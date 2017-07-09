@@ -1,6 +1,6 @@
 # waterwatch
 
-[[http://www.reviewstowatch.com/wp-content/uploads/2015/01/omega-water.jpg|alt=waterwatch]]
+![alt text](http://www.reviewstowatch.com/wp-content/uploads/2015/01/omega-water.jpg)
 
 > A project for watching water
 > Built with Vue.js
