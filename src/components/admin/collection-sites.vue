@@ -36,7 +36,7 @@
         <md-table-body>
           <md-table-row v-for="collectionSite in collectionSites" v-bind:key="collectionSite.stationName">
             <md-table-cell>
-              <md-checkbox v-model="collectionSite.selected" class="md-primary">Regular Checkbox</md-checkbox>
+              <md-checkbox v-model="collectionSite.selected" class="md-primary"></md-checkbox>
             </md-table-cell>
             <md-table-cell>{{ collectionSite.stationName }}</md-table-cell>
             <md-table-cell>{{ collectionSite.logbookAbv }}</md-table-cell>

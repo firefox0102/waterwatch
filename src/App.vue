@@ -1,48 +1,19 @@
 <template>
-  <div id="app">
-    <md-card>
-      <md-toolbar class="md-transparent">
-        <h3>Neighborhood Water Watch</h3>
-      </md-toolbar>
-      <md-card-area>
-        <md-tabs class="md-transparent navbar-tabs" md-right>
-          <md-tab id="logdata" md-label="Log Data">
-            <div class="app-body">
-              TODO lul
-            </div>
-          </md-tab>
+  <div id="app" class="app">
+    <app-nav></app-nav>
+    <div class="app__wrapper">
+      <div class="app__body">
+        <router-view></router-view>
+      </div>
+    </div>
+    <footer class="app__footer">
 
-          <md-tab id="collectionsites" md-label="Collection Sites">
-            <div class="app-body">
-              <collection-sites></collection-sites>
-            </div>
-          </md-tab>
-
-          <md-tab id="reports" md-label="Reports">
-            <div class="app-body">
-              TODO lul
-            </div>
-          </md-tab>
-
-          <md-tab id="manageusers" md-label="Manage Users">
-            <div class="app-body">
-              TODO lul
-            </div>
-          </md-tab>
-
-          <md-tab id="signout" md-label="Sign Out">
-            <div class="app-body">
-              TODO lul
-            </div>
-          </md-tab>
-        </md-tabs>
-      </md-card-area>
-    </md-card>
+    </footer>
   </div>
 </template>
 
 <script>
-  import CollectionSites from './components/collection-sites'
+  import AppNav from './components/app-nav'
 
   export default {
     name: 'app',
@@ -52,19 +23,40 @@
       }
     },
     components: {
-      'collection-sites': CollectionSites
+      'app-nav': AppNav
     }
   }
 </script>
 
-<style>
-  .navbar-tabs {
-    margin-top: -48px;
+<style lang="scss">
+  .app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+
+    &__body {
+      background-color: #F3F3F3;
+      padding: 36px 48px;
+      min-height: calc(100vh - 64px - 140px);
+    }
+
+    &__footer {
+      height: 140px;
+      min-height: 140px;
+      background-color: #4A4A4A;
+    }
   }
 
-  .app-body {
-	   background-color: #F3F3F3;
-     padding: 36px 48px;
-     margin: -16px;
+  .flex-start {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .flex-end {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 </style>
