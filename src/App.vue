@@ -6,14 +6,13 @@
         <router-view></router-view>
       </div>
     </div>
-    <footer class="app__footer">
-
-    </footer>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
   import AppNav from './components/app-nav'
+  import AppFooter from './components/app-footer'
 
   export default {
     name: 'app',
@@ -23,7 +22,8 @@
       }
     },
     components: {
-      'app-nav': AppNav
+      'app-nav': AppNav,
+      'app-footer': AppFooter
     }
   }
 </script>
@@ -42,6 +42,10 @@
     }
 
     &__footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       height: 140px;
       min-height: 140px;
       background-color: #4A4A4A;

@@ -2,8 +2,8 @@
   <header>
     <md-toolbar class="md-transparent app-nav__toolbar app-nav">
       <div class="app-nav__section flex-start">
-        <img class="app-nav__logo" src="../assets/client-logo-crk.png"/>
-        <h3>Neighborhood Water Watch</h3>
+        <img class="app-nav__crk-logo" src="../assets/client-logo-crk.png"/>
+        <img class="app-nav__nww-logo" src="../assets/nww-logo.png"/>
       </div>
       <div class="app-nav__section flex-end">
         <router-link to="/logData">
@@ -60,8 +60,12 @@ export default {
     min-height: $navbar-height;
     padding: 0 66px;
 
-    &__logo {
+    &__crk-logo {
       height: $navbar-height;
+    }
+
+    &__nww-logo {
+      height: 40px;
     }
 
     &__button {

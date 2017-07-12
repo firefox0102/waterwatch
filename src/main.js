@@ -34,6 +34,7 @@ const routes = [
   { path: '/about', component: About },
   { path: '/dataPage', component: DataPage },
   { path: '/signIn', component: SignIn },
+  { path: '*', redirect: '/signIn' }
 ]
 
 const router = new VueRouter({
