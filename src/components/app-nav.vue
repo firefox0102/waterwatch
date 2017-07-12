@@ -42,7 +42,8 @@
 
 <script>
 export default {
-  name: 'app-nav'
+  name: 'app-nav',
+  props: ['user']
 }
 </script>
 

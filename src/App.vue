@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="app">
-    <app-nav></app-nav>
+    <app-nav v-bind:user="user"></app-nav>
     <div class="app__wrapper">
       <div class="app__body">
         <router-view></router-view>
@@ -18,7 +18,10 @@
     name: 'app',
     data: function() {
       return {
-        msg: "App loaded"
+        msg: "App loaded",
+        user: {
+          name: Peter
+        }
       }
     },
     components: {
@@ -37,8 +40,11 @@
 
     &__body {
       background-color: #F3F3F3;
-      padding: 36px 48px;
       min-height: calc(100vh - 64px - 140px);
+
+      @media screen and (min-width: 401px) {
+        padding: 36px 48px;
+      }
     }
 
     &__footer {
@@ -62,5 +68,11 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+  }
+
+  .btn-dark {
+    border-radius: 2px;
+    color: white !important;
+    background-color: #4A4A4A !important;
   }
 </style>

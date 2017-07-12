@@ -82,6 +82,7 @@ export default {
       line-height: 24px;
 
       &--underline {
+        @extend .footer-info__text;
         text-decoration: underline;
       }
     }
