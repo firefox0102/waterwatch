@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'data-page',
-  data: function() {
+  data: function () {
     return {
       testData: []
     }

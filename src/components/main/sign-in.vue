@@ -10,28 +10,37 @@
     </div>
     <div class="sign-in-body">
       <form class="sign-in-body__form">
-        <md-input-container>
-          <label>Email</label>
-          <md-input v-model="email"></md-input>
-        </md-input-container>
+        <v-text-field
+            label="Email"
+            class="input-group--focused">
+          </v-text-field>
 
-        <md-input-container md-has-password>
-          <label>Password</label>
-          <md-input type="password"></md-input>
-        </md-input-container>
+        <v-text-field
+            label="Password"
+            hint="At least 8 characters"
+            min="8"
+            :append-icon="passVisible ? 'visibility' : 'visibility_off'"
+            :append-icon-cb="() => (passVisible = !passVisible)"
+            class="input-group--focused">
+          </v-text-field>
 
         <a class="sign-in-body__sub-text">Forget Password?</a>
       </form>
-      <md-button class="md-raised btn-dark sign-in-body__btn">
+      <v-btn class="md-raised btn-dark sign-in-body__btn">
         Sign In
-      </md-button>
+      </v-btn>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'sign-in'
+  name: 'sign-in',
+  data () {
+    return {
+      passVisible: false
+    }
+  }
 }
 </script>
 

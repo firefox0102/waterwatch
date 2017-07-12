@@ -14,11 +14,15 @@
           <div class="log-data-body__header">
             Collection Details
           </div>
-          <md-input-container>
-            <label>Logbook #</label>
-            <md-input type="number"></md-input>
-            <span>Last Logbook # was **TODO**</span>
-          </md-input-container>
+          <<v-text-field
+              label="Password"
+              hint="At least 8 characters"
+              min="8"
+              :append-icon="e4 ? 'visibility' : 'visibility_off'"
+              :append-icon-cb="() => (e4 = !e4)"
+              value="Pa"
+              class="input-group--focused"
+            ></v-text-field>
           Date
           Station Name
           <md-input-container>
@@ -52,7 +56,7 @@
 <script>
 export default {
   name: 'log-data',
-  data: function() {
+  data: function () {
     return {
       testData: []
     }

@@ -1,42 +1,42 @@
 <template>
   <header>
-    <md-toolbar class="md-transparent app-nav">
+    <div class="md-transparent app-nav">
       <div class="app-nav__primary-section">
         <img class="app-nav__crk-logo" src="../assets/client-logo-crk.png"/>
         <img class="app-nav__nww-logo" src="../assets/nww-logo.png"/>
       </div>
       <div class="app-nav__secondary-section">
-        <router-link to="/logData">
-          <md-button class="app-nav__button">
+        <router-link class="app-nav__button" to="/logData">
+          <v-btn class="app-nav__button" flat>
             Log Data
-          </md-button>
+          </v-btn>
         </router-link>
 
-        <router-link to="/collectionSites">
-          <md-button class="app-nav__button">
+        <router-link class="app-nav__button" to="/collectionSites">
+          <v-btn class="app-nav__button" flat>
             Collection Sites
-          </md-button>
+          </v-btn>
         </router-link>
 
-        <router-link to="/reports">
-          <md-button class="app-nav__button">
+        <router-link class="app-nav__button" to="/reports">
+          <v-btn class="app-nav__button" flat>
             Reports
-          </md-button>
+          </v-btn>
         </router-link>
 
-        <router-link to="/manageUsers">
-          <md-button class="app-nav__button">
+        <router-link class="app-nav__button" to="/manageUsers">
+          <v-btn class="app-nav__button" flat>
             Manage Users
-          </md-button>
+          </v-btn>
         </router-link>
 
-        <router-link to="/signOut">
-          <md-button class="app-nav__button">
+        <router-link class="app-nav__button" to="/signOut">
+          <v-btn flat class="app-nav__button">
             Sign Out
-          </md-button>
+          </v-btn>
         </router-link>
       </div>
-    </md-toolbar>
+    </div>
   </header>
 </template>
 
@@ -55,6 +55,7 @@
   .app-nav {
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
 
     align-items: center;
     box-shadow: 0 0 1px 0 rgba(0,0,0,0.12), 0 1px 3px 0 rgba(155,155,155,0.5);
@@ -64,6 +65,7 @@
     padding: 0;
 
     @media screen and (min-width: $nav-split-breakpoint) {
+      flex-direction: row;
       height: $navbar-height;
       padding: 0 66px;
     }
@@ -75,6 +77,7 @@
       font-weight: 500;
       text-align: center;
       margin: 0;
+      text-decoration: none !important;
 
       &:hover {
          color: #4A4A4A;
@@ -97,6 +100,7 @@
 
     &__primary-section {
       display: flex;
+      align-items: center;
       width: 100%;
       box-shadow: 0 0 1px 0 rgba(0,0,0,0.12), 0 1px 3px 0 rgba(155,155,155,0.5);
       padding: 12px 20px;
@@ -124,6 +128,10 @@
       .app-nav__button {
         @extend .app-nav__button:hover;
       }
+    }
+
+    .toolbar__content {
+      width: 100%;
     }
   }
 </style>

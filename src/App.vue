@@ -16,11 +16,11 @@
 
   export default {
     name: 'app',
-    data: function() {
+    data: function () {
       return {
-        msg: "App loaded",
+        msg: 'App loaded',
         user: {
-          name: Peter
+          name: 'Peter'
         }
       }
     },
@@ -30,6 +30,10 @@
     }
   }
 </script>
+
+<style lang="stylus">
+  @import './stylus/main'
+</style>
 
 <style lang="scss">
   .app {
