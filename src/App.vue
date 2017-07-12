@@ -36,7 +36,8 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     &__body {
       background-color: #F3F3F3;

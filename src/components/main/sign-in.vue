@@ -37,12 +37,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  $small-screen-breakpoint: 401px;
+
   .sign-in {
     display: flex;
     align-items: center;
     flex-direction: column;
 
-    @media screen and (min-width: 401px) {
+    @media screen and (min-width: $small-screen-breakpoint) {
       padding-top: 73px;
     }
   }
@@ -56,7 +58,7 @@ export default {
     padding: 28px 30px;
     background-color: #4A4A4A;
 
-    @media screen and (min-width: 401px) {
+    @media screen and (min-width: $small-screen-breakpoint) {
       width: 360px;
       max-width: 360px;
     }
@@ -86,7 +88,7 @@ export default {
     background-color: #FFFFFF;
     box-shadow: 0 1px 3px 0 rgba(155,155,155,0.5);
 
-    @media screen and (min-width: 401px) {
+    @media screen and (min-width: $small-screen-breakpoint) {
       width: 360px;
       max-width: 360px;
       height: 420px;
