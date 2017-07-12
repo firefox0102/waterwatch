@@ -14,39 +14,150 @@
           <div class="log-data-body__header">
             Collection Details
           </div>
-          <<v-text-field
-              label="Password"
-              hint="At least 8 characters"
-              min="8"
-              :append-icon="e4 ? 'visibility' : 'visibility_off'"
-              :append-icon-cb="() => (e4 = !e4)"
-              value="Pa"
+
+          <v-text-field
+              label="Logbook #"
+              hint="Last Logbook # was TODO DYNAMIC NUM"
+              persistent-hint
+              class="input-group--focused"
+              v-model="logData.logbookNumber">
+          </v-text-field>
+
+          <v-menu
+          lazy
+          :close-on-content-click="false"
+          v-model="logData.date"
+          transition="scale-transition"
+          offset-y
+          full-width
+          :nudge-left="40"
+          max-width="290px">
+            <v-text-field
+              slot="activator"
+              label="Picker in menu"
+              v-model="e3"
+              prepend-icon="event"
+              class="input-group--focused"
+              readonly>
+            </v-text-field>
+            <v-date-picker v-model="logData.date" no-title scrollable actions>
+              <template scope="{ save, cancel }">
+                <v-card-actions>
+                  <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
+                  <v-btn flat primary @click.native="save()">Save</v-btn>
+                </v-card-actions>
+              </template>
+            </v-date-picker>
+          </v-menu>
+
+          <v-select
+            v-bind:items="stations"
+            v-model="logData.station"
+            label="Station Name"
+            single-line
+            class="input-group--focused"
+            bottom>
+          </v-select>
+          <v-text-field
+              label="Collection Time"
+              v-model="logData.collectionTime"
+              type="time"
+              suffix="EST"
+              class="input-group--focused">
+          </v-text-field>
+          <v-text-field
+              label="Analyst (Initials)"
+              class="input-group--focused"
+              v-model="logData.analyst">
+          </v-text-field>
+          <v-text-field
+              name="input-5-1"
+              label="Notes"
+              v-bind="logData.notes"
+              multi-line
               class="input-group--focused"
             ></v-text-field>
-          Date
-          Station Name
-          <md-input-container>
-            <label>Notes</label>
-            <md-textarea></md-textarea>
-          </md-input-container>
         </div>
 
         <div class="log-data-body__column">
           <div class="log-data-body__header">
             Incubation and Parameters
           </div>
+          <v-text-field
+              label="Incubation In Time"
+              v-model="logData.incubationTime"
+              type="time"
+              class="input-group--focused">
+          </v-text-field>
+          <v-text-field
+              label="# mL/100mL (Dilution)"
+              class="input-group--focused"
+              v-model="logData.dilution">
+          </v-text-field>
+          <v-select
+            v-bind:items="stations"
+            v-model="logData.station"
+            label="Station Name"
+            single-line
+            class="input-group--focused"
+            bottom>
+          </v-select>
+          <v-text-field
+              label="Turbidity (NTU)"
+              class="input-group--focused"
+              v-model="logData.turbidity">
+          </v-text-field>
+          <v-text-field
+              label="Rainfall (in)"
+              class="input-group--focused"
+              v-model="logData.rainfall">
+          </v-text-field>
+          <v-text-field
+              label="Incubation Temp (*C)"
+              class="input-group--focused"
+              v-model="logData.incubationTemp">
+          </v-text-field>
+          <v-text-field
+              label="Incubation Out"
+              v-model="logData.incubationOut"
+              type="time"
+              class="input-group--focused">
+          </v-text-field>
         </div>
 
         <div class="log-data-body__column">
           <div class="log-data-body__header">
             Total Coliform
           </div>
-        </div>
+          <v-text-field
+              label="Large Cells"
+              class="input-group--focused"
+              v-model="logData.coliformLargeCells">
+          </v-text-field>
+          <v-text-field
+              label="Small Cells"
+              class="input-group--focused"
+              v-model="logData.coliformSmallCells">
+          </v-text-field>
 
-        <div class="log-data-body__column">
           <div class="log-data-body__header">
             E. Coli
           </div>
+
+          <v-text-field
+              label="Large Cells"
+              class="input-group--focused"
+              v-model="logData.ecoliLargeCells">
+          </v-text-field>
+          <v-text-field
+              label="Small Cells"
+              class="input-group--focused"
+              v-model="logData.ecoliSmallCells">
+          </v-text-field>
+
+          <v-btn class="btn-dark">
+            Log Data
+          </v-btn>
         </div>
       </form>
     </div>
@@ -58,7 +169,9 @@ export default {
   name: 'log-data',
   data: function () {
     return {
-      testData: []
+      testData: [],
+      stations: ['Test Station 1', 'Test station 2'],
+      logData: {}
     }
   }
 }
@@ -101,7 +214,29 @@ export default {
   }
 
   .log-data-body {
-    padding: 33px 106px;
+    padding: 33px 50px;
     background-color: #FFFFFF;
+
+    &__column {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+    }
+
+    &__form {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    &__header {
+      height: 16px;
+      color: #4A4A4A;
+      font-family: Roboto;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 16px;
+      margin-bottom: 46px;
+    }
   }
 </style>

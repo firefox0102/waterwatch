@@ -14,10 +14,10 @@
         <v-btn class=" btn-dark">Add New Site</v-btn>
       </div>
     </div>
-    <v-card>
-      <v-card-header>
-        <h4>List of Collection Sites</h4>
-      </v-card-header>
+    <v-card class="white-table">
+      <v-card-title primary-title>
+        <h4 class="headline mb-0">List of Collection Sites</h4>
+      </v-card-title>
 
       <v-data-table
           v-bind:headers="headers"
@@ -26,18 +26,17 @@
           class="elevation-1"
         >
         <template slot="items" scope="props">
-          <td>{{ props.item.name }}</td>
-          <td class="text-xs-right">{{ props.item.calories }}</td>
-          <td class="text-xs-right">{{ props.item.fat }}</td>
-          <td class="text-xs-right">{{ props.item.carbs }}</td>
-          <td class="text-xs-right">{{ props.item.protein }}</td>
-          <td class="text-xs-right">{{ props.item.sodium }}</td>
-          <td class="text-xs-right">{{ props.item.calcium }}</td>
-          <td class="text-xs-right">{{ props.item.iron }}</td>
+          <td class="text-xs-right">{{ props.item.stationName }}</td>
+          <td class="text-xs-right">{{ props.item.logbookAbv }}</td>
+          <td class="text-xs-right">{{ props.item.latitude }}</td>
+          <td class="text-xs-right">{{ props.item.longitude }}</td>
+          <td class="text-xs-right">{{ props.item.collectionPartner }}</td>
+          <td class="text-xs-right">{{ props.item.lab }}</td>
+          <td class="text-xs-right">{{ props.item.huc }}</td>
         </template>
       </v-data-table>
-        </v-card>
-      </v-layout>
+    </v-card>
+  </v-layout>
 </template>
 
 <script>
@@ -46,60 +45,74 @@ export default {
   data: function () {
     return {
       headers: [
-        {
-          text: 'Dessert (100g serving)',
-          align: 'left',
-          sortable: false,
-          value: 'name'
-        },
         { text: 'Station Name', value: 'stationName' },
         { text: 'Logbook abv', value: 'logbookAbv' },
         { text: 'Latitude', value: 'latitude' },
         { text: 'Longitude', value: 'longitude' },
         { text: 'Collection Partner', value: 'collectionPartner' },
-        { text: 'Calcium (%)', value: 'calcium' },
-        { text: 'Iron (%)', value: 'iron' }
+        { text: 'Lab', value: 'lab' },
+        { text: 'HUC', value: 'huc' }
       ],
-      collectionSites: [
+      items: [
         {
           selected: false,
           stationName: 'Station 1',
           logbookAbv: 'Beav @ Park',
           latitude: '33.7489',
           longitude: '-84.3879',
-          collectionPartner: 'CRK'
+          collectionPartner: 'CRK',
+          lab: 'Petes Lab',
+          huc: 'no idea'
         },
         {
           selected: false,
-          stationName: 'Station 2',
+          stationName: 'Station 1',
           logbookAbv: 'Beav @ Park',
           latitude: '33.7489',
           longitude: '-84.3879',
-          collectionPartner: 'CRK'
+          collectionPartner: 'CRK',
+          lab: 'Petes Lab',
+          huc: 'no idea'
         },
         {
           selected: false,
-          stationName: 'Station 3',
+          stationName: 'Station 1',
           logbookAbv: 'Beav @ Park',
           latitude: '33.7489',
           longitude: '-84.3879',
-          collectionPartner: 'CRK'
+          collectionPartner: 'CRK',
+          lab: 'Petes Lab',
+          huc: 'no idea'
         },
         {
           selected: false,
-          stationName: 'Station 4',
+          stationName: 'Station 1',
           logbookAbv: 'Beav @ Park',
           latitude: '33.7489',
           longitude: '-84.3879',
-          collectionPartner: 'CRK'
+          collectionPartner: 'CRK',
+          lab: 'Petes Lab',
+          huc: 'no idea'
         },
         {
           selected: false,
-          stationName: 'Station 5',
+          stationName: 'Station 1',
           logbookAbv: 'Beav @ Park',
           latitude: '33.7489',
           longitude: '-84.3879',
-          collectionPartner: 'CRK'
+          collectionPartner: 'CRK',
+          lab: 'Petes Lab',
+          huc: 'no idea'
+        },
+        {
+          selected: false,
+          stationName: 'Station 1',
+          logbookAbv: 'Beav @ Park',
+          latitude: '33.7489',
+          longitude: '-84.3879',
+          collectionPartner: 'CRK',
+          lab: 'Petes Lab',
+          huc: 'no idea'
         }
       ]
     }

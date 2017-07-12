@@ -80,4 +80,8 @@
     color: white !important;
     background-color: #4A4A4A !important;
   }
+
+  .white-table {
+    background: #FFF;
+  }
 </style>
