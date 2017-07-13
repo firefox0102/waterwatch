@@ -10,7 +10,82 @@
       </div>
     </div>
     <div class="reports-body">
-      MENU ITEMS GO HERE LOL
+      <div class="reports-body__toolbar">
+        <v-layout row>
+          <v-text-field
+            xs3
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+            v-model="search"
+          ></v-text-field>
+          <v-menu
+            xs2
+            lazy
+            :close-on-content-click="false"
+            v-model="menu"
+            transition="scale-transition"
+            offset-y
+            full-width
+            :nudge-left="40"
+            max-width="290px"
+          >
+            <v-text-field
+              slot="activator"
+              label="Picker in menu"
+              v-model="e3"
+              prepend-icon="event"
+              readonly
+            ></v-text-field>
+            <v-date-picker v-model="e3" no-title scrollable actions>
+              <template scope="{ save, cancel }">
+                <v-card-actions>
+                  <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
+                  <v-btn flat primary @click.native="save()">Save</v-btn>
+                </v-card-actions>
+              </template>
+            </v-date-picker>
+          </v-menu>
+          <v-menu
+            xs1
+            right
+            lazy
+            :close-on-content-click="false"
+            v-model="menu"
+            transition="scale-transition"
+            offset-y
+            full-width
+            :nudge-left="40"
+            max-width="290px"
+          >
+            <v-text-field
+              slot="activator"
+              label="Picker in menu"
+              v-model="e3"
+              prepend-icon="event"
+              readonly
+            ></v-text-field>
+            <v-date-picker v-model="e3" no-title scrollable actions>
+              <template scope="{ save, cancel }">
+                <v-card-actions>
+                  <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
+                  <v-btn flat primary @click.native="save()">Save</v-btn>
+                </v-card-actions>
+              </template>
+            </v-date-picker>
+          </v-menu>
+          <v-flex xs4>
+            <v-select
+              v-bind:items="items"
+              v-model="e1"
+              label="Select"
+              single-line
+              bottom
+            ></v-select>
+          </v-flex>
+        </v-layout>
+      </div>
       <v-card class="white-table">
         <v-data-table
             v-bind:headers="headers"

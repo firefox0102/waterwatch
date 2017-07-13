@@ -14,9 +14,9 @@
         <v-btn class=" btn-dark">Add New Site</v-btn>
       </div>
     </div>
-    <v-card class="white-table">
+    <v-card class="white-table collection-site-body">
       <v-card-title primary-title>
-        <h4 class="headline mb-0">List of Collection Sites</h4>
+        <h4 class="collection-site-body__header">List of Collection Sites</h4>
       </v-card-title>
 
       <v-data-table
@@ -26,7 +26,11 @@
           class="elevation-1"
         >
         <template slot="items" scope="props">
-          <td class="text-xs-right">{{ props.item.stationName }}</td>
+          <td class="text-xs-right">
+            <router-link :to="{ name: 'Collection Site Data', params: { siteId: props.item.collectionSiteId } }">
+              {{ props.item.stationName }}
+            </router-link>
+          </td>
           <td class="text-xs-right">{{ props.item.logbookAbv }}</td>
           <td class="text-xs-right">{{ props.item.latitude }}</td>
           <td class="text-xs-right">{{ props.item.longitude }}</td>
@@ -62,7 +66,8 @@ export default {
           longitude: '-84.3879',
           collectionPartner: 'CRK',
           lab: 'Petes Lab',
-          huc: 'no idea'
+          huc: 'no idea',
+          collectionSiteId: 1
         },
         {
           selected: false,
@@ -72,7 +77,8 @@ export default {
           longitude: '-84.3879',
           collectionPartner: 'CRK',
           lab: 'Petes Lab',
-          huc: 'no idea'
+          huc: 'no idea',
+          collectionSiteId: 2
         },
         {
           selected: false,
@@ -82,7 +88,8 @@ export default {
           longitude: '-84.3879',
           collectionPartner: 'CRK',
           lab: 'Petes Lab',
-          huc: 'no idea'
+          huc: 'no idea',
+          collectionSiteId: 3
         },
         {
           selected: false,
@@ -92,7 +99,8 @@ export default {
           longitude: '-84.3879',
           collectionPartner: 'CRK',
           lab: 'Petes Lab',
-          huc: 'no idea'
+          huc: 'no idea',
+          collectionSiteId: 4
         },
         {
           selected: false,
@@ -102,7 +110,8 @@ export default {
           longitude: '-84.3879',
           collectionPartner: 'CRK',
           lab: 'Petes Lab',
-          huc: 'no idea'
+          huc: 'no idea',
+          collectionSiteId: 5
         },
         {
           selected: false,
@@ -112,7 +121,8 @@ export default {
           longitude: '-84.3879',
           collectionPartner: 'CRK',
           lab: 'Petes Lab',
-          huc: 'no idea'
+          huc: 'no idea',
+          collectionSiteId: 6
         }
       ]
     }
@@ -141,11 +151,19 @@ export default {
     }
 
     &__subheader {
-      // height: 16px;
-      // width: 502px;
       color: #9B9B9B;
       font-family: Roboto;
       font-size: 13px;
+      line-height: 16px;
+    }
+  }
+
+  .collection-site-body {
+    &__header {
+      height: 16px;
+      color: #4A4A4A;
+      font-family: Roboto;
+      font-size: 24px;
       line-height: 16px;
     }
   }

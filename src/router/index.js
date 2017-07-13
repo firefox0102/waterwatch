@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import CollectionSites from '../components/admin/collection-sites'
+import CollectionSiteData from '../components/admin/collection-site-data'
 import LogData from '../components/admin/log-data'
 import ManageUsers from '../components/admin/manage-users'
 import Reports from '../components/admin/reports'
@@ -17,6 +18,11 @@ export default new Router({
       path: '/collectionSites',
       name: 'Collection Sites',
       component: CollectionSites
+    },
+    {
+      path: '/collectionSiteData/:siteId',
+      name: 'Collection Site Data',
+      component: CollectionSiteData
     },
     {
       path: '/logData',
