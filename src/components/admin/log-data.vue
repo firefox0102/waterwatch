@@ -35,7 +35,7 @@
             <v-text-field
               slot="activator"
               label="Picker in menu"
-              v-model="e3"
+              v-model="logData.date"
               prepend-icon="event"
               class="input-group--focused"
               readonly>
@@ -94,14 +94,11 @@
               class="input-group--focused"
               v-model="logData.dilution">
           </v-text-field>
-          <v-select
-            v-bind:items="stations"
-            v-model="logData.station"
-            label="Station Name"
-            single-line
-            class="input-group--focused"
-            bottom>
-          </v-select>
+          <v-text-field
+              label="Station Name"
+              class="input-group--focused"
+              v-model="logData.stationName">
+          </v-text-field>
           <v-text-field
               label="Turbidity (NTU)"
               class="input-group--focused"
@@ -165,8 +162,29 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+
+function requireAuth (to, from, next) {
+  if (!firebase.auth().currentUser) {
+    console.log('User is not logged in')
+    next({
+      path: '/auth',
+      query: {
+        redirect: to.fullPath
+      }
+    })
+  } else {
+    console.log('User is logged in:', firebase.auth().currentUser.uid)
+    next()
+  }
+}
+
 export default {
   name: 'log-data',
+  props: [
+    'logDataCallback'
+  ],
+  beforeEnter: requireAuth,
   data: function () {
     return {
       testData: [],

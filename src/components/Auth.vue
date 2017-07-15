@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
   <div class="sign-in">
     <div class="sign-in-header">
       <span class="sign-in-header__text">
@@ -9,41 +9,45 @@
       </span>
     </div>
     <div class="sign-in-body">
-      <form class="sign-in-body__form">
-        <v-text-field
-            label="Email"
-            class="input-group--focused">
-          </v-text-field>
-
-        <v-text-field
-            label="Password"
-            hint="At least 8 characters"
-            min="8"
-            :append-icon="passVisible ? 'visibility' : 'visibility_off'"
-            :append-icon-cb="() => (passVisible = !passVisible)"
-            class="input-group--focused">
-          </v-text-field>
-
-        <a class="sign-in-body__sub-text">Forget Password?</a>
-      </form>
-      <v-btn class="md-raised btn-dark sign-in-body__btn">
+      <!-- <form class="sign-in-body__form"> -->
+        <div id="firebaseui-auth-container"></div>
+      <!-- </form> -->
+      <!-- <v-btn class="md-raised btn-dark sign-in-body__btn">
         Sign In
-      </v-btn>
+      </v-btn> -->
     </div>
   </div>
 </template>
-
 <script>
-export default {
-  name: 'sign-in',
-  data () {
-    return {
-      passVisible: false
+  import firebase from 'firebase'
+  import firebaseui from 'firebaseui'
+
+  export default {
+    name: 'auth',
+    mounted () {
+      var uiConfig = {
+        signInSuccessUrl: '/logData',
+        signInOptions: [
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.EmailAuthProvider.PROVIDER_ID
+        ]
+      }
+
+      // let ui
+      // if (!firebase.apps.length) {
+      let ui = new firebaseui.auth.AuthUI(firebase.auth())
+      // } else {
+        // console.log(firebase.apps)
+
+        // ui = firebase.apps[0]
+      // }
+
+      ui.start('#firebaseui-auth-container', uiConfig)
     }
   }
-}
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
   $small-screen-breakpoint: 401px;
 

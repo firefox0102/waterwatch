@@ -8,12 +8,24 @@ import ManageUsers from '../components/admin/manage-users'
 import Reports from '../components/admin/reports'
 import About from '../components/main/about'
 import DataPage from '../components/main/data-page'
+
 import SignIn from '../components/main/sign-in'
+// import Auth from '../components/Auth.vue'
+// import AuthSuccess from '../components/AuthSuccess.vue'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
+    {
+      path: '*',
+      component: SignIn
+    },
+    {
+      path: '/signIn',
+      component: SignIn
+    },
     {
       path: '/collectionSites',
       name: 'Collection Sites',
@@ -47,14 +59,6 @@ export default new Router({
     {
       path: '/dataPage',
       component: DataPage
-    },
-    {
-      path: '/signIn',
-      component: SignIn
-    },
-    {
-      path: '*',
-      redirect: '/signIn'
     }
   ]
 })

@@ -6,33 +6,25 @@
         <img class="app-nav__nww-logo" src="../assets/nww-logo.png"/>
       </div>
       <div class="app-nav__secondary-section">
-        <router-link class="app-nav__button" to="/logData">
+        <router-link
+          v-for="(item, index) in arrNav"
+          class="app-nav__button"
+          v-bind:to="item.path"
+          v-bind:key="index"
+        >
           <v-btn class="app-nav__button" flat>
-            Log Data
+            {{ item.title }}
           </v-btn>
         </router-link>
 
-        <router-link class="app-nav__button" to="/collectionSites">
-          <v-btn class="app-nav__button" flat>
-            Collection Sites
-          </v-btn>
-        </router-link>
-
-        <router-link class="app-nav__button" to="/reports">
-          <v-btn class="app-nav__button" flat>
-            Reports
-          </v-btn>
-        </router-link>
-
-        <router-link class="app-nav__button" to="/manageUsers">
-          <v-btn class="app-nav__button" flat>
-            Manage Users
-          </v-btn>
-        </router-link>
-
-        <router-link class="app-nav__button" to="/signOut">
-          <v-btn flat class="app-nav__button">
+        <a v-if="user" class="app-nav__button">
+          <v-btn flat class="app-nav__button" v-on:click.native="logout()">
             Sign Out
+          </v-btn>
+        </a>
+        <router-link v-else  class="app-nav__button" to="/signIn">
+          <v-btn flat class="app-nav__button" v-on:click.native="login()">
+            Sign In
           </v-btn>
         </router-link>
       </div>
@@ -41,9 +33,56 @@
 </template>
 
 <script>
+  import firebase from 'firebase'
+  import { mapState } from 'vuex'
+
   export default {
     name: 'app-nav',
-    props: ['user']
+    computed: {
+      ...mapState(['user'])
+    },
+    data () {
+      return {
+        arrNav: [{
+          title: 'Log Data',
+          id: '1',
+          auth: true,
+          path: '/logData'
+        },
+        {
+          title: 'Collection Sites',
+          id: '2',
+          auth: false,
+          path: '/collectionSites'
+        },
+        {
+          title: 'Reports',
+          id: '3',
+          auth: false,
+          path: '/reports'
+        },
+        {
+          title: 'Manage Users',
+          id: '4',
+          auth: false,
+          path: '/manageUsers'
+        }]
+      }
+    },
+    methods: {
+      login () {
+        console.log('login')
+        window.location.href = '/signIn'
+      },
+      logout () {
+        console.log('login outtt')
+        firebase.auth().signOut().then(function () {
+          window.location.href = '/signIn'
+        }, function (error) {
+          console.log(error)
+        })
+      }
+    }
   }
 </script>
 
