@@ -20,13 +20,13 @@
               hint="Last Logbook # was TODO DYNAMIC NUM"
               persistent-hint
               class="input-group--focused"
-              v-model="logData.logbookNumber">
+              v-model="newLogData.logbookNumber">
           </v-text-field>
 
           <v-menu
           lazy
           :close-on-content-click="false"
-          v-model="logData.date"
+          v-model="newLogData.date"
           transition="scale-transition"
           offset-y
           full-width
@@ -35,12 +35,12 @@
             <v-text-field
               slot="activator"
               label="Picker in menu"
-              v-model="logData.date"
+              v-model="newLogData.date"
               prepend-icon="event"
               class="input-group--focused"
               readonly>
             </v-text-field>
-            <v-date-picker v-model="logData.date" no-title scrollable actions>
+            <v-date-picker v-model="newLogData.date" no-title scrollable actions>
               <template scope="{ save, cancel }">
                 <v-card-actions>
                   <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -52,7 +52,7 @@
 
           <v-select
             v-bind:items="stations"
-            v-model="logData.station"
+            v-model="newLogData.station"
             label="Station Name"
             single-line
             class="input-group--focused"
@@ -60,7 +60,7 @@
           </v-select>
           <v-text-field
               label="Collection Time"
-              v-model="logData.collectionTime"
+              v-model="newLogData.collectionTime"
               type="time"
               suffix="EST"
               class="input-group--focused">
@@ -68,13 +68,12 @@
           <v-text-field
               label="Analyst (Initials)"
               class="input-group--focused"
-              v-model="logData.analyst">
+              v-model="newLogData.analyst">
           </v-text-field>
           <v-text-field
               name="input-5-1"
               label="Notes"
-              v-bind="logData.notes"
-              multi-line
+              v-bind="newLogData.notes"
               class="input-group--focused"
             ></v-text-field>
         </div>
@@ -85,38 +84,38 @@
           </div>
           <v-text-field
               label="Incubation In Time"
-              v-model="logData.incubationTime"
+              v-model="newLogData.incubationTime"
               type="time"
               class="input-group--focused">
           </v-text-field>
           <v-text-field
               label="# mL/100mL (Dilution)"
               class="input-group--focused"
-              v-model="logData.dilution">
+              v-model="newLogData.dilution">
           </v-text-field>
           <v-text-field
               label="Station Name"
               class="input-group--focused"
-              v-model="logData.stationName">
+              v-model="newLogData.stationName">
           </v-text-field>
           <v-text-field
               label="Turbidity (NTU)"
               class="input-group--focused"
-              v-model="logData.turbidity">
+              v-model="newLogData.turbidity">
           </v-text-field>
           <v-text-field
               label="Rainfall (in)"
               class="input-group--focused"
-              v-model="logData.rainfall">
+              v-model="newLogData.rainfall">
           </v-text-field>
           <v-text-field
               label="Incubation Temp (*C)"
               class="input-group--focused"
-              v-model="logData.incubationTemp">
+              v-model="newLogData.incubationTemp">
           </v-text-field>
           <v-text-field
               label="Incubation Out"
-              v-model="logData.incubationOut"
+              v-model="newLogData.incubationOut"
               type="time"
               class="input-group--focused">
           </v-text-field>
@@ -129,12 +128,12 @@
           <v-text-field
               label="Large Cells"
               class="input-group--focused"
-              v-model="logData.coliformLargeCells">
+              v-model="newLogData.coliformLargeCells">
           </v-text-field>
           <v-text-field
               label="Small Cells"
               class="input-group--focused"
-              v-model="logData.coliformSmallCells">
+              v-model="newLogData.coliformSmallCells">
           </v-text-field>
 
           <div class="log-data-body__header">
@@ -144,12 +143,12 @@
           <v-text-field
               label="Large Cells"
               class="input-group--focused"
-              v-model="logData.ecoliLargeCells">
+              v-model="newLogData.ecoliLargeCells">
           </v-text-field>
           <v-text-field
               label="Small Cells"
               class="input-group--focused"
-              v-model="logData.ecoliSmallCells">
+              v-model="newLogData.ecoliSmallCells">
           </v-text-field>
 
           <v-btn class="btn-dark">
@@ -162,37 +161,37 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+  import firebase from 'firebase'
 
-function requireAuth (to, from, next) {
-  if (!firebase.auth().currentUser) {
-    console.log('User is not logged in')
-    next({
-      path: '/auth',
-      query: {
-        redirect: to.fullPath
-      }
-    })
-  } else {
-    console.log('User is logged in:', firebase.auth().currentUser.uid)
-    next()
-  }
-}
-
-export default {
-  name: 'log-data',
-  props: [
-    'logDataCallback'
-  ],
-  beforeEnter: requireAuth,
-  data: function () {
-    return {
-      testData: [],
-      stations: ['Test Station 1', 'Test station 2'],
-      logData: {}
+  function requireAuth (to, from, next) {
+    if (!firebase.auth().currentUser) {
+      console.log('User is not logged in')
+      next({
+        path: '/auth',
+        query: {
+          redirect: to.fullPath
+        }
+      })
+    } else {
+      console.log('User is logged in:', firebase.auth().currentUser.uid)
+      next()
     }
   }
-}
+
+  export default {
+    name: 'log-data',
+    props: [
+      'logDataCallback'
+    ],
+    beforeEnter: requireAuth,
+    data: function () {
+      return {
+        testData: [],
+        stations: ['Test Station 1', 'Test station 2'],
+        newLogData: {}
+      }
+    }
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

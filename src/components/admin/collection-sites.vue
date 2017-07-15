@@ -26,7 +26,7 @@
           class="elevation-1"
         >
         <template slot="items" scope="props">
-          <td class="text-xs-right">
+          <td class="text-sm-right">
             <router-link :to="{ name: 'Collection Site Data', params: { siteId: props.item.collectionSiteId } }">
               {{ props.item.stationName }}
             </router-link>

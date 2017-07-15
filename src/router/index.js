@@ -10,8 +10,6 @@ import About from '../components/main/about'
 import DataPage from '../components/main/data-page'
 
 import SignIn from '../components/main/sign-in'
-// import Auth from '../components/Auth.vue'
-// import AuthSuccess from '../components/AuthSuccess.vue'
 
 Vue.use(Router)
 
