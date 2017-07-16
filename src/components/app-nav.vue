@@ -111,7 +111,7 @@
 
     &__button {
       height: $navbar-height;
-      color: #9B9B9B;
+      color: #004D71;
       font-size: 14px;
       font-weight: 500;
       text-align: center;
@@ -119,8 +119,8 @@
       text-decoration: none !important;
 
       &:hover {
-         color: #4A4A4A;
-         border-bottom: 2px solid #4A4A4A;
+        color: #7FBA00;
+        border-bottom: 2px solid #7FBA00;
       }
     }
 

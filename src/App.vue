@@ -90,7 +90,11 @@
       flex-direction: column;
       height: 140px;
       min-height: 140px;
-      background-color: #4A4A4A;
+      background-color: #004D71;
+    }
+
+    .input-group__hint { // Vuetify style override
+      color: #8E7630 !important;
     }
   }
 
@@ -106,13 +110,22 @@
     justify-content: flex-end;
   }
 
-  .btn-dark {
+  .btn-nww { // Vuetify style override
     border-radius: 2px;
     color: white !important;
-    background-color: #4A4A4A !important;
+    background-color: #4D86A0 !important;
+
+    &--light {
+      color: white !important;
+      background-color: #7FBA00 !important;
+    }
   }
 
-  .white-table {
+  .nww-table {
     background: #FFF;
+
+    table.table tbody tr:hover {
+      background: rgba(127,186,0,0.1);
+    }
   }
 </style>

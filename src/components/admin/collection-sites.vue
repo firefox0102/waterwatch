@@ -11,10 +11,10 @@
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
-        <v-btn class=" btn-dark">Add New Site</v-btn>
+        <v-btn class=" btn-nww--light">Add New Site</v-btn>
       </div>
     </div>
-    <v-card class="white-table collection-site-body">
+    <v-card class="nww-table collection-site-body">
       <v-card-title primary-title>
         <h4 class="collection-site-body__header">List of Collection Sites</h4>
       </v-card-title>
@@ -22,9 +22,7 @@
       <v-data-table
           v-bind:headers="headers"
           :items="items"
-          hide-actions
-          class="elevation-1"
-        >
+          class="elevation-1">
         <template slot="items" scope="props">
           <td class="text-sm-right">
             <router-link :to="{ name: 'Collection Site Data', params: { siteId: props.item.collectionSiteId } }">
@@ -142,7 +140,7 @@ export default {
     }
 
     &__header {
-      color: #4A4A4A;
+      color: #004D71;
       font-family: Roboto;
       font-size: 32px;
       font-weight: 300;
@@ -151,7 +149,7 @@ export default {
     }
 
     &__subheader {
-      color: #9B9B9B;
+      color: #4D86A0;
       font-family: Roboto;
       font-size: 13px;
       line-height: 16px;

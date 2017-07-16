@@ -25,13 +25,12 @@
               v-model="filters.startDateModal"
               lazy
               full-width>
-              <v-text-field
-                slot="activator"
-                label="Start Date"
-                v-model="filters.startDate"
-                append-icon="event"
-                single-line
-              ></v-text-field>
+              <div
+                class="reports-toolbar-datepicker__activator"
+                slot="activator">
+                <span class="reports-toolbar-datepicker__activator-text">{{ filters.startDate ? filters.startDate : "Start Date"}}</span>
+                <i class="fa fa-calendar"></i>
+              </div>
               <v-date-picker v-model="filters.startDate" scrollable >
                 <template scope="{ save, cancel }">
                   <v-card-actions>
@@ -48,13 +47,12 @@
               v-model="filters.endDateModal"
               lazy
               full-width>
-              <v-text-field
-                slot="activator"
-                label="End Date"
-                v-model="filters.endDate"
-                append-icon="event"
-                single-line
-              ></v-text-field>
+              <div
+                class="reports-toolbar-datepicker__activator"
+                slot="activator">
+                <span class="reports-toolbar-datepicker__activator-text">{{ filters.endDate ? filters.endDate : "End Date"}}</span>
+                <i class="fa fa-calendar"></i>
+              </div>
               <v-date-picker v-model="filters.endDate" scrollable >
                 <template scope="{ save, cancel }">
                   <v-card-actions>
@@ -68,24 +66,41 @@
         </div>
         <div class="reports-body-toolbar__secondary-content">
           <div class="reports-toolbar-export">
-            <v-select
-              v-bind:items="filters.exportActions"
-              v-model="filters.exportAction"
-              label="Export"
-              single-line
-              bottom>
-            </v-select>
+            <v-menu
+              offset-y
+              left>
+              <div
+                slot="activator"
+                class="reports-toolbar-export__activator">
+                <div class="reports-toolbar-export__activator-text">
+                  Export
+                </div>
+                <i class="material-icons">arrow_drop_down</i>
+              </div>
+              <v-list>
+                <v-list-tile v-for="action in filters.exportActions" :key="action">
+                  <v-list-tile-title>{{ action.title }}</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
           </div>
         </div>
       </div>
-      <v-card class="white-table">
+      <v-card class="nww-table">
         <v-data-table
             v-bind:headers="headers"
             :items="items"
-            hide-actions
+            :total-items="totalItems"
+            :loading="loading"
+            v-bind:pagination.sync="pagination"
             class="elevation-1">
+          <template slot="headerCell" scope="props">
+            <span v-tooltip:bottom="{ 'html': props.header.text }">
+              {{ props.header.text }}
+            </span>
+          </template>
           <template slot="items" scope="props">
-            <td class="text-xs-right">{{ props.item.stationName }}</td>
+            <td>{{ props.item.stationName }}</td>
             <td class="text-xs-right">{{ props.item.logbookAbv }}</td>
             <td class="text-xs-right">{{ props.item.latitude }}</td>
             <td class="text-xs-right">{{ props.item.longitude }}</td>
@@ -104,6 +119,11 @@ export default {
   name: 'reports',
   data: function () {
     return {
+      pagination: {
+        sortBy: 'stationName',
+        totalItems: 'totalItems', // TODO
+        loading: 'loading' // TODO
+      },
       filters: {
         search: '',
         startDate: null,
@@ -111,19 +131,19 @@ export default {
         exportAction: { label: 'Export' },
         exportActions: [
           {
-            text: 'Export as CSV',
+            title: 'Export as CSV',
             callback: 'TODO MAKE CALLBACK'
           },
           {
-            text: 'Export as XLS',
+            title: 'Export as XLS',
             callback: 'TODO MAKE CALLBACK'
           },
           {
-            text: 'Export for Adopt-A-Stream',
+            title: 'Export for Adopt-A-Stream',
             callback: 'TODO MAKE CALLBACK'
           },
           {
-            text: 'Export for STORET',
+            title: 'Export for STORET',
             callback: 'TODO MAKE CALLBACK'
           }
         ],
@@ -152,7 +172,7 @@ export default {
         },
         {
           selected: false,
-          stationName: 'Station 1',
+          stationName: 'Station 2',
           logbookAbv: 'Beav @ Park',
           latitude: '33.7489',
           longitude: '-84.3879',
@@ -162,7 +182,7 @@ export default {
         },
         {
           selected: false,
-          stationName: 'Station 1',
+          stationName: 'Station 3',
           logbookAbv: 'Beav @ Park',
           latitude: '33.7489',
           longitude: '-84.3879',
@@ -172,7 +192,7 @@ export default {
         },
         {
           selected: false,
-          stationName: 'Station 1',
+          stationName: 'Station 4',
           logbookAbv: 'Beav @ Park',
           latitude: '33.7489',
           longitude: '-84.3879',
@@ -182,7 +202,7 @@ export default {
         },
         {
           selected: false,
-          stationName: 'Station 1',
+          stationName: 'Station 5',
           logbookAbv: 'Beav @ Park',
           latitude: '33.7489',
           longitude: '-84.3879',
@@ -192,7 +212,37 @@ export default {
         },
         {
           selected: false,
-          stationName: 'Station 1',
+          stationName: 'Station 6',
+          logbookAbv: 'Beav @ Park',
+          latitude: '33.7489',
+          longitude: '-84.3879',
+          collectionPartner: 'CRK',
+          lab: 'Petes Lab',
+          huc: 'no idea'
+        },
+        {
+          selected: false,
+          stationName: 'Station 7',
+          logbookAbv: 'Beav @ Park',
+          latitude: '33.7489',
+          longitude: '-84.3879',
+          collectionPartner: 'CRK',
+          lab: 'Petes Lab',
+          huc: 'no idea'
+        },
+        {
+          selected: false,
+          stationName: 'Station 8',
+          logbookAbv: 'Beav @ Park',
+          latitude: '33.7489',
+          longitude: '-84.3879',
+          collectionPartner: 'CRK',
+          lab: 'Petes Lab',
+          huc: 'no idea'
+        },
+        {
+          selected: false,
+          stationName: 'Station 9',
           logbookAbv: 'Beav @ Park',
           latitude: '33.7489',
           longitude: '-84.3879',
@@ -208,6 +258,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  $toolbar-datepicker-height: 36px;
+
   .reports-header {
     display: flex;
     justify-content: space-between;
@@ -215,8 +267,7 @@ export default {
     flex-direction: column;
 
     &__header {
-      color: #4A4A4A;
-      font-family: Roboto;
+      color: #004D71;
       font-size: 32px;
       font-weight: 300;
       letter-spacing: 1px;
@@ -224,8 +275,7 @@ export default {
     }
 
     &__subheader {
-      color: #9B9B9B;
-      font-family: Roboto;
+      color: #4D86A0;
       font-size: 13px;
       line-height: 16px;
     }
@@ -286,19 +336,47 @@ export default {
   }
 
   .reports-toolbar-datepicker {
-  	height: 36px;
+  	height: $toolbar-datepicker-height;
   	width: 130px;
     margin-left: 10px;
   	border-radius: 2px;
   	background-color: #FFFFFF;
   	box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
 
-    .input-group {
-      margin: 0;
+    &__activator {
+      display: flex;
+      align-items: center;
+      height: $toolbar-datepicker-height;
+      cursor: pointer;
+      padding: 11px 10px 11px 15px;
+    }
+
+    &__activator-text {
+    	height: 20px;
+    	width: 71px;
+    	color: #9B9B9B;
+    	font-size: 14px;
+    	line-height: 20px;
+      margin-right: 19px;
     }
   }
 
   .reports-toolbar-export {
     width: 100%;
+    color: #7FBA00;
+
+    &__activator {
+      height: 28px;
+      width: 100px;
+      border-bottom: 2px solid #9B9B9B;
+    }
+
+    &__activator-text {
+    	height: 24px;
+    	width: 47px;
+      padding-left: 2px;
+    	font-size: 16px;
+    	line-height: 24px;
+    }
   }
 </style>

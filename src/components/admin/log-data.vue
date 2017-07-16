@@ -4,7 +4,7 @@
       <div class="log-data-header__text">
         Log Data
       </div>
-      <div class="log-data-header__text--small">
+      <div class="log-data-header__subtext">
         Log new data for a collection site
       </div>
     </div>
@@ -151,7 +151,7 @@
               v-model="newLogData.ecoliSmallCells">
           </v-text-field>
 
-          <v-btn class="btn-dark">
+          <v-btn class="btn-nww">
             Log Data
           </v-btn>
         </div>
@@ -210,7 +210,7 @@
 
     &__text {
     	height: 38px;
-    	color: #4A4A4A;
+      color: #004D71;
     	font-family: Roboto;
     	font-size: 32px;
     	font-weight: 300;
@@ -218,15 +218,15 @@
     	line-height: 38px;
     	text-align: center;
       margin-bottom: 5px;
+    }
 
-      &--small {
-        @extend .log-data-header__text;
-        height: 16px;
-        color: #9B9B9B;
-        font-family: Roboto;
-        font-size: 13px;
-        line-height: 16px;
-      }
+    &__subtext {
+      @extend .log-data-header__text;
+      height: 16px;
+      color: #4D86A0;
+      font-family: Roboto;
+      font-size: 13px;
+      line-height: 16px;
     }
   }
 
@@ -248,7 +248,7 @@
 
     &__header {
       height: 16px;
-      color: #4A4A4A;
+      color: #7FBA00;
       font-family: Roboto;
       font-size: 18px;
       font-weight: 500;

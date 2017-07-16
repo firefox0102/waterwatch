@@ -6,22 +6,23 @@
           {{ site.stationName }}
         </div>
 
-        <div>
+        <div class="collection-sites-header__subheader-wrapper">
+          <
           <router-link class="collection-sites-header__subheader" :to="{ name: 'Collection Sites'}">
-            < Back to List of Collection Sites
+            Back to List of Collection Sites
           </router-link>
 
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
         <router-link to="/logData">
-          <v-btn class=" btn-dark">
+          <v-btn class="btn-nww--light">
             Log New Data
           </v-btn>
         </router-link>
       </div>
     </div>
-    <v-card class="white-table collection-site-body">
+    <v-card class="nww-table collection-site-body">
       <v-card-title primary-title>
         <h4 class="collection-site-body__header">Logged Data for {{ site.stationName }}</h4>
       </v-card-title>
@@ -218,8 +219,7 @@ export default {
     }
 
     &__header {
-      color: #4A4A4A;
-      font-family: Roboto;
+      color: #004D71;
       font-size: 32px;
       font-weight: 300;
       letter-spacing: 1px;
@@ -227,8 +227,13 @@ export default {
     }
 
     &__subheader {
-      color: #4A4A4A;
-      font-family: Roboto;
+      color: #8E7630;
+      font-size: 13px;
+      line-height: 16px;
+    }
+
+    &__subheader-wrapper {
+      color: #8E7630;
       font-size: 13px;
       line-height: 16px;
     }

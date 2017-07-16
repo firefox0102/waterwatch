@@ -26,7 +26,7 @@
 
         <a class="sign-in-body__sub-text">Forget Password?</a>
       </form>
-      <v-btn class="md-raised btn-dark sign-in-body__btn">
+      <v-btn class="md-raised btn-nww sign-in-body__btn">
         Sign In
       </v-btn>
     </div>
@@ -81,7 +81,7 @@ export default {
     min-width: 30px;
     height: 100px;
     padding: 28px 30px;
-    background-color: #4A4A4A;
+    background-color: #004D71;
 
     @media screen and (min-width: $small-screen-breakpoint) {
       width: 360px;
@@ -109,7 +109,7 @@ export default {
     height: 455px;
     width: 100%;
     min-width: 30px;
-    padding: 44px 30px;
+    padding: 65px 30px 46px;
     background-color: #FFFFFF;
     box-shadow: 0 1px 3px 0 rgba(155,155,155,0.5);
 
@@ -128,7 +128,7 @@ export default {
     &__sub-text {
       height: 13px;
       width: 96px;
-      color: #9B9B9B;
+      color: #8E7630;
       font-family: Roboto;
       font-size: 11px;
       line-height: 13px;
