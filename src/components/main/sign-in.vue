@@ -19,6 +19,7 @@
             label="Password"
             hint="At least 8 characters"
             min="8"
+            :type="passVisible ? 'text' : 'password'"
             :append-icon="passVisible ? 'visibility' : 'visibility_off'"
             :append-icon-cb="() => (passVisible = !passVisible)"
             class="input-group--focused">

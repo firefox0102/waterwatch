@@ -36,7 +36,7 @@
               slot="activator"
               label="Picker in menu"
               v-model="newLogData.date"
-              prepend-icon="event"
+              append-icon="event"
               class="input-group--focused"
               readonly>
             </v-text-field>

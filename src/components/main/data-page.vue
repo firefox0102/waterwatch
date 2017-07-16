@@ -1,6 +1,6 @@
 <template>
   <div>
-    stuff
+    Data Page will go here eventually
   </div>
 </template>
 

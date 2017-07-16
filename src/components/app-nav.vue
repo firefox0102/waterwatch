@@ -12,7 +12,7 @@
           v-bind:to="item.path"
           v-bind:key="index"
         >
-          <v-btn class="app-nav__button" flat>
+          <v-btn class="app-nav__button" v-if="item.auth === !!user" flat>
             {{ item.title }}
           </v-btn>
         </router-link>
@@ -43,30 +43,44 @@
     },
     data () {
       return {
-        arrNav: [{
-          title: 'Log Data',
-          id: '1',
-          auth: true,
-          path: '/logData'
-        },
-        {
-          title: 'Collection Sites',
-          id: '2',
-          auth: false,
-          path: '/collectionSites'
-        },
-        {
-          title: 'Reports',
-          id: '3',
-          auth: false,
-          path: '/reports'
-        },
-        {
-          title: 'Manage Users',
-          id: '4',
-          auth: false,
-          path: '/manageUsers'
-        }]
+        arrNav: [
+          {
+            title: 'Log Data',
+            id: '1',
+            auth: true,
+            path: '/logData'
+          },
+          {
+            title: 'Collection Sites',
+            id: '2',
+            auth: true,
+            path: '/collectionSites'
+          },
+          {
+            title: 'Reports',
+            id: '3',
+            auth: true,
+            path: '/reports'
+          },
+          {
+            title: 'Manage Users',
+            id: '4',
+            auth: true,
+            path: '/manageUsers'
+          },
+          {
+            title: 'Data',
+            id: '5',
+            auth: false,
+            path: '/dataPage'
+          },
+          {
+            title: 'Log Data',
+            id: '6',
+            auth: false,
+            path: '/about'
+          }
+        ]
       }
     },
     methods: {
