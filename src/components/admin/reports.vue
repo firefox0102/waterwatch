@@ -18,7 +18,7 @@
               class="reports-toolbar-search__input"
               placeholder="Search collection sites"/>
           </div>
-          <span>Select date range:</span>
+          <span class="reports-body-toolbar__text-content">Select date range:</span>
           <div class="reports-toolbar-datepicker">
             <v-dialog
               persistent
@@ -259,6 +259,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
   $toolbar-datepicker-height: 36px;
+  $toolbar-breakpoint: 1040px;
 
   .reports-header {
     display: flex;
@@ -290,24 +291,44 @@ export default {
   .reports-body-toolbar {
     display: flex;
     align-items: center;
-    flex-wrap: nowrap;
-    height: 36px;
+    flex-direction: column;
+    flex-wrap: wrap;
     margin-bottom: 13px;
     justify-content: space-between;
 
+    @media screen and (min-width: $toolbar-breakpoint) {
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+
     &__primary-content {
       display: flex;
+      height: 36px;
       align-items: center;
       flex-wrap: nowrap;
-      width: 60%;
+      width: 100%;
+
+      @media screen and (min-width: $toolbar-breakpoint) {
+        width: 90%;
+      }
     }
 
     &__secondary-content {
       display: flex;
+      height: 36px;
       align-items: center;
       flex-wrap: nowrap;
       justify-content: flex-end;
-      width: 10%;
+      width: 100%;
+
+      @media screen and (min-width: $toolbar-breakpoint) {
+        width: 10%;
+      }
+    }
+
+    &__text-content {
+      width: 112px;
+      min-width: 112px;
     }
   }
 
@@ -366,6 +387,8 @@ export default {
     color: #7FBA00;
 
     &__activator {
+      display: flex;
+      justify-content: space-between;
       height: 28px;
       width: 100px;
       border-bottom: 2px solid #9B9B9B;
