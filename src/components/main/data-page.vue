@@ -258,8 +258,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  $data-sidebar-width: 240px;
+
   .data-page-wrapper {
     display: flex;
+    justify-content: flex-end;
     margin: -36px -48px;
     width: 100vw;
     position: relative;
@@ -273,7 +276,9 @@ export default {
 
   .map-wrapper {
     flex: 1;
-    background: gold;
+    background: grey;
+    width: 100%;
+    height: 100%;
   }
 
   .data-body {
@@ -286,16 +291,12 @@ export default {
     margin-left: 0;
     transition: 0.5s;
 
-    &--collapsed {
-      margin-left: -240px;
-      transition: 0.5s;
-    }
-
     &__fixed-column {
       width: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-top: 24px;
     }
 
     &__dynamic-column {
@@ -307,8 +308,15 @@ export default {
       justify-content: center;
       flex-direction: row;
       padding: 26px 24px;
+      width: calc(100% - #{$data-sidebar-width});
+
+      &--collapsed {
+        width: 100%;
+        transition: 0.5s;
+      }
 
       &__fixed-column {
+        margin-top: 0;
         width: 302px;
       }
 
@@ -326,6 +334,7 @@ export default {
     height: 100%;
     top: 0;
     left: 0;
+    background: white;
     transition: 0.5s;
     z-index: 2;
 
