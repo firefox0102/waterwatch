@@ -356,32 +356,6 @@ export default {
     }
   }
 
-  .reports-toolbar-datepicker {
-  	height: $toolbar-datepicker-height;
-  	width: 130px;
-    margin-left: 10px;
-  	border-radius: 2px;
-  	background-color: #FFFFFF;
-  	box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
-
-    &__activator {
-      display: flex;
-      align-items: center;
-      height: $toolbar-datepicker-height;
-      cursor: pointer;
-      padding: 11px 10px 11px 15px;
-    }
-
-    &__activator-text {
-    	height: 20px;
-    	width: 71px;
-    	color: #9B9B9B;
-    	font-size: 14px;
-    	line-height: 20px;
-      margin-right: 19px;
-    }
-  }
-
   .reports-toolbar-export {
     width: 100%;
     color: #7FBA00;
