@@ -443,10 +443,14 @@ export default {
     display: flex;
     flex-direction: column;
     height: 211px;
-    width: 302px;
+    width: 80%;
     background-color: #FFFFFF;
     box-shadow: 0 2px 4px 0 rgba(155,155,155,0.5);
     margin-bottom: 24px;
+
+    @media screen and (min-width: 850px) {
+      width: 302px;
+    }
   }
 
   .controls-card-header {
@@ -504,12 +508,16 @@ export default {
 
   .graph-card {
     height: 232px;
-    width: 302px;
+    width: 80%;
     padding-top: 13px;
     padding-left: 9px;
     background-color: #FFFFFF;
     box-shadow: 0 2px 4px 0 rgba(155,155,155,0.5);
     margin-bottom: 24px;
+
+    @media screen and (min-width: 850px) {
+      width: 302px;
+    }
   }
 
   .graph-card-title {
