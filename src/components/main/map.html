@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoibGNhY2VkYSIsImEiOiIzNmM4MGRlN2I4NDhiY2UxZjA4MmJjZjE5OWEzYjUzNSJ9.Wc5KTJpWxmpxVMZfcuEQNg';
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/light-v9', //hosted style id
+    center: [-84.387249, 33.755788], // starting position
+    zoom: 8 // starting zoom
+});
+
+//MAP LAYERS
+map.on('load', function () {
+
+
+    //// CHATTAHOOCHEE RIVER BASIN/////
+    map.addLayer({
+        'id': 'OBJECTID',
+        'type': 'fill',
+        'source': {
+            'type': 'geojson',
+            'data': './data/chattBasin.geojson'
+        },
+        'layout': {},
+        'paint': {
+            // 'fill-outline-color': 'rgba(7, 78, 112, 1)',
+            'fill-color': "rgba(80, 134, 158, 0.2)",
+            // 'line-dash-array': '1',
+        }
+        // This is the important part of this example: the addLayer
+    // method takes 2 arguments: the layer as an object, and a string
+    // representing another layer's name. if the other layer
+    // exists in the stylesheet already, the new layer will be positioned
+    // right before that layer in the stack, making it possible to put
+    // 'overlays' anywhere in the layer stack.
+    }, '12');
+
+    map.addLayer({
+        'id': 'COUNTYFP10',
+        'type': 'fill',
+        'source': {
+            'type': 'geojson',
+            'data': 'https://opendata.arcgis.com/datasets/53ca7db14b8f4a9193c1883247886459_67.geojson'
+        },
+        'layout': {},
+        'paint': {
+            'fill-outline-color': 'rgba(7, 78, 112, 1)',
+            'fill-color': "rgba(7, 78, 112, 0)",
+            // 'line-dash-array': '1',
+        }
+        // This is the important part of this example: the addLayer
+    // method takes 2 arguments: the layer as an object, and a string
+    // representing another layer's name. if the other layer
+    // exists in the stylesheet already, the new layer will be positioned
+    // right before that layer in the stack, making it possible to put
+    // 'overlays' anywhere in the layer stack.
+    }, 'county');
+
+});
+
+</script>
+
+</body>
+</html>
