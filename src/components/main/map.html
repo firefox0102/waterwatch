@@ -12,6 +12,9 @@
     </style>
 </head>
 <body>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+<div id='map'></div>
 
 <div id='map'></div>
 <script>
@@ -33,7 +36,7 @@ map.on('load', function () {
         'type': 'fill',
         'source': {
             'type': 'geojson',
-            'data': './data/chattBasin.geojson'
+            'data': 'https://opendata.arcgis.com/datasets/9c7a1719eb814540b3cf81326c8bcf29_106.geojson'
         },
         'layout': {},
         'paint': {
@@ -48,7 +51,7 @@ map.on('load', function () {
     // right before that layer in the stack, making it possible to put
     // 'overlays' anywhere in the layer stack.
     }, '12');
-
+//COUNTIES
     map.addLayer({
         'id': 'COUNTYFP10',
         'type': 'fill',
@@ -71,6 +74,16 @@ map.on('load', function () {
     }, 'county');
 
 });
+
+// Add zoom and rotation controls to the map.
+map.addControl(new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+})); map.addControl(new mapboxgl.NavigationControl()); map.addControl(new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    trackUserLocation: true
+})); map.addControl(new mapboxgl.FullscreenControl());
 
 </script>
 
