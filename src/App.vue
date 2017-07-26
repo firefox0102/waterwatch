@@ -27,7 +27,7 @@
 
         if (user) {
           console.log('auth user is good')
-          // this.$router.push('/logData')
+          this.$router.push('/logData')
         } else {
           console.log('auth user is logged out')
 

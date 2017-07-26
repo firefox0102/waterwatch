@@ -12,52 +12,87 @@
       <form class="sign-in-body__form">
         <v-text-field
             label="Email"
-            class="input-group--focused">
+            class="input-group--focused"
+            v-model="user.email">
           </v-text-field>
 
         <v-text-field
             label="Password"
-            hint="At least 8 characters"
-            min="8"
             :type="passVisible ? 'text' : 'password'"
             :append-icon="passVisible ? 'visibility' : 'visibility_off'"
             :append-icon-cb="() => (passVisible = !passVisible)"
+            v-model="user.password"
             class="input-group--focused">
           </v-text-field>
 
         <a class="sign-in-body__sub-text">Forget Password?</a>
       </form>
-      <v-btn class="md-raised btn-nww sign-in-body__btn">
+      <v-btn
+        v-on:click.native="signInWithPassword()"
+        class="md-raised btn-nww sign-in-body__btn">
         Sign In
       </v-btn>
     </div>
-    <div id="firebaseui-auth-container"></div>
+    <v-snackbar
+      :timeout="snackbar.timeout"
+      :error="true"
+      v-model="snackbar.visible">
+      {{snackbar.errorMessage}}
+      <v-btn dark flat @click.native="snackbar.visible = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
-import firebaseui from 'firebaseui'
+
+function testAuth (to, from, next) {
+  console.log('test')
+  if (firebase.auth().currentUser) {
+    console.log('User is logged in')
+    next({
+      path: '/logData',
+      query: {
+        redirect: to.fullPath
+      }
+    })
+  } else {
+    console.log('User is not logged in:')
+    next()
+  }
+}
 
 export default {
   name: 'sign-in',
+  beforeEnter: testAuth,
   data () {
     return {
-      passVisible: false
+      passVisible: false,
+      user: {
+        email: '',
+        password: ''
+      },
+      snackbar: {
+        visible: false,
+        errorMessage: 'There was an issue signing in to Admin',
+        timeout: 6000
+      }
     }
   },
-  mounted () {
-    var uiConfig = {
-      signInSuccessUrl: '/logData',
-      signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.EmailAuthProvider.PROVIDER_ID
-      ]
+  methods: {
+    signInWithPassword () {
+      console.log(this.user.email)
+      console.log(this.user.password)
+      return firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.password)
+      .then((userData) => {
+        this.onSignedIn()
+        return userData
+      })
+      .catch(() => { this.snackbar.visible = true })
+    },
+    onSignedIn () {
+      this.$router.go('/')
     }
-
-    let ui = new firebaseui.auth.AuthUI(firebase.auth())
-
-    ui.start('#firebaseui-auth-container', uiConfig)
   }
 }
 </script>

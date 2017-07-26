@@ -23,7 +23,7 @@
           </v-btn>
         </a>
         <router-link v-else  class="app-nav__button" to="/signIn">
-          <v-btn flat class="app-nav__button" v-on:click.native="login()">
+          <v-btn flat class="app-nav__button">
             Sign In
           </v-btn>
         </router-link>
@@ -75,7 +75,7 @@
             path: '/dataPage'
           },
           {
-            title: 'Log Data',
+            title: 'About',
             id: '6',
             auth: false,
             path: '/about'
@@ -84,10 +84,6 @@
       }
     },
     methods: {
-      login () {
-        console.log('login')
-        window.location.href = '/signIn'
-      },
       logout () {
         console.log('login outtt')
         firebase.auth().signOut().then(function () {
