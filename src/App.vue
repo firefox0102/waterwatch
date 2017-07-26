@@ -16,27 +16,10 @@
   import AppNav from './components/app-nav'
   import AppFooter from './components/app-footer'
   import firebase from 'firebase'
-  import { config } from './helpers/firebaseConfig'
   import { mapState } from 'vuex'
-
-  let app = firebase.initializeApp(config)
-  let db = app.database()
-  let collectionSitesRef = db.ref('collectionSites')
 
   export default {
     name: 'app',
-    firebase: {
-      collectionSites: collectionSitesRef
-    },
-    methods: {
-      // TODO create a bunch of callbacks that you can pass around
-      // the app so you don't have to pass around firebase
-    },
-    data: function () {
-      return {
-        msg: 'App loaded'
-      }
-    },
     created () {
       firebase.auth().onAuthStateChanged((user) => {
         console.log('Auth state changed')

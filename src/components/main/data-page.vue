@@ -263,10 +263,13 @@ export default {
   .data-page-wrapper {
     display: flex;
     justify-content: flex-end;
-    margin: -36px -48px;
     width: 100vw;
     position: relative;
     z-index: 1;
+
+    @media screen and (min-width: 401px) {
+      margin: -36px -48px;
+    }
   }
 
   .date-picker-wrapper {

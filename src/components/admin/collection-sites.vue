@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
-        <v-btn class=" btn-nww--light">Add New Site</v-btn>
+        <v-btn v-on:click.native="testingclick" class="btn-nww--light">Add New Site</v-btn>
       </div>
     </div>
     <v-card class="nww-table collection-site-body">
@@ -21,7 +21,7 @@
 
       <v-data-table
           v-bind:headers="headers"
-          :items="items"
+          :items="collectionSites"
           class="elevation-1">
         <template slot="items" scope="props">
           <td class="text-sm-right">
@@ -42,8 +42,32 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+import { db } from '../../helpers/firebase'
+
+let collectionSitesRef = db.ref('collectionSites')
+
+function requireAuth (to, from, next) {
+  if (!firebase.auth().currentUser) {
+    console.log('User is not logged in')
+    next({
+      path: '/signIn',
+      query: {
+        redirect: to.fullPath
+      }
+    })
+  } else {
+    console.log('User is logged in:', firebase.auth().currentUser.uid)
+    next()
+  }
+}
+
 export default {
   name: 'collection-sites',
+  beforeEnter: requireAuth,
+  firebase: {
+    collectionSites: collectionSitesRef
+  },
   data: function () {
     return {
       headers: [
@@ -54,74 +78,6 @@ export default {
         { text: 'Collection Partner', value: 'collectionPartner' },
         { text: 'Lab', value: 'lab' },
         { text: 'HUC', value: 'huc' }
-      ],
-      items: [
-        {
-          selected: false,
-          stationName: 'Station 1',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 1
-        },
-        {
-          selected: false,
-          stationName: 'Station 1',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 2
-        },
-        {
-          selected: false,
-          stationName: 'Station 1',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 3
-        },
-        {
-          selected: false,
-          stationName: 'Station 1',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 4
-        },
-        {
-          selected: false,
-          stationName: 'Station 1',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 5
-        },
-        {
-          selected: false,
-          stationName: 'Station 1',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 6
-        }
       ]
     }
   }

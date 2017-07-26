@@ -5,8 +5,26 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+
+function requireAuth (to, from, next) {
+  if (!firebase.auth().currentUser) {
+    console.log('User is not logged in')
+    next({
+      path: '/signIn',
+      query: {
+        redirect: to.fullPath
+      }
+    })
+  } else {
+    console.log('User is logged in:', firebase.auth().currentUser.uid)
+    next()
+  }
+}
+
 export default {
-  name: 'manage-users'
+  name: 'manage-users',
+  beforeEnter: requireAuth
 }
 </script>
 

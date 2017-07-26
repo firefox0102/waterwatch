@@ -14,33 +14,28 @@
           <div class="log-data-body__header">
             Collection Details
           </div>
-
-          <v-text-field
-              label="Logbook #"
-              hint="Last Logbook # was TODO DYNAMIC NUM"
-              persistent-hint
-              class="input-group--focused"
-              v-model="newLogData.logbookNumber">
-          </v-text-field>
+          <div>
+            Logbook # - {{getLogbookNumber()}}
+          </div>
 
           <v-menu
-          lazy
-          :close-on-content-click="false"
-          v-model="newLogData.date"
-          transition="scale-transition"
-          offset-y
-          full-width
-          :nudge-left="40"
-          max-width="290px">
+            lazy
+            :close-on-content-click="false"
+            v-model="newLogData.collectionDate"
+            transition="scale-transition"
+            offset-y
+            full-width
+            :nudge-left="40"
+            max-width="290px">
             <v-text-field
               slot="activator"
-              label="Picker in menu"
-              v-model="newLogData.date"
+              label="Date"
+              v-model="newLogData.collectionDate"
               append-icon="event"
               class="input-group--focused"
-              readonly>
+              required>
             </v-text-field>
-            <v-date-picker v-model="newLogData.date" no-title scrollable actions>
+            <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
               <template scope="{ save, cancel }">
                 <v-card-actions>
                   <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -51,11 +46,14 @@
           </v-menu>
 
           <v-select
-            v-bind:items="stations"
-            v-model="newLogData.station"
+            v-bind:items="collectionSites"
+            item-text="stationName"
+            item-value="$index"
+            v-model="newLogData.collectionSite"
             label="Station Name"
             single-line
             class="input-group--focused"
+            required
             bottom>
           </v-select>
           <v-text-field
@@ -63,18 +61,21 @@
               v-model="newLogData.collectionTime"
               type="time"
               suffix="EST"
+              required
               class="input-group--focused">
           </v-text-field>
           <v-text-field
               label="Analyst (Initials)"
               class="input-group--focused"
+              required
               v-model="newLogData.analyst">
           </v-text-field>
           <v-text-field
               name="input-5-1"
               label="Notes"
-              v-bind="newLogData.notes"
+              v-model="newLogData.notes"
               class="input-group--focused"
+              required
             ></v-text-field>
         </div>
 
@@ -86,37 +87,56 @@
               label="Incubation In Time"
               v-model="newLogData.incubationTime"
               type="time"
+              required
               class="input-group--focused">
           </v-text-field>
           <v-text-field
               label="# mL/100mL (Dilution)"
               class="input-group--focused"
+              required
+              type="number"
               v-model="newLogData.dilution">
           </v-text-field>
           <v-text-field
-              label="Station Name"
+              label="Fluorometry"
               class="input-group--focused"
-              v-model="newLogData.stationName">
+              required
+              type="number"
+              v-model="newLogData.fluorometry">
           </v-text-field>
           <v-text-field
               label="Turbidity (NTU)"
               class="input-group--focused"
+              required
+              type="number"
               v-model="newLogData.turbidity">
+          </v-text-field>
+          <v-text-field
+              label="Conductivity (uS)"
+              class="input-group--focused"
+              required
+              type="number"
+              v-model="newLogData.specifcConductivity">
           </v-text-field>
           <v-text-field
               label="Rainfall (in)"
               class="input-group--focused"
-              v-model="newLogData.rainfall">
+              required
+              type="number"
+              v-model="newLogData.precipitation">
           </v-text-field>
           <v-text-field
               label="Incubation Temp (*C)"
               class="input-group--focused"
+              required
+              type="number"
               v-model="newLogData.incubationTemp">
           </v-text-field>
           <v-text-field
               label="Incubation Out"
               v-model="newLogData.incubationOut"
               type="time"
+              required
               class="input-group--focused">
           </v-text-field>
         </div>
@@ -128,30 +148,37 @@
           <v-text-field
               label="Large Cells"
               class="input-group--focused"
+              required
+              type="number"
               v-model="newLogData.coliformLargeCells">
           </v-text-field>
           <v-text-field
               label="Small Cells"
               class="input-group--focused"
+              required
+              type="number"
               v-model="newLogData.coliformSmallCells">
           </v-text-field>
 
           <div class="log-data-body__header">
             E. Coli
           </div>
-
           <v-text-field
               label="Large Cells"
               class="input-group--focused"
+              required
+              type="number"
               v-model="newLogData.ecoliLargeCells">
           </v-text-field>
           <v-text-field
               label="Small Cells"
               class="input-group--focused"
+              required
+              type="number"
               v-model="newLogData.ecoliSmallCells">
           </v-text-field>
 
-          <v-btn class="btn-nww">
+          <v-btn class="btn-nww" v-on:click.native="submitLog">
             Log Data
           </v-btn>
         </div>
@@ -161,37 +188,78 @@
 </template>
 
 <script>
-  import firebase from 'firebase'
+import firebase from 'firebase'
+import { db } from '../../helpers/firebase'
 
-  function requireAuth (to, from, next) {
-    if (!firebase.auth().currentUser) {
-      console.log('User is not logged in')
-      next({
-        path: '/auth',
-        query: {
-          redirect: to.fullPath
-        }
-      })
-    } else {
-      console.log('User is logged in:', firebase.auth().currentUser.uid)
-      next()
-    }
+let collectionSitesRef = db.ref('collectionSites')
+let reportsRef = db.ref('reports')
+let lastReportRef = db.ref('reports').limitToLast(1)
+
+function requireAuth (to, from, next) {
+  if (!firebase.auth().currentUser) {
+    console.log('User is not logged in')
+    next({
+      path: '/signIn',
+      query: {
+        redirect: to.fullPath
+      }
+    })
+  } else {
+    console.log('User is logged in:', firebase.auth().currentUser.uid)
+    next()
   }
+}
 
-  export default {
-    name: 'log-data',
-    props: [
-      'logDataCallback'
-    ],
-    beforeEnter: requireAuth,
-    data: function () {
-      return {
-        testData: [],
-        stations: ['Test Station 1', 'Test station 2'],
-        newLogData: {}
+export default {
+  name: 'log-data',
+  firebase: {
+    collectionSites: collectionSitesRef,
+    reports: reportsRef,
+    lastReport: lastReportRef
+  },
+  beforeEnter: requireAuth,
+  data: function () {
+    return {
+      newLogData: {
+        analyst: '',
+        coliformLargeCells: '',
+        coliformSmallCells: '',
+        collectionDate: '',
+        collectionTime: '',
+        dilution: null,
+        eColiLargeCells: null,
+        eColiSmallCells: null,
+        fluorometry: null,
+        incubationOut: '',
+        incubationTemp: null,
+        incubationTime: '',
+        precipitation: null,
+        collectionSite: null,
+        siteName: '',
+        specifcConductivity: null,
+        turbidity: null,
+        notes: ''
       }
     }
+  },
+  methods: {
+    submitLog: function () {
+      // Parse collection site data
+      let selectedSite = this.newLogData.collectionSite
+      this.newLogData.stationName = selectedSite.stationName
+      this.newLogData.stationId = this.newLogData.collectionSite['.key']
+      this.newLogData.collectionSite = null
+
+      // Set logbook number
+      this.newLogData.logbookNumber = this.getLogbookNumber()
+
+      this.$firebaseRefs.reports.push(this.newLogData)
+    },
+    getLogbookNumber: function () {
+      return (this.lastReport[0] ? this.lastReport[0].logbookNumber : 0) + 1
+    }
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
