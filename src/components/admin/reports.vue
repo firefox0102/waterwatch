@@ -258,122 +258,131 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  $toolbar-datepicker-height: 36px;
-  $toolbar-breakpoint: 1040px;
+$toolbar-datepicker-height: 36px;
+$toolbar-breakpoint: 1040px;
 
-  .reports-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 22px 56px 29px;
-    flex-direction: column;
+.reports-header {
+  display: flex;
 
-    &__header {
-      color: #004D71;
-      font-size: 32px;
-      font-weight: 300;
-      letter-spacing: 1px;
-      line-height: 38px;
-    }
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px 56px 29px;
 
-    &__subheader {
-      color: #4D86A0;
-      font-size: 13px;
-      line-height: 16px;
-    }
+  &__header {
+    color: #004d71;
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    line-height: 38px;
   }
 
-  .reports-body {
-    padding: 0 24px 24px;
+  &__subheader {
+    color: #4d86a0;
+    font-size: 13px;
+    line-height: 16px;
+  }
+}
 
+.reports-body {
+  padding: 0 24px 24px;
+}
 
+.reports-body-toolbar {
+  display: flex;
+
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  margin-bottom: 13px;
+
+  @media screen and (min-width: $toolbar-breakpoint) {
+    flex-direction: row;
+    flex-wrap: nowrap;
   }
 
-  .reports-body-toolbar {
+  &__primary-content {
     display: flex;
     align-items: center;
-    flex-direction: column;
-    flex-wrap: wrap;
-    margin-bottom: 13px;
-    justify-content: space-between;
+    flex-wrap: nowrap;
+
+    height: 36px;
+    width: 100%;
 
     @media screen and (min-width: $toolbar-breakpoint) {
-      flex-direction: row;
-      flex-wrap: nowrap;
-    }
-
-    &__primary-content {
-      display: flex;
-      height: 36px;
-      align-items: center;
-      flex-wrap: nowrap;
-      width: 100%;
-
-      @media screen and (min-width: $toolbar-breakpoint) {
-        width: 90%;
-      }
-    }
-
-    &__secondary-content {
-      display: flex;
-      height: 36px;
-      align-items: center;
-      flex-wrap: nowrap;
-      justify-content: flex-end;
-      width: 100%;
-
-      @media screen and (min-width: $toolbar-breakpoint) {
-        width: 10%;
-      }
-    }
-
-    &__text-content {
-      width: 112px;
-      min-width: 112px;
+      width: 90%;
     }
   }
 
-  .reports-toolbar-search {
+  &__secondary-content {
     display: flex;
-  	height: 36px;
-  	width: 330px;
-    margin-right: 29px;
-  	border-radius: 2px;
-    padding: 6px 16px;
-  	background-color: #FFFFFF;
-  	box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
 
-    &__icon {
-      height: 17.49px;
-      width: 17.49px;
-      margin-right: 28px;
-    }
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
 
-    &__input {
-      width: 250px;
-      &:focus {
-        outline: none;
-      }
-    }
-  }
-
-  .reports-toolbar-export {
+    height: 36px;
     width: 100%;
-    color: #7FBA00;
 
-    &__activator {
-      display: flex;
-      justify-content: space-between;
-      height: 28px;
-      width: 100px;
-      border-bottom: 2px solid #9B9B9B;
-    }
-
-    &__activator-text {
-    	height: 24px;
-    	width: 47px;
-      padding-left: 2px;
-    	font-size: 16px;
-    	line-height: 24px;
+    @media screen and (min-width: $toolbar-breakpoint) {
+      width: 10%;
     }
   }
+
+  &__text-content {
+    min-width: 112px;
+    width: 112px;
+  }
+}
+
+.reports-toolbar-search {
+  display: flex;
+  height: 36px;
+  margin-right: 29px;
+  padding: 6px 16px;
+  width: 330px;
+
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+
+  &__icon {
+    height: 17.49px;
+    margin-right: 28px;
+    width: 17.49px;
+  }
+
+  &__input {
+    width: 250px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.reports-toolbar-export {
+  width: 100%;
+
+  color: #7fba00;
+
+  &__activator {
+    display: flex;
+
+    justify-content: space-between;
+    height: 28px;
+    width: 100px;
+    border-bottom: 2px solid #9b9b9b;
+  }
+
+  &__activator-text {
+    height: 24px;
+    padding-left: 2px;
+    width: 47px;
+
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
 </style>

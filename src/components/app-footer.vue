@@ -30,61 +30,64 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  .icon-group {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 161px;
-    margin-bottom: 14px;
+.icon-group {
+  display: flex;
 
-    &__facebook {
-      @extend %font-awesome-icon;
-      width: 12px;
-    }
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  width: 161px;
 
-    &__twitter {
-      @extend %font-awesome-icon;
-      width: 19px;
-    }
-
-    &__instagram {
-      @extend %font-awesome-icon;
-      width: 18px;
-    }
-
-    &__vimeo {
-      @extend %font-awesome-icon;
-      width: 20px;
-    }
-
-    &__youtube {
-      @extend %font-awesome-icon;
-      width: 20px;
-    }
+  &__facebook {
+    @extend %font-awesome-icon;
+    width: 12px;
   }
 
-  %font-awesome-icon {
-    height: 20px;
-    color: #FFFFFF;
-    font-family: FontAwesome;
-    font-size: 20px;
-    line-height: 20px;
+  &__twitter {
+    @extend %font-awesome-icon;
+    width: 19px;
   }
 
-  .footer-info {
-    height: 48px;
-    color: #FFFFFF;
-    text-align: center;
+  &__instagram {
+    @extend %font-awesome-icon;
+    width: 18px;
+  }
 
-    &__text {
-      font-family: Roboto;
-      font-size: 14px;
-      line-height: 24px;
+  &__vimeo {
+    @extend %font-awesome-icon;
+    width: 20px;
+  }
 
-      &--underline {
-        @extend .footer-info__text;
-        text-decoration: underline;
-      }
+  &__youtube {
+    @extend %font-awesome-icon;
+    width: 20px;
+  }
+}
+
+%font-awesome-icon {
+  height: 20px;
+
+  color: #fff;
+  font-family: FontAwesome;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.footer-info {
+  height: 48px;
+
+  color: #fff;
+  text-align: center;
+
+  &__text {
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 24px;
+
+    &--underline {
+      @extend .footer-info__text;
+      text-decoration: underline;
     }
   }
+}
 </style>

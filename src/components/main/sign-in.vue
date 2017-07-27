@@ -114,21 +114,23 @@ $small-screen-breakpoint: 401px;
 
 .sign-in-header {
   display: flex;
+
   flex-direction: column;
-  width: 100%;
-  min-width: 30px;
   height: 100px;
+  min-width: 30px;
   padding: 28px 30px;
-  background-color: #004D71;
+  width: 100%;
+
+  background-color: #004d71;
 
   @media screen and (min-width: $small-screen-breakpoint) {
-    width: 360px;
     max-width: 360px;
+    width: 360px;
   }
 
   &__text {
     height: 16px;
-    color: #E5E5E5;
+    color: #e5e5e5;
     font-family: Roboto;
     font-size: 13px;
     line-height: 16px;
@@ -145,17 +147,18 @@ $small-screen-breakpoint: 401px;
   display: flex;
   flex-direction: column;
   height: 455px;
-  width: 100%;
   min-width: 30px;
   padding: 65px 30px 46px;
-  background-color: #FFFFFF;
-  box-shadow: 0 1px 3px 0 rgba(155,155,155,0.5);
+  width: 100%;
+
+  background-color: #fff;
+  box-shadow: 0 1px 3px 0 rgba(155, 155, 155, 0.5);
 
   @media screen and (min-width: $small-screen-breakpoint) {
-    width: 360px;
-    max-width: 360px;
     height: 420px;
     max-height: 420px;
+    max-width: 360px;
+    width: 360px;
   }
 
   &__form {
@@ -166,11 +169,12 @@ $small-screen-breakpoint: 401px;
   &__sub-text {
     height: 13px;
     width: 96px;
-    color: #8E7630;
+
+    color: #8e7630;
+    cursor: pointer;
     font-family: Roboto;
     font-size: 11px;
     line-height: 13px;
-    cursor: pointer;
     text-align: center;
     text-decoration: underline;
   }
@@ -178,8 +182,8 @@ $small-screen-breakpoint: 401px;
   &__btn {
     align-self: center;
     height: 36px;
-    width: 88px;
     margin-top: 44px;
+    width: 88px;
   }
 }
 </style>
