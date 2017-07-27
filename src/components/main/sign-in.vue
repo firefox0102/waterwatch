@@ -9,7 +9,9 @@
       </span>
     </div>
     <div class="sign-in-body">
-      <form class="sign-in-body__form">
+      <form
+        v-on:submit="submitForm"
+        class="sign-in-body__form">
         <v-text-field
             label="Email"
             class="input-group--focused"
@@ -26,12 +28,13 @@
           </v-text-field>
 
         <a class="sign-in-body__sub-text">Forget Password?</a>
+        <v-btn
+          type="submit"
+          v-on:click.native="signInWithPassword()"
+          class="md-raised btn-nww sign-in-body__btn">
+          Sign In
+        </v-btn>
       </form>
-      <v-btn
-        v-on:click.native="signInWithPassword()"
-        class="md-raised btn-nww sign-in-body__btn">
-        Sign In
-      </v-btn>
     </div>
     <v-snackbar
       :timeout="snackbar.timeout"
@@ -46,10 +49,8 @@
 <script>
 import firebase from 'firebase'
 
-function testAuth (to, from, next) {
-  console.log('test')
+function signInTest (to, from, next) {
   if (firebase.auth().currentUser) {
-    console.log('User is logged in')
     next({
       path: '/logData',
       query: {
@@ -57,14 +58,13 @@ function testAuth (to, from, next) {
       }
     })
   } else {
-    console.log('User is not logged in:')
     next()
   }
 }
 
 export default {
   name: 'sign-in',
-  beforeEnter: testAuth,
+  beforeEnter: signInTest,
   data () {
     return {
       passVisible: false,
@@ -80,10 +80,12 @@ export default {
     }
   },
   methods: {
+    submitForm (evnt) {
+      this.signInWithPassword()
+      evnt.preventDefault()
+    },
     signInWithPassword () {
-      console.log(this.user.email)
-      console.log(this.user.password)
-      return firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.password)
+      firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.password)
       .then((userData) => {
         this.onSignedIn()
         return userData
@@ -98,86 +100,86 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  $small-screen-breakpoint: 401px;
+$small-screen-breakpoint: 401px;
 
-  .sign-in {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.sign-in {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 
-    @media screen and (min-width: $small-screen-breakpoint) {
-      padding-top: 73px;
-    }
+  @media screen and (min-width: $small-screen-breakpoint) {
+    padding-top: 73px;
+  }
+}
+
+.sign-in-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 30px;
+  height: 100px;
+  padding: 28px 30px;
+  background-color: #004D71;
+
+  @media screen and (min-width: $small-screen-breakpoint) {
+    width: 360px;
+    max-width: 360px;
   }
 
-  .sign-in-header {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-width: 30px;
-    height: 100px;
-    padding: 28px 30px;
-    background-color: #004D71;
+  &__text {
+    height: 16px;
+    color: #E5E5E5;
+    font-family: Roboto;
+    font-size: 13px;
+    line-height: 16px;
 
-    @media screen and (min-width: $small-screen-breakpoint) {
-      width: 360px;
-      max-width: 360px;
-    }
-
-    &__text {
-      height: 16px;
-      color: #E5E5E5;
-      font-family: Roboto;
-      font-size: 13px;
-      line-height: 16px;
-
-      &--large {
-        @extend .sign-in-header__text;
-        font-size: 28px;
-        line-height: 28px;
-      }
+    &--large {
+      @extend .sign-in-header__text;
+      font-size: 28px;
+      line-height: 28px;
     }
   }
+}
 
-  .sign-in-body {
+.sign-in-body {
+  display: flex;
+  flex-direction: column;
+  height: 455px;
+  width: 100%;
+  min-width: 30px;
+  padding: 65px 30px 46px;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 3px 0 rgba(155,155,155,0.5);
+
+  @media screen and (min-width: $small-screen-breakpoint) {
+    width: 360px;
+    max-width: 360px;
+    height: 420px;
+    max-height: 420px;
+  }
+
+  &__form {
     display: flex;
     flex-direction: column;
-    height: 455px;
-    width: 100%;
-    min-width: 30px;
-    padding: 65px 30px 46px;
-    background-color: #FFFFFF;
-    box-shadow: 0 1px 3px 0 rgba(155,155,155,0.5);
-
-    @media screen and (min-width: $small-screen-breakpoint) {
-      width: 360px;
-      max-width: 360px;
-      height: 420px;
-      max-height: 420px;
-    }
-
-    &__form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    &__sub-text {
-      height: 13px;
-      width: 96px;
-      color: #8E7630;
-      font-family: Roboto;
-      font-size: 11px;
-      line-height: 13px;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: underline;
-    }
-
-    &__btn {
-      align-self: center;
-      height: 36px;
-      width: 88px;
-      margin-top: 44px;
-    }
   }
+
+  &__sub-text {
+    height: 13px;
+    width: 96px;
+    color: #8E7630;
+    font-family: Roboto;
+    font-size: 11px;
+    line-height: 13px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: underline;
+  }
+
+  &__btn {
+    align-self: center;
+    height: 36px;
+    width: 88px;
+    margin-top: 44px;
+  }
+}
 </style>

@@ -1,21 +1,23 @@
 <template>
   <div class="log-data">
-    <div class="log-data-header">
-      <div class="log-data-header__text">
+    <div class="page-content-header">
+      <div class="page-content-header__text">
         Log Data
       </div>
-      <div class="log-data-header__subtext">
+      <div class="page-content-header__subtext">
         Log new data for a collection site
       </div>
     </div>
-    <div class="log-data-body">
-      <form class="log-data-body__form">
-        <div class="log-data-body__column">
-          <div class="log-data-body__header">
+    <div class="page-content-body">
+      <form
+        v-on:submit="submitForm"
+        class="page-content-body__form">
+        <div class="page-content-body__column">
+          <div class="page-content-body__header">
             Collection Details
           </div>
           <div>
-            Logbook # - {{getLogbookNumber()}}
+            Logbook # - {{getLastLogbookNumber()}}
           </div>
 
           <v-menu
@@ -79,8 +81,8 @@
             ></v-text-field>
         </div>
 
-        <div class="log-data-body__column">
-          <div class="log-data-body__header">
+        <div class="page-content-body__column">
+          <div class="page-content-body__header">
             Incubation and Parameters
           </div>
           <v-text-field
@@ -141,8 +143,8 @@
           </v-text-field>
         </div>
 
-        <div class="log-data-body__column">
-          <div class="log-data-body__header">
+        <div class="page-content-body__column">
+          <div class="page-content-body__header">
             Total Coliform
           </div>
           <v-text-field
@@ -160,7 +162,7 @@
               v-model="newLogData.coliformSmallCells">
           </v-text-field>
 
-          <div class="log-data-body__header">
+          <div class="page-content-body__header">
             E. Coli
           </div>
           <v-text-field
@@ -178,37 +180,31 @@
               v-model="newLogData.ecoliSmallCells">
           </v-text-field>
 
-          <v-btn class="btn-nww" v-on:click.native="submitLog">
+          <v-btn
+            type="submit"
+            class="btn-nww"
+            v-on:click.native="submitLog">
             Log Data
           </v-btn>
         </div>
       </form>
     </div>
+    <v-snackbar
+      :timeout="snackbar.timeout"
+      :error="true"
+      v-model="snackbar.visible">
+      {{snackbar.errorMessage}}
+      <v-btn dark flat @click.native="snackbar.visible = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
 <script>
-import firebase from 'firebase'
 import { db } from '../../helpers/firebase'
 
 let collectionSitesRef = db.ref('collectionSites')
 let reportsRef = db.ref('reports')
 let lastReportRef = db.ref('reports').limitToLast(1)
-
-function requireAuth (to, from, next) {
-  if (!firebase.auth().currentUser) {
-    console.log('User is not logged in')
-    next({
-      path: '/signIn',
-      query: {
-        redirect: to.fullPath
-      }
-    })
-  } else {
-    console.log('User is logged in:', firebase.auth().currentUser.uid)
-    next()
-  }
-}
 
 export default {
   name: 'log-data',
@@ -217,7 +213,6 @@ export default {
     reports: reportsRef,
     lastReport: lastReportRef
   },
-  beforeEnter: requireAuth,
   data: function () {
     return {
       newLogData: {
@@ -239,89 +234,49 @@ export default {
         specifcConductivity: null,
         turbidity: null,
         notes: ''
+      },
+      snackbar: {
+        visible: false,
+        errorMessage: 'There was an issue logging your data',
+        timeout: 6000
       }
     }
   },
   methods: {
-    submitLog: function () {
-      // Parse collection site data
-      let selectedSite = this.newLogData.collectionSite
-      this.newLogData.stationName = selectedSite.stationName
-      this.newLogData.stationId = this.newLogData.collectionSite['.key']
-      this.newLogData.collectionSite = null
-
-      // Set logbook number
-      this.newLogData.logbookNumber = this.getLogbookNumber()
-
-      this.$firebaseRefs.reports.push(this.newLogData)
+    submitForm (evnt) {
+      this.submitLog()
+      evnt.preventDefault()
     },
-    getLogbookNumber: function () {
+    submitLog: function () {
+      try {
+        // Parse collection site data
+        let selectedSite = this.newLogData.collectionSite
+        this.newLogData.stationName = selectedSite.stationName
+        this.newLogData.stationId = this.newLogData.collectionSite['.key']
+        this.newLogData.collectionSite = null
+
+        // Set logbook number
+        this.newLogData.logbookNumber = this.getLastLogbookNumber()
+
+        this.$firebaseRefs.reports.push(this.newLogData)
+      } catch (e) {
+        console.log(e)
+        this.snackbar.visible = true
+      }
+    },
+    getLastLogbookNumber: function () {
       return (this.lastReport[0] ? this.lastReport[0].logbookNumber : 0) + 1
+    },
+    getLastTimeOut: function () {
+      return (this.lastReport[0] ? this.lastReport[0].incubationOut : 0) + 'Not Recorded'
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  .log-data {
-    margin: 24px;
-    box-shadow: 0 1px 3px 0 rgba(155,155,155,0.5);
-  }
-
-  .log-data-header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    background-color: #F7F7F7;
-    padding: 22px 56px;
-
-    &__text {
-    	height: 38px;
-      color: #004D71;
-    	font-family: Roboto;
-    	font-size: 32px;
-    	font-weight: 300;
-    	letter-spacing: 1px;
-    	line-height: 38px;
-    	text-align: center;
-      margin-bottom: 5px;
-    }
-
-    &__subtext {
-      @extend .log-data-header__text;
-      height: 16px;
-      color: #4D86A0;
-      font-family: Roboto;
-      font-size: 13px;
-      line-height: 16px;
-    }
-  }
-
-  .log-data-body {
-    padding: 33px 50px;
-    background-color: #FFFFFF;
-
-    &__column {
-      display: flex;
-      flex-direction: column;
-      width: 300px;
-    }
-
-    &__form {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-    }
-
-    &__header {
-      height: 16px;
-      color: #7FBA00;
-      font-family: Roboto;
-      font-size: 18px;
-      font-weight: 500;
-      line-height: 16px;
-      margin-bottom: 46px;
-    }
-  }
+.log-data {
+  margin: 24px;
+  box-shadow: 0 1px 3px 0 rgba(155, 155, 155, 0.5);
+}
 </style>

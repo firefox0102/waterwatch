@@ -42,29 +42,12 @@
 </template>
 
 <script>
-import firebase from 'firebase'
 import { db } from '../../helpers/firebase'
 
 let collectionSitesRef = db.ref('collectionSites')
 
-function requireAuth (to, from, next) {
-  if (!firebase.auth().currentUser) {
-    console.log('User is not logged in')
-    next({
-      path: '/signIn',
-      query: {
-        redirect: to.fullPath
-      }
-    })
-  } else {
-    console.log('User is logged in:', firebase.auth().currentUser.uid)
-    next()
-  }
-}
-
 export default {
   name: 'collection-sites',
-  beforeEnter: requireAuth,
   firebase: {
     collectionSites: collectionSitesRef
   },

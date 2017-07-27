@@ -80,26 +80,20 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+// import firebase from 'firebase'
+// import { db } from '../../helpers/firebase'
 
-function requireAuth (to, from, next) {
-  if (!firebase.auth().currentUser) {
-    console.log('User is not logged in')
-    next({
-      path: '/signIn',
-      query: {
-        redirect: to.fullPath
-      }
-    })
-  } else {
-    console.log('User is logged in:', firebase.auth().currentUser.uid)
-    next()
-  }
-}
+// let sitesRef = db.ref('collectionSites')
+// let reportsRef = db.ref('reports')
+// let start = 0
+// let end = 0
 
 export default {
   name: 'collection-sites',
-  beforeEnter: requireAuth,
+  // firebase: {
+  //   site: sitesRef.orderByChild('key').equalTo(this.$route.params.id),
+  //   reports: reportsRef.orderByChild('stationId').equalTo(1).startAt(start).endAt(end)
+  // },
   data: function () {
     return {
       pagination: {
@@ -116,95 +110,6 @@ export default {
         { text: 'Fluorometry', value: 'fluorometry' },
         { text: 'Turbidity (NTU)', value: 'turbidity' },
         { text: 'Conductivity (uS)', value: 'conductivity' }
-      ],
-      site: {
-        stationName: 'Beavers in a Park',
-        logbookAbv: 'Beav @ Park',
-        latitude: '33.7489',
-        longitude: '-84.3879',
-        collectionPartner: 'CRK',
-        lab: 'Petes Lab',
-        huc: 'no idea',
-        collectionSiteId: 1
-      },
-      items: [
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        },
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        },
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        },
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        },
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        },
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        },
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        }
       ]
     }
   },

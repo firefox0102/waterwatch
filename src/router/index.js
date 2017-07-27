@@ -8,7 +8,6 @@ import ManageUsers from '../components/admin/manage-users'
 import Reports from '../components/admin/reports'
 import About from '../components/main/about'
 import DataPage from '../components/main/data-page'
-
 import SignIn from '../components/main/sign-in'
 
 Vue.use(Router)
@@ -18,45 +17,54 @@ export default new Router({
   routes: [
     {
       path: '*',
-      component: SignIn
+      component: SignIn,
+      meta: { requiresAuth: false }
     },
     {
       path: '/signIn',
-      component: SignIn
+      component: SignIn,
+      meta: { requiresAuth: false }
     },
     {
       path: '/collectionSites',
       name: 'Collection Sites',
-      component: CollectionSites
+      component: CollectionSites,
+      meta: { requiresAuth: true }
     },
     {
       path: '/collectionSiteData/:siteId',
       name: 'Collection Site Data',
-      component: CollectionSiteData
+      component: CollectionSiteData,
+      meta: { requiresAuth: true }
     },
     {
       path: '/logData',
       name: 'Log Data',
-      component: LogData
+      component: LogData,
+      meta: { requiresAuth: true }
     },
     {
       path: '/manageUsers',
       name: 'Manage Users',
-      component: ManageUsers
+      component: ManageUsers,
+      meta: { requiresAuth: true }
     },
     {
       path: '/reports',
       name: 'Reports',
-      component: Reports
+      component: Reports,
+      meta: { requiresAuth: true }
     },
     {
       path: '/about',
       name: 'About',
-      component: About
+      component: About,
+      meta: { requiresAuth: false }
     },
     {
       path: '/dataPage',
-      component: DataPage
+      component: DataPage,
+      meta: { requiresAuth: false }
     }
   ]
 })

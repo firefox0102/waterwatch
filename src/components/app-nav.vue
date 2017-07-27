@@ -8,23 +8,23 @@
       <div class="app-nav__secondary-section">
         <router-link
           v-for="(item, index) in arrNav"
-          class="app-nav__button"
+          class="app-nav__link"
           v-bind:to="item.path"
-          v-bind:key="index"
-        >
+          v-bind:key="index">
           <v-btn class="app-nav__button" v-if="item.auth === !!user" flat>
             {{ item.title }}
           </v-btn>
         </router-link>
 
-        <a v-if="user" class="app-nav__button">
+        <a v-if="user" class="app-nav__link">
           <v-btn flat class="app-nav__button" v-on:click.native="logout()">
             Sign Out
           </v-btn>
         </a>
-        <router-link v-else  class="app-nav__button" to="/signIn">
-          <v-btn flat class="app-nav__button">
-            Sign In
+        <router-link v-else  class="app-nav__link" to="/signIn">
+          <v-btn flat class="app-nav__button--small">
+            <i class="material-icons">lock</i>
+            Admin
           </v-btn>
         </router-link>
       </div>
@@ -98,89 +98,112 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  $navbar-height: 64px;
-  $nav-split-breakpoint: 820px;
+$navbar-height: 64px;
+$nav-split-breakpoint: 820px;
 
-  .app-nav {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
+.app-nav {
+  display: flex;
 
-    align-items: center;
-    box-shadow: 0 0 1px 0 rgba(0,0,0,0.12), 0 1px 3px 0 rgba(155,155,155,0.5);
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc($navbar-height * 2);
+  min-height: $navbar-height;
+  padding: 0;
 
-    height: calc($navbar-height * 2);
-    min-height: $navbar-height;
-    padding: 0;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(155, 155, 155, 0.5);
 
-    @media screen and (min-width: $nav-split-breakpoint) {
-      flex-direction: row;
-      height: $navbar-height;
-      padding: 0 66px;
+  @media screen and (min-width: $nav-split-breakpoint) {
+    flex-direction: row;
+    height: $navbar-height;
+    padding: 0 66px;
+  }
+
+  &__link {
+    text-decoration: none;
+  }
+
+  &__button {
+    height: $navbar-height;
+    margin: 0;
+
+    color: #004d71;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none !important;
+
+    &:hover {
+      border-bottom: 2px solid #7fba00;
+      color: #7fba00;
     }
 
-    &__button {
+    &--small {
       height: $navbar-height;
-      color: #004D71;
-      font-size: 14px;
+      margin: 0;
+
+      color: #004d71;
+      font-size: 12px;
       font-weight: 500;
       text-align: center;
-      margin: 0;
       text-decoration: none !important;
 
-      &:hover {
-        color: #7FBA00;
-        border-bottom: 2px solid #7FBA00;
+      .material-icons {
+        font-size: 12px;
       }
-    }
-
-    &__crk-logo {
-      display: none;
-
-      @media screen and (min-width: 1000px) {
-        display: block;
-        height: $navbar-height;
-      }
-    }
-
-    &__nww-logo {
-      height: 40px;
-    }
-
-    &__primary-section {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      box-shadow: 0 0 1px 0 rgba(0,0,0,0.12), 0 1px 3px 0 rgba(155,155,155,0.5);
-      padding: 12px 20px;
-
-      @media screen and (min-width: $nav-split-breakpoint) {
-        box-shadow: none;
-        width: 30%;
-      }
-    }
-
-    &__secondary-section {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      width: 100%;
-
-      @media screen and (min-width: $nav-split-breakpoint) {
-        flex-wrap: nowrap;
-        justify-content: flex-end;
-        width: 70%;
-      }
-    }
-
-    .router-link-active {
-      .app-nav__button {
-        @extend .app-nav__button:hover;
-      }
-    }
-
-    .toolbar__content {
-      width: 100%;
     }
   }
+
+  &__crk-logo {
+    display: none;
+
+    @media screen and (min-width: 1000px) {
+      display: block;
+      height: $navbar-height;
+    }
+  }
+
+  &__nww-logo {
+    height: 40px;
+  }
+
+  &__primary-section {
+    display: flex;
+
+    align-items: center;
+    padding: 12px 20px;
+    width: 100%;
+
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(155, 155, 155, 0.5);
+
+    @media screen and (min-width: $nav-split-breakpoint) {
+      width: 30%;
+      box-shadow: none;
+    }
+  }
+
+  &__secondary-section {
+    display: flex;
+
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+
+    @media screen and (min-width: $nav-split-breakpoint) {
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+      width: 70%;
+    }
+  }
+
+  .router-link-active {
+    .app-nav__button {
+      @extend .app-nav__button:hover;
+    }
+  }
+
+  .toolbar__content {
+    width: 100%;
+  }
+}
 </style>
