@@ -338,10 +338,6 @@ export default {
     }
   },
   methods: {
-    testing: function (data) {
-      console.log('event caught')
-      console.log(data)
-    },
     toggleAdditionalParmas: function () {
       this.controls.showAdditionalParams = !this.controls.showAdditionalParams
     },
@@ -351,7 +347,7 @@ export default {
         let selectedSite = this.newLogData.collectionSite
         this.newLogData.stationName = selectedSite.stationName
         this.newLogData.logbookAbbv = selectedSite.logbookAbbv
-        this.newLogData.stationId = this.newLogData.collectionSite['.key']
+        this.newLogData.collectionSiteId = this.newLogData.collectionSite['.key']
         this.newLogData.collectionSite = null
 
         // Set logbook number

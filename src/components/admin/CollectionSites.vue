@@ -136,7 +136,9 @@
                   ></v-checkbox>
                 </td>
                 <td>
-                  <router-link :to="{ name: 'Collection Site Data', params: { siteId: props.item.collectionSiteId } }">
+                  <router-link
+                    class="nww-table__primary-link"
+                    :to="{ name: 'Collection Site Data', params: { siteId: props.item['.key'] } }">
                     {{ props.item.stationName }}
                   </router-link>
                 </td>

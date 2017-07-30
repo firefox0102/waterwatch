@@ -27,12 +27,7 @@ export default {
       this.$store.commit('setUser', user || false)
 
       if (user) {
-        console.log('auth user is good')
-        this.$router.push('/logData')
-      } else {
-        console.log('auth user is logged out')
-
-        this.$router.push('/signIn')
+        this.$router.push('/collectionSites')
       }
     })
 
@@ -144,6 +139,10 @@ body {
 
   &__header {
     background-color: #f7f7f7;
+  }
+
+  &__primary-link {
+    color: #4d86a0;
   }
 
   table.table tbody tr:hover {

@@ -11,7 +11,6 @@
           <router-link class="collection-sites-header__subheader" :to="{ name: 'Collection Sites'}">
             Back to List of Collection Sites
           </router-link>
-
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
@@ -30,7 +29,7 @@
       <v-data-table
           v-model="selected"
           v-bind:headers="headers"
-          :items="items"
+          :items="reports"
           select-all
           class="elevation-1"
           selected-key="logbookNumber"
@@ -80,22 +79,29 @@
 </template>
 
 <script>
-// import firebase from 'firebase'
-// import { db } from '../../helpers/firebase'
+import { db } from '../../helpers/firebase'
 
-// let sitesRef = db.ref('collectionSites')
-// let reportsRef = db.ref('reports')
-// let start = 0
-// let end = 0
+let collectionSitesRef = db.ref('collectionSites')
+let reportsRef = db.ref('reports')
 
 export default {
   name: 'collection-sites',
-  // firebase: {
-  //   site: sitesRef.orderByChild('key').equalTo(this.$route.params.id),
-  //   reports: reportsRef.orderByChild('stationId').equalTo(1).startAt(start).endAt(end)
-  // },
+  firebase () {
+    return {
+      firebaseSite: {
+        source: collectionSitesRef.orderByKey().equalTo(this.$route.params.siteId)
+      },
+      reports: {
+        source: reportsRef.orderByChild('collectionSiteId').equalTo(parseInt(this.$route.params.siteId))
+      }
+    }
+  },
+  mounted: function () {
+    this.site = this.firebaseSite[0]
+  },
   data: function () {
     return {
+      site: {},
       pagination: {
         sortBy: 'name'
       },
@@ -116,7 +122,7 @@ export default {
   methods: {
     toggleAll () {
       if (this.selected.length) this.selected = []
-      else this.selected = this.items.slice()
+      else this.selected = this.reports.slice()
     },
     changeSort (column) {
       if (this.pagination.sortBy === column) {
