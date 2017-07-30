@@ -27,7 +27,7 @@
             class="input-group--focused">
           </v-text-field>
 
-        <a class="sign-in-body__sub-text">Forget Password?</a>
+        <a class="form-input-sub-text">Forget Password?</a>
         <v-btn
           type="submit"
           v-on:click.native="signInWithPassword()"
@@ -164,19 +164,6 @@ $small-screen-breakpoint: 401px;
   &__form {
     display: flex;
     flex-direction: column;
-  }
-
-  &__sub-text {
-    height: 13px;
-    width: 96px;
-
-    color: #8e7630;
-    cursor: pointer;
-    font-family: Roboto;
-    font-size: 11px;
-    line-height: 13px;
-    text-align: center;
-    text-decoration: underline;
   }
 
   &__btn {

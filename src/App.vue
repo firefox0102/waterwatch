@@ -107,6 +107,13 @@ body {
   }
 }
 
+.input-group {
+  &--limit-height {
+    margin: 18px 0 20px;
+    max-height: 48px;
+  }
+}
+
 .flex-start {
   display: flex;
 
@@ -207,6 +214,10 @@ body {
     font-size: 18px;
     font-weight: 500;
     line-height: 16px;
+
+    &--space-above {
+      margin-top: 16px;
+    }
   }
 }
 
@@ -237,6 +248,24 @@ body {
     color: #9b9b9b;
     font-size: 14px;
     line-height: 20px;
+  }
+}
+
+.form-input-sub-text {
+  height: 13px;
+  width: 100%;
+
+  color: #8e7630;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 13px;
+  text-align: left;
+  text-decoration: underline;
+
+  &--hug-input {
+    @extend .form-input-sub-text;
+    margin: -18px 0 18px;
   }
 }
 </style>

@@ -168,14 +168,16 @@ export default {
     return {
       pagination: {
         sortBy: 'stationName',
-        totalItems: 'totalItems', // TODO
-        loading: 'loading', // TODO
-        descending: 'asc'
+        descending: 'asc',
+        totalItems: 0, // TODO
+        loading: true // TODO
       },
       filters: {
         search: '',
-        startDate: null,
-        endDate: null,
+        startDate: null, // TODO with firebase
+        endDate: null, // TODO with firebase
+        startDateModal: false,
+        endDateModal: false,
         exportAction: { label: 'Export' },
         exportActions: [
           {
@@ -194,9 +196,7 @@ export default {
             title: 'Export for STORET',
             callback: 'TODO MAKE CALLBACK'
           }
-        ],
-        startDateModal: false,
-        endDateModal: false
+        ]
       },
       headers: [
         { text: 'Station Name', value: 'stationName' },

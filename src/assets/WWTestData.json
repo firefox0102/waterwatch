@@ -1,4 +1,9 @@
 {
+  "labs": [
+    "Atlanta",
+    "Gainesville",
+    "LaGrange"
+  ],
   "collectionSites": [
     {
       "stationName": "Lull at Headwaters",

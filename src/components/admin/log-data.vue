@@ -19,8 +19,8 @@
           <v-text-field
             label="Logbook Number"
             v-model="newLogData.logbookNumber"
-            class="input-group--focused"
-            disabled="true"
+            class="input-group--focused input-group--limit-height"
+            disabled
             required>
           </v-text-field>
 
@@ -38,7 +38,7 @@
               label="Date"
               v-model="newLogData.collectionDate"
               append-icon="event"
-              class="input-group--focused"
+              class="input-group--focused input-group--limit-height"
               required>
             </v-text-field>
             <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
@@ -58,7 +58,7 @@
             v-model="newLogData.collectionSite"
             label="Station Name"
             single-line
-            class="input-group--focused"
+            class="input-group--focused input-group--limit-height"
             required
             bottom>
           </v-select>
@@ -68,21 +68,26 @@
               type="time"
               suffix="EST"
               required
-              class="input-group--focused">
+              class="input-group--focused input-group--limit-height">
           </v-text-field>
           <v-text-field
               label="Analyst (Initials)"
-              class="input-group--focused"
+              class="input-group--focused input-group--limit-height"
               required
               v-model="newLogData.analyst">
           </v-text-field>
-          <v-text-field
-              name="input-5-1"
-              label="Notes"
-              v-model="newLogData.notes"
-              class="input-group--focused"
-              required
-            ></v-text-field>
+          <v-select
+            v-bind:items="labs"
+            v-model="newLogData.collectionSite"
+            item-text=".value"
+            item-value=".key"
+            label="Lab"
+            single-line
+            class="input-group--focused input-group--limit-height"
+            required
+            bottom>
+          </v-select>
+          <a class="form-input-sub-text--hug-input">Add New Lab (TODO ADD THIS)</a>
         </div>
 
         <div class="page-content-body__column">
@@ -94,46 +99,47 @@
               v-model="newLogData.incubationTime"
               type="time"
               required
-              class="input-group--focused">
+              class="input-group--focused input-group--limit-height">
           </v-text-field>
           <v-text-field
               label="# mL/100mL (Dilution)"
-              class="input-group--focused"
+              class="input-group--focused input-group--limit-height"
               required
               type="number"
               v-model="newLogData.dilution">
           </v-text-field>
           <v-text-field
               label="Fluorometry"
-              class="input-group--focused"
+              class="input-group--focused input-group--limit-height"
               required
               type="number"
               v-model="newLogData.fluorometry">
           </v-text-field>
           <v-text-field
               label="Turbidity (NTU)"
-              class="input-group--focused"
+              class="input-group--focused input-group--limit-height"
               required
               type="number"
               v-model="newLogData.turbidity">
           </v-text-field>
           <v-text-field
               label="Conductivity (uS)"
-              class="input-group--focused"
+              class="input-group--focused input-group--limit-height"
               required
               type="number"
               v-model="newLogData.specifcConductivity">
           </v-text-field>
           <v-text-field
               label="Rainfall (in)"
-              class="input-group--focused"
+              class="input-group--focused input-group--limit-height"
               required
               type="number"
               v-model="newLogData.precipitation">
           </v-text-field>
+          <a class="form-input-sub-text--hug-input">Rainfall value from Weather Underground (TODO ADD THIS)</a>
           <v-text-field
               label="Incubation Temp (*C)"
-              class="input-group--focused"
+              class="input-group--focused input-group--limit-height"
               required
               type="number"
               v-model="newLogData.incubationTemp">
@@ -143,7 +149,7 @@
               v-model="newLogData.incubationOut"
               type="time"
               required
-              class="input-group--focused">
+              class="input-group--focused input-group--limit-height">
           </v-text-field>
         </div>
 
@@ -153,36 +159,97 @@
           </div>
           <v-text-field
               label="Large Cells"
-              class="input-group--focused"
+              class="input-group--focused input-group--limit-height"
               required
               type="number"
               v-model="newLogData.coliformLargeCells">
           </v-text-field>
           <v-text-field
               label="Small Cells"
-              class="input-group--focused"
+              class="input-group--focused input-group--limit-height"
               required
               type="number"
               v-model="newLogData.coliformSmallCells">
           </v-text-field>
+
+          <a class="log-data-total">Total Coliform = TODO</a>
 
           <div class="page-content-body__header">
             E. Coli
           </div>
           <v-text-field
               label="Large Cells"
-              class="input-group--focused"
+              class="input-group--focused input-group--limit-height"
               required
               type="number"
               v-model="newLogData.ecoliLargeCells">
           </v-text-field>
           <v-text-field
               label="Small Cells"
-              class="input-group--focused"
+              class="input-group--focused input-group--limit-height"
               required
               type="number"
               v-model="newLogData.ecoliSmallCells">
           </v-text-field>
+
+          <a class="log-data-total">Total E. coli = TODO</a>
+
+          <a class="form-input-sub-text">See More Parameters</a>
+
+          <div>
+            <div class="page-content-body__header page-content-body__header--space-above">
+              Additional Parameters
+            </div>
+            <v-text-field
+                label="Dissolved Oxygen"
+                class="input-group--focused input-group--limit-height"
+                type="number"
+                v-model="newLogData.dissolvedOxygen"
+                required>
+            </v-text-field>
+            <v-text-field
+                label="Nitrate"
+                class="input-group--focused input-group--limit-height"
+                type="number"
+                v-model="newLogData.nitrate"
+                required>
+            </v-text-field>
+            <v-text-field
+                label="Phosphate"
+                class="input-group--focused input-group--limit-height"
+                type="number"
+                v-model="newLogData.phosphate"
+                required>
+            </v-text-field>
+            <v-text-field
+                label="Ammonium"
+                class="input-group--focused input-group--limit-height"
+                type="number"
+                v-model="newLogData.ammonium"
+                required>
+            </v-text-field>
+            <v-text-field
+                label="Total Chlorine"
+                class="input-group--focused input-group--limit-height"
+                type="number"
+                v-model="newLogData.totalChlorine"
+                required>
+            </v-text-field>
+            <v-text-field
+                label="Chlorophyll"
+                class="input-group--focused input-group--limit-height"
+                type="number"
+                v-model="newLogData.chlorophyll"
+                required>
+            </v-text-field>
+            <v-text-field
+                name="input-5-1"
+                label="Notes"
+                v-model="newLogData.notes"
+                class="input-group--focused input-group--limit-height"
+                required
+              ></v-text-field>
+          </div>
 
           <v-btn
             type="submit"
@@ -208,6 +275,7 @@ import { db } from '../../helpers/firebase'
 
 let collectionSitesRef = db.ref('collectionSites')
 let reportsRef = db.ref('reports')
+let labsRef = db.ref('labs')
 let lastReportRef = db.ref('reports').limitToLast(1)
 
 export default {
@@ -215,18 +283,22 @@ export default {
   firebase: {
     collectionSites: collectionSitesRef,
     reports: reportsRef,
+    labs: labsRef,
     lastReport: lastReportRef
   },
   data: function () {
     return {
       newLogData: {
+        ammonium: null,
         analyst: '',
+        chlorophyll: null,
         coliformLargeCells: '',
         coliformSmallCells: '',
         collectionDate: '',
         collectionSite: null,
         collectionTime: '',
         dilution: null,
+        dissolvedOxygen: null,
         eColiLargeCells: null,
         eColiSmallCells: null,
         fluorometry: null,
@@ -234,9 +306,12 @@ export default {
         incubationTemp: null,
         incubationTime: '',
         logbookNumber: 1, // TODO list the logbookNumber
+        nitrate: null,
+        phosphate: null,
         precipitation: null,
         specifcConductivity: null,
         turbidity: null,
+        totalChlorine: null,
         notes: ''
       },
       snackbar: {
@@ -280,5 +355,15 @@ export default {
 .log-data {
   margin: 24px;
   box-shadow: 0 1px 3px 0 rgba(155, 155, 155, 0.5);
+}
+
+.log-data-total {
+  height: 16px;
+  margin-bottom: 32px;
+  width: 100%;
+
+  color: #4d86a0;
+  font-size: 13px;
+  line-height: 16px;
 }
 </style>
