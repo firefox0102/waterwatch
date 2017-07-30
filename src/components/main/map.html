@@ -36,13 +36,17 @@ map.on('load', function () {
         'type': 'fill',
         'source': {
             'type': 'geojson',
-            'data': 'https://opendata.arcgis.com/datasets/9c7a1719eb814540b3cf81326c8bcf29_106.geojson'
+            'data': '../assets/River_Basins_Georgia.geojsons'
+            //RIVER geojson??
+             //'https://opendata.arcgis.com/datasets/c5dd02ed33964aaba0f8d6dc65863f82_0.geojson'
+
         },
         'layout': {},
         'paint': {
-            // 'fill-outline-color': 'rgba(7, 78, 112, 1)',
-            'fill-color': "rgba(80, 134, 158, 0.2)",
-            // 'line-dash-array': '1',
+            // 'line-width': 100,
+            'fill-outline-color': "rgba(7, 78, 112, 1)" ,
+            'fill-color': "rgba(62,136,173,0.5)",
+            //'line-dash-array': '[1 , 4]',
         }
         // This is the important part of this example: the addLayer
     // method takes 2 arguments: the layer as an object, and a string
@@ -50,7 +54,7 @@ map.on('load', function () {
     // exists in the stylesheet already, the new layer will be positioned
     // right before that layer in the stack, making it possible to put
     // 'overlays' anywhere in the layer stack.
-    }, '12');
+    });
 //COUNTIES
     map.addLayer({
         'id': 'COUNTYFP10',
