@@ -25,6 +25,7 @@
               <i class="site-reports-toolbar-search__icon material-icons">search</i>
               <input
                 class="site-reports-toolbar-search__input"
+                v-model="filters.search"
                 placeholder="Search collection sites"/>
             </div>
             <span class="site-reports-body-toolbar__text-content">Select date range:</span>
@@ -95,12 +96,13 @@
             </div>
           </div>
         </div>
-        <v-card class="nww-table">
+        <v-card class="nww-table nww-table--left-align">
           <v-data-table
               v-model="selected"
               v-bind:headers="headers"
               v-bind:items="collectionSites"
               v-bind:pagination.sync="pagination"
+              v-bind:search="filters.search"
               select-all
               selected-key="stationName"
               class="elevation-1">
@@ -206,7 +208,15 @@ export default {
         { text: 'Last E. coli Result', value: 'lastEColi' },
         { text: 'Status', value: 'status' },
         { text: 'Collection Partner', value: 'collectionPartner' },
-        { text: 'HUC Name', value: 'hucName' }
+        { text: 'HUC Name', value: 'hucName' },
+        { text: 'Adopt-A-Stream Name', value: 'hucName' },
+        { text: 'STORET Name', value: 'hucName' },
+        { text: '# Samples Collected', value: 'hucName' },
+        { text: 'First Collection Data', value: 'hucName' },
+        { text: 'Google Maps URL', value: 'hucName' },
+        { text: 'Latitude', value: 'hucName' },
+        { text: 'Longitude', value: 'hucName' },
+        { text: 'HUC', value: 'hucName' }
       ],
       selected: []
     }

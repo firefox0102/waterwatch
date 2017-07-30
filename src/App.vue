@@ -139,7 +139,7 @@ body {
   }
 }
 
-.nww-table {
+.nww-table { // This is not great BEM but it's necessary for overriding the framework
   background: #fff;
 
   &__header {
@@ -148,6 +148,13 @@ body {
 
   table.table tbody tr:hover {
     background-color: rgba(77, 134, 160, 0.1);
+  }
+
+  &--left-align {
+    .datatable__actions {
+      justify-content: flex-start;
+      padding-left: 20px;
+    }
   }
 }
 
