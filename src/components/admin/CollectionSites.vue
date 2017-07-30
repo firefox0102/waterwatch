@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
-        <v-btn v-on:click.native="testingclick" class="btn-nww--light">Add New Site</v-btn>
+        <add-collection-site></add-collection-site>
       </div>
     </div>
     <v-card>
@@ -25,23 +25,23 @@
               <i class="site-reports-toolbar-search__icon material-icons">search</i>
               <input
                 class="site-reports-toolbar-search__input"
-                v-model="filters.search"
+                v-model="controls.search"
                 placeholder="Search collection sites"/>
             </div>
             <span class="site-reports-body-toolbar__text-content">Select date range:</span>
             <div class="site-reports-toolbar-datepicker">
               <v-dialog
                 persistent
-                v-model="filters.startDateModal"
+                v-model="controls.startDateModal"
                 lazy
                 full-width>
                 <div
                   class="site-reports-toolbar-datepicker__activator"
                   slot="activator">
-                  <span class="site-reports-toolbar-datepicker__activator-text">{{ filters.startDate ? filters.startDate : "Start Date"}}</span>
+                  <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.startDate ? controls.startDate : "Start Date"}}</span>
                   <i class="fa fa-calendar"></i>
                 </div>
-                <v-date-picker v-model="filters.startDate" scrollable >
+                <v-date-picker v-model="controls.startDate" scrollable >
                   <template scope="{ save, cancel }">
                     <v-card-actions>
                       <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -54,16 +54,16 @@
             <div class="site-reports-toolbar-datepicker">
               <v-dialog
                 persistent
-                v-model="filters.endDateModal"
+                v-model="controls.endDateModal"
                 lazy
                 full-width>
                 <div
                   class="site-reports-toolbar-datepicker__activator"
                   slot="activator">
-                  <span class="site-reports-toolbar-datepicker__activator-text">{{ filters.endDate ? filters.endDate : "End Date"}}</span>
+                  <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.endDate ? controls.endDate : "End Date"}}</span>
                   <i class="fa fa-calendar"></i>
                 </div>
-                <v-date-picker v-model="filters.endDate" scrollable >
+                <v-date-picker v-model="controls.endDate" scrollable >
                   <template scope="{ save, cancel }">
                     <v-card-actions>
                       <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -88,7 +88,7 @@
                   <i class="material-icons">arrow_drop_down</i>
                 </div>
                 <v-list>
-                  <v-list-tile v-for="action in filters.exportActions" :key="action">
+                  <v-list-tile v-for="action in controls.exportActions" :key="action">
                     <v-list-tile-title>{{ action.title }}</v-list-tile-title>
                   </v-list-tile>
                 </v-list>
@@ -102,7 +102,7 @@
               v-bind:headers="headers"
               v-bind:items="collectionSites"
               v-bind:pagination.sync="pagination"
-              v-bind:search="filters.search"
+              v-bind:search="controls.search"
               select-all
               selected-key="stationName"
               class="elevation-1">
@@ -147,6 +147,14 @@
                 <td>{{ props.item.status }}</td>
                 <td>{{ props.item.collectionPartner }}</td>
                 <td>{{ props.item.hucName }}</td>
+                <td>{{ props.item.adoptAStreamName }}</td>
+                <td>{{ props.item.storetName }}</td>
+                <td>{{ props.item.numSamples }}</td>
+                <td>{{ props.item.firstCollectionDate }}</td>
+                <td>{{ props.item.googleMapsUrl }}</td>
+                <td>{{ props.item.latitude }}</td>
+                <td>{{ props.item.longitude }}</td>
+                <td>{{ props.item.huc }}</td>
               </tr>
             </template>
           </v-data-table>
@@ -158,11 +166,15 @@
 
 <script>
 import { db } from '../../helpers/firebase'
+import AddCollectionSite from './AddCollectionSite'
 
 let collectionSitesRef = db.ref('collectionSites')
 
 export default {
   name: 'site-reports',
+  components: {
+    'add-collection-site': AddCollectionSite
+  },
   firebase: {
     collectionSites: collectionSitesRef
   },
@@ -174,7 +186,7 @@ export default {
         totalItems: 0, // TODO
         loading: true // TODO
       },
-      filters: {
+      controls: {
         search: '',
         startDate: null, // TODO with firebase
         endDate: null, // TODO with firebase
@@ -209,27 +221,27 @@ export default {
         { text: 'Status', value: 'status' },
         { text: 'Collection Partner', value: 'collectionPartner' },
         { text: 'HUC Name', value: 'hucName' },
-        { text: 'Adopt-A-Stream Name', value: 'hucName' },
-        { text: 'STORET Name', value: 'hucName' },
-        { text: '# Samples Collected', value: 'hucName' },
-        { text: 'First Collection Data', value: 'hucName' },
-        { text: 'Google Maps URL', value: 'hucName' },
-        { text: 'Latitude', value: 'hucName' },
-        { text: 'Longitude', value: 'hucName' },
-        { text: 'HUC', value: 'hucName' }
+        { text: 'Adopt-A-Stream Name', value: 'adoptAStreamName' },
+        { text: 'STORET Name', value: 'storetName' },
+        { text: '# Samples Collected', value: 'numSamples' },
+        { text: 'First Collection Data', value: 'firstCollectionDate' },
+        { text: 'Google Maps URL', value: 'googleMapsUrl' },
+        { text: 'Latitude', value: 'latitude' },
+        { text: 'Longitude', value: 'longitude' },
+        { text: 'HUC', value: 'huc' }
       ],
       selected: []
     }
   },
   methods: {
-    toggleAll () {
+    toggleAll: function () {
       if (this.selected.length) {
         this.selected = []
       } else {
         this.selected = this.collectionSites.slice()
       }
     },
-    changeSort (column) {
+    changeSort: function (column) {
       if (this.pagination.sortBy === column) {
         this.pagination.descending = !this.pagination.descending
       } else {

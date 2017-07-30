@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import CollectionSites from '../components/admin/collection-sites'
-import CollectionSiteData from '../components/admin/collection-site-data'
-import LogData from '../components/admin/log-data'
-import About from '../components/main/about'
-import DataPage from '../components/main/data-page'
-import SignIn from '../components/main/sign-in'
+import CollectionSites from '../components/admin/CollectionSites'
+import CollectionSiteData from '../components/admin/CollectionSiteData'
+import LogData from '../components/admin/LogData'
+import About from '../components/main/About'
+import DataPage from '../components/main/DataPage'
+import SignIn from '../components/main/SignIn'
 
 Vue.use(Router)
 
