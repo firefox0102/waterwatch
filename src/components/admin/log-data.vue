@@ -10,255 +10,263 @@
     </div>
     <div class="page-content-body">
       <form
-        v-on:submit="submitForm"
-        class="page-content-body__form">
-        <div class="page-content-body__column">
-          <div class="page-content-body__header">
-            Collection Details
-          </div>
-          <v-text-field
-            label="Logbook Number"
-            v-model="newLogData.logbookNumber"
-            class="input-group--focused input-group--limit-height"
-            disabled
-            required>
-          </v-text-field>
-
-          <v-menu
-            lazy
-            :close-on-content-click="false"
-            v-model="newLogData.collectionDate"
-            transition="scale-transition"
-            offset-y
-            full-width
-            :nudge-left="40"
-            max-width="290px">
-            <v-text-field
-              slot="activator"
-              label="Date"
-              v-model="newLogData.collectionDate"
-              append-icon="event"
-              class="input-group--focused input-group--limit-height"
-              required>
-            </v-text-field>
-            <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
-              <template scope="{ save, cancel }">
-                <v-card-actions>
-                  <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                  <v-btn flat primary @click.native="save()">Save</v-btn>
-                </v-card-actions>
-              </template>
-            </v-date-picker>
-          </v-menu>
-
-          <v-select
-            v-bind:items="collectionSites"
-            item-text="stationName"
-            item-value="$index"
-            v-model="newLogData.collectionSite"
-            label="Station Name"
-            single-line
-            class="input-group--focused input-group--limit-height"
-            required
-            bottom>
-          </v-select>
-          <v-text-field
-              label="Collection Time"
-              v-model="newLogData.collectionTime"
-              type="time"
-              suffix="EST"
-              required
-              class="input-group--focused input-group--limit-height">
-          </v-text-field>
-          <v-text-field
-              label="Analyst (Initials)"
-              class="input-group--focused input-group--limit-height"
-              required
-              v-model="newLogData.analyst">
-          </v-text-field>
-          <v-select
-            v-bind:items="labs"
-            v-model="newLogData.collectionSite"
-            item-text=".value"
-            item-value=".key"
-            label="Lab"
-            single-line
-            class="input-group--focused input-group--limit-height"
-            required
-            bottom>
-          </v-select>
-          <a class="form-input-sub-text--hug-input">Add New Lab (TODO ADD THIS)</a>
-        </div>
-
-        <div class="page-content-body__column">
-          <div class="page-content-body__header">
-            Incubation and Parameters
-          </div>
-          <v-text-field
-              label="Incubation In Time"
-              v-model="newLogData.incubationTime"
-              type="time"
-              required
-              class="input-group--focused input-group--limit-height">
-          </v-text-field>
-          <v-text-field
-              label="# mL/100mL (Dilution)"
-              class="input-group--focused input-group--limit-height"
-              required
-              type="number"
-              v-model="newLogData.dilution">
-          </v-text-field>
-          <v-text-field
-              label="Fluorometry"
-              class="input-group--focused input-group--limit-height"
-              required
-              type="number"
-              v-model="newLogData.fluorometry">
-          </v-text-field>
-          <v-text-field
-              label="Turbidity (NTU)"
-              class="input-group--focused input-group--limit-height"
-              required
-              type="number"
-              v-model="newLogData.turbidity">
-          </v-text-field>
-          <v-text-field
-              label="Conductivity (uS)"
-              class="input-group--focused input-group--limit-height"
-              required
-              type="number"
-              v-model="newLogData.specifcConductivity">
-          </v-text-field>
-          <v-text-field
-              label="Rainfall (in)"
-              class="input-group--focused input-group--limit-height"
-              required
-              type="number"
-              v-model="newLogData.precipitation">
-          </v-text-field>
-          <a class="form-input-sub-text--hug-input">Rainfall value from Weather Underground (TODO ADD THIS)</a>
-          <v-text-field
-              label="Incubation Temp (*C)"
-              class="input-group--focused input-group--limit-height"
-              required
-              type="number"
-              v-model="newLogData.incubationTemp">
-          </v-text-field>
-          <v-text-field
-              label="Incubation Out"
-              v-model="newLogData.incubationOut"
-              type="time"
-              required
-              class="input-group--focused input-group--limit-height">
-          </v-text-field>
-        </div>
-
-        <div class="page-content-body__column">
-          <div class="page-content-body__header">
-            Total Coliform
-          </div>
-          <v-text-field
-              label="Large Cells"
-              class="input-group--focused input-group--limit-height"
-              required
-              type="number"
-              v-model="newLogData.coliformLargeCells">
-          </v-text-field>
-          <v-text-field
-              label="Small Cells"
-              class="input-group--focused input-group--limit-height"
-              required
-              type="number"
-              v-model="newLogData.coliformSmallCells">
-          </v-text-field>
-
-          <a class="log-data-total">Total Coliform = TODO</a>
-
-          <div class="page-content-body__header">
-            E. Coli
-          </div>
-          <v-text-field
-              label="Large Cells"
-              class="input-group--focused input-group--limit-height"
-              required
-              type="number"
-              v-model="newLogData.ecoliLargeCells">
-          </v-text-field>
-          <v-text-field
-              label="Small Cells"
-              class="input-group--focused input-group--limit-height"
-              required
-              type="number"
-              v-model="newLogData.ecoliSmallCells">
-          </v-text-field>
-
-          <a class="log-data-total">Total E. coli = TODO</a>
-
-          <a class="form-input-sub-text">See More Parameters</a>
-
-          <div>
-            <div class="page-content-body__header page-content-body__header--space-above">
-              Additional Parameters
+          v-on:submit.prevent="submitLog"
+          class="page-content-body__form">
+          <!-- Column 1 -->
+          <div class="page-content-body__column">
+            <div class="page-content-body__header">
+              Collection Details
             </div>
             <v-text-field
-                label="Dissolved Oxygen"
-                class="input-group--focused input-group--limit-height"
-                type="number"
-                v-model="newLogData.dissolvedOxygen"
-                required>
+              label="Logbook Number"
+              v-model="newLogData.logbookNumber"
+              class="input-group--focused input-group--limit-height"
+              disabled>
+            </v-text-field>
+
+            <v-menu
+              lazy
+              :close-on-content-click="false"
+              v-model="controls.showDateicker"
+              transition="scale-transition"
+              offset-y
+              full-width
+              :nudge-left="40"
+              max-width="290px">
+              <v-text-field
+                slot="activator"
+                label="Date"
+                v-model="newLogData.collectionDate"
+                append-icon="event"
+                class="input-group--focused input-group--limit-height">
+              </v-text-field>
+              <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
+                <template scope="{ save, cancel }">
+                  <v-card-actions>
+                    <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
+                    <v-btn flat primary @click.native="save()">Save</v-btn>
+                  </v-card-actions>
+                </template>
+              </v-date-picker>
+            </v-menu>
+
+            <v-select
+              v-bind:items="collectionSites"
+              item-text="stationName"
+              item-value="$index"
+              v-model="newLogData.collectionSite"
+              label="Station Name"
+              single-line
+              class="input-group--focused input-group--limit-height"
+              bottom>
+            </v-select>
+            <v-text-field
+                label="Collection Time"
+                v-model="newLogData.collectionTime"
+                type="time"
+                suffix="EST"
+                class="input-group--focused input-group--limit-height">
             </v-text-field>
             <v-text-field
-                label="Nitrate"
+                label="Analyst (Initials)"
                 class="input-group--focused input-group--limit-height"
-                type="number"
-                v-model="newLogData.nitrate"
-                required>
+                v-model="newLogData.analyst">
             </v-text-field>
-            <v-text-field
-                label="Phosphate"
-                class="input-group--focused input-group--limit-height"
-                type="number"
-                v-model="newLogData.phosphate"
-                required>
-            </v-text-field>
-            <v-text-field
-                label="Ammonium"
-                class="input-group--focused input-group--limit-height"
-                type="number"
-                v-model="newLogData.ammonium"
-                required>
-            </v-text-field>
-            <v-text-field
-                label="Total Chlorine"
-                class="input-group--focused input-group--limit-height"
-                type="number"
-                v-model="newLogData.totalChlorine"
-                required>
-            </v-text-field>
-            <v-text-field
-                label="Chlorophyll"
-                class="input-group--focused input-group--limit-height"
-                type="number"
-                v-model="newLogData.chlorophyll"
-                required>
-            </v-text-field>
-            <v-text-field
-                name="input-5-1"
-                label="Notes"
-                v-model="newLogData.notes"
-                class="input-group--focused input-group--limit-height"
-                required
-              ></v-text-field>
+            <v-select
+              v-bind:items="labs"
+              v-model="newLogData.collectionSite"
+              item-text=".value"
+              item-value=".key"
+              label="Lab"
+              single-line
+              class="input-group--focused input-group--limit-height"
+              bottom>
+            </v-select>
+            <a class="form-input-sub-text--hug-input">Add New Lab (TODO ADD THIS)</a>
           </div>
 
-          <v-btn
-            type="submit"
-            class="btn-nww"
-            v-on:click.native="submitLog">
-            Log Data
-          </v-btn>
-        </div>
-      </form>
+          <!-- Column 2 -->
+          <div class="page-content-body__column">
+            <div class="page-content-body__header">
+              Incubation and Parameters
+            </div>
+            <v-text-field
+                label="Incubation In Time"
+                v-model="newLogData.incubationTime"
+                type="time"
+                class="input-group--focused input-group--limit-height">
+            </v-text-field>
+            <v-text-field
+                label="# mL/100mL (Dilution)"
+                class="input-group--focused input-group--limit-height"
+                type="number"
+                v-model="newLogData.dilution">
+            </v-text-field>
+            <v-text-field
+                label="Fluorometry"
+                class="input-group--focused input-group--limit-height"
+                type="number"
+                v-model="newLogData.fluorometry">
+            </v-text-field>
+            <v-text-field
+                label="Turbidity (NTU)"
+                class="input-group--focused input-group--limit-height"
+                type="number"
+                v-model="newLogData.turbidity">
+            </v-text-field>
+            <v-text-field
+                label="Conductivity (uS)"
+                class="input-group--focused input-group--limit-height"
+                type="number"
+                v-model="newLogData.specifcConductivity">
+            </v-text-field>
+            <v-text-field
+                label="Rainfall (in)"
+                class="input-group--focused input-group--limit-height"
+                type="number"
+                v-model="newLogData.precipitation">
+            </v-text-field>
+            <a class="form-input-sub-text--hug-input">Rainfall value from Weather Underground (TODO ADD THIS)</a>
+            <v-text-field
+                label="Incubation Temp (*C)"
+                class="input-group--focused input-group--limit-height"
+                type="number"
+                v-model="newLogData.incubationTemp">
+            </v-text-field>
+            <v-text-field
+                label="Incubation Out"
+                v-model="newLogData.incubationOut"
+                type="time"
+                class="input-group--focused input-group--limit-height">
+            </v-text-field>
+          </div>
+
+          <!-- Column 3 -->
+          <div class="page-content-body__column page-content-body__column--end">
+            <div class="log-data-section-wrapper">
+              <div class="page-content-body__header">
+                Total Coliform
+              </div>
+              <v-text-field
+                  label="Large Cells"
+                  class="input-group--focused input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.coliformLargeCells">
+              </v-text-field>
+              <v-text-field
+                  label="Small Cells"
+                  class="input-group--focused input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.coliformSmallCells">
+              </v-text-field>
+            </div>
+
+            <a class="log-data-total">Total Coliform = TODO</a>
+
+            <div class="log-data-section-wrapper">
+              <div class="page-content-body__header">
+                E. Coli
+              </div>
+              <v-text-field
+                  label="Large Cells"
+                  class="input-group--focused input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.ecoliLargeCells">
+              </v-text-field>
+              <v-text-field
+                  label="Small Cells"
+                  class="input-group--focused input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.ecoliSmallCells">
+              </v-text-field>
+            </div>
+
+            <a class="log-data-total">Total E. coli = TODO</a>
+
+            <div class="form-input-sub-text" v-on:click="toggleAdditionalParmas">
+              See More Parameters
+            </div>
+
+            <div
+              class="log-data-section-wrapper"
+              v-if="controls.showAdditionalParams === true">
+              <div class="page-content-body__header page-content-body__header--space-above">
+                Additional Parameters
+              </div>
+              <v-text-field
+                  label="Dissolved Oxygen"
+                  class="input-group--focused input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.dissolvedOxygen">
+              </v-text-field>
+              <v-text-field
+                  label="Nitrate"
+                  class="input-group--focused input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.nitrate">
+              </v-text-field>
+              <v-text-field
+                  label="Phosphate"
+                  class="input-group--focused input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.phosphate">
+              </v-text-field>
+              <v-text-field
+                  label="Ammonium"
+                  class="input-group--focused input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.ammonium">
+              </v-text-field>
+              <v-text-field
+                  label="Total Chlorine"
+                  class="input-group--focused input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.totalChlorine">
+              </v-text-field>
+              <v-text-field
+                  label="Chlorophyll"
+                  class="input-group--focused input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.chlorophyll">
+              </v-text-field>
+              <v-text-field
+                  name="input-5-1"
+                  label="Notes"
+                  v-model="newLogData.notes"
+                  class="input-group--focused input-group--limit-height"
+                ></v-text-field>
+            </div>
+
+            <v-dialog v-model="controls.showDialog" lazy absolute>
+              <v-btn
+                slot="activator"
+                class="btn-nww log-data-submit-btn">
+                Log Data
+              </v-btn>
+              <v-card>
+                <v-card-title>
+                  <div class="headline log-data-confirm__header">Log Data?</div>
+                </v-card-title>
+                <v-card-text>Please confirm that you would like to log data</v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    class="green--text darken-1"
+                    flat="flat"
+                    v-on:click.native="controls.showDialog = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    class="btn-nww"
+                    v-on:click.native="submitLog"
+                    type="submit">
+                    Confirm
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </div>
+        </form>
     </div>
     <v-snackbar
       :timeout="snackbar.timeout"
@@ -286,8 +294,16 @@ export default {
     labs: labsRef,
     lastReport: lastReportRef
   },
+  mounted: function () {
+    this.newLogData.logbookNumber = this.getLastLogbookNumber()
+  },
   data: function () {
     return {
+      controls: {
+        showAdditionalParams: false,
+        showDialog: false,
+        showDateicker: false
+      },
       newLogData: {
         ammonium: null,
         analyst: '',
@@ -322,9 +338,12 @@ export default {
     }
   },
   methods: {
-    submitForm (evnt) {
-      this.submitLog()
-      evnt.preventDefault()
+    testing: function (data) {
+      console.log('event caught')
+      console.log(data)
+    },
+    toggleAdditionalParmas: function () {
+      this.controls.showAdditionalParams = !this.controls.showAdditionalParams
     },
     submitLog: function () {
       try {
@@ -343,9 +362,40 @@ export default {
         console.log(e)
         this.snackbar.visible = true
       }
+
+      this.controls.dialog = false
     },
     getLastLogbookNumber: function () {
       return (this.lastReport[0] ? this.lastReport[0].logbookNumber : 0) + 1
+    },
+    resetForm: function () {
+      var newLogNum = this.newLogData.logbookNumber + 1
+      this.newLogData = {
+        ammonium: null,
+        analyst: '',
+        chlorophyll: null,
+        coliformLargeCells: '',
+        coliformSmallCells: '',
+        collectionDate: '',
+        collectionSite: null,
+        collectionTime: '',
+        dilution: null,
+        dissolvedOxygen: null,
+        eColiLargeCells: null,
+        eColiSmallCells: null,
+        fluorometry: null,
+        incubationOut: '',
+        incubationTemp: null,
+        incubationTime: '',
+        logbookNumber: newLogNum,
+        nitrate: null,
+        phosphate: null,
+        precipitation: null,
+        specifcConductivity: null,
+        turbidity: null,
+        totalChlorine: null,
+        notes: ''
+      }
     }
   }
 }
@@ -357,6 +407,15 @@ export default {
   box-shadow: 0 1px 3px 0 rgba(155, 155, 155, 0.5);
 }
 
+.log-data-submit-btn {
+  margin-top: 26px;
+  width: 96px;
+}
+
+.log-data-section-wrapper {
+  width: 100%;
+}
+
 .log-data-total {
   height: 16px;
   margin-bottom: 32px;
@@ -365,5 +424,15 @@ export default {
   color: #4d86a0;
   font-size: 13px;
   line-height: 16px;
+}
+
+.log-data-confirm {
+  &__header {
+    color: #004d71;
+  }
+
+  &__cancel {
+    color: #7fba00;
+  }
 }
 </style>

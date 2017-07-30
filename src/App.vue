@@ -197,6 +197,10 @@ body {
 
     flex-direction: column;
     width: 300px;
+
+    &--end {
+      align-items: flex-end;
+    }
   }
 
   &__form {
