@@ -57,26 +57,14 @@
             path: '/collectionSites'
           },
           {
-            title: 'Reports',
-            id: '3',
-            auth: true,
-            path: '/reports'
-          },
-          {
-            title: 'Manage Users',
-            id: '4',
-            auth: true,
-            path: '/manageUsers'
-          },
-          {
             title: 'Data',
-            id: '5',
+            id: '3',
             auth: false,
             path: '/dataPage'
           },
           {
             title: 'About',
-            id: '6',
+            id: '4',
             auth: false,
             path: '/about'
           }

@@ -86,7 +86,7 @@ body {
     background-color: #f3f3f3;
 
     @media screen and (min-width: 401px) {
-      padding: 36px 48px;
+      padding: 24px;
     }
   }
 
@@ -135,38 +135,12 @@ body {
 .nww-table {
   background: #fff;
 
+  &__header {
+    background-color: #f7f7f7;
+  }
+
   table.table tbody tr:hover {
-    background: rgba(127, 186, 0, 0.1);
-  }
-}
-
-.reports-toolbar-datepicker {
-  height: $toolbar-datepicker-height;
-  margin-left: 10px;
-  width: 130px;
-
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
-
-  &__activator {
-    display: flex;
-
-    align-items: center;
-    height: $toolbar-datepicker-height;
-    padding: 11px 10px 11px 15px;
-
-    cursor: pointer;
-  }
-
-  &__activator-text {
-    height: 20px;
-    margin-right: 19px;
-    width: 71px;
-
-    color: #9b9b9b;
-    font-size: 14px;
-    line-height: 20px;
+    background-color: rgba(77, 134, 160, 0.1);
   }
 }
 
@@ -198,6 +172,11 @@ body {
     color: #4d86a0;
     font-size: 13px;
     line-height: 16px;
+
+    &--dark {
+      @extend .page-content-header__subtext;
+      color: #8e7630;
+    }
   }
 }
 
@@ -228,6 +207,36 @@ body {
     font-size: 18px;
     font-weight: 500;
     line-height: 16px;
+  }
+}
+
+.site-reports-toolbar-datepicker {
+  height: $toolbar-datepicker-height;
+  margin-left: 10px;
+  width: 130px;
+
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+
+  &__activator {
+    display: flex;
+
+    align-items: center;
+    height: $toolbar-datepicker-height;
+    padding: 11px 10px 11px 15px;
+
+    cursor: pointer;
+  }
+
+  &__activator-text {
+    height: 20px;
+    margin-right: 19px;
+    width: 71px;
+
+    color: #9b9b9b;
+    font-size: 14px;
+    line-height: 20px;
   }
 }
 </style>

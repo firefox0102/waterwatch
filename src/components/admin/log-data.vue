@@ -4,7 +4,7 @@
       <div class="page-content-header__text">
         Log Data
       </div>
-      <div class="page-content-header__subtext">
+      <div class="page-content-header__subtext--dark">
         Log new data for a collection site
       </div>
     </div>
@@ -16,9 +16,13 @@
           <div class="page-content-body__header">
             Collection Details
           </div>
-          <div>
-            Logbook # - {{getLastLogbookNumber()}}
-          </div>
+          <v-text-field
+            label="Logbook Number"
+            v-model="newLogData.logbookNumber"
+            class="input-group--focused"
+            disabled="true"
+            required>
+          </v-text-field>
 
           <v-menu
             lazy
@@ -220,6 +224,7 @@ export default {
         coliformLargeCells: '',
         coliformSmallCells: '',
         collectionDate: '',
+        collectionSite: null,
         collectionTime: '',
         dilution: null,
         eColiLargeCells: null,
@@ -228,9 +233,8 @@ export default {
         incubationOut: '',
         incubationTemp: null,
         incubationTime: '',
+        logbookNumber: 1, // TODO list the logbookNumber
         precipitation: null,
-        collectionSite: null,
-        siteName: '',
         specifcConductivity: null,
         turbidity: null,
         notes: ''
@@ -252,6 +256,7 @@ export default {
         // Parse collection site data
         let selectedSite = this.newLogData.collectionSite
         this.newLogData.stationName = selectedSite.stationName
+        this.newLogData.logbookAbbv = selectedSite.logbookAbbv
         this.newLogData.stationId = this.newLogData.collectionSite['.key']
         this.newLogData.collectionSite = null
 
@@ -266,9 +271,6 @@ export default {
     },
     getLastLogbookNumber: function () {
       return (this.lastReport[0] ? this.lastReport[0].logbookNumber : 0) + 1
-    },
-    getLastTimeOut: function () {
-      return (this.lastReport[0] ? this.lastReport[0].incubationOut : 0) + 'Not Recorded'
     }
   }
 }

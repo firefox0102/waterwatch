@@ -59,16 +59,16 @@
               <div class="controls-card-control-group__content">
                 Select date range:
                 <div class="date-picker-wrapper">
-                  <div class="reports-toolbar-datepicker">
+                  <div class="site-reports-toolbar-datepicker">
                     <v-dialog
                       persistent
                       v-model="filters.startDateModal"
                       lazy
                       full-width>
                       <div
-                        class="reports-toolbar-datepicker__activator"
+                        class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
-                        <span class="reports-toolbar-datepicker__activator-text">{{ filters.startDate ? filters.startDate : "Start Date"}}</span>
+                        <span class="site-reports-toolbar-datepicker__activator-text">{{ filters.startDate ? filters.startDate : "Start Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
                       <v-date-picker v-model="filters.startDate" scrollable >
@@ -81,16 +81,16 @@
                       </v-date-picker>
                     </v-dialog>
                   </div>
-                  <div class="reports-toolbar-datepicker">
+                  <div class="site-reports-toolbar-datepicker">
                     <v-dialog
                       persistent
                       v-model="filters.endDateModal"
                       lazy
                       full-width>
                       <div
-                        class="reports-toolbar-datepicker__activator"
+                        class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
-                        <span class="reports-toolbar-datepicker__activator-text">{{ filters.endDate ? filters.endDate : "End Date"}}</span>
+                        <span class="site-reports-toolbar-datepicker__activator-text">{{ filters.endDate ? filters.endDate : "End Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
                       <v-date-picker v-model="filters.endDate" scrollable >
@@ -269,7 +269,7 @@ $data-sidebar-width: 240px;
   width: 100vw;
 
   @media screen and (min-width: 401px) {
-    margin: -36px -48px;
+    margin: -24px;
   }
 }
 
