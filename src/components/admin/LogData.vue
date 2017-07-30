@@ -74,9 +74,9 @@
             </v-text-field>
             <v-select
               v-bind:items="labs"
-              v-model="newLogData.collectionSite"
+              v-model="newLogData.lab"
               item-text=".value"
-              item-value=".key"
+              item-value=".value"
               label="Lab"
               single-line
               class="input-group--focused input-group--limit-height"
@@ -358,12 +358,11 @@ export default {
         this.newLogData.logbookNumber = this.getLastLogbookNumber()
 
         this.$firebaseRefs.reports.push(this.newLogData)
+        this.controls.dialog = false
       } catch (e) {
         console.log(e)
         this.snackbar.visible = true
       }
-
-      this.controls.dialog = false
     },
     getLastLogbookNumber: function () {
       return (this.lastReport[0] ? this.lastReport[0].logbookNumber : 0) + 1
