@@ -1,6 +1,13 @@
 <template>
   <div>
-    About section
+    <div class="page-content-header">
+      <div class="page-content-header__text">
+        About
+      </div>
+    </div>
+    <div class="page-content-body">
+      Contents go here!
+    </div>
   </div>
 </template>
 
@@ -10,6 +17,5 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
