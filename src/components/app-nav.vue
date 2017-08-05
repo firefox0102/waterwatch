@@ -1,7 +1,26 @@
 <template>
   <header>
-    <div class="md-transparent app-nav">
+    <v-navigation-drawer
+      class="pb-0 app-sidebar"
+      floating
+      absolute
+      height="calc(100vh - 64px)"
+      clipped
+      enable-resize-watcher
+      v-model="controls.sidebarOpen"
+    >
+    <router-link
+      v-for="(item, index) in arrNav"
+      v-bind:to="item.path"
+      v-bind:key="index">
+      {{ item.title }}
+    </router-link>
+    </v-navigation-drawer>
+    <div class="app-nav">
       <div class="app-nav__primary-section">
+        <v-toolbar-title class="app-sidebar-toggle">
+          <v-toolbar-side-icon @click.native.stop="controls.sidebarOpen = !controls.sidebarOpen"></v-toolbar-side-icon>
+        </v-toolbar-title>
         <img class="app-nav__crk-logo" src="../assets/client-logo-crk.png"/>
         <img class="app-nav__nww-logo" src="../assets/nww-logo.png"/>
       </div>
@@ -17,7 +36,8 @@
         </router-link>
 
         <a v-if="user" class="app-nav__link">
-          <v-btn flat class="app-nav__button" v-on:click.native="logout()">
+          <v-btn flat class="app-nav__button--small" v-on:click.native="logout()">
+            <i class="material-icons">lock</i>
             Sign Out
           </v-btn>
         </a>
@@ -43,6 +63,9 @@
     },
     data () {
       return {
+        controls: {
+          sidebarOpen: false
+        },
         arrNav: [
           {
             title: 'Log Data',
@@ -89,21 +112,42 @@
 $navbar-height: 64px;
 $nav-split-breakpoint: 820px;
 
+.app-sidebar {
+  display: block;
+  z-index: 5;
+
+  margin-top: $navbar-height;
+
+  @media screen and (min-width: $nav-split-breakpoint) {
+    display: none;
+  }
+}
+
+.app-sidebar-toggle {
+  display: block;
+
+  @media screen and (min-width: $nav-split-breakpoint) {
+    display: none;
+  }
+}
+
 .app-nav {
   display: flex;
+  position: relative;
+  z-index: 6;
 
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
-  height: calc($navbar-height * 2);
+  height: $navbar-height;
+  max-height: $navbar-height;
   min-height: $navbar-height;
   padding: 0;
 
+  background-color: #fff;
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(155, 155, 155, 0.5);
 
   @media screen and (min-width: $nav-split-breakpoint) {
-    flex-direction: row;
-    height: $navbar-height;
     padding: 0 66px;
   }
 
@@ -171,13 +215,15 @@ $nav-split-breakpoint: 820px;
   }
 
   &__secondary-section {
-    display: flex;
+    display: none;
 
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
 
     @media screen and (min-width: $nav-split-breakpoint) {
+      display: flex;
+
       flex-wrap: nowrap;
       justify-content: flex-end;
       width: 70%;
