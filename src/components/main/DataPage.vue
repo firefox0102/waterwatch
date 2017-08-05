@@ -28,8 +28,8 @@
       <div class="data-sidebar__body">
         <div
           class="data-sidebar-list-item"
-          v-for=" item in items">
-            {{ item.stationName }}
+          v-for=" site in collectionSites">
+            {{ site.stationName }}
         </div>
       </div>
     </aside>
@@ -166,8 +166,15 @@
 </template>
 
 <script>
+import { db } from '../../helpers/firebase'
+
+let collectionSitesRef = db.ref('collectionSites')
+
 export default {
   name: 'data-page',
+  firebase: {
+    collectionSites: collectionSitesRef
+  },
   data: function () {
     return {
       filters: {
@@ -178,75 +185,7 @@ export default {
         filterSites: [ 'HUC', 'Lab', 'Partner' ],
         startDate: null,
         endDate: null
-      },
-      items: [
-        {
-          selected: false,
-          stationName: 'Station 1',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 1
-        },
-        {
-          selected: false,
-          stationName: 'Station 2',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 2
-        },
-        {
-          selected: false,
-          stationName: 'Station 3',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 3
-        },
-        {
-          selected: false,
-          stationName: 'Station 4',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 4
-        },
-        {
-          selected: false,
-          stationName: 'Station 5',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 5
-        },
-        {
-          selected: false,
-          stationName: 'Station 6',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 6
-        }
-      ]
+      }
     }
   },
   methods: {
