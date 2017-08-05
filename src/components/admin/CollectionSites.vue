@@ -28,50 +28,52 @@
                 v-model="controls.search"
                 placeholder="Search collection sites"/>
             </div>
-            <span class="site-reports-body-toolbar__text-content">Select date range:</span>
-            <div class="site-reports-toolbar-datepicker">
-              <v-dialog
-                persistent
-                v-model="controls.startDateModal"
-                lazy
-                full-width>
-                <div
-                  class="site-reports-toolbar-datepicker__activator"
-                  slot="activator">
-                  <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.startDate ? controls.startDate : "Start Date"}}</span>
-                  <i class="fa fa-calendar"></i>
-                </div>
-                <v-date-picker v-model="controls.startDate" scrollable >
-                  <template scope="{ save, cancel }">
-                    <v-card-actions>
-                      <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                      <v-btn flat primary @click.native="save()">Save</v-btn>
-                    </v-card-actions>
-                  </template>
-                </v-date-picker>
-              </v-dialog>
-            </div>
-            <div class="site-reports-toolbar-datepicker">
-              <v-dialog
-                persistent
-                v-model="controls.endDateModal"
-                lazy
-                full-width>
-                <div
-                  class="site-reports-toolbar-datepicker__activator"
-                  slot="activator">
-                  <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.endDate ? controls.endDate : "End Date"}}</span>
-                  <i class="fa fa-calendar"></i>
-                </div>
-                <v-date-picker v-model="controls.endDate" scrollable >
-                  <template scope="{ save, cancel }">
-                    <v-card-actions>
-                      <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                      <v-btn flat primary @click.native="save()">Save</v-btn>
-                    </v-card-actions>
-                  </template>
-                </v-date-picker>
-              </v-dialog>
+            <div class="site-reports-datepickers">
+              <span class="site-reports-body-toolbar__text-content">Select date range:</span>
+              <div class="site-reports-toolbar-datepicker">
+                <v-dialog
+                  persistent
+                  v-model="controls.startDateModal"
+                  lazy
+                  full-width>
+                  <div
+                    class="site-reports-toolbar-datepicker__activator"
+                    slot="activator">
+                    <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.startDate ? controls.startDate : "Start Date"}}</span>
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <v-date-picker v-model="controls.startDate" scrollable >
+                    <template scope="{ save, cancel }">
+                      <v-card-actions>
+                        <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
+                        <v-btn flat primary @click.native="save()">Save</v-btn>
+                      </v-card-actions>
+                    </template>
+                  </v-date-picker>
+                </v-dialog>
+              </div>
+              <div class="site-reports-toolbar-datepicker">
+                <v-dialog
+                  persistent
+                  v-model="controls.endDateModal"
+                  lazy
+                  full-width>
+                  <div
+                    class="site-reports-toolbar-datepicker__activator"
+                    slot="activator">
+                    <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.endDate ? controls.endDate : "End Date"}}</span>
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <v-date-picker v-model="controls.endDate" scrollable >
+                    <template scope="{ save, cancel }">
+                      <v-card-actions>
+                        <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
+                        <v-btn flat primary @click.native="save()">Save</v-btn>
+                      </v-card-actions>
+                    </template>
+                  </v-date-picker>
+                </v-dialog>
+              </div>
             </div>
           </div>
           <div class="site-reports-body-toolbar__secondary-content">
@@ -277,8 +279,6 @@ $toolbar-breakpoint: 1040px;
   flex-wrap: wrap;
   justify-content: space-between;
 
-  margin-bottom: 13px;
-
   @media screen and (min-width: $toolbar-breakpoint) {
     flex-direction: row;
     flex-wrap: nowrap;
@@ -286,10 +286,11 @@ $toolbar-breakpoint: 1040px;
 
   &__primary-content {
     display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
 
-    height: 36px;
+    align-items: center;
+    flex-wrap: wrap;
+
+    height: auto;
     width: 100%;
 
     @media screen and (min-width: $toolbar-breakpoint) {
@@ -318,9 +319,18 @@ $toolbar-breakpoint: 1040px;
   }
 }
 
+.site-reports-datepickers {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 13px;
+}
+
 .site-reports-toolbar-search {
   display: flex;
   height: 36px;
+  margin-bottom: 13px;
   margin-right: 29px;
   padding: 6px 16px;
   width: 330px;
@@ -345,6 +355,7 @@ $toolbar-breakpoint: 1040px;
 }
 
 .site-reports-toolbar-export {
+  margin-bottom: 13px;
   width: 100%;
 
   color: #7fba00;
