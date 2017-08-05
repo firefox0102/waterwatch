@@ -46,7 +46,16 @@
           <div
             v-if="filters.huc"
             class="filter-body">
-            HUC Section
+            <div
+              v-for="huc in hucList"
+              class="filter-body__list-item">
+              <input
+                type="checkbox"
+                v-bind:value="huc"
+                v-model="filters.hucFilters"
+              ></input>
+              {{ huc }}
+            </div>
           </div>
         </div>
 
@@ -67,7 +76,16 @@
           <div
             v-if="filters.lab"
             class="filter-body">
-            Labs Section
+            <div
+              v-for="lab in labs"
+              class="filter-body__list-item">
+              <input
+                type="checkbox"
+                v-bind:value="lab['.value']"
+                v-model="filters.labFilters"
+              ></input>
+              {{ lab['.value'] }}
+            </div>
           </div>
         </div>
 
@@ -88,7 +106,16 @@
           <div
             v-if="filters.partner"
             class="filter-body">
-            Partners Section
+            <div
+              v-for="partner in partnerList"
+              class="filter-body__list-item">
+              <input
+                type="checkbox"
+                v-bind:value="partner"
+                v-model="filters.partnerFilters"
+              ></input>
+              {{ partner }}
+            </div>
           </div>
         </div>
       </div>
@@ -239,14 +266,28 @@
 import { db } from '../../helpers/firebase'
 
 let collectionSitesRef = db.ref('collectionSites')
+let labsRef = db.ref('labs')
 
 export default {
   name: 'data-page',
   firebase: {
-    collectionSites: collectionSitesRef
+    collectionSites: collectionSitesRef,
+    labs: labsRef
+  },
+  watch: {
+    collectionSites: {
+      deep: true,
+      handler (newArray) {
+        this.partnerList = this._.uniq(this._.map(this.collectionSites, 'collectionPartner'))
+        this.hucList = this._.uniq(this._.map(this.collectionSites, 'huc'))
+        console.log(this.partnerList)
+        console.log(this.hucList)
+      }
+    }
   },
   data: function () {
     return {
+      collectionSites: [], // Placeholder for sites watching
       controls: {
         showFilters: false,
         selectedControl: 'dateRange',
@@ -605,15 +646,16 @@ $data-sidebar-width: 240px;
 
   border-bottom: 1px solid #e4e4e4;
   cursor: pointer;
+  font-size: 16px;
 
   &--secondary {
     @extend .filters-toggle;
     background-color: #4d86a0;
+    font-size: 14px;
   }
 
   &__title {
     color: #fff;
-    font-size: 14px;
   }
 
   &__icon {
@@ -622,6 +664,28 @@ $data-sidebar-width: 240px;
 
     &--collapsed {
       transform: rotate(270deg);
+    }
+  }
+}
+
+.filter-body {
+  padding: 10px 18px;
+
+  background-color: #dfdfdf;
+
+  &__list-item {
+    display: inline-flex;
+
+    align-items: center;
+
+    height: 16px;
+    width: 91px;
+
+    color: #4a4a4a;
+    font-size: 11px;
+
+    input[type=checkbox] { //I know this isn't great BEM but I'm okay with it for now
+      margin-right: 8px;
     }
   }
 }
