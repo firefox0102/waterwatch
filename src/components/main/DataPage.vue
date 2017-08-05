@@ -438,11 +438,13 @@ $data-sidebar-width: 240px;
 }
 
 .data-sidebar-list-item {
-  display: flex;
+  display: block;
 
   align-items: center;
   justify-content: center;
   height: 38px;
+  overflow: hidden;
+  padding: 8px 15px 8px 20px;
   width: 100%;
 
   border-bottom: 1px solid #e4e4e4;
@@ -450,6 +452,8 @@ $data-sidebar-width: 240px;
   cursor: pointer;
   font-size: 13px;
   line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   &--active,
   &:hover {
