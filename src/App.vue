@@ -97,6 +97,10 @@ body {
     background-color: #004d71;
   }
 
+  &__wrapper {
+    z-index: 0;
+  }
+
   .input-group__hint { // Vuetify style override
     color: #8e7630 !important;
   }

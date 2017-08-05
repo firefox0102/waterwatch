@@ -9,12 +9,29 @@
       enable-resize-watcher
       v-model="controls.sidebarOpen"
     >
-    <router-link
-      v-for="(item, index) in arrNav"
-      v-bind:to="item.path"
-      v-bind:key="index">
-      {{ item.title }}
-    </router-link>
+      <router-link
+        class="app-sidebar__link"
+        v-for="(item, index) in arrNav"
+        v-if="item.auth === !!user"
+        v-bind:to="item.path"
+        v-bind:key="index">
+        <i class="material-icons app-sidebar__icon">{{item.icon}}</i>
+        {{ item.title }}
+      </router-link>
+      <a
+        v-if="user"
+        class="app-sidebar__link"
+        v-on:click="logout()">
+        <i class="material-icons app-sidebar__icon">lock</i>
+        Sign Out
+      </a>
+      <router-link
+        v-else
+        class="app-sidebar__link"
+        to="/signIn">
+        <i class="material-icons app-sidebar__icon">lock</i>
+        Admin
+      </router-link>
     </v-navigation-drawer>
     <div class="app-nav">
       <div class="app-nav__primary-section">
@@ -71,25 +88,29 @@
             title: 'Log Data',
             id: '1',
             auth: true,
-            path: '/logData'
+            path: '/logData',
+            icon: 'format_align_left'
           },
           {
             title: 'Collection Sites',
             id: '2',
             auth: true,
-            path: '/collectionSites'
+            path: '/collectionSites',
+            icon: 'location_on'
           },
           {
             title: 'Data',
             id: '3',
             auth: false,
-            path: '/dataPage'
+            path: '/dataPage',
+            icon: 'data_usage'
           },
           {
             title: 'About',
             id: '4',
             auth: false,
-            path: '/about'
+            path: '/about',
+            icon: 'info_about'
           }
         ]
       }
@@ -113,13 +134,47 @@ $navbar-height: 64px;
 $nav-split-breakpoint: 820px;
 
 .app-sidebar {
-  display: block;
+  display: flex;
   z-index: 5;
 
+  flex-direction: column;
   margin-top: $navbar-height;
 
   @media screen and (min-width: $nav-split-breakpoint) {
     display: none;
+  }
+
+  &__link {
+    display: flex;
+
+    margin: 12px 0 12px 16px;
+    width: 100%;
+
+    color: #004d71;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-decoration: none;
+
+    &:nth-of-type(1) {
+      margin-top: 24px;
+    }
+
+    &.router-link-active,
+    &.router-link-active i {
+      color: #7fba00;
+    }
+  }
+
+  &__icon {
+    margin-right: 20px;
+    width: 24px;
+
+    color: #004d71;
+    font-size: 24px;
+    line-height: 24px;
+    text-align: center;
   }
 }
 
