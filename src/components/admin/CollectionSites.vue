@@ -259,12 +259,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+@import "../../scss/colors";
+
 $toolbar-datepicker-height: 36px;
 $toolbar-breakpoint: 1040px;
 
 .site-reports-wrapper {
   padding: 0 24px 20px;
-  background-color: #f7f7f7;
+  background-color: $color-bone;
 }
 
 .site-reports-body {
@@ -335,7 +337,7 @@ $toolbar-breakpoint: 1040px;
   padding: 6px 16px;
   width: 330px;
 
-  background-color: #fff;
+  background-color: $color-finn-white;
   border-radius: 2px;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 
@@ -358,7 +360,7 @@ $toolbar-breakpoint: 1040px;
   margin-bottom: 13px;
   width: 100%;
 
-  color: #7fba00;
+  color: $color-nww-green;
 
   &__activator {
     display: flex;
@@ -390,7 +392,7 @@ $toolbar-breakpoint: 1040px;
   }
 
   &__header {
-    color: #004d71;
+    color: $color-iron-sea;
     font-size: 32px;
     font-weight: 300;
     letter-spacing: 1px;

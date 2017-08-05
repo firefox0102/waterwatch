@@ -100,6 +100,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../scss/colors";
 $small-screen-breakpoint: 401px;
 
 .sign-in {
@@ -121,7 +122,7 @@ $small-screen-breakpoint: 401px;
   padding: 28px 30px;
   width: 100%;
 
-  background-color: #004d71;
+  background-color: $color-iron-sea;
 
   @media screen and (min-width: $small-screen-breakpoint) {
     max-width: 360px;
@@ -151,7 +152,7 @@ $small-screen-breakpoint: 401px;
   padding: 65px 30px 46px;
   width: 100%;
 
-  background-color: #fff;
+  background-color: $color-finn-white;
   box-shadow: 0 1px 3px 0 rgba(155, 155, 155, 0.5);
 
   @media screen and (min-width: $small-screen-breakpoint) {

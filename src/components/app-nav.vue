@@ -130,6 +130,8 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+@import "../scss/colors";
+
 $navbar-height: 64px;
 $nav-split-breakpoint: 820px;
 
@@ -150,7 +152,7 @@ $nav-split-breakpoint: 820px;
     margin: 12px 0 12px 16px;
     width: 100%;
 
-    color: #004d71;
+    color: $color-iron-sea;
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
@@ -163,7 +165,7 @@ $nav-split-breakpoint: 820px;
 
     &.router-link-active,
     &.router-link-active i {
-      color: #7fba00;
+      color: $color-nww-green;
     }
   }
 
@@ -171,7 +173,7 @@ $nav-split-breakpoint: 820px;
     margin-right: 20px;
     width: 24px;
 
-    color: #004d71;
+    color: $color-iron-sea;
     font-size: 24px;
     line-height: 24px;
     text-align: center;
@@ -199,7 +201,7 @@ $nav-split-breakpoint: 820px;
   min-height: $navbar-height;
   padding: 0;
 
-  background-color: #fff;
+  background-color: $color-finn-white;
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(155, 155, 155, 0.5);
 
   @media screen and (min-width: $nav-split-breakpoint) {
@@ -214,22 +216,22 @@ $nav-split-breakpoint: 820px;
     height: $navbar-height;
     margin: 0;
 
-    color: #004d71;
+    color: $color-iron-sea;
     font-size: 14px;
     font-weight: 500;
     text-align: center;
     text-decoration: none !important;
 
     &:hover {
-      border-bottom: 2px solid #7fba00;
-      color: #7fba00;
+      border-bottom: 2px solid $color-nww-green;
+      color: $color-nww-green;
     }
 
     &--small {
       height: $navbar-height;
       margin: 0;
 
-      color: #004d71;
+      color: $color-iron-sea;
       font-size: 12px;
       font-weight: 500;
       text-align: center;

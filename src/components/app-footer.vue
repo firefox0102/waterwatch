@@ -67,7 +67,7 @@ export default {
 %font-awesome-icon {
   height: 20px;
 
-  color: #fff;
+  color: $color-finn-white;
   font-family: FontAwesome;
   font-size: 20px;
   line-height: 20px;
@@ -76,7 +76,7 @@ export default {
 .footer-info {
   height: 48px;
 
-  color: #fff;
+  color: $color-finn-white;
   text-align: center;
 
   &__text {

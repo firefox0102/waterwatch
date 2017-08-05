@@ -397,6 +397,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../scss/colors";
+
 .log-data {
   margin: 24px;
   box-shadow: 0 1px 3px 0 rgba(155, 155, 155, 0.5);
@@ -416,18 +418,18 @@ export default {
   margin-bottom: 32px;
   width: 100%;
 
-  color: #4d86a0;
+  color: $color-warlock;
   font-size: 13px;
   line-height: 16px;
 }
 
 .log-data-confirm {
   &__header {
-    color: #004d71;
+    color: $color-iron-sea;
   }
 
   &__cancel {
-    color: #7fba00;
+    color: $color-nww-green;
   }
 }
 </style>

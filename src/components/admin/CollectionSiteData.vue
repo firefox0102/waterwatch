@@ -138,6 +138,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+@import "../../scss/colors";
+
 .collection-sites-header {
   display: flex;
   justify-content: space-between;
@@ -148,7 +150,7 @@ export default {
   }
 
   &__header {
-    color: #004d71;
+    color: $color-iron-sea;
     font-size: 32px;
     font-weight: 300;
     letter-spacing: 1px;
@@ -156,13 +158,13 @@ export default {
   }
 
   &__subheader {
-    color: #8e7630;
+    color: $color-bumble-bee;
     font-size: 13px;
     line-height: 16px;
   }
 
   &__subheader-wrapper {
-    color: #8e7630;
+    color: $color-bumble-bee;
     font-size: 13px;
     line-height: 16px;
   }
@@ -171,7 +173,7 @@ export default {
 .collection-site-body {
   &__header {
     height: 16px;
-    color: #4a4a4a;
+    color: $color-storm-cloud;
     font-size: 24px;
     line-height: 16px;
   }

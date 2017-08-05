@@ -325,6 +325,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../scss/colors";
+
 $data-sidebar-width: 240px;
 
 .data-page-wrapper {
@@ -412,7 +414,7 @@ $data-sidebar-width: 240px;
   height: 100%;
   width: 240px;
 
-  background: #fff;
+  background: $color-finn-white;
   box-shadow: 0 2px 4px 0 rgba(155, 155, 155, 0.5);
   transition: 0.5s;
 
@@ -423,7 +425,7 @@ $data-sidebar-width: 240px;
     padding-top: 10px;
     width: 100%;
 
-    background-color: #004d71;
+    background-color: $color-iron-sea;
   }
 
   &__body {
@@ -448,7 +450,7 @@ $data-sidebar-width: 240px;
   height: 36px;
   width: 16px;
 
-  background-color: #004d71;
+  background-color: $color-iron-sea;
   border-radius: 0 2px 2px 0;
   cursor: pointer;
 
@@ -456,7 +458,7 @@ $data-sidebar-width: 240px;
     height: 20px;
     width: 20px;
 
-    color: #fff;
+    color: $color-finn-white;
     font-size: 20px;
     line-height: 20px;
     transform: rotate(450deg);
@@ -472,7 +474,7 @@ $data-sidebar-width: 240px;
   padding: 10px 15px;
   width: calc(100% - 20px);
 
-  background-color: #fff;
+  background-color: $color-finn-white;
   border-radius: 2px;
 
   &__input {
@@ -500,8 +502,8 @@ $data-sidebar-width: 240px;
   padding: 8px 15px 8px 20px;
   width: 100%;
 
-  border-bottom: 1px solid #e4e4e4;
-  color: #4a4a4a;
+  border-bottom: 1px solid $color-dust;
+  color: $color-storm-cloud;
   cursor: pointer;
   font-size: 13px;
   line-height: 20px;
@@ -511,7 +513,7 @@ $data-sidebar-width: 240px;
   &--active,
   &:hover {
     background-color: rgba(77, 134, 160, 0.1);
-    color: #004d71;
+    color: $color-iron-sea;
     font-size: 13px;
     font-weight: 500;
     line-height: 20px;
@@ -526,7 +528,7 @@ $data-sidebar-width: 240px;
   margin-bottom: 24px;
   width: 80%;
 
-  background-color: #fff;
+  background-color: $color-finn-white;
   box-shadow: 0 2px 4px 0 rgba(155, 155, 155, 0.5);
 
   @media screen and (min-width: 850px) {
@@ -542,8 +544,8 @@ $data-sidebar-width: 240px;
   padding-left: 16px;
   width: 100%;
 
-  background-color: #004d71;
-  color: #fff;
+  background-color: $color-iron-sea;
+  color: $color-finn-white;
   font-size: 13px;
   font-weight: 400;
 }
@@ -556,7 +558,7 @@ $data-sidebar-width: 240px;
   height: 108px;
   overflow: hidden;
 
-  border-bottom: 1px solid #e4e4e4;
+  border-bottom: 1px solid $color-dust;
   transition: all 0.33s ease;
 
   &:nth-of-type(3) {
@@ -576,14 +578,16 @@ $data-sidebar-width: 240px;
     height: 36px;
     padding-left: 16px;
 
-    color: #4a4a4a;
+    color: $color-storm-cloud;
     cursor: pointer;
     font-size: 11px;
     font-weight: 500;
   }
 
   &__title {
-    color: #7fba00;
+    padding-bottom: 4px;
+
+    color: $color-nww-green;
   }
 
   &__content {
@@ -592,7 +596,7 @@ $data-sidebar-width: 240px;
     height: 82px;
     padding: 0 16px;
 
-    color: #4a4a4a;
+    color: $color-storm-cloud;
     font-size: 13px;
   }
 }
@@ -604,7 +608,7 @@ $data-sidebar-width: 240px;
   padding-top: 13px;
   width: 80%;
 
-  background-color: #fff;
+  background-color: $color-finn-white;
   box-shadow: 0 2px 4px 0 rgba(155, 155, 155, 0.5);
 
   @media screen and (min-width: 850px) {
@@ -625,14 +629,14 @@ $data-sidebar-width: 240px;
 
     height: 21px;
 
-    color: #004d71;
+    color: $color-iron-sea;
     font-size: 18px;
     line-height: 21px;
   }
 
   &__secondary {
     height: 13px;
-    color: #004d71;
+    color: $color-iron-sea;
     font-size: 11px;
     line-height: 13px;
 
@@ -645,7 +649,7 @@ $data-sidebar-width: 240px;
   &__icon {
     height: 16px;
     width: 20px;
-    color: #7fba00;
+    color: $color-nww-green;
     font-size: 16px;
     line-height: 16px;
     text-align: center;
@@ -661,22 +665,22 @@ $data-sidebar-width: 240px;
   height: 36px;
   padding: 10px 20px;
 
-  border-bottom: 1px solid #e4e4e4;
+  border-bottom: 1px solid $color-dust;
   cursor: pointer;
   font-size: 16px;
 
   &--secondary {
     @extend .filters-toggle;
-    background-color: #4d86a0;
+    background-color: $color-warlock;
     font-size: 14px;
   }
 
   &__title {
-    color: #fff;
+    color: $color-finn-white;
   }
 
   &__icon {
-    color: #fff;
+    color: $color-finn-white;
     font-size: 20px;
 
     &--collapsed {
@@ -703,7 +707,7 @@ $data-sidebar-width: 240px;
     overflow: hidden;
     width: 100%;
 
-    color: #4a4a4a;
+    color: $color-storm-cloud;
     font-size: 11px;
     text-overflow: ellipsis;
     white-space: nowrap;
