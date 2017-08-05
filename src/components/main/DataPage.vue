@@ -237,11 +237,16 @@
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
               E. Coli
+              <i class="material-icons graph-card-title__icon">info_outline</i>
             </span>
-            <span class="graph-card-title__secondary">
-              (MPN/100mL)
-            </span>
-            <i class="material-icons graph-card-title__icon">info_outline</i>
+            <div>
+              <span class="graph-card-title__secondary--strong">
+                Last Result:
+              </span>
+              <span class="graph-card-title__secondary">
+                TODO GET RESULT
+              </span>
+            </div>
           </div>
         </div>
 
@@ -249,12 +254,17 @@
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
-              E. Coli
+              Turbidity
+              <i class="material-icons graph-card-title__icon">info_outline</i>
             </span>
-            <span class="graph-card-title__secondary">
-              (MPN/100mL)
-            </span>
-            <i class="material-icons graph-card-title__icon">info_outline</i>
+            <div>
+              <span class="graph-card-title__secondary--strong">
+                Last Result:
+              </span>
+              <span class="graph-card-title__secondary">
+                TODO GET RESULT
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -280,8 +290,6 @@ export default {
       handler (newArray) {
         this.partnerList = this._.uniq(this._.map(this.collectionSites, 'collectionPartner'))
         this.hucList = this._.uniq(this._.map(this.collectionSites, 'huc'))
-        console.log(this.partnerList)
-        console.log(this.hucList)
       }
     }
   },
@@ -590,7 +598,7 @@ $data-sidebar-width: 240px;
 }
 
 .graph-card {
-  height: 232px;
+  height: 280px;
   margin-bottom: 24px;
   padding-left: 9px;
   padding-top: 13px;
@@ -606,29 +614,38 @@ $data-sidebar-width: 240px;
 
 .graph-card-title {
   display: flex;
-  align-items: flex-end;
+
+  align-items: flex-start;
+  flex-direction: column;
 
   &__primary {
-    height: 21px;
-    margin-right: 6px;
-    width: 52px;
+    display: flex;
 
-    color: #7fba00;
+    align-items: center;
+
+    height: 21px;
+
+    color: #004d71;
     font-size: 18px;
+    line-height: 21px;
   }
 
   &__secondary {
     height: 13px;
-    width: 71px;
     color: #004d71;
     font-size: 11px;
     line-height: 13px;
+
+    &--strong {
+      @extend .graph-card-title__secondary;
+      font-weight: 500;
+    }
   }
 
   &__icon {
     height: 16px;
     width: 20px;
-    color: #004d71;
+    color: #7fba00;
     font-size: 16px;
     line-height: 16px;
     text-align: center;
@@ -669,20 +686,27 @@ $data-sidebar-width: 240px;
 }
 
 .filter-body {
+  display: flex;
+
+  flex-direction: column;
+
   padding: 10px 18px;
 
   background-color: #dfdfdf;
 
   &__list-item {
-    display: inline-flex;
+    display: block;
 
     align-items: center;
 
     height: 16px;
-    width: 91px;
+    overflow: hidden;
+    width: 100%;
 
     color: #4a4a4a;
     font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     input[type=checkbox] { //I know this isn't great BEM but I'm okay with it for now
       margin-right: 8px;
