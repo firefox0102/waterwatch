@@ -28,8 +28,9 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+@import "../scss/colors";
+
 .icon-group {
   display: flex;
 
