@@ -1,6 +1,6 @@
 <template>
   <div class="data-page-wrapper">
-    <aside class="data-sidebar" v-bind:class="{ 'data-sidebar--collapsed': filters.sidebar}">
+    <aside class="data-sidebar" v-bind:class="{ 'data-sidebar--collapsed': controls.sidebar}">
       <div class="data-sidebar__header">
         <div
           class="data-sidebar-toggle"
@@ -8,23 +8,92 @@
           <i class="data-sidebar-toggle__caret material-icons">arrow_drop_down</i>
         </div>
         <div class="data-sidebar-search">
-          <input class="data-sidebar-search__input" v-model="filters.search" placeholder="Search collection sites" />
+          <input class="data-sidebar-search__input" v-model="controls.search" placeholder="Search collection sites" />
           <i class="data-sidebar-search__icon material-icons">search</i>
         </div>
-        <div class="data-sidebar-filter-text">
-          Showing all sites
-        </div>
-        <div class="data-sidebar-filter">
-          <v-select
-              v-bind:items="filters.filterSites"
-              v-model="filters.selectedItem"
-              label="Filter"
-              dark
-              single-line
-              bottom
-            ></v-select>
+        <div
+          class="filters-toggle"
+          v-on:click="controls.showFilters = !controls.showFilters">
+          <span class="filters-toggle__title">
+            Filter
+          </span>
+          <i
+            class="material-icons filters-toggle__icon"
+            v-bind:class="{'filters-toggle__icon--collapsed': !controls.showFilters }">
+            arrow_drop_down
+          </i>
         </div>
       </div>
+
+      <!-- Filter Sections -->
+      <div
+        v-if="controls.showFilters"
+        class="filters">
+        <!-- HUC Filter -->
+        <div class="filters__section">
+          <div
+            v-on:click="filters.huc = !filters.huc"
+            class="filters-toggle--secondary">
+            <span class="filters-toggle__title">
+              HUC
+            </span>
+            <i
+              class="material-icons filters-toggle__icon"
+              v-bind:class="{'filters-toggle__icon--collapsed': !filters.huc }">
+              arrow_drop_down
+            </i>
+          </div>
+          <div
+            v-if="filters.huc"
+            class="filter-body">
+            HUC Section
+          </div>
+        </div>
+
+        <!-- Lab Filter -->
+        <div class="filters__section">
+          <div
+            v-on:click="filters.lab = !filters.lab"
+            class="filters-toggle--secondary">
+            <span class="filters-toggle__title">
+              Lab
+            </span>
+            <i
+              class="material-icons filters-toggle__icon"
+              v-bind:class="{'filters-toggle__icon--collapsed': !filters.lab }">
+              arrow_drop_down
+            </i>
+          </div>
+          <div
+            v-if="filters.lab"
+            class="filter-body">
+            Labs Section
+          </div>
+        </div>
+
+        <!-- Partner Filter -->
+        <div class="filters__section">
+          <div
+            v-on:click="filters.partner = !filters.partner"
+            class="filters-toggle--secondary">
+            <span class="filters-toggle__title">
+              Partner
+            </span>
+            <i
+              class="material-icons filters-toggle__icon"
+              v-bind:class="{'filters-toggle__icon--collapsed': !filters.partner }">
+              arrow_drop_down
+            </i>
+          </div>
+          <div
+            v-if="filters.partner"
+            class="filter-body">
+            Partners Section
+          </div>
+        </div>
+      </div>
+
+      <!-- List items -->
       <div class="data-sidebar__body">
         <div
           class="data-sidebar-list-item"
@@ -33,7 +102,8 @@
         </div>
       </div>
     </aside>
-    <div class="data-body" v-bind:class="{ 'data-body--collapsed': filters.sidebar}">
+
+    <div class="data-body" v-bind:class="{ 'data-body--collapsed': controls.sidebar}">
       <div class="data-body__dynamic-column">
         <div class="map-wrapper">
 
@@ -49,29 +119,29 @@
           <div class="controls-card-body">
             <div
               class="controls-card-control-group"
-              v-bind:class="{ 'controls-card-control-group--collapsed': filters.selectedControl != 'dateRange'}">
+              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControl != 'dateRange'}">
               <div
                 class="controls-card-control-group__header"
-                v-on:click="filters.selectedControl = 'dateRange'">
+                v-on:click="controls.selectedControl = 'dateRange'">
                 Date Range
                 <i class="material-icons">arrow_drop_up</i>
               </div>
               <div class="controls-card-control-group__content">
-                Select date range:
+                <span class="controls-card-control-group__title">Select date range:</span>
                 <div class="date-picker-wrapper">
                   <div class="site-reports-toolbar-datepicker">
                     <v-dialog
                       persistent
-                      v-model="filters.startDateModal"
+                      v-model="controls.startDateModal"
                       lazy
                       full-width>
                       <div
                         class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
-                        <span class="site-reports-toolbar-datepicker__activator-text">{{ filters.startDate ? filters.startDate : "Start Date"}}</span>
+                        <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.startDate ? controls.startDate : "Start Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <v-date-picker v-model="filters.startDate" scrollable >
+                      <v-date-picker v-model="controls.startDate" scrollable >
                         <template scope="{ save, cancel }">
                           <v-card-actions>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -84,16 +154,16 @@
                   <div class="site-reports-toolbar-datepicker">
                     <v-dialog
                       persistent
-                      v-model="filters.endDateModal"
+                      v-model="controls.endDateModal"
                       lazy
                       full-width>
                       <div
                         class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
-                        <span class="site-reports-toolbar-datepicker__activator-text">{{ filters.endDate ? filters.endDate : "End Date"}}</span>
+                        <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.endDate ? controls.endDate : "End Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <v-date-picker v-model="filters.endDate" scrollable >
+                      <v-date-picker v-model="controls.endDate" scrollable >
                         <template scope="{ save, cancel }">
                           <v-card-actions>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -108,10 +178,10 @@
             </div>
             <div
               class="controls-card-control-group"
-              v-bind:class="{ 'controls-card-control-group--collapsed': filters.selectedControl != 'report'}">
+              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControl != 'report'}">
               <div
                 class="controls-card-control-group__header"
-                v-on:click="filters.selectedControl = 'report'">
+                v-on:click="controls.selectedControl = 'report'">
                 Reports
                 <i class="material-icons">arrow_drop_up</i>
               </div>
@@ -121,10 +191,10 @@
             </div>
             <div
               class="controls-card-control-group"
-              v-bind:class="{ 'controls-card-control-group--collapsed': filters.selectedControl != 'mapLayer'}">
+              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControl != 'mapLayer'}">
               <div
                 class="controls-card-control-group__header"
-                v-on:click="filters.selectedControl = 'mapLayer'">
+                v-on:click="controls.selectedControl = 'mapLayer'">
                 Map Layer
                 <i class="material-icons">arrow_drop_up</i>
               </div>
@@ -177,7 +247,8 @@ export default {
   },
   data: function () {
     return {
-      filters: {
+      controls: {
+        showFilters: false,
         selectedControl: 'dateRange',
         sidebar: false,
         selectedItem: null,
@@ -185,12 +256,20 @@ export default {
         filterSites: [ 'HUC', 'Lab', 'Partner' ],
         startDate: null,
         endDate: null
+      },
+      filters: {
+        huc: false,
+        hucFilters: [],
+        lab: false,
+        labFilters: [],
+        partner: false,
+        partnerFilters: []
       }
     }
   },
   methods: {
     toggleSidebar: function (event) {
-      this.filters.sidebar = !this.filters.sidebar
+      this.controls.sidebar = !this.controls.sidebar
     }
   }
 }
@@ -291,8 +370,9 @@ $data-sidebar-width: 240px;
   &__header {
     position: relative;
 
-    height: 120px;
-    padding: 9px 10px;
+    height: 88px;
+    padding-top: 10px;
+    width: 100%;
 
     background-color: #004d71;
   }
@@ -319,14 +399,15 @@ $data-sidebar-width: 240px;
   height: 36px;
   width: 16px;
 
-  background-color: rgba(255, 255, 255, 1);
+  background-color: #004d71;
+  border-radius: 0 2px 2px 0;
   cursor: pointer;
 
   &__caret {
     height: 20px;
     width: 20px;
 
-    color: #9b9b9b;
+    color: #fff;
     font-size: 20px;
     line-height: 20px;
     transform: rotate(450deg);
@@ -338,9 +419,9 @@ $data-sidebar-width: 240px;
 
   align-items: center;
   height: 36px;
-  margin-bottom: 9px;
+  margin: 0 10px 6px;
   padding: 10px 15px;
-  width: 220px;
+  width: calc(100% - 20px);
 
   background-color: #fff;
   border-radius: 2px;
@@ -358,22 +439,6 @@ $data-sidebar-width: 240px;
     width: 18px;
     opacity: 0.54;
   }
-}
-
-.data-sidebar-filter {
-  color: #fff;
-
-  .input-group {
-    margin: 0;
-  }
-}
-
-.data-sidebar-filter-text {
-  height: 24px;
-  width: 100px;
-
-  color: #fff;
-  font-size: 11px;
 }
 
 .data-sidebar-list-item {
@@ -456,14 +521,20 @@ $data-sidebar-width: 240px;
 
   &__header {
     display: flex;
+
     align-items: center;
+    justify-content: space-between;
     height: 36px;
     padding-left: 16px;
 
-    color: #7fba00;
+    color: #4a4a4a;
     cursor: pointer;
     font-size: 11px;
     font-weight: 500;
+  }
+
+  &__title {
+    color: #7fba00;
   }
 
   &__content {
@@ -520,6 +591,38 @@ $data-sidebar-width: 240px;
     font-size: 16px;
     line-height: 16px;
     text-align: center;
+  }
+}
+
+.filters-toggle {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-start;
+
+  height: 36px;
+  padding: 10px 20px;
+
+  border-bottom: 1px solid #e4e4e4;
+  cursor: pointer;
+
+  &--secondary {
+    @extend .filters-toggle;
+    background-color: #4d86a0;
+  }
+
+  &__title {
+    color: #fff;
+    font-size: 14px;
+  }
+
+  &__icon {
+    color: #fff;
+    font-size: 20px;
+
+    &--collapsed {
+      transform: rotate(270deg);
+    }
   }
 }
 </style>
