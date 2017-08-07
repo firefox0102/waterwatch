@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
-        <router-link to="/logData">
+        <router-link class="log-new-data-btn" to="/logData">
           <v-btn class="btn-nww--light">
             Log New Data
           </v-btn>
@@ -175,5 +175,9 @@ export default {
     font-size: 24px;
     line-height: 16px;
   }
+}
+
+.log-new-data-btn {
+  text-decoration: none;
 }
 </style>

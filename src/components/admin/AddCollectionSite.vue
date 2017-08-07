@@ -7,7 +7,7 @@
         Add New Site
       </v-btn>
       <v-card>
-        <v-toolbar dark class="primary">
+        <v-toolbar dark class="primary add-header-toolbar">
           <v-btn icon @click.native="controls.showDialog = false" dark>
             <v-icon>close</v-icon>
           </v-btn>
@@ -15,6 +15,7 @@
           <v-spacer></v-spacer>
         </v-toolbar>
         <form
+          class="add-form"
           v-on:submit.prevent="submitForm">
           <v-text-field label="Station Name" v-model="newCollectionSite.stationName" required></v-text-field>
           <v-text-field label="Logbook Abbreviation" v-model="newCollectionSite.logbookAbbv" required></v-text-field>
@@ -33,7 +34,7 @@
             item-value=".value"
             label="Lab"
             single-line
-            class="input-group--focused input-group--limit-height"
+            class="input-group--limit-height"
             bottom>
           </v-select>
           <v-btn
@@ -104,3 +105,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import "../../scss/colors";
+
+.add-header-toolbar {
+  background-color: $color-iron-sea !important;
+}
+
+.add-form {
+  padding: 10px;
+}
+</style>

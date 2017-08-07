@@ -359,7 +359,7 @@ $toolbar-breakpoint: 1040px;
   margin-bottom: 13px;
   width: 100%;
 
-  color: #7fba00;
+  color: $color-nww-green;
 
   &__activator {
     display: flex;
@@ -367,7 +367,7 @@ $toolbar-breakpoint: 1040px;
     justify-content: space-between;
     height: 28px;
     width: 100px;
-    border-bottom: 2px solid #9b9b9b;
+    border-bottom: 1px solid $color-nww-green;
   }
 
   &__activator-text {

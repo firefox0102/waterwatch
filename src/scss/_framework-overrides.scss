@@ -17,7 +17,7 @@
   }
 
   &:after {
-    background-color: #7fba00 !important;
+    background-color: $color-nww-green !important;
   }
 }
 
@@ -30,4 +30,9 @@ a.list__tile:hover,
   transition: 0;
   background-color: #EDF2F5 !important;
   color: #004D71 !important;
+}
+
+.picker__title,
+.picker--date .btn--active:after {
+  background: #004D71;
 }

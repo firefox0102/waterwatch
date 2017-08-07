@@ -161,7 +161,7 @@
               </v-text-field>
             </div>
 
-            <a class="log-data-total">Total Coliform = TODO</a>
+            <a class="log-data-total">Total Coliform = {{ getTotalColiform }}</a>
 
             <div class="log-data-section-wrapper">
               <div class="page-content-body__header">
@@ -181,7 +181,7 @@
               </v-text-field>
             </div>
 
-            <a class="log-data-total">Total E. coli = TODO</a>
+            <a class="log-data-total">Total E. coli = {{ getTotalEcoli }}</a>
 
             <div
               class="form-input-sub-text"
@@ -293,21 +293,46 @@ import { db } from '../../helpers/firebase'
 let collectionSitesRef = db.ref('collectionSites')
 let reportsRef = db.ref('reports')
 let labsRef = db.ref('labs')
-let lastReportRef = db.ref('reports').limitToLast(1)
 
 export default {
   name: 'log-data',
   firebase: {
     collectionSites: collectionSitesRef,
     reports: reportsRef,
-    labs: labsRef,
-    lastReport: lastReportRef
+    labs: labsRef
   },
-  mounted: function () {
-    this.newLogData.logbookNumber = this.getLastLogbookNumber()
+  watch: {
+    reports: {
+      deep: true,
+      handler (newArray) {
+        this.newLogData.logbookNumber = this.getLastLogbookNumber(newArray)
+      }
+    }
+  },
+  computed: {
+    getTotalColiform: function () {
+      var num1 = parseInt(this.newLogData.coliformLargeCells)
+      var num2 = parseInt(this.newLogData.coliformSmallCells)
+      if (num1 + num2) {
+        return num1 + num2
+      } else {
+        return ''
+      }
+    },
+    getTotalEcoli: function () {
+      var num1 = parseInt(this.newLogData.ecoliLargeCells)
+      var num2 = parseInt(this.newLogData.ecoliSmallCells)
+      if (num1 + num2) {
+        return num1 + num2
+      } else {
+        return ''
+      }
+    }
   },
   data: function () {
     return {
+      reports: [], // Placeholder for sites watching
+      lastReport: 1,
       controls: {
         showAdditionalParams: false,
         showDialog: false,
@@ -330,7 +355,7 @@ export default {
         incubationOut: '',
         incubationTemp: null,
         incubationTime: '',
-        logbookNumber: 1, // TODO list the logbookNumber
+        logbookNumber: 1,
         nitrate: null,
         phosphate: null,
         precipitation: null,
@@ -369,8 +394,8 @@ export default {
         this.snackbar.visible = true
       }
     },
-    getLastLogbookNumber: function () {
-      return (this.lastReport[0] ? this.lastReport[0].logbookNumber : 0) + 1
+    getLastLogbookNumber: function (newArray) {
+      return (newArray[newArray.length - 1] ? newArray[newArray.length - 1].logbookNumber : 0) + 1
     },
     resetForm: function () {
       var newLogNum = this.newLogData.logbookNumber + 1
@@ -399,6 +424,15 @@ export default {
         turbidity: null,
         totalChlorine: null,
         notes: ''
+      }
+    },
+    getTotal: function (num1, num2) {
+      var n1 = parseInt(num1)
+      var n2 = parseInt(num2)
+      if (n1 + n2 > 0) {
+        return n1 + n2
+      } else {
+        return ''
       }
     }
   }
