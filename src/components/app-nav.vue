@@ -203,7 +203,7 @@ $nav-split-breakpoint: 820px;
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(155, 155, 155, 0.5);
 
   @media screen and (min-width: $nav-split-breakpoint) {
-    padding: 0 66px;
+    padding: 0 40px;
   }
 
   &__link {
