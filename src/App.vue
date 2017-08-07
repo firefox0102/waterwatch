@@ -93,8 +93,8 @@ body {
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    height: 140px;
-    min-height: 140px;
+    height: 106px;
+    min-height: 106px;
 
     background-color: #004d71;
   }

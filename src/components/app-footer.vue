@@ -15,8 +15,7 @@
       </div>
       <div class="footer-info__text">
         Phone (404) 352-9828 |
-        <span class="footer-info__text--underline">info@chattachoochee.org</span>
-        .
+        <span class="footer-info__text--underline footer-info__text--active">info@chattachoochee.org</span>
       </div>
     </div>
   </footer>
@@ -28,14 +27,15 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+@import "../scss/colors";
+
 .icon-group {
   display: flex;
 
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
+  margin-bottom: 6px;
   width: 161px;
 
   &__facebook {
@@ -87,6 +87,10 @@ export default {
     &--underline {
       @extend .footer-info__text;
       text-decoration: underline;
+    }
+
+    &--active {
+      color: $color-nww-green;
     }
   }
 }
