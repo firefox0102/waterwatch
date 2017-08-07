@@ -1,0 +1,22 @@
+.application--light .input-group input,
+.input-group--text-field label { // Vuetify style override
+  color: $color-sad-grey !important;
+}
+
+.input-group--text-field label {
+  transform: translate3d(0, -18px, 0) scale(0.75) !important;
+}
+
+.input-group__hint { // Vuetify style override
+  color: $color-bumble-bee !important;
+}
+
+.input-group__details {
+  &:before {
+    color: $color-sad-grey;
+  }
+
+  &:after {
+    background-color: #7fba00 !important;
+  }
+}

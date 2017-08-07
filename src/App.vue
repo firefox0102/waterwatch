@@ -61,6 +61,8 @@ export default {
 </style>
 
 <style lang="scss">
+@import "scss/colors";
+@import "scss/framework-overrides";
 $toolbar-datepicker-height: 36px;
 
 body {
@@ -99,10 +101,6 @@ body {
 
   &__wrapper {
     z-index: 0;
-  }
-
-  .input-group__hint { // Vuetify style override
-    color: #8e7630 !important;
   }
 }
 
@@ -279,7 +277,7 @@ body {
 
   &--hug-input {
     @extend .form-input-sub-text;
-    margin: -18px 0 18px;
+    margin: -24px 0 24px;
   }
 }
 </style>

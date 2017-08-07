@@ -259,6 +259,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+@import "../../scss/colors";
 $toolbar-datepicker-height: 36px;
 $toolbar-breakpoint: 1040px;
 
@@ -398,7 +399,7 @@ $toolbar-breakpoint: 1040px;
   }
 
   &__subheader {
-    color: #7d7d7d;
+    color: $color-sad-grey;
     font-size: 13px;
     line-height: 16px;
 

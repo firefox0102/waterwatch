@@ -2,7 +2,7 @@
   <div class="sign-in">
     <div class="sign-in-header">
       <span class="sign-in-header__text">
-        Site Admin
+        ADMIN
       </span>
       <span class="sign-in-header__text--large">
         Sign In
@@ -14,7 +14,6 @@
         class="sign-in-body__form">
         <v-text-field
             label="Email"
-            class="input-group--focused"
             v-model="user.email">
           </v-text-field>
 
@@ -23,11 +22,10 @@
             :type="passVisible ? 'text' : 'password'"
             :append-icon="passVisible ? 'visibility' : 'visibility_off'"
             :append-icon-cb="() => (passVisible = !passVisible)"
-            v-model="user.password"
-            class="input-group--focused">
+            v-model="user.password">
           </v-text-field>
 
-        <a class="form-input-sub-text">Forget Password?</a>
+        <a class="form-input-sub-text--hug-input">Forget Password?</a>
         <v-btn
           type="submit"
           v-on:click.native="signInWithPassword()"
@@ -100,6 +98,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../scss/colors";
 $small-screen-breakpoint: 401px;
 
 .sign-in {
@@ -130,9 +129,9 @@ $small-screen-breakpoint: 401px;
 
   &__text {
     height: 16px;
-    color: #e5e5e5;
-    font-family: Roboto;
+    color: $color-finn-white;
     font-size: 13px;
+    font-weight: 500;
     line-height: 16px;
 
     &--large {

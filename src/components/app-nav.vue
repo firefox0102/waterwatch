@@ -7,8 +7,7 @@
       height="calc(100vh - 64px)"
       clipped
       enable-resize-watcher
-      v-model="controls.sidebarOpen"
-    >
+      v-model="controls.sidebarOpen">
       <router-link
         class="app-sidebar__link"
         v-for="(item, index) in arrNav"
@@ -226,14 +225,15 @@ $nav-split-breakpoint: 820px;
     }
 
     &--small {
+      @extend .app-nav__button;
       height: $navbar-height;
       margin: 0;
 
-      color: #004d71;
+      // color: #004d71;
       font-size: 12px;
       font-weight: 500;
       text-align: center;
-      text-decoration: none !important;
+      // text-decoration: none !important;
 
       .material-icons {
         font-size: 12px;
