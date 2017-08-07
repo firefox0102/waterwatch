@@ -190,7 +190,7 @@ body {
 
     &--dark {
       @extend .page-content-header__subtext;
-      color: #8e7630;
+      color: $color-sad-grey;
     }
   }
 }

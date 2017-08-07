@@ -20,3 +20,14 @@
     background-color: #7fba00 !important;
   }
 }
+
+a.list__tile {
+  transition: color 0s;
+}
+
+a.list__tile:hover,
+.list__tile--highlighted {
+  transition: 0;
+  background-color: #EDF2F5 !important;
+  color: #004D71 !important;
+}
