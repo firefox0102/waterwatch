@@ -1,3 +1,11 @@
+<!-- notes:
+On by default:
+Chattahoochee Watershed
+Labs / Sample Dropoff locations
+
+Off by default:
+Counties, Hydrography (12 digit HUCs, high res flowlines, waterbodies), Sewer spills found and stopped? -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,11 +44,11 @@ map.on('load', function () {
         'type': 'fill',
         'source': {
             'type': 'geojson',
-            'data': 'https://opendata.arcgis.com/datasets/9c7a1719eb814540b3cf81326c8bcf29_106.geojson'
+            'data': '/data/Chatt_River_Basin.geojson'
         },
         'layout': {},
         'paint': {
-            // 'fill-outline-color': 'rgba(7, 78, 112, 1)',
+            'fill-outline-color': 'rgba(7, 78, 112, 1)',
             'fill-color': "rgba(80, 134, 158, 0.2)",
             // 'line-dash-array': '1',
         }
