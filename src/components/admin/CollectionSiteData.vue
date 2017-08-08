@@ -64,14 +64,14 @@
             ></v-checkbox>
           </td>
           <td class="text-xs-right">{{ props.item.logbookNumber }}</td>
-          <td class="text-xs-right">{{ props.item.date }}</td>
+          <td class="text-xs-right">{{ props.item.collectionDate }}</td>
           <td class="text-xs-right">{{ props.item.collectionTime }}</td>
           <td class="text-xs-right">{{ props.item.analyst }}</td>
           <td class="text-xs-right">{{ props.item.incubationTime }}</td>
           <td class="text-xs-right">{{ props.item.dilution }}</td>
           <td class="text-xs-right">{{ props.item.fluorometry }}</td>
           <td class="text-xs-right">{{ props.item.turbidity }}</td>
-          <td class="text-xs-right">{{ props.item.conductivity }}</td>
+          <td class="text-xs-right">{{ props.item.specifcConductivity }}</td>
         </template>
       </v-data-table>
     </v-card>
@@ -96,11 +96,17 @@ export default {
       }
     }
   },
-  mounted: function () {
-    this.site = this.firebaseSite[0]
+  watch: {
+    firebaseSite: {
+      deep: true,
+      handler (newArray) {
+        this.site = newArray[0]
+      }
+    }
   },
   data: function () {
     return {
+      firebaseSite: [],
       site: {},
       pagination: {
         sortBy: 'name'

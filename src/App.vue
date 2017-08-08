@@ -25,10 +25,6 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       console.log('Auth state changed')
       this.$store.commit('setUser', user || false)
-
-      if (user) {
-        this.$router.push('/collectionSites')
-      }
     })
 
     router.beforeEach((to, from, next) => {

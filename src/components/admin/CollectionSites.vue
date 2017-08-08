@@ -7,7 +7,7 @@
         </div>
 
         <div class="collection-sites-header__subheader--bold">
-          172 active of 200 total sites (TODO GET THESE METRICS)
+          {{ activeSites.length }} active of {{ collectionSites.length }}
         </div>
         <div class="collection-sites-header__subheader">
           Select a site to view logged data. Create and export reports of logged data for one or many collection sites.
@@ -148,7 +148,7 @@
                 <td>{{ props.item.lab }}</td>
                 <td>{{ props.item.lastCollectionDate }}</td>
                 <td>{{ props.item.lastEColi }}</td>
-                <td>{{ props.item.status }}</td>
+                <td>{{ props.item.active ? 'active' : 'inactive' }}</td>
                 <td>{{ props.item.collectionPartner }}</td>
                 <td>{{ props.item.hucName }}</td>
                 <td>{{ props.item.adoptAStreamName }}</td>
@@ -179,8 +179,13 @@ export default {
   components: {
     'add-collection-site': AddCollectionSite
   },
-  firebase: {
-    collectionSites: collectionSitesRef
+  firebase () {
+    return {
+      collectionSites: collectionSitesRef,
+      activeSites: {
+        source: collectionSitesRef.orderByChild('active').equalTo(true)
+      }
+    }
   },
   data: function () {
     return {
@@ -222,7 +227,7 @@ export default {
         { text: 'Lab', value: 'lab' },
         { text: 'Last Collection Date', value: 'lastCollectionDate' },
         { text: 'Last E. coli Result', value: 'lastEColi' },
-        { text: 'Status', value: 'status' },
+        { text: 'Status', value: 'active' },
         { text: 'Collection Partner', value: 'collectionPartner' },
         { text: 'HUC Name', value: 'hucName' },
         { text: 'Adopt-A-Stream Name', value: 'adoptAStreamName' },

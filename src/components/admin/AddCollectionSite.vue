@@ -83,7 +83,8 @@ export default {
         logbookAbbv: '',
         longitude: '',
         stationName: '',
-        storetName: ''
+        storetName: '',
+        collectionSiteId: null // TODO set the ID when you save it
       },
       snackbar: {
         visible: false,
