@@ -82,7 +82,7 @@
               class="input-group--limit-height"
               bottom>
             </v-select>
-            <a class="form-input-sub-text--hug-input">Add New Lab (TODO ADD THIS)</a>
+            <a class="form-input-sub-text--hug-input">Add New Lab (TODO)</a>
           </div>
 
           <!-- Column 2 -->
@@ -126,7 +126,7 @@
                 type="number"
                 v-model="newLogData.precipitation">
             </v-text-field>
-            <a class="form-input-sub-text--hug-input">Rainfall value from Weather Underground (TODO ADD THIS)</a>
+            <a class="form-input-sub-text--hug-input">Rainfall value from Weather Underground (TODO)</a>
             <v-text-field
                 label="Incubation Temp (*C)"
                 class="input-group--limit-height"
