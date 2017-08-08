@@ -59,16 +59,16 @@
               <div class="controls-card-control-group__content">
                 Select date range:
                 <div class="date-picker-wrapper">
-                  <div class="reports-toolbar-datepicker">
+                  <div class="site-reports-toolbar-datepicker">
                     <v-dialog
                       persistent
                       v-model="filters.startDateModal"
                       lazy
                       full-width>
                       <div
-                        class="reports-toolbar-datepicker__activator"
+                        class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
-                        <span class="reports-toolbar-datepicker__activator-text">{{ filters.startDate ? filters.startDate : "Start Date"}}</span>
+                        <span class="site-reports-toolbar-datepicker__activator-text">{{ filters.startDate ? filters.startDate : "Start Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
                       <v-date-picker v-model="filters.startDate" scrollable >
@@ -81,16 +81,16 @@
                       </v-date-picker>
                     </v-dialog>
                   </div>
-                  <div class="reports-toolbar-datepicker">
+                  <div class="site-reports-toolbar-datepicker">
                     <v-dialog
                       persistent
                       v-model="filters.endDateModal"
                       lazy
                       full-width>
                       <div
-                        class="reports-toolbar-datepicker__activator"
+                        class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
-                        <span class="reports-toolbar-datepicker__activator-text">{{ filters.endDate ? filters.endDate : "End Date"}}</span>
+                        <span class="site-reports-toolbar-datepicker__activator-text">{{ filters.endDate ? filters.endDate : "End Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
                       <v-date-picker v-model="filters.endDate" scrollable >
@@ -258,296 +258,325 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  $data-sidebar-width: 240px;
+$data-sidebar-width: 240px;
 
-  .data-page-wrapper {
-    display: flex;
-    justify-content: flex-end;
-    margin: -36px -48px;
-    width: 100vw;
-    position: relative;
-    z-index: 1;
+.data-page-wrapper {
+  display: flex;
+  position: relative;
+  z-index: 1;
+
+  justify-content: flex-end;
+  width: 100vw;
+
+  @media screen and (min-width: 401px) {
+    margin: -24px;
   }
+}
 
-  .date-picker-wrapper {
+.date-picker-wrapper {
+  display: flex;
+  margin-left: -10px;
+}
+
+.map-wrapper {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  background: #808080;
+}
+
+.data-body {
+  display: flex;
+
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  height: 100%;
+  margin-left: 0;
+  padding: 0;
+  width: 100%;
+
+  transition: 0.5s;
+
+  &__fixed-column {
     display: flex;
-    margin-left: -10px;
-  }
-
-  .map-wrapper {
-    flex: 1;
-    background: grey;
-    width: 100%;
-    height: 100%;
-  }
-
-  .data-body {
-    display: flex;
+    align-items: center;
     flex-direction: column;
-    flex-wrap: wrap;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    margin-left: 0;
-    transition: 0.5s;
+
+    margin-top: 24px;
+    width: auto;
+  }
+
+  &__dynamic-column {
+    height: 50vh;
+    width: 100vw;
+  }
+
+  @media screen and (min-width: 850px) {
+    flex-direction: row;
+    justify-content: center;
+
+    padding: 26px 24px;
+    width: calc(100% - #{$data-sidebar-width});
+
+    &--collapsed {
+      width: 100%;
+      transition: 0.5s;
+    }
 
     &__fixed-column {
-      width: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 24px;
+      margin-top: 0;
+      width: 302px;
     }
 
     &__dynamic-column {
-      width: 100vw;
-      height: 50vh;
-    }
-
-    @media screen and (min-width: 850px) {
-      justify-content: center;
-      flex-direction: row;
-      padding: 26px 24px;
-      width: calc(100% - #{$data-sidebar-width});
-
-      &--collapsed {
-        width: 100%;
-        transition: 0.5s;
-      }
-
-      &__fixed-column {
-        margin-top: 0;
-        width: 302px;
-      }
-
-      &__dynamic-column {
-        flex: 1;
-        margin-right: 24px;
-      }
+      flex: 1;
+      margin-right: 24px;
     }
   }
+}
 
-  .data-sidebar {
-    width: 240px;
-    box-shadow: 0 2px 4px 0 rgba(155, 155, 155, 0.5);
-    position: absolute;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: white;
+.data-sidebar {
+  left: 0;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+
+  height: 100%;
+  width: 240px;
+
+  background: #fff;
+  box-shadow: 0 2px 4px 0 rgba(155, 155, 155, 0.5);
+  transition: 0.5s;
+
+  &__header {
+    position: relative;
+
+    height: 120px;
+    padding: 9px 10px;
+
+    background-color: #004d71;
+  }
+
+  &__body {
+    overflow-y: auto;
+  }
+
+  &--collapsed {
+    left: -240px;
     transition: 0.5s;
-    z-index: 2;
+  }
+}
 
-    &__header {
-      background-color: #004D71;
-      height: 120px;
-      position: relative;
-      padding: 9px 10px;
-    }
+.data-sidebar-toggle {
+  display: flex;
 
-    &__body {
-      overflow-y: auto;
-    }
+  position: absolute;
+  right: -16px;
+  top: 10px;
 
-    &--collapsed {
-      transition: 0.5s;
-      left: -240px;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 16px;
+
+  background-color: rgba(255, 255, 255, 1);
+  cursor: pointer;
+
+  &__caret {
+    height: 20px;
+    width: 20px;
+
+    color: #9b9b9b;
+    font-size: 20px;
+    line-height: 20px;
+    transform: rotate(450deg);
+  }
+}
+
+.data-sidebar-search {
+  display: flex;
+
+  align-items: center;
+  height: 36px;
+  margin-bottom: 9px;
+  padding: 10px 15px;
+  width: 220px;
+
+  background-color: #fff;
+  border-radius: 2px;
+
+  &__input {
+    width: 175px;
+
+    &:focus {
+      outline: none;
     }
   }
 
-  .data-sidebar-toggle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    right: -16px;
-    top: 10px;
+  &__icon {
+    height: 20px;
+    width: 18px;
+    opacity: 0.54;
+  }
+}
+
+.data-sidebar-filter {
+  color: #fff;
+
+  .input-group {
+    margin: 0;
+  }
+}
+
+.data-sidebar-filter-text {
+  height: 24px;
+  width: 100px;
+
+  color: #fff;
+  font-size: 11px;
+}
+
+.data-sidebar-list-item {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  width: 100%;
+
+  border-bottom: 1px solid #e4e4e4;
+  color: #4a4a4a;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 20px;
+
+  &--active,
+  &:hover {
+    background-color: rgba(77, 134, 160, 0.1);
+    color: #004d71;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}
+
+.controls-card {
+  display: flex;
+
+  flex-direction: column;
+  height: 211px;
+  margin-bottom: 24px;
+  width: 80%;
+
+  background-color: #fff;
+  box-shadow: 0 2px 4px 0 rgba(155, 155, 155, 0.5);
+
+  @media screen and (min-width: 850px) {
+    width: 302px;
+  }
+}
+
+.controls-card-header {
+  display: flex;
+
+  align-items: center;
+  height: 26px;
+  padding-left: 16px;
+  width: 100%;
+
+  background-color: #004d71;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.controls-card-body {
+  height: 184px;
+}
+
+.controls-card-control-group {
+  height: 108px;
+  overflow: hidden;
+
+  border-bottom: 1px solid #e4e4e4;
+  transition: all 0.33s ease;
+
+  &:nth-of-type(3) {
+    border-bottom: 0;
+  }
+
+  &--collapsed {
     height: 36px;
-    width: 16px;
-    background-color: rgba(255, 255, 255, 1);
-    cursor: pointer;
-
-    &__caret {
-      height: 20px;
-      width: 20px;
-      transform: rotate(450deg);
-      color: #9B9B9B;
-      font-size: 20px;
-      line-height: 20px;
-    }
+    transition: 0.33s;
   }
 
-  .data-sidebar-search {
+  &__header {
     display: flex;
     align-items: center;
-  	height: 36px;
-  	width: 220px;
-  	border-radius: 2px;
-  	background-color: #FFFFFF;
-    margin-bottom: 9px;
-    padding: 10px 15px 10px;
+    height: 36px;
+    padding-left: 16px;
 
-    &__input {
-      width: 175px;
-
-      &:focus {
-        outline: none;
-      }
-    }
-
-    &__icon {
-      height: 20px;
-      width: 18px;
-      opacity: 0.54;
-    }
-  }
-
-  .data-sidebar-filter {
-    color: #ffffff;
-
-    .input-group {
-      margin: 0;
-    }
-  }
-
-  .data-sidebar-filter-text {
-    color: #FFFFFF;
+    color: #7fba00;
+    cursor: pointer;
     font-size: 11px;
-    height: 24px;
-    width: 100px;
+    font-weight: 500;
   }
 
-  .data-sidebar-list-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 38px;
-  	width: 100%;
-  	color: #4A4A4A;
-  	font-size: 13px;
-  	line-height: 20px;
-    border-bottom: 1px solid #E4E4E4;
-    cursor: pointer;
-
-    &--active,
-    &:hover {
-      background-color: rgba(77,134,160,0.1);
-    	color: #004D71;
-    	font-size: 13px;
-    	font-weight: 500;
-    	line-height: 20px;
-    }
-  }
-
-  .controls-card {
+  &__content {
     display: flex;
     flex-direction: column;
-    height: 211px;
-    width: 80%;
-    background-color: #FFFFFF;
-    box-shadow: 0 2px 4px 0 rgba(155,155,155,0.5);
-    margin-bottom: 24px;
+    height: 82px;
+    padding: 0 16px;
 
-    @media screen and (min-width: 850px) {
-      width: 302px;
-    }
-  }
-
-  .controls-card-header {
-    display: flex;
-    align-items: center;
-    padding-left: 16px;
-    height: 26px;
-    background-color: #004D71;
-    width: 100%;
-    color: #FFFFFF;
+    color: #4a4a4a;
     font-size: 13px;
-    font-weight: 400;
+  }
+}
+
+.graph-card {
+  height: 232px;
+  margin-bottom: 24px;
+  padding-left: 9px;
+  padding-top: 13px;
+  width: 80%;
+
+  background-color: #fff;
+  box-shadow: 0 2px 4px 0 rgba(155, 155, 155, 0.5);
+
+  @media screen and (min-width: 850px) {
+    width: 302px;
+  }
+}
+
+.graph-card-title {
+  display: flex;
+  align-items: flex-end;
+
+  &__primary {
+    height: 21px;
+    margin-right: 6px;
+    width: 52px;
+
+    color: #7fba00;
+    font-size: 18px;
   }
 
-  .controls-card-body {
-    height: 184px;
+  &__secondary {
+    height: 13px;
+    width: 71px;
+    color: #004d71;
+    font-size: 11px;
+    line-height: 13px;
   }
 
-  .controls-card-control-group {
-    height: 108px;
-    border-bottom: 1px solid #E4E4E4;
-    transition: all 0.33s ease;
-    transition: 0.33s;
-    overflow: hidden;
-
-    &:nth-of-type(3) {
-      border-bottom: none;
-    }
-
-    &--collapsed {
-      height: 36px;
-      transition: 0.33s;
-    }
-
-    &__header {
-      display: flex;
-      align-items: center;
-      padding-left: 16px;
-      height: 36px;
-      color: #7FBA00;
-      font-size: 11px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-
-    &__content {
-      display: flex;
-      flex-direction: column;
-      padding: 0 16px;
-      color: #4A4A4A;
-      font-size: 13px;
-      height: 82px;
-    }
+  &__icon {
+    height: 16px;
+    width: 20px;
+    color: #004d71;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
   }
-
-  .graph-card {
-    height: 232px;
-    width: 80%;
-    padding-top: 13px;
-    padding-left: 9px;
-    background-color: #FFFFFF;
-    box-shadow: 0 2px 4px 0 rgba(155,155,155,0.5);
-    margin-bottom: 24px;
-
-    @media screen and (min-width: 850px) {
-      width: 302px;
-    }
-  }
-
-  .graph-card-title {
-    display: flex;
-    align-items: flex-end;
-
-    &__primary {
-      width: 52px;
-      color: #7FBA00;
-      font-size: 18px;
-      margin-right: 6px;
-      height: 21px;
-    }
-
-    &__secondary {
-      height: 13px;
-      width: 71px;
-      color: #004D71;
-      font-family: Roboto;
-      font-size: 11px;
-      line-height: 13px;
-    }
-
-    &__icon {
-      height: 16px;
-      width: 20px;
-      color: #004D71;
-      font-size: 16px;
-      line-height: 16px;
-      text-align: center;
-    }
-  }
+}
 </style>

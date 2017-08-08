@@ -11,7 +11,6 @@
           <router-link class="collection-sites-header__subheader" :to="{ name: 'Collection Sites'}">
             Back to List of Collection Sites
           </router-link>
-
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
@@ -30,7 +29,7 @@
       <v-data-table
           v-model="selected"
           v-bind:headers="headers"
-          :items="items"
+          :items="reports"
           select-all
           class="elevation-1"
           selected-key="logbookNumber"
@@ -80,10 +79,29 @@
 </template>
 
 <script>
+import { db } from '../../helpers/firebase'
+
+let collectionSitesRef = db.ref('collectionSites')
+let reportsRef = db.ref('reports')
+
 export default {
   name: 'collection-sites',
+  firebase () {
+    return {
+      firebaseSite: {
+        source: collectionSitesRef.orderByKey().equalTo(this.$route.params.siteId)
+      },
+      reports: {
+        source: reportsRef.orderByChild('collectionSiteId').equalTo(parseInt(this.$route.params.siteId))
+      }
+    }
+  },
+  mounted: function () {
+    this.site = this.firebaseSite[0]
+  },
   data: function () {
     return {
+      site: {},
       pagination: {
         sortBy: 'name'
       },
@@ -98,102 +116,13 @@ export default {
         { text: 'Fluorometry', value: 'fluorometry' },
         { text: 'Turbidity (NTU)', value: 'turbidity' },
         { text: 'Conductivity (uS)', value: 'conductivity' }
-      ],
-      site: {
-        stationName: 'Beavers in a Park',
-        logbookAbv: 'Beav @ Park',
-        latitude: '33.7489',
-        longitude: '-84.3879',
-        collectionPartner: 'CRK',
-        lab: 'Petes Lab',
-        huc: 'no idea',
-        collectionSiteId: 1
-      },
-      items: [
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        },
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        },
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        },
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        },
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        },
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        },
-        {
-          logbookNumber: 8561,
-          date: '2/18/16',
-          collectionTime: '10:50',
-          analyst: 'OI',
-          incubationTime: '14:09',
-          dilution: '2',
-          fluorometry: '7.168',
-          turbidity: '6.57',
-          conductivity: '360'
-        }
       ]
     }
   },
   methods: {
     toggleAll () {
       if (this.selected.length) this.selected = []
-      else this.selected = this.items.slice()
+      else this.selected = this.reports.slice()
     },
     changeSort (column) {
       if (this.pagination.sortBy === column) {
@@ -209,43 +138,42 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  .collection-sites-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 47px;
+.collection-sites-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 47px;
 
-    &__primary-content {
-      padding-left: 32px;
-    }
-
-    &__header {
-      color: #004D71;
-      font-size: 32px;
-      font-weight: 300;
-      letter-spacing: 1px;
-      line-height: 38px;
-    }
-
-    &__subheader {
-      color: #8E7630;
-      font-size: 13px;
-      line-height: 16px;
-    }
-
-    &__subheader-wrapper {
-      color: #8E7630;
-      font-size: 13px;
-      line-height: 16px;
-    }
+  &__primary-content {
+    padding-left: 32px;
   }
 
-  .collection-site-body {
-    &__header {
-      height: 16px;
-      color: #4A4A4A;
-      font-family: Roboto;
-      font-size: 24px;
-      line-height: 16px;
-    }
+  &__header {
+    color: #004d71;
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    line-height: 38px;
   }
+
+  &__subheader {
+    color: #8e7630;
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  &__subheader-wrapper {
+    color: #8e7630;
+    font-size: 13px;
+    line-height: 16px;
+  }
+}
+
+.collection-site-body {
+  &__header {
+    height: 16px;
+    color: #4a4a4a;
+    font-size: 24px;
+    line-height: 16px;
+  }
+}
 </style>
