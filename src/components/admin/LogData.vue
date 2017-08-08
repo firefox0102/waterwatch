@@ -385,10 +385,10 @@ export default {
         this.newLogData.collectionSite = null
 
         // Set logbook number
-        this.newLogData.logbookNumber = this.getLastLogbookNumber()
+        // this.newLogData.logbookNumber = this.getLastLogbookNumber()
 
         this.$firebaseRefs.reports.push(this.newLogData)
-        this.controls.dialog = false
+        this.controls.showDialog = false
       } catch (e) {
         console.log(e)
         this.snackbar.visible = true
