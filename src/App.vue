@@ -74,7 +74,7 @@ body {
   overflow-y: auto;
 
   &__body {
-    min-height: calc(100vh - 64px - 140px);
+    min-height: calc(100vh - 64px - 106px);
 
     background-color: #f3f3f3;
 
