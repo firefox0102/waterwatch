@@ -25,7 +25,24 @@
             v-model="user.password">
           </v-text-field>
 
-        <a class="form-input-sub-text--hug-input">Forget Password?</a>
+        <v-dialog v-model="showResetPassword" persistent>
+          <a class="form-input-sub-text--hug-input" slot="activator">Forget Password?</a>
+          <v-card>
+            <v-card-title class="headline">Reset Password</v-card-title>
+            <v-card-text>
+                <v-text-field
+                  v-model="user.email"
+                  label="Email Address"
+                  single-line>
+                </v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn class="green--text darken-1" flat="flat" @click.native="showResetPassword = false">Cancel</v-btn>
+              <v-btn class="green--text darken-1" flat="flat" @click.native="resetPassword">Send Reset Email</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
         <v-btn
           type="submit"
           v-on:click.native="signInWithPassword()"
@@ -35,11 +52,18 @@
       </form>
     </div>
     <v-snackbar
-      :timeout="snackbar.timeout"
+      :timeout="errorSnackbar.timeout"
       :error="true"
-      v-model="snackbar.visible">
-      {{snackbar.errorMessage}}
-      <v-btn dark flat @click.native="snackbar.visible = false">Close</v-btn>
+      v-model="errorSnackbar.visible">
+      {{errorSnackbar.errorMessage}}
+      <v-btn dark flat @click.native="errorSnackbar.visible = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar
+      :timeout="passwordSnackbar.timeout"
+      :info="true"
+      v-model="passwordSnackbar.visible">
+      {{passwordSnackbar.errorMessage}}
+      <v-btn dark flat @click.native="passwordSnackbar.visible = false">Close</v-btn>
     </v-snackbar>
   </div>
 </template>
@@ -65,14 +89,20 @@ export default {
   beforeEnter: signInTest,
   data () {
     return {
+      showResetPassword: false,
       passVisible: false,
       user: {
         email: '',
         password: ''
       },
-      snackbar: {
+      errorSnackbar: {
         visible: false,
         errorMessage: 'There was an issue signing in to Admin',
+        timeout: 6000
+      },
+      passwordSnackbar: {
+        visible: false,
+        errorMessage: 'Password email reset sent!',
         timeout: 6000
       }
     }
@@ -86,12 +116,21 @@ export default {
       firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.password)
       .then((userData) => {
         this.onSignedIn()
-        return userData
       })
-      .catch(() => { this.snackbar.visible = true })
+      .catch(() => {
+        this.errorSnackbar.visible = true
+      })
     },
     onSignedIn () {
-      this.$router.go('/')
+      this.$router.go('/logData')
+    },
+    resetPassword () {
+      console.log('test')
+      console.log(this.user.email)
+      firebase.auth().sendPasswordResetEmail(this.user.email).then(() => {
+        this.showResetPassword = false
+        this.passwordSnackbar.visible = true
+      })
     }
   }
 }
@@ -100,6 +139,11 @@ export default {
 <style lang="scss" scoped>
 @import "../../scss/colors";
 $small-screen-breakpoint: 401px;
+
+.reset-password-input {
+  width: 100%;
+
+}
 
 .sign-in {
   display: flex;
