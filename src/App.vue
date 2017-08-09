@@ -141,6 +141,7 @@ body {
 
   &__primary-link {
     color: #4d86a0;
+    text-decoration: none;
   }
 
   table.table tbody tr:hover {
