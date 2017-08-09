@@ -165,7 +165,7 @@
 
             <div class="log-data-section-wrapper">
               <div class="page-content-body__header">
-                E. Coli
+                E. coli
               </div>
               <v-text-field
                   label="Large Cells"
