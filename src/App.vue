@@ -76,7 +76,7 @@ body {
   &__body {
     min-height: calc(100vh - 64px - 106px);
 
-    background-color: #f3f3f3;
+    background-color: $color-sandslash;
 
     @media screen and (min-width: 401px) {
       padding: 24px;
