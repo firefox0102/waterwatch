@@ -14,7 +14,7 @@
         class="sign-in-body__form">
         <v-text-field
             label="Email"
-            v-model="user.email">
+            v-model="formUser.email">
           </v-text-field>
 
         <v-text-field
@@ -22,7 +22,7 @@
             :type="passVisible ? 'text' : 'password'"
             :append-icon="passVisible ? 'visibility' : 'visibility_off'"
             :append-icon-cb="() => (passVisible = !passVisible)"
-            v-model="user.password">
+            v-model="formUser.password">
           </v-text-field>
 
         <v-dialog v-model="showResetPassword" persistent>
@@ -31,7 +31,7 @@
             <v-card-title class="headline">Reset Password</v-card-title>
             <v-card-text>
                 <v-text-field
-                  v-model="user.email"
+                  v-model="formUser.email"
                   label="Email Address"
                   single-line>
                 </v-text-field>
@@ -70,28 +70,25 @@
 
 <script>
 import firebase from 'firebase'
-
-function signInTest (to, from, next) {
-  if (firebase.auth().currentUser) {
-    next({
-      path: '/logData',
-      query: {
-        redirect: to.fullPath
-      }
-    })
-  } else {
-    next()
-  }
-}
+import { mapState } from 'vuex'
 
 export default {
   name: 'sign-in',
-  beforeEnter: signInTest,
+  computed: {
+    ...mapState(['user'])
+  },
+  watch: {
+    user: function () {
+      if (firebase.auth().currentUser) {
+        this.$router.push('/logData')
+      }
+    }
+  },
   data () {
     return {
       showResetPassword: false,
       passVisible: false,
-      user: {
+      formUser: {
         email: '',
         password: ''
       },
@@ -113,7 +110,7 @@ export default {
       evnt.preventDefault()
     },
     signInWithPassword () {
-      firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.password)
+      firebase.auth().signInWithEmailAndPassword(this.formUser.email, this.formUser.password)
       .then((userData) => {
         this.onSignedIn()
       })
@@ -122,12 +119,12 @@ export default {
       })
     },
     onSignedIn () {
-      this.$router.go('/logData')
+      this.$router.push('/logData')
     },
     resetPassword () {
       console.log('test')
-      console.log(this.user.email)
-      firebase.auth().sendPasswordResetEmail(this.user.email).then(() => {
+      console.log(this.formUser.email)
+      firebase.auth().sendPasswordResetEmail(this.formUser.email).then(() => {
         this.showResetPassword = false
         this.passwordSnackbar.visible = true
       })
