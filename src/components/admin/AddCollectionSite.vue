@@ -1,19 +1,15 @@
 <template>
   <v-layout row justify-center>
-    <v-dialog v-model="controls.showDialog" fullscreen  :overlay=false>
+    <v-dialog v-model="controls.showDialog"  :overlay=false>
       <v-btn
         slot="activator"
         class="btn-nww--light">
         Add New Site
       </v-btn>
       <v-card>
-        <v-toolbar dark class="primary add-header-toolbar">
-          <v-btn icon @click.native="controls.showDialog = false" dark>
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-toolbar-title>New Collection Site</v-toolbar-title>
-          <v-spacer></v-spacer>
-        </v-toolbar>
+        <v-card-title>
+          <span class="headline">New Collection Site</span>
+        </v-card-title>
         <form
           class="add-form"
           v-on:submit.prevent="submitForm">
