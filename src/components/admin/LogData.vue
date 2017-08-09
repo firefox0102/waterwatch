@@ -151,12 +151,16 @@
                   label="Large Cells"
                   class="input-group--limit-height"
                   type="number"
+                  hint="Should be between 0-49 (Leave empty if not recorded)"
+                  persistent-hint
                   v-model="newLogData.coliformLargeCells">
               </v-text-field>
               <v-text-field
                   label="Small Cells"
                   class="input-group--limit-height"
                   type="number"
+                  hint="Should be between 0-48 (Leave empty if not recorded)"
+                  persistent-hint
                   v-model="newLogData.coliformSmallCells">
               </v-text-field>
             </div>
@@ -171,12 +175,16 @@
                   label="Large Cells"
                   class="input-group--limit-height"
                   type="number"
+                  hint="Should be between 0-49 (Leave empty if not recorded)"
+                  persistent-hint
                   v-model="newLogData.ecoliLargeCells">
               </v-text-field>
               <v-text-field
                   label="Small Cells"
                   class="input-group--limit-height"
                   type="number"
+                  hint="Should be between 0-48 (Leave empty if not recorded)"
+                  persistent-hint
                   v-model="newLogData.ecoliSmallCells">
               </v-text-field>
             </div>
