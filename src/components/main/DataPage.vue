@@ -279,7 +279,98 @@
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
               Turbidity
-              <i class="material-icons graph-card-title__icon">info_outline</i>
+              <v-dialog v-model="controls.turbidityDialog" persistent>
+                <i
+                  slot="activator"
+                  class="material-icons graph-card-title__icon">
+                  info_outline
+                </i>
+                <v-card>
+                  <v-card-title class="headline">Turbidity</v-card-title>
+                  <v-card-text>
+                    <p>
+                      Turbidity copy
+                    </p>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="green--text darken-1" flat="flat" @click.native="controls.turbidityDialog = false">Close</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </span>
+            <div>
+              <span class="graph-card-title__secondary--strong">
+                Last Result:
+              </span>
+              <span class="graph-card-title__secondary">
+                TODO
+              </span>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Graph 3 -->
+        <div class="graph-card">
+          <div class="graph-card-title">
+            <span class="graph-card-title__primary">
+              Rainfall (inches)
+              <v-dialog v-model="controls.rainDialog" persistent>
+                <i
+                  slot="activator"
+                  class="material-icons graph-card-title__icon">
+                  info_outline
+                </i>
+                <v-card>
+                  <v-card-title class="headline">Rainfall</v-card-title>
+                  <v-card-text>
+                    <p>
+                      Rainfall copy
+                    </p>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="green--text darken-1" flat="flat" @click.native="controls.rainDialog = false">Close</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </span>
+            <div>
+              <span class="graph-card-title__secondary--strong">
+                Last Result:
+              </span>
+              <span class="graph-card-title__secondary">
+                TODO
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Graph 4 -->
+        <div class="graph-card">
+          <div class="graph-card-title">
+            <span class="graph-card-title__primary">
+              Specific Conductivity (uS)
+              <v-dialog v-model="controls.conductiveDialog" persistent>
+                <i
+                  slot="activator"
+                  class="material-icons graph-card-title__icon">
+                  info_outline
+                </i>
+                <v-card>
+                  <v-card-title class="headline">Specific Conductivity (uS)</v-card-title>
+                  <v-card-text>
+                    <p>
+                      Specific Conductivity (uS) copy
+                    </p>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="green--text darken-1" flat="flat" @click.native="controls.conductiveDialog = false">Close</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </span>
             <div>
               <span class="graph-card-title__secondary--strong">
@@ -330,7 +421,9 @@ export default {
         startDate: null,
         endDate: null,
         ecoliDialog: false,
-        turbidityDialog: false
+        turbidityDialog: false,
+        rainDialog: false,
+        conductiveDialog: false
       },
       filters: {
         huc: false,
