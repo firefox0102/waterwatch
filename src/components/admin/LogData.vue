@@ -10,7 +10,7 @@
     </div>
     <div class="page-content-body">
       <form
-          v-on:submit.prevent="submitLog"
+          v-on:submit.prevent="controls.showDialog = true"
           class="page-content-body__form">
           <!-- Column 1 -->
           <div class="page-content-body__column">
@@ -257,6 +257,7 @@
             <v-dialog v-model="controls.showDialog" lazy absolute>
               <v-btn
                 slot="activator"
+                type="submit"
                 class="btn-nww log-data-submit-btn">
                 Log Data
               </v-btn>
