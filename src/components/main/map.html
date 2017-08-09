@@ -100,6 +100,7 @@ map.on('load', function () {
     map.addLayer({
         'id': 'Basin',
         'type': 'fill',
+<<<<<<< HEAD
         'source': 'basin',
         // {
         //     'type': 'geojson',
@@ -115,12 +116,29 @@ map.on('load', function () {
             'description': "Chattahoochee River Basin"
 
         },
+=======
+        'source': {
+            'type': 'geojson',
+            'data': '/data/Chatt_River_Basin.geojson'
+            //RIVER geojson??
+             //'https://opendata.arcgis.com/datasets/c5dd02ed33964aaba0f8d6dc65863f82_0.geojson'
+
+        },
+        'layout': {},
+        'paint': {
+            // 'line-width': 100,
+            'fill-outline-color': "rgba(7, 78, 112, 1)" ,
+            'fill-color': "rgba(62,136,173,0.5)",
+            //'line-dash-array': '[1 , 4]',
+        }
+>>>>>>> f5d325e1183af862790aebb2ded37877bb4c8f6e
         // This is the important part of this example: the addLayer
     // method takes 2 arguments: the layer as an object, and a string
     // representing another layer's name. if the other layer
     // exists in the stylesheet already, the new layer will be positioned
     // right before that layer in the stack, making it possible to put
     // 'overlays' anywhere in the layer stack.
+<<<<<<< HEAD
     }, '12');
     //  map.addLayer({
     //     'id': 'basinLayer',
@@ -135,6 +153,9 @@ map.on('load', function () {
     //             'text-color': 'black'
     //         }
     // });
+=======
+    });
+>>>>>>> f5d325e1183af862790aebb2ded37877bb4c8f6e
 //COUNTIES
     map.addLayer({
         'id': 'Counties',
