@@ -237,7 +237,31 @@
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
               E. Coli
-              <i class="material-icons graph-card-title__icon">info_outline</i>
+              <v-dialog v-model="controls.ecoliDialog" persistent>
+                <i
+                  slot="activator"
+                  class="material-icons graph-card-title__icon">
+                  info_outline
+                </i>
+                <v-card>
+                  <v-card-title class="headline">What is E. coli?</v-card-title>
+                  <v-card-text>
+                    <p>
+                      Escherichia coli (E. coli) is a bacteria that is commonly found in the gastrointestinal tract and feces of warm-blooded animals and humans. According to the U.S. EPA, E. coli is the best indicator of the presence of pathogens in surface waters and its presence provides direct evidence of fecal contamination of the water.
+                    </p>
+                    <h5>
+                      How are the E. coli results interpreted to determine if they are acceptable?
+                    </h5>
+                    <p>
+                      EPA recommends an E. coli recreational safety level for primary contact of a geometric average of 126 cfu/100ml or less. Because it is common to find high bacteria counts in urban areas, Georgia Adopt-A-Stream advises that counts that exceed a 1000 cfu/100 ml threshold may warrant special attention. NWW results that show a “high” bacterial count may be a one-time event or occurrence or may be a part of a chronic problem. This information is useful, but before taking further action additional sampling is necessary to document bacterial levels over a long period to determine seasonal fluctuations and in response to rain events. This long term information is vital in assessing the overall health of the stream and determining if special attention is warranted to investigate potential pollution sources.
+                    </p>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="green--text darken-1" flat="flat" @click.native="controls.ecoliDialog = false">Close</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </span>
             <div>
               <span class="graph-card-title__secondary--strong">
@@ -304,7 +328,9 @@ export default {
         search: '',
         filterSites: [ 'HUC', 'Lab', 'Partner' ],
         startDate: null,
-        endDate: null
+        endDate: null,
+        ecoliDialog: false,
+        turbidityDialog: false
       },
       filters: {
         huc: false,
@@ -650,6 +676,7 @@ $data-sidebar-width: 240px;
     height: 16px;
     width: 20px;
     color: $color-nww-green;
+    cursor: pointer;
     font-size: 16px;
     line-height: 16px;
     text-align: center;
