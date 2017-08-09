@@ -18,21 +18,21 @@
               HUC:
             </span>
             <span class="collection-data-group__text">
-              {{ site.huc }}
+              {{ site ? site.huc : '' }}
             </span>
             <span class="collection-data-group__divider">|</span>
             <span class="collection-data-group__text--strong">
               Collection Partner:
             </span>
             <span class="collection-data-group__text">
-              {{ site.collectionPartner }}
+              {{ site ? site.collectionPartner : '' }}
             </span>
             <span class="collection-data-group__divider">|</span>
             <span class="collection-data-group__text--strong">
               Total Samples:
             </span>
             <span class="collection-data-group__text">
-              {{ site.totalSamples }}
+              {{ site ? site.totalSamples : '' }}
               <!-- TODO this doesn't exist yet, increment when logging new data -->
             </span>
             <span class="collection-data-group__divider">|</span>
@@ -40,7 +40,7 @@
               First Collection Date:
             </span>
             <span class="collection-data-group__text">
-              {{ site.firstCollectionDate }}
+              {{ site ? site.firstCollectionDate : '' }}
               <!-- TODO this doesn't exist yet, set when logging new data -->
             </span>
           </div>
@@ -221,7 +221,7 @@ export default {
         source: collectionSitesRef.orderByKey().equalTo(this.$route.params.siteId)
       },
       reports: {
-        source: reportsRef.orderByChild('collectionSiteId').equalTo(parseInt(this.$route.params.siteId))
+        source: reportsRef.orderByChild('collectionSiteId').equalTo(this.$route.params.siteId)
       }
     }
   },
@@ -361,6 +361,7 @@ export default {
     font-size: 13px;
     font-weight: 400;
     line-height: 18px;
+    text-decoration: underline;
   }
 }
 </style>
