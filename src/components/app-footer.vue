@@ -1,11 +1,21 @@
 <template>
   <footer class="app__footer">
     <div class="icon-group">
-      <i class="fa fa-facebook icon-group__facebook"></i>
-      <i class="fa fa-twitter icon-group__twitter"></i>
-      <i class="fa fa-instagram icon-group__instagram"></i>
-      <i class="fa fa-vimeo icon-group__vimeo"></i>
-      <i class="fa fa-youtube-play icon-group__youtube"></i>
+      <a href="https://www.facebook.com/chattahoocheeriverkeeper/" target="_blank">
+        <i class="fa fa-facebook icon-group__facebook"></i>
+      </a>
+      <a href="https://twitter.com/CRKeeper" target="_blank">
+        <i class="fa fa-twitter icon-group__twitter"></i>
+      </a>
+      <a href="https://www.instagram.com/crkeeper/#" target="_blank">
+        <i class="fa fa-instagram icon-group__instagram"></i>
+      </a>
+      <a href="https://vimeo.com/crkeeper" target="_blank">
+        <i class="fa fa-vimeo icon-group__vimeo"></i>
+      </a>
+      <a href="https://www.youtube.com/user/UCRiverkeeperVideos" target="_blank">
+        <i class="fa fa-youtube-play icon-group__youtube"></i>
+      </a>
     </div>
     <div class="footer-info">
       <div class="footer-info__text">
