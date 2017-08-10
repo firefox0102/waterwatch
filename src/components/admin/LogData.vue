@@ -10,7 +10,7 @@
     </div>
     <div class="page-content-body">
       <form
-          v-on:submit.prevent="submitLog"
+          v-on:submit.prevent="controls.showDialog = true"
           class="page-content-body__form">
           <!-- Column 1 -->
           <div class="page-content-body__column">
@@ -20,7 +20,7 @@
             <v-text-field
               label="Logbook Number"
               v-model="newLogData.logbookNumber"
-              class="input-group--focused input-group--limit-height"
+              class="input-group--limit-height"
               disabled>
             </v-text-field>
 
@@ -38,7 +38,7 @@
                 label="Date"
                 v-model="newLogData.collectionDate"
                 append-icon="event"
-                class="input-group--focused input-group--limit-height">
+                class="input-group--limit-height">
               </v-text-field>
               <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
                 <template scope="{ save, cancel }">
@@ -57,7 +57,7 @@
               v-model="newLogData.collectionSite"
               label="Station Name"
               single-line
-              class="input-group--focused input-group--limit-height"
+              class="input-group--limit-height"
               bottom>
             </v-select>
             <v-text-field
@@ -65,11 +65,11 @@
                 v-model="newLogData.collectionTime"
                 type="time"
                 suffix="EST"
-                class="input-group--focused input-group--limit-height">
+                class="input-group--limit-height">
             </v-text-field>
             <v-text-field
                 label="Analyst (Initials)"
-                class="input-group--focused input-group--limit-height"
+                class="input-group--limit-height"
                 v-model="newLogData.analyst">
             </v-text-field>
             <v-select
@@ -79,10 +79,10 @@
               item-value=".value"
               label="Lab"
               single-line
-              class="input-group--focused input-group--limit-height"
+              class="input-group--limit-height"
               bottom>
             </v-select>
-            <a class="form-input-sub-text--hug-input">Add New Lab (TODO ADD THIS)</a>
+            <a class="form-input-sub-text--hug-input">Add New Lab (TODO)</a>
           </div>
 
           <!-- Column 2 -->
@@ -94,42 +94,42 @@
                 label="Incubation In Time"
                 v-model="newLogData.incubationTime"
                 type="time"
-                class="input-group--focused input-group--limit-height">
+                class="input-group--limit-height">
             </v-text-field>
             <v-text-field
                 label="# mL/100mL (Dilution)"
-                class="input-group--focused input-group--limit-height"
+                class="input-group--limit-height"
                 type="number"
                 v-model="newLogData.dilution">
             </v-text-field>
             <v-text-field
                 label="Fluorometry"
-                class="input-group--focused input-group--limit-height"
+                class="input-group--limit-height"
                 type="number"
                 v-model="newLogData.fluorometry">
             </v-text-field>
             <v-text-field
                 label="Turbidity (NTU)"
-                class="input-group--focused input-group--limit-height"
+                class="input-group--limit-height"
                 type="number"
                 v-model="newLogData.turbidity">
             </v-text-field>
             <v-text-field
                 label="Conductivity (uS)"
-                class="input-group--focused input-group--limit-height"
+                class="input-group--limit-height"
                 type="number"
                 v-model="newLogData.specifcConductivity">
             </v-text-field>
             <v-text-field
                 label="Rainfall (in)"
-                class="input-group--focused input-group--limit-height"
+                class="input-group--limit-height"
                 type="number"
                 v-model="newLogData.precipitation">
             </v-text-field>
-            <a class="form-input-sub-text--hug-input">Rainfall value from Weather Underground (TODO ADD THIS)</a>
+            <a class="form-input-sub-text--hug-input">Rainfall value from Weather Underground (TODO)</a>
             <v-text-field
                 label="Incubation Temp (*C)"
-                class="input-group--focused input-group--limit-height"
+                class="input-group--limit-height"
                 type="number"
                 v-model="newLogData.incubationTemp">
             </v-text-field>
@@ -137,7 +137,7 @@
                 label="Incubation Out"
                 v-model="newLogData.incubationOut"
                 type="time"
-                class="input-group--focused input-group--limit-height">
+                class="input-group--limit-height">
             </v-text-field>
           </div>
 
@@ -149,42 +149,59 @@
               </div>
               <v-text-field
                   label="Large Cells"
-                  class="input-group--focused input-group--limit-height"
+                  class="input-group--limit-height"
                   type="number"
+                  hint="Should be between 0-49 (Leave empty if not recorded)"
+                  persistent-hint
                   v-model="newLogData.coliformLargeCells">
               </v-text-field>
               <v-text-field
                   label="Small Cells"
-                  class="input-group--focused input-group--limit-height"
+                  class="input-group--limit-height"
                   type="number"
+                  hint="Should be between 0-48 (Leave empty if not recorded)"
+                  persistent-hint
                   v-model="newLogData.coliformSmallCells">
               </v-text-field>
             </div>
 
-            <a class="log-data-total">Total Coliform = TODO</a>
+            <a class="log-data-total">Total Coliform = {{ getTotalColiform }}</a>
 
             <div class="log-data-section-wrapper">
               <div class="page-content-body__header">
-                E. Coli
+                E. coli
               </div>
               <v-text-field
                   label="Large Cells"
-                  class="input-group--focused input-group--limit-height"
+                  class="input-group--limit-height"
                   type="number"
+                  hint="Should be between 0-49 (Leave empty if not recorded)"
+                  persistent-hint
                   v-model="newLogData.ecoliLargeCells">
               </v-text-field>
               <v-text-field
                   label="Small Cells"
-                  class="input-group--focused input-group--limit-height"
+                  class="input-group--limit-height"
                   type="number"
+                  hint="Should be between 0-48 (Leave empty if not recorded)"
+                  persistent-hint
                   v-model="newLogData.ecoliSmallCells">
               </v-text-field>
             </div>
 
-            <a class="log-data-total">Total E. coli = TODO</a>
+            <a class="log-data-total">Total E. coli = {{ getTotalEcoli }}</a>
 
-            <div class="form-input-sub-text" v-on:click="toggleAdditionalParmas">
+            <div
+              class="form-input-sub-text"
+              v-if="controls.showAdditionalParams === false"
+              v-on:click="toggleAdditionalParmas">
               See More Parameters
+            </div>
+            <div
+              class="form-input-sub-text"
+              v-if="controls.showAdditionalParams === true"
+              v-on:click="toggleAdditionalParmas">
+              Hide More Parameters
             </div>
 
             <div
@@ -195,37 +212,37 @@
               </div>
               <v-text-field
                   label="Dissolved Oxygen"
-                  class="input-group--focused input-group--limit-height"
+                  class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.dissolvedOxygen">
               </v-text-field>
               <v-text-field
                   label="Nitrate"
-                  class="input-group--focused input-group--limit-height"
+                  class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.nitrate">
               </v-text-field>
               <v-text-field
                   label="Phosphate"
-                  class="input-group--focused input-group--limit-height"
+                  class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.phosphate">
               </v-text-field>
               <v-text-field
                   label="Ammonium"
-                  class="input-group--focused input-group--limit-height"
+                  class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.ammonium">
               </v-text-field>
               <v-text-field
                   label="Total Chlorine"
-                  class="input-group--focused input-group--limit-height"
+                  class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.totalChlorine">
               </v-text-field>
               <v-text-field
                   label="Chlorophyll"
-                  class="input-group--focused input-group--limit-height"
+                  class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.chlorophyll">
               </v-text-field>
@@ -233,13 +250,14 @@
                   name="input-5-1"
                   label="Notes"
                   v-model="newLogData.notes"
-                  class="input-group--focused input-group--limit-height"
+                  class="input-group--limit-height"
                 ></v-text-field>
             </div>
 
             <v-dialog v-model="controls.showDialog" lazy absolute>
               <v-btn
                 slot="activator"
+                type="submit"
                 class="btn-nww log-data-submit-btn">
                 Log Data
               </v-btn>
@@ -271,9 +289,16 @@
     <v-snackbar
       :timeout="snackbar.timeout"
       :error="true"
-      v-model="snackbar.visible">
+      v-model="snackbar.errorVisible">
       {{snackbar.errorMessage}}
-      <v-btn dark flat @click.native="snackbar.visible = false">Close</v-btn>
+      <v-btn dark flat @click.native="snackbar.errorVisible = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar
+      :timeout="snackbar.timeout"
+      :info="true"
+      v-model="snackbar.successVisible">
+      {{snackbar.successMessage}}
+      <v-btn dark flat @click.native="snackbar.successVisible = false">Close</v-btn>
     </v-snackbar>
   </div>
 </template>
@@ -284,21 +309,46 @@ import { db } from '../../helpers/firebase'
 let collectionSitesRef = db.ref('collectionSites')
 let reportsRef = db.ref('reports')
 let labsRef = db.ref('labs')
-let lastReportRef = db.ref('reports').limitToLast(1)
 
 export default {
   name: 'log-data',
   firebase: {
     collectionSites: collectionSitesRef,
     reports: reportsRef,
-    labs: labsRef,
-    lastReport: lastReportRef
+    labs: labsRef
   },
-  mounted: function () {
-    this.newLogData.logbookNumber = this.getLastLogbookNumber()
+  watch: {
+    reports: {
+      deep: true,
+      handler (newArray) {
+        this.newLogData.logbookNumber = this.getLastLogbookNumber(newArray)
+      }
+    }
+  },
+  computed: {
+    getTotalColiform: function () {
+      var num1 = parseInt(this.newLogData.coliformLargeCells)
+      var num2 = parseInt(this.newLogData.coliformSmallCells)
+      if (num1 + num2) {
+        return num1 + num2
+      } else {
+        return ''
+      }
+    },
+    getTotalEcoli: function () {
+      var num1 = parseInt(this.newLogData.ecoliLargeCells)
+      var num2 = parseInt(this.newLogData.ecoliSmallCells)
+      if (num1 + num2) {
+        return num1 + num2
+      } else {
+        return ''
+      }
+    }
   },
   data: function () {
     return {
+      reports: [], // Placeholder for sites watching
+      lastReport: 1,
       controls: {
         showAdditionalParams: false,
         showDialog: false,
@@ -321,7 +371,7 @@ export default {
         incubationOut: '',
         incubationTemp: null,
         incubationTime: '',
-        logbookNumber: 1, // TODO list the logbookNumber
+        logbookNumber: 1,
         nitrate: null,
         phosphate: null,
         precipitation: null,
@@ -331,7 +381,9 @@ export default {
         notes: ''
       },
       snackbar: {
-        visible: false,
+        errorVisible: false,
+        successVisible: false,
+        successMessage: 'Data logged successfully!',
         errorMessage: 'There was an issue logging your data',
         timeout: 6000
       }
@@ -350,18 +402,19 @@ export default {
         this.newLogData.collectionSiteId = this.newLogData.collectionSite['.key']
         this.newLogData.collectionSite = null
 
-        // Set logbook number
-        this.newLogData.logbookNumber = this.getLastLogbookNumber()
-
         this.$firebaseRefs.reports.push(this.newLogData)
-        this.controls.dialog = false
+
+        // Success!
+        this.snackbar.successVisible = true
+        this.controls.showDialog = false
       } catch (e) {
         console.log(e)
-        this.snackbar.visible = true
+        this.snackbar.errorVisible = true
+        this.controls.showDialog = false
       }
     },
-    getLastLogbookNumber: function () {
-      return (this.lastReport[0] ? this.lastReport[0].logbookNumber : 0) + 1
+    getLastLogbookNumber: function (newArray) {
+      return (newArray[newArray.length - 1] ? newArray[newArray.length - 1].logbookNumber : 0) + 1
     },
     resetForm: function () {
       var newLogNum = this.newLogData.logbookNumber + 1
@@ -390,6 +443,15 @@ export default {
         turbidity: null,
         totalChlorine: null,
         notes: ''
+      }
+    },
+    getTotal: function (num1, num2) {
+      var n1 = parseInt(num1)
+      var n2 = parseInt(num2)
+      if (n1 + n2 > 0) {
+        return n1 + n2
+      } else {
+        return ''
       }
     }
   }

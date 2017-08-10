@@ -1,31 +1,37 @@
 <template>
   <v-layout row justify-center>
-    <v-dialog v-model="controls.showDialog" fullscreen  :overlay=false>
+    <v-dialog v-model="controls.showDialog"  :overlay=false>
       <v-btn
         slot="activator"
         class="btn-nww--light">
         Add New Site
       </v-btn>
       <v-card>
-        <v-toolbar dark class="primary">
-          <v-btn icon @click.native="controls.showDialog = false" dark>
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-toolbar-title>New Collection Site</v-toolbar-title>
-          <v-spacer></v-spacer>
-        </v-toolbar>
+        <v-card-title>
+          <span class="headline">New Collection Site</span>
+        </v-card-title>
         <form
+          class="add-form"
           v-on:submit.prevent="submitForm">
           <v-text-field label="Station Name" v-model="newCollectionSite.stationName" required></v-text-field>
           <v-text-field label="Logbook Abbreviation" v-model="newCollectionSite.logbookAbbv" required></v-text-field>
           <v-text-field label="Adopt A Stream Name" v-model="newCollectionSite.adoptAStreamName" required></v-text-field>
-          <v-text-field label="Collection Partner" v-model="newCollectionSite.collectionPartner" required></v-text-field>
-          <v-text-field label="Google Maps URL" v-model="newCollectionSite.googleMapsUrl" required></v-text-field>
           <v-text-field label="HUC Name" v-model="newCollectionSite.hucName" required></v-text-field>
           <v-text-field label="HUC" type="number" v-model="newCollectionSite.huc" required></v-text-field>
           <v-text-field label="Latitude" v-model="newCollectionSite.latitude" required></v-text-field>
-          <v-text-field label="longitude" v-model="newCollectionSite.longitude" required></v-text-field>
-          <v-text-field label="storetName" v-model="newCollectionSite.storetName" required></v-text-field>
+          <v-text-field label="Longitude" v-model="newCollectionSite.longitude" required></v-text-field>
+          <v-text-field label="Storet Name" v-model="newCollectionSite.storetName" required></v-text-field>
+          <v-select
+            v-bind:items="partners"
+            v-model="newCollectionSite.collectionPartner"
+            item-text=".value"
+            item-value=".value"
+            label="Collection Partner"
+            single-line
+            class="input-group--limit-height"
+            required
+            bottom>
+          </v-select>
           <v-select
             v-bind:items="labs"
             v-model="newCollectionSite.lab"
@@ -33,7 +39,7 @@
             item-value=".value"
             label="Lab"
             single-line
-            class="input-group--focused input-group--limit-height"
+            class="input-group--limit-height"
             bottom>
           </v-select>
           <v-btn
@@ -47,9 +53,16 @@
     <v-snackbar
       :timeout="snackbar.timeout"
       :error="true"
-      v-model="snackbar.visible">
+      v-model="snackbar.errorVisible">
       {{snackbar.errorMessage}}
-      <v-btn dark flat @click.native="snackbar.visible = false">Close</v-btn>
+      <v-btn dark flat @click.native="snackbar.errorVisible = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar
+      :timeout="snackbar.timeout"
+      :info="true"
+      v-model="snackbar.successVisible">
+      {{snackbar.successMessage}}
+      <v-btn dark flat @click.native="snackbar.successVisible = false">Close</v-btn>
     </v-snackbar>
   </v-layout>
 </template>
@@ -59,12 +72,14 @@ import { db } from '../../helpers/firebase'
 
 let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
+let partnersRef = db.ref('partners')
 
 export default {
   name: 'site-reports',
   firebase: {
     collectionSites: collectionSitesRef,
-    labs: labsRef
+    labs: labsRef,
+    partners: partnersRef
   },
   data: function () {
     return {
@@ -74,7 +89,6 @@ export default {
       newCollectionSite: {
         adoptAStreamName: '',
         collectionPartner: '',
-        googleMapsUrl: '',
         hucName: '',
         huc: '',
         lab: '',
@@ -82,10 +96,13 @@ export default {
         logbookAbbv: '',
         longitude: '',
         stationName: '',
-        storetName: ''
+        storetName: '',
+        numSamples: 0
       },
       snackbar: {
-        visible: false,
+        errorVisible: false,
+        successVisible: false,
+        successMessage: 'Collection Site saved successfully!',
         errorMessage: 'There was an issue saving your Collection Site',
         timeout: 6000
       }
@@ -95,12 +112,40 @@ export default {
     submitForm: function () {
       try {
         this.$firebaseRefs.collectionSites.push(this.newCollectionSite)
+        this.snackbar.successVisible = true
         this.controls.showDialog = false
       } catch (e) {
         console.log(e)
-        this.snackbar.visible = true
+        this.snackbar.errorVisible = true
+      }
+    },
+    resetCollectionForm () {
+      this.newCollectionSite = {
+        adoptAStreamName: '',
+        collectionPartner: '',
+        hucName: '',
+        huc: '',
+        lab: '',
+        latitude: '',
+        logbookAbbv: '',
+        longitude: '',
+        stationName: '',
+        storetName: '',
+        numSamples: 0
       }
     }
   }
 }
 </script>
+
+<style lang="scss">
+@import "../../scss/colors";
+
+.add-header-toolbar {
+  background-color: $color-iron-sea !important;
+}
+
+.add-form {
+  padding: 10px;
+}
+</style>

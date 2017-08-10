@@ -25,10 +25,6 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       console.log('Auth state changed')
       this.$store.commit('setUser', user || false)
-
-      if (user) {
-        this.$router.push('/collectionSites')
-      }
     })
 
     router.beforeEach((to, from, next) => {
@@ -61,6 +57,8 @@ export default {
 </style>
 
 <style lang="scss">
+@import "scss/colors";
+@import "scss/framework-overrides";
 $toolbar-datepicker-height: 36px;
 
 body {
@@ -76,9 +74,9 @@ body {
   overflow-y: auto;
 
   &__body {
-    min-height: calc(100vh - 64px - 140px);
+    min-height: calc(100vh - 64px - 106px);
 
-    background-color: #f3f3f3;
+    background-color: $color-sandslash;
 
     @media screen and (min-width: 401px) {
       padding: 24px;
@@ -91,18 +89,14 @@ body {
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    height: 140px;
-    min-height: 140px;
+    height: 106px;
+    min-height: 106px;
 
     background-color: #004d71;
   }
 
   &__wrapper {
     z-index: 0;
-  }
-
-  .input-group__hint { // Vuetify style override
-    color: #8e7630 !important;
   }
 }
 
@@ -147,6 +141,7 @@ body {
 
   &__primary-link {
     color: #4d86a0;
+    text-decoration: none;
   }
 
   table.table tbody tr:hover {
@@ -192,7 +187,7 @@ body {
 
     &--dark {
       @extend .page-content-header__subtext;
-      color: #8e7630;
+      color: $color-sad-grey;
     }
   }
 }
@@ -279,7 +274,7 @@ body {
 
   &--hug-input {
     @extend .form-input-sub-text;
-    margin: -18px 0 18px;
+    margin: -24px 0 24px;
   }
 }
 </style>
