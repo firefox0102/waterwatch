@@ -191,7 +191,7 @@ export default {
     return {
       pagination: {
         sortBy: 'stationName',
-        descending: 'asc',
+        descending: false,
         totalItems: 0, // TODO
         loading: true // TODO
       },
