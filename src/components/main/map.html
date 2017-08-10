@@ -5,167 +5,168 @@ Labs / Sample Dropoff locations
 
 Off by default:
 Counties, Hydrography (12 digit HUCs, high res flowlines, waterbodies), Sewer spills found and stopped? -->
-
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset='utf-8' />
-    <title></title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.0/mapbox-gl.css' rel='stylesheet' />
-    <style>
-        body { margin:0; padding:0; }
-        #map { position:absolute; top:0; bottom:0; width:100%; }
-    </style>
+  <meta charset='utf-8' />
+  <title></title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.0/mapbox-gl.css' rel='stylesheet' />
+  <style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  #map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  </style>
 </head>
+
 <body>
-<style>
-     #menu {
-        background: #fff;
-        position: absolute;
-        z-index: 1;
-        top: 250px;
-        right: 10px;
-        border-radius: 3px;
-        width: 120px;
-        border: 1px solid rgba(0,0,0,0.4);
-        font-family: 'Open Sans', sans-serif;
-    }
+  <style>
+  #menu {
+    background: #fff;
+    position: absolute;
+    z-index: 1;
+    top: 250px;
+    right: 10px;
+    border-radius: 3px;
+    width: 120px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    font-family: 'Open Sans', sans-serif;
+  }
 
-    #menu a {
-        font-size: 13px;
-        color: #404040;
-        display: block;
-        margin: 0;
-        padding: 0;
-        padding: 10px;
-        text-decoration: none;
-        border-bottom: 1px solid rgba(0,0,0,0.25);
-        text-align: center;
-    }
+  #menu a {
+    font-size: 13px;
+    color: #404040;
+    display: block;
+    margin: 0;
+    padding: 0;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    text-align: center;
+  }
 
-    #menu a:last-child {
-        border: none;
-    }
+  #menu a:last-child {
+    border: none;
+  }
 
-    #menu a:hover {
-        background-color: #f8f8f8;
-        color: #404040;
-    }
+  #menu a:hover {
+    background-color: #f8f8f8;
+    color: #404040;
+  }
 
-    #menu a.active {
-        background-color: #3887be;
-        color: #ffffff;
-    }
+  #menu a.active {
+    background-color: #3887be;
+    color: #ffffff;
+  }
 
-    #menu a.active:hover {
-        background: #3074a4;
-    }
-</style>
+  #menu a.active:hover {
+    background: #3074a4;
+  }
 
-
-<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
-<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
-
-<div id='menu'></div>
-<div id='map'></div>
-
-<script>
-mapboxgl.accessToken = 'pk.eyJ1IjoibGNhY2VkYSIsImEiOiIzNmM4MGRlN2I4NDhiY2UxZjA4MmJjZjE5OWEzYjUzNSJ9.Wc5KTJpWxmpxVMZfcuEQNg';
-var map = new mapboxgl.Map({
+  </style>
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+  <div id='menu'></div>
+  <div id='map'></div>
+  <script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoibGNhY2VkYSIsImEiOiIzNmM4MGRlN2I4NDhiY2UxZjA4MmJjZjE5OWEzYjUzNSJ9.Wc5KTJpWxmpxVMZfcuEQNg';
+  var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/light-v9', //hosted style id
     center: [-84.387249, 33.755788], // starting position
     zoom: 8 // starting zoom
-});
+  });
 
-//MAP LAYERS
-map.on('load', function () {
-
+  //// MAP LAYERS ////
+  map.on('load', function() {
 
     //// CHATTAHOOCHEE RIVER BASIN/////
     map.addSource('basin', {
-            'type': 'geojson',
-            'data': 'https://s3.amazonaws.com/waterwatchcrk/Chatt_River_Basin.geojson'
-        });
-     map.addSource('sites', {
-            'type': 'geojson',
-            'data': 'https://s3.amazonaws.com/waterwatchcrk/initial_points.geojson',
-            'cluster': true,
-            'clusterMaxZoom': 14, // Max zoom to cluster points on
-            'clusterRadius': 50 // Radius of each cluster when clustering points (defaults to 50)
-        });
+      'type': 'geojson',
+      'data': 'https://s3.amazonaws.com/waterwatchcrk/Chatt_River_Basin.geojson'
+    });
+    map.addSource('sites', {
+      'type': 'geojson',
+      'data': 'https://s3.amazonaws.com/waterwatchcrk/initial_points.geojson',
+      'cluster': true,
+      'clusterMaxZoom': 14, // Max zoom to cluster points on
+      'clusterRadius': 50 // Radius of each cluster when clustering points (defaults to 50)
+    });
 
     map.addLayer({
-        'id': 'Basin',
-        'type': 'fill',
-        'source': 'basin',
-        // {
-        //     'type': 'geojson',
-        //     'data': '/data/Chatt_River_Basin.geojson'
-        // },
-        'layout': {},
-        'paint': {
-            'fill-outline-color': 'rgba(7, 78, 112, 1)',
-            'fill-color': "rgba(80, 134, 158, 0.2)",
-            // 'line-dash-array': '1',
-        },
-        'properties': {
-            'description': "Chattahoochee River Basin"
-        },
+      'id': 'Basin',
+      'type': 'fill',
+      'source': 'basin',
+      // {
+      //     'type': 'geojson',
+      //     'data': '/data/Chatt_River_Basin.geojson'
+      // },
+      'layout': {},
+      'paint': {
+        'fill-outline-color': 'rgba(7, 78, 112, 1)',
+        'fill-color': "rgba(80, 134, 158, 0.2)",
+        // 'line-dash-array': '1',
+      },
+      'properties': {
+        'description': "Chattahoochee River Basin"
+      },
     });
-//COUNTIES
+    ////COUNTIES////
     map.addLayer({
-        'id': 'Counties',
-        'type': 'fill',
-        'source': {
-            'type': 'geojson',
-            'data': 'https://opendata.arcgis.com/datasets/53ca7db14b8f4a9193c1883247886459_67.geojson'
-        },
-        'layout': {
-            'visibility': 'none'
-        },
-        'paint': {
-            'fill-outline-color': 'rgba(7, 78, 112, 1)',
-            'fill-color': "rgba(7, 78, 112, 0)",
-            // 'line-dash-array': '1',
-        }
-        // This is the important part of this example: the addLayer
-    // method takes 2 arguments: the layer as an object, and a string
-    // representing another layer's name. if the other layer
-    // exists in the stylesheet already, the new layer will be positioned
-    // right before that layer in the stack, making it possible to put
-    // 'overlays' anywhere in the layer stack.
+      'id': 'Counties',
+      'type': 'fill',
+      'source': {
+        'type': 'geojson',
+        'data': 'https://opendata.arcgis.com/datasets/53ca7db14b8f4a9193c1883247886459_67.geojson'
+      },
+      'layout': {
+        'visibility': 'none'
+      },
+      'paint': {
+        'fill-outline-color': 'rgba(7, 78, 112, 1)',
+        'fill-color': "rgba(7, 78, 112, 0)",
+        // 'line-dash-array': '1',
+      }
+      // This is the important part of this example: the addLayer
+      // method takes 2 arguments: the layer as an object, and a string
+      // representing another layer's name. if the other layer
+      // exists in the stylesheet already, the new layer will be positioned
+      // right before that layer in the stack, making it possible to put
+      // 'overlays' anywhere in the layer stack.
     }, 'place_label_city_small_s');
 
-///// COLLECTION SITES/////
+    ///// COLLECTION SITES /////
     map.addLayer({
-        'id': 'Sites',
-        'type': 'circle',
-        'source': 'sites',
-        'paint': {
-            'circle-color': "red",
-            // 'line-dash-array': '1',
-        },
-        'layout': {},
-        'properties': {
-            'description': "points!"
+      'id': 'Sites',
+      'type': 'circle',
+      'source': 'sites',
+      'paint': {
+        'circle-color': "red",
+        // 'line-dash-array': '1',
+      },
+      'layout': {},
+      'properties': {
+        'description': "points!"
 
-        },
-        // This is the important part of this example: the addLayer
-    // method takes 2 arguments: the layer as an object, and a string
-    // representing another layer's name. if the other layer
-    // exists in the stylesheet already, the new layer will be positioned
-    // right before that layer in the stack, making it possible to put
-    // 'overlays' anywhere in the layer stack.
+      },
     });
-    });
+  });
 
-///MENU TOGGLE///
-var toggleableLayerIds = ['Basin', 'Counties', 'Sites'];
+  ////MENU TOGGLE////
+  var toggleableLayerIds = ['Basin', 'Counties', 'Sites'];
 
-for (var i = 0; i < toggleableLayerIds.length; i++) {
+  for (var i = 0; i < toggleableLayerIds.length; i++) {
     var id = toggleableLayerIds[i];
 
     var link = document.createElement('a');
@@ -173,39 +174,41 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
     link.className = 'active';
     link.textContent = id;
 
-    link.onclick = function (e) {
-        var clickedLayer = this.textContent;
-        e.preventDefault();
-        e.stopPropagation();
+    link.onclick = function(e) {
+      var clickedLayer = this.textContent;
+      e.preventDefault();
+      e.stopPropagation();
 
-        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+      var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
 
-        if (visibility === 'visible') {
-            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-            this.className = '';
-        } else {
-            this.className = 'active';
-            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-        }
+      if (visibility === 'visible') {
+        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+        this.className = '';
+      } else {
+        this.className = 'active';
+        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+      }
     };
 
     var layers = document.getElementById('menu');
     layers.appendChild(link);
-}
+  }
 
 
-// Add zoom and rotation controls to the map.
-map.addControl(new MapboxGeocoder({
+  //// Add zoom and rotation controls to the map. ////
+  map.addControl(new MapboxGeocoder({
     accessToken: mapboxgl.accessToken
-})); map.addControl(new mapboxgl.NavigationControl()); map.addControl(new mapboxgl.GeolocateControl({
+  }));
+  map.addControl(new mapboxgl.NavigationControl());
+  map.addControl(new mapboxgl.GeolocateControl({
     positionOptions: {
-        enableHighAccuracy: true
+      enableHighAccuracy: true
     },
     trackUserLocation: true
-})); map.addControl(new mapboxgl.FullscreenControl());
+  }));
+  map.addControl(new mapboxgl.FullscreenControl());
 
-
-</script>
-
+  </script>
 </body>
+
 </html>
