@@ -289,9 +289,16 @@
     <v-snackbar
       :timeout="snackbar.timeout"
       :error="true"
-      v-model="snackbar.visible">
+      v-model="snackbar.errorVisible">
       {{snackbar.errorMessage}}
-      <v-btn dark flat @click.native="snackbar.visible = false">Close</v-btn>
+      <v-btn dark flat @click.native="snackbar.errorVisible = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar
+      :timeout="snackbar.timeout"
+      :info="true"
+      v-model="snackbar.successVisible">
+      {{snackbar.successMessage}}
+      <v-btn dark flat @click.native="snackbar.successVisible = false">Close</v-btn>
     </v-snackbar>
   </div>
 </template>
@@ -374,7 +381,9 @@ export default {
         notes: ''
       },
       snackbar: {
-        visible: false,
+        errorVisible: false,
+        successVisible: false,
+        successMessage: 'Data logged successfully!',
         errorMessage: 'There was an issue logging your data',
         timeout: 6000
       }
@@ -393,14 +402,15 @@ export default {
         this.newLogData.collectionSiteId = this.newLogData.collectionSite['.key']
         this.newLogData.collectionSite = null
 
-        // Set logbook number
-        // this.newLogData.logbookNumber = this.getLastLogbookNumber()
-
         this.$firebaseRefs.reports.push(this.newLogData)
+
+        // Success!
+        this.snackbar.successVisible = true
         this.controls.showDialog = false
       } catch (e) {
         console.log(e)
-        this.snackbar.visible = true
+        this.snackbar.errorVisible = true
+        this.controls.showDialog = false
       }
     },
     getLastLogbookNumber: function (newArray) {
