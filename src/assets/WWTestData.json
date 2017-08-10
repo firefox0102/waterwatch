@@ -21,7 +21,8 @@
        "stationName": "Station 1",
        "storetName": "kjhasdfkjadsf",
        "active": true,
-       "collectionSiteId": 0
+       "collectionSiteId": 0,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 1,
@@ -36,7 +37,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 2,
@@ -51,7 +53,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 3,
@@ -66,7 +69,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 4,
@@ -81,7 +85,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 5,
@@ -96,7 +101,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 6,
@@ -111,7 +117,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 7,
@@ -126,7 +133,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 8,
@@ -141,7 +149,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 9,
@@ -156,7 +165,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 10,
@@ -171,7 +181,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 11,
@@ -186,7 +197,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 12,
@@ -201,7 +213,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 13,
@@ -216,7 +229,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     },
     {
       "collectionSiteId": 14,
@@ -231,7 +245,8 @@
        "logbookAbbv": "st1 @ park name",
        "longitude": "-735",
        "storetName": "kjhasdfkjadsf",
-       "active": true
+       "active": true,
+       "numSamples": 0
     }
   ],
   "reports": [

@@ -96,7 +96,8 @@ export default {
         logbookAbbv: '',
         longitude: '',
         stationName: '',
-        storetName: ''
+        storetName: '',
+        numSamples: 0
       },
       snackbar: {
         errorVisible: false,
@@ -129,7 +130,8 @@ export default {
         logbookAbbv: '',
         longitude: '',
         stationName: '',
-        storetName: ''
+        storetName: '',
+        numSamples: 0
       }
     }
   }
