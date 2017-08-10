@@ -236,7 +236,7 @@
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
-              E. Coli
+              E. coli
               <v-dialog v-model="controls.ecoliDialog" persistent>
                 <i
                   slot="activator"

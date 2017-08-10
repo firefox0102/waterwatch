@@ -7,7 +7,7 @@
         </div>
 
         <div class="collection-sites-header__subheader--bold">
-          172 active of 200 total sites (TODO GET THESE METRICS)
+          {{ activeSites.length }} active of {{ collectionSites.length }}
         </div>
         <div class="collection-sites-header__subheader">
           Select a site to view logged data. Create and export reports of logged data for one or many collection sites.
@@ -148,7 +148,7 @@
                 <td>{{ props.item.lab }}</td>
                 <td>{{ props.item.lastCollectionDate }}</td>
                 <td>{{ props.item.lastEColi }}</td>
-                <td>{{ props.item.status }}</td>
+                <td>{{ props.item.active ? 'active' : 'inactive' }}</td>
                 <td>{{ props.item.collectionPartner }}</td>
                 <td>{{ props.item.hucName }}</td>
                 <td>{{ props.item.adoptAStreamName }}</td>
@@ -179,14 +179,19 @@ export default {
   components: {
     'add-collection-site': AddCollectionSite
   },
-  firebase: {
-    collectionSites: collectionSitesRef
+  firebase () {
+    return {
+      collectionSites: collectionSitesRef,
+      activeSites: {
+        source: collectionSitesRef.orderByChild('active').equalTo(true)
+      }
+    }
   },
   data: function () {
     return {
       pagination: {
         sortBy: 'stationName',
-        descending: 'asc',
+        descending: false,
         totalItems: 0, // TODO
         loading: true // TODO
       },
@@ -222,7 +227,7 @@ export default {
         { text: 'Lab', value: 'lab' },
         { text: 'Last Collection Date', value: 'lastCollectionDate' },
         { text: 'Last E. coli Result', value: 'lastEColi' },
-        { text: 'Status', value: 'status' },
+        { text: 'Status', value: 'active' },
         { text: 'Collection Partner', value: 'collectionPartner' },
         { text: 'HUC Name', value: 'hucName' },
         { text: 'Adopt-A-Stream Name', value: 'adoptAStreamName' },
@@ -260,154 +265,5 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../../scss/colors";
-
-$toolbar-datepicker-height: 36px;
-$toolbar-breakpoint: 1040px;
-
-.site-reports-wrapper {
-  padding: 0 24px 20px;
-  background-color: $color-bone;
-}
-
-.site-reports-body {
-  padding: 21px 24px 24px;
-}
-
-.site-reports-body-toolbar {
-  display: flex;
-
-  align-items: center;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
-  @media screen and (min-width: $toolbar-breakpoint) {
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-
-  &__primary-content {
-    display: flex;
-
-    align-items: center;
-    flex-wrap: wrap;
-
-    height: auto;
-    width: 100%;
-
-    @media screen and (min-width: $toolbar-breakpoint) {
-      width: 90%;
-    }
-  }
-
-  &__secondary-content {
-    display: flex;
-
-    align-items: center;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-
-    height: 36px;
-    width: 100%;
-
-    @media screen and (min-width: $toolbar-breakpoint) {
-      width: 10%;
-    }
-  }
-
-  &__text-content {
-    min-width: 112px;
-    width: 112px;
-  }
-}
-
-.site-reports-datepickers {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 13px;
-}
-
-.site-reports-toolbar-search {
-  display: flex;
-  height: 36px;
-  margin-bottom: 13px;
-  margin-right: 29px;
-  padding: 6px 16px;
-  width: 330px;
-
-  background-color: $color-finn-white;
-  border-radius: 2px;
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
-
-  &__icon {
-    height: 17.49px;
-    margin-right: 28px;
-    width: 17.49px;
-  }
-
-  &__input {
-    width: 250px;
-
-    &:focus {
-      outline: none;
-    }
-  }
-}
-
-.site-reports-toolbar-export {
-  margin-bottom: 13px;
-  width: 100%;
-
-  color: $color-nww-green;
-
-  &__activator {
-    display: flex;
-
-    justify-content: space-between;
-    height: 28px;
-    width: 100px;
-    border-bottom: 2px solid #9b9b9b;
-  }
-
-  &__activator-text {
-    height: 24px;
-    padding-left: 2px;
-    width: 47px;
-
-    font-size: 16px;
-    line-height: 24px;
-  }
-}
-
-.collection-sites-header {
-  display: flex;
-
-  justify-content: space-between;
-  padding: 22px 0 17px 32px;
-
-  &__primary-content {
-    // padding-left: 32px;
-  }
-
-  &__header {
-    color: $color-iron-sea;
-    font-size: 32px;
-    font-weight: 300;
-    letter-spacing: 1px;
-    line-height: 38px;
-  }
-
-  &__subheader {
-    color: #7d7d7d;
-    font-size: 13px;
-    line-height: 16px;
-
-    &--bold {
-      @extend .collection-sites-header__subheader;
-      font-weight: 500;
-    }
-  }
-}
+@import "../../scss/collection-sites";
 </style>
