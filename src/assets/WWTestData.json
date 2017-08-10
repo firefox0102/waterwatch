@@ -4,6 +4,9 @@
     "Gainesville",
     "LaGrange"
   ],
+  "partners": [
+    "CRK"
+  ],
   "collectionSites": [
     {
       "adoptAStreamName": "adoption name",
