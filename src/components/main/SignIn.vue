@@ -2,7 +2,7 @@
   <div class="sign-in">
     <div class="sign-in-header">
       <span class="sign-in-header__text">
-        Site Admin
+        ADMIN
       </span>
       <span class="sign-in-header__text--large">
         Sign In
@@ -14,8 +14,7 @@
         class="sign-in-body__form">
         <v-text-field
             label="Email"
-            class="input-group--focused"
-            v-model="user.email">
+            v-model="formUser.email">
           </v-text-field>
 
         <v-text-field
@@ -23,11 +22,27 @@
             :type="passVisible ? 'text' : 'password'"
             :append-icon="passVisible ? 'visibility' : 'visibility_off'"
             :append-icon-cb="() => (passVisible = !passVisible)"
-            v-model="user.password"
-            class="input-group--focused">
+            v-model="formUser.password">
           </v-text-field>
 
-        <a class="form-input-sub-text">Forget Password?</a>
+        <v-dialog v-model="showResetPassword" persistent>
+          <a class="form-input-sub-text--hug-input" slot="activator">Forget Password?</a>
+          <v-card>
+            <v-card-title class="headline">Reset Password</v-card-title>
+            <v-card-text>
+                <v-text-field
+                  v-model="formUser.email"
+                  label="Email Address"
+                  single-line>
+                </v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn class="green--text darken-1" flat="flat" @click.native="showResetPassword = false">Cancel</v-btn>
+              <v-btn class="green--text darken-1" flat="flat" @click.native="resetPassword">Send Reset Email</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
         <v-btn
           type="submit"
           v-on:click.native="signInWithPassword()"
@@ -37,44 +52,54 @@
       </form>
     </div>
     <v-snackbar
-      :timeout="snackbar.timeout"
+      :timeout="errorSnackbar.timeout"
       :error="true"
-      v-model="snackbar.visible">
-      {{snackbar.errorMessage}}
-      <v-btn dark flat @click.native="snackbar.visible = false">Close</v-btn>
+      v-model="errorSnackbar.visible">
+      {{errorSnackbar.errorMessage}}
+      <v-btn dark flat @click.native="errorSnackbar.visible = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar
+      :timeout="passwordSnackbar.timeout"
+      :info="true"
+      v-model="passwordSnackbar.visible">
+      {{passwordSnackbar.errorMessage}}
+      <v-btn dark flat @click.native="passwordSnackbar.visible = false">Close</v-btn>
     </v-snackbar>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
-
-function signInTest (to, from, next) {
-  if (firebase.auth().currentUser) {
-    next({
-      path: '/logData',
-      query: {
-        redirect: to.fullPath
-      }
-    })
-  } else {
-    next()
-  }
-}
+import { mapState } from 'vuex'
 
 export default {
   name: 'sign-in',
-  beforeEnter: signInTest,
+  computed: {
+    ...mapState(['user'])
+  },
+  watch: {
+    user: function () {
+      if (firebase.auth().currentUser) {
+        this.$router.push('/logData')
+      }
+    }
+  },
   data () {
     return {
+      showResetPassword: false,
       passVisible: false,
-      user: {
+      formUser: {
         email: '',
         password: ''
       },
-      snackbar: {
+      errorSnackbar: {
         visible: false,
         errorMessage: 'There was an issue signing in to Admin',
+        timeout: 6000
+      },
+      passwordSnackbar: {
+        visible: false,
+        errorMessage: 'Password email reset sent!',
         timeout: 6000
       }
     }
@@ -85,22 +110,37 @@ export default {
       evnt.preventDefault()
     },
     signInWithPassword () {
-      firebase.auth().signInWithEmailAndPassword(this.user.email, this.user.password)
+      firebase.auth().signInWithEmailAndPassword(this.formUser.email, this.formUser.password)
       .then((userData) => {
         this.onSignedIn()
-        return userData
       })
-      .catch(() => { this.snackbar.visible = true })
+      .catch(() => {
+        this.errorSnackbar.visible = true
+      })
     },
     onSignedIn () {
-      this.$router.go('/')
+      this.$router.push('/logData')
+    },
+    resetPassword () {
+      console.log('test')
+      console.log(this.formUser.email)
+      firebase.auth().sendPasswordResetEmail(this.formUser.email).then(() => {
+        this.showResetPassword = false
+        this.passwordSnackbar.visible = true
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import "../../scss/colors";
 $small-screen-breakpoint: 401px;
+
+.reset-password-input {
+  width: 100%;
+
+}
 
 .sign-in {
   display: flex;
@@ -130,9 +170,9 @@ $small-screen-breakpoint: 401px;
 
   &__text {
     height: 16px;
-    color: #e5e5e5;
-    font-family: Roboto;
+    color: $color-finn-white;
     font-size: 13px;
+    font-weight: 500;
     line-height: 16px;
 
     &--large {

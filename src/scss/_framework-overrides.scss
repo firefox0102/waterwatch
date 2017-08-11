@@ -1,0 +1,42 @@
+.application--light .input-group input,
+.input-group--text-field label { // Vuetify style override
+  color: $color-sad-grey !important;
+}
+
+.input-group--text-field label {
+  transform: translate3d(0, -18px, 0) scale(0.75) !important;
+}
+
+.input-group__hint { // Vuetify style override
+  color: $color-bumble-bee !important;
+}
+
+.input-group__details {
+  &:before {
+    color: $color-sad-grey;
+  }
+
+  &:after {
+    background-color: $color-nww-green !important;
+  }
+}
+
+a.list__tile {
+  transition: color 0s;
+}
+
+a.list__tile:hover,
+.list__tile--highlighted {
+  transition: 0;
+  background-color: #EDF2F5 !important;
+  color: #004D71 !important;
+}
+
+.picker__title,
+.picker--date .btn--active:after {
+  background: #004D71;
+}
+
+.dialog {
+  width: 500px !important;
+}

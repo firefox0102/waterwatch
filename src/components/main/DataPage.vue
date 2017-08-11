@@ -139,7 +139,7 @@
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
-              E. Coli
+              E. coli
             </span>
             <span class="graph-card-title__secondary">
               (MPN/100mL)
@@ -152,7 +152,7 @@
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
-              E. Coli
+              E. coli
             </span>
             <span class="graph-card-title__secondary">
               (MPN/100mL)
