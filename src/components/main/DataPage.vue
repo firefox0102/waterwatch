@@ -429,7 +429,8 @@ $data-sidebar-width: 240px;
   }
 
   &__dynamic-column {
-    height: 50vh;
+    max-height: 100%;
+    min-height: 50vh;
     width: 100vw;
   }
 
