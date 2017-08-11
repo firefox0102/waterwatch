@@ -436,9 +436,9 @@ export default {
 $data-sidebar-width: 240px;
 
 .mapboxgl-popup {
-        max-width: 400px;
-        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    }
+  max-width: 400px;
+  font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
 
 .data-page-wrapper {
   display: flex;
@@ -751,6 +751,7 @@ $data-sidebar-width: 240px;
   &__secondary {
     height: 13px;
     width: 71px;
+
     color: #004d71;
     font-size: 11px;
     line-height: 13px;
@@ -759,6 +760,7 @@ $data-sidebar-width: 240px;
   &__icon {
     height: 16px;
     width: 20px;
+
     color: #004d71;
     font-size: 16px;
     line-height: 16px;
@@ -768,9 +770,10 @@ $data-sidebar-width: 240px;
 
 .map {
   position: relative;
+  z-index: 0;
+
   height: 100%;
   width: 100%;
-  z-index: 0;
 }
 
 .menu {
