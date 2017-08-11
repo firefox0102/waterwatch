@@ -1,11 +1,21 @@
 <template>
   <footer class="app__footer">
     <div class="icon-group">
-      <i class="fa fa-facebook icon-group__facebook"></i>
-      <i class="fa fa-twitter icon-group__twitter"></i>
-      <i class="fa fa-instagram icon-group__instagram"></i>
-      <i class="fa fa-vimeo icon-group__vimeo"></i>
-      <i class="fa fa-youtube-play icon-group__youtube"></i>
+      <a href="https://www.facebook.com/chattahoocheeriverkeeper/" target="_blank">
+        <i class="fa fa-facebook icon-group__facebook"></i>
+      </a>
+      <a href="https://twitter.com/CRKeeper" target="_blank">
+        <i class="fa fa-twitter icon-group__twitter"></i>
+      </a>
+      <a href="https://www.instagram.com/crkeeper/#" target="_blank">
+        <i class="fa fa-instagram icon-group__instagram"></i>
+      </a>
+      <a href="https://vimeo.com/crkeeper" target="_blank">
+        <i class="fa fa-vimeo icon-group__vimeo"></i>
+      </a>
+      <a href="https://www.youtube.com/user/UCRiverkeeperVideos" target="_blank">
+        <i class="fa fa-youtube-play icon-group__youtube"></i>
+      </a>
     </div>
     <div class="footer-info">
       <div class="footer-info__text">
@@ -15,8 +25,7 @@
       </div>
       <div class="footer-info__text">
         Phone (404) 352-9828 |
-        <span class="footer-info__text--underline">info@chattachoochee.org</span>
-        .
+        <span class="footer-info__text--underline footer-info__text--active">info@chattachoochee.org</span>
       </div>
     </div>
   </footer>
@@ -28,14 +37,15 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+@import "../scss/colors";
+
 .icon-group {
   display: flex;
 
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
+  margin-bottom: 6px;
   width: 161px;
 
   &__facebook {
@@ -87,6 +97,10 @@ export default {
     &--underline {
       @extend .footer-info__text;
       text-decoration: underline;
+    }
+
+    &--active {
+      color: $color-nww-green;
     }
   }
 }
