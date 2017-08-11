@@ -1,3 +1,4 @@
+
 <template>
   <div class="data-page-wrapper">
     <aside class="data-sidebar" v-bind:class="{ 'data-sidebar--collapsed': filters.sidebar}">
@@ -322,7 +323,16 @@ export default {
         'type': 'circle',
         'source': 'sites',
         'paint': {
-          'circle-color': 'red'
+          'circle-color': '#50869E',
+          'circle-radius': {
+            'property': 'point_count',
+            'type': 'interval',
+            'stops': [
+              [0, 10],
+              [15, 15],
+              [30, 20]
+            ]
+          }
         },
         'layout': {},
         'properties': {
@@ -330,6 +340,33 @@ export default {
         }
       })
     })
+
+    // // Cluster labels //
+    // map.addLayer({
+    //   'id': 'sites-count',
+    //   'type': 'symbol',
+    //   'source': 'sites',
+    //   'filter': ['has', 'point_count'],
+    //   'layout': {
+    //     'text-field': '{point_count_abbreviated}',
+    //     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+    //     'text-size': 12,
+    //     'color': '#ee3311'
+    //   }
+    // })
+
+    // map.addLayer({
+    //   'id': 'unclustered-sites',
+    //   'type': 'circle',
+    //   'source': 'sites',
+    //   'filter': ['!has', 'point-count'],
+    //   'paint': {
+    //     'circle-color': '#50869E',
+    //     'circle-radius': 4,
+    //     'circle-stroke-width': 1,
+    //     'circle-stroke-color': '#fff'
+    //   }
+    // })
 
     // MENU TOGGLE//
     var toggleableLayerIds = ['Basin', 'Counties', 'Sites']
@@ -362,6 +399,23 @@ export default {
       layers.appendChild(link)
     }
 
+    // Pop up //
+    // map.on('click', 'Sites', function (e) {
+    //   new mapboxgl.Popup()
+    //     .setLngLat(e.features[0].geometry.coordinates)
+    //     .setHTML(e.features[0].properties.description)
+    //     .addTo(map)
+    // })
+    //  // Change the cursor to a pointer when the mouse is over the places layer.
+    // map.on('mouseenter', 'places', function () {
+    //   map.getCanvas().style.cursor = 'pointer'
+    // })
+
+    // // Change it back to a pointer when it leaves.
+    // map.on('mouseleave', 'places', function () {
+    //   map.getCanvas().style.cursor = ''
+    // })
+
     // Add zoom and rotation controls to the map. //
     map.addControl(new window.MapboxGeocoder({
       accessToken: window.mapboxgl.accessToken
@@ -380,6 +434,11 @@ export default {
 
 <style lang="scss" scoped>
 $data-sidebar-width: 240px;
+
+.mapboxgl-popup {
+        max-width: 400px;
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
 
 .data-page-wrapper {
   display: flex;
@@ -711,6 +770,7 @@ $data-sidebar-width: 240px;
   position: relative;
   height: 100%;
   width: 100%;
+  z-index: 0;
 }
 
 .menu {
