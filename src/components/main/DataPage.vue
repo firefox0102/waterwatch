@@ -1,7 +1,7 @@
 
 <template>
   <div class="data-page-wrapper">
-    <aside class="data-sidebar" v-bind:class="{ 'data-sidebar--collapsed': filters.sidebar}">
+    <aside class="data-sidebar" v-bind:class="{ 'data-sidebar--collapsed': controls.sidebar}">
       <div class="data-sidebar__header">
         <div
           class="data-sidebar-toggle"
@@ -9,34 +9,131 @@
           <i class="data-sidebar-toggle__caret material-icons">arrow_drop_down</i>
         </div>
         <div class="data-sidebar-search">
-          <input class="data-sidebar-search__input" v-model="filters.search" placeholder="Search collection sites" />
+          <input class="data-sidebar-search__input" v-model="controls.search" placeholder="Search collection sites" />
           <i class="data-sidebar-search__icon material-icons">search</i>
         </div>
-        <div class="data-sidebar-filter-text">
-          Showing all sites
-        </div>
-        <div class="data-sidebar-filter">
-          <v-select
-              v-bind:items="filters.filterSites"
-              v-model="filters.selectedItem"
-              label="Filter"
-              dark
-              single-line
-              bottom
-            ></v-select>
+        <div
+          class="filters-toggle"
+          v-on:click="controls.showFilters = !controls.showFilters">
+          <span class="filters-toggle__title">
+            Filter
+          </span>
+          <i
+            class="material-icons filters-toggle__icon"
+            v-bind:class="{'filters-toggle__icon--collapsed': !controls.showFilters }">
+            arrow_drop_down
+          </i>
         </div>
       </div>
+
+      <!-- Filter Sections -->
+      <div
+        v-if="controls.showFilters"
+        class="filters">
+        <!-- HUC Filter -->
+        <div class="filters__section">
+          <div
+            v-on:click="filters.huc = !filters.huc"
+            class="filters-toggle--secondary">
+            <span class="filters-toggle__title">
+              HUC
+            </span>
+            <i
+              class="material-icons filters-toggle__icon"
+              v-bind:class="{'filters-toggle__icon--collapsed': !filters.huc }">
+              arrow_drop_down
+            </i>
+          </div>
+          <div
+            v-if="filters.huc"
+            class="filter-body">
+            <div
+              v-for="huc in hucList"
+              class="filter-body__list-item">
+              <input
+                type="checkbox"
+                v-bind:value="huc"
+                v-model="filters.hucFilters"
+              ></input>
+              {{ huc }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Lab Filter -->
+        <div class="filters__section">
+          <div
+            v-on:click="filters.lab = !filters.lab"
+            class="filters-toggle--secondary">
+            <span class="filters-toggle__title">
+              Lab
+            </span>
+            <i
+              class="material-icons filters-toggle__icon"
+              v-bind:class="{'filters-toggle__icon--collapsed': !filters.lab }">
+              arrow_drop_down
+            </i>
+          </div>
+          <div
+            v-if="filters.lab"
+            class="filter-body">
+            <div
+              v-for="lab in labs"
+              class="filter-body__list-item">
+              <input
+                type="checkbox"
+                v-bind:value="lab['.value']"
+                v-model="filters.labFilters"
+              ></input>
+              {{ lab['.value'] }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Partner Filter -->
+        <div class="filters__section">
+          <div
+            v-on:click="filters.partner = !filters.partner"
+            class="filters-toggle--secondary">
+            <span class="filters-toggle__title">
+              Partner
+            </span>
+            <i
+              class="material-icons filters-toggle__icon"
+              v-bind:class="{'filters-toggle__icon--collapsed': !filters.partner }">
+              arrow_drop_down
+            </i>
+          </div>
+          <div
+            v-if="filters.partner"
+            class="filter-body">
+            <div
+              v-for="partner in partnerList"
+              class="filter-body__list-item">
+              <input
+                type="checkbox"
+                v-bind:value="partner"
+                v-model="filters.partnerFilters"
+              ></input>
+              {{ partner }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- List items -->
       <div class="data-sidebar__body">
         <div
           class="data-sidebar-list-item"
-          v-on:click="selectedSite = item"
-          v-bind:class="{'data-sidebar-list-item--active': selectedSite === item}"
-          v-for=" item in items">
-            {{ item.stationName }}
+          v-on:click="selectedSite = site"
+          v-bind:class="{'data-sidebar-list-item--active': selectedSite === site}"
+          v-for=" site in collectionSites">
+            {{ site.stationName }}
         </div>
       </div>
     </aside>
-    <div class="data-body" v-bind:class="{ 'data-body--collapsed': filters.sidebar}">
+
+    <div class="data-body" v-bind:class="{ 'data-body--collapsed': controls.sidebar}">
       <div class="data-body__dynamic-column">
         <div class="map-wrapper">
           <div id='menu' class="menu"></div>
@@ -53,29 +150,29 @@
           <div class="controls-card-body">
             <div
               class="controls-card-control-group"
-              v-bind:class="{ 'controls-card-control-group--collapsed': filters.selectedControl != 'dateRange'}">
+              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControl != 'dateRange'}">
               <div
                 class="controls-card-control-group__header"
-                v-on:click="filters.selectedControl = 'dateRange'">
+                v-on:click="controls.selectedControl = 'dateRange'">
                 Date Range
                 <i class="material-icons">arrow_drop_up</i>
               </div>
               <div class="controls-card-control-group__content">
-                Select date range:
+                <span class="controls-card-control-group__title">Select date range:</span>
                 <div class="date-picker-wrapper">
                   <div class="site-reports-toolbar-datepicker">
                     <v-dialog
                       persistent
-                      v-model="filters.startDateModal"
+                      v-model="controls.startDateModal"
                       lazy
                       full-width>
                       <div
                         class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
-                        <span class="site-reports-toolbar-datepicker__activator-text">{{ filters.startDate ? filters.startDate : "Start Date"}}</span>
+                        <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.startDate ? controls.startDate : "Start Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <v-date-picker v-model="filters.startDate" scrollable >
+                      <v-date-picker v-model="controls.startDate" scrollable >
                         <template scope="{ save, cancel }">
                           <v-card-actions>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -88,16 +185,16 @@
                   <div class="site-reports-toolbar-datepicker">
                     <v-dialog
                       persistent
-                      v-model="filters.endDateModal"
+                      v-model="controls.endDateModal"
                       lazy
                       full-width>
                       <div
                         class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
-                        <span class="site-reports-toolbar-datepicker__activator-text">{{ filters.endDate ? filters.endDate : "End Date"}}</span>
+                        <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.endDate ? controls.endDate : "End Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <v-date-picker v-model="filters.endDate" scrollable >
+                      <v-date-picker v-model="controls.endDate" scrollable >
                         <template scope="{ save, cancel }">
                           <v-card-actions>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -112,10 +209,10 @@
             </div>
             <div
               class="controls-card-control-group"
-              v-bind:class="{ 'controls-card-control-group--collapsed': filters.selectedControl != 'report'}">
+              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControl != 'report'}">
               <div
                 class="controls-card-control-group__header"
-                v-on:click="filters.selectedControl = 'report'">
+                v-on:click="controls.selectedControl = 'report'">
                 Reports
                 <i class="material-icons">arrow_drop_up</i>
               </div>
@@ -125,10 +222,10 @@
             </div>
             <div
               class="controls-card-control-group"
-              v-bind:class="{ 'controls-card-control-group--collapsed': filters.selectedControl != 'mapLayer'}">
+              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControl != 'mapLayer'}">
               <div
                 class="controls-card-control-group__header"
-                v-on:click="filters.selectedControl = 'mapLayer'">
+                v-on:click="controls.selectedControl = 'mapLayer'">
                 Map Layer
                 <i class="material-icons">arrow_drop_up</i>
               </div>
@@ -144,11 +241,40 @@
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
               E. coli
+              <v-dialog v-model="controls.ecoliDialog" persistent>
+                <i
+                  slot="activator"
+                  class="material-icons graph-card-title__icon">
+                  info_outline
+                </i>
+                <v-card>
+                  <v-card-title class="headline">What is E. coli?</v-card-title>
+                  <v-card-text>
+                    <p>
+                      Escherichia coli (E. coli) is a bacteria that is commonly found in the gastrointestinal tract and feces of warm-blooded animals and humans. According to the U.S. EPA, E. coli is the best indicator of the presence of pathogens in surface waters and its presence provides direct evidence of fecal contamination of the water.
+                    </p>
+                    <h5>
+                      How are the E. coli results interpreted to determine if they are acceptable?
+                    </h5>
+                    <p>
+                      EPA recommends an E. coli recreational safety level for primary contact of a geometric average of 126 cfu/100ml or less. Because it is common to find high bacteria counts in urban areas, Georgia Adopt-A-Stream advises that counts that exceed a 1000 cfu/100 ml threshold may warrant special attention. NWW results that show a “high” bacterial count may be a one-time event or occurrence or may be a part of a chronic problem. This information is useful, but before taking further action additional sampling is necessary to document bacterial levels over a long period to determine seasonal fluctuations and in response to rain events. This long term information is vital in assessing the overall health of the stream and determining if special attention is warranted to investigate potential pollution sources.
+                    </p>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="green--text darken-1" flat="flat" @click.native="controls.ecoliDialog = false">Close</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </span>
-            <span class="graph-card-title__secondary">
-              (MPN/100mL)
-            </span>
-            <i class="material-icons graph-card-title__icon">info_outline</i>
+            <div>
+              <span class="graph-card-title__secondary--strong">
+                Last Result:
+              </span>
+              <span class="graph-card-title__secondary">
+                TODO GET RESULT
+              </span>
+            </div>
           </div>
         </div>
 
@@ -156,12 +282,108 @@
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
-              E. coli
+              Turbidity
+              <v-dialog v-model="controls.turbidityDialog" persistent>
+                <i
+                  slot="activator"
+                  class="material-icons graph-card-title__icon">
+                  info_outline
+                </i>
+                <v-card>
+                  <v-card-title class="headline">Turbidity</v-card-title>
+                  <v-card-text>
+                    <p>
+                      Turbidity copy
+                    </p>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="green--text darken-1" flat="flat" @click.native="controls.turbidityDialog = false">Close</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </span>
-            <span class="graph-card-title__secondary">
-              (MPN/100mL)
+            <div>
+              <span class="graph-card-title__secondary--strong">
+                Last Result:
+              </span>
+              <span class="graph-card-title__secondary">
+                TODO
+              </span>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Graph 3 -->
+        <div class="graph-card">
+          <div class="graph-card-title">
+            <span class="graph-card-title__primary">
+              Rainfall (inches)
+              <v-dialog v-model="controls.rainDialog" persistent>
+                <i
+                  slot="activator"
+                  class="material-icons graph-card-title__icon">
+                  info_outline
+                </i>
+                <v-card>
+                  <v-card-title class="headline">Rainfall</v-card-title>
+                  <v-card-text>
+                    <p>
+                      Rainfall copy
+                    </p>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="green--text darken-1" flat="flat" @click.native="controls.rainDialog = false">Close</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </span>
-            <i class="material-icons graph-card-title__icon">info_outline</i>
+            <div>
+              <span class="graph-card-title__secondary--strong">
+                Last Result:
+              </span>
+              <span class="graph-card-title__secondary">
+                TODO
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Graph 4 -->
+        <div class="graph-card">
+          <div class="graph-card-title">
+            <span class="graph-card-title__primary">
+              Specific Conductivity (uS)
+              <v-dialog v-model="controls.conductiveDialog" persistent>
+                <i
+                  slot="activator"
+                  class="material-icons graph-card-title__icon">
+                  info_outline
+                </i>
+                <v-card>
+                  <v-card-title class="headline">Specific Conductivity (uS)</v-card-title>
+                  <v-card-text>
+                    <p>
+                      Specific Conductivity (uS) copy
+                    </p>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="green--text darken-1" flat="flat" @click.native="controls.conductiveDialog = false">Close</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </span>
+            <div>
+              <span class="graph-card-title__secondary--strong">
+                Last Result:
+              </span>
+              <span class="graph-card-title__secondary">
+                TODO GET RESULT
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -170,94 +392,56 @@
 </template>
 
 <script>
+import { db } from '../../helpers/firebase'
 
+let collectionSitesRef = db.ref('collectionSites')
+let labsRef = db.ref('labs')
 export default {
   name: 'data-page',
+  firebase: {
+    collectionSites: collectionSitesRef,
+    labs: labsRef
+  },
+  watch: {
+    collectionSites: {
+      deep: true,
+      handler (newArray) {
+        this.partnerList = this._.uniq(this._.map(this.collectionSites, 'collectionPartner'))
+        this.hucList = this._.uniq(this._.map(this.collectionSites, 'huc'))
+      }
+    }
+  },
   data: function () {
     return {
       selectedSite: null,
-      filters: {
+      collectionSites: [], // Placeholder for sites watching
+      controls: {
+        showFilters: false,
         selectedControl: 'dateRange',
         sidebar: false,
         selectedItem: null,
         search: '',
         filterSites: [ 'HUC', 'Lab', 'Partner' ],
         startDate: null,
-        endDate: null
+        endDate: null,
+        ecoliDialog: false,
+        turbidityDialog: false,
+        rainDialog: false,
+        conductiveDialog: false
       },
-      items: [
-        {
-          selected: false,
-          stationName: 'Station 1',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 1
-        },
-        {
-          selected: false,
-          stationName: 'Station 2',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 2
-        },
-        {
-          selected: false,
-          stationName: 'Station 3',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 3
-        },
-        {
-          selected: false,
-          stationName: 'Station 4',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 4
-        },
-        {
-          selected: false,
-          stationName: 'Station 5',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 5
-        },
-        {
-          selected: false,
-          stationName: 'Station 6',
-          logbookAbv: 'Beav @ Park',
-          latitude: '33.7489',
-          longitude: '-84.3879',
-          collectionPartner: 'CRK',
-          lab: 'Petes Lab',
-          huc: 'no idea',
-          collectionSiteId: 6
-        }
-      ]
+      filters: {
+        huc: false,
+        hucFilters: [],
+        lab: false,
+        labFilters: [],
+        partner: false,
+        partnerFilters: []
+      }
     }
   },
   methods: {
     toggleSidebar: function (event) {
-      this.filters.sidebar = !this.filters.sidebar
+      this.controls.sidebar = !this.controls.sidebar
     }
   },
   mounted: function () {
@@ -436,6 +620,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../scss/colors";
+
 $data-sidebar-width: 240px;
 
 .mapboxgl-popup {
@@ -534,17 +720,18 @@ $data-sidebar-width: 240px;
   height: 100%;
   width: 240px;
 
-  background: #fff;
+  background: $color-finn-white;
   box-shadow: 0 2px 4px 0 rgba(155, 155, 155, 0.5);
   transition: 0.5s;
 
   &__header {
     position: relative;
 
-    height: 120px;
-    padding: 9px 10px;
+    height: 88px;
+    padding-top: 10px;
+    width: 100%;
 
-    background-color: #004d71;
+    background-color: $color-iron-sea;
   }
 
   &__body {
@@ -569,14 +756,15 @@ $data-sidebar-width: 240px;
   height: 36px;
   width: 16px;
 
-  background-color: rgba(255, 255, 255, 1);
+  background-color: $color-iron-sea;
+  border-radius: 0 2px 2px 0;
   cursor: pointer;
 
   &__caret {
     height: 20px;
     width: 20px;
 
-    color: #9b9b9b;
+    color: $color-finn-white;
     font-size: 20px;
     line-height: 20px;
     transform: rotate(450deg);
@@ -588,11 +776,11 @@ $data-sidebar-width: 240px;
 
   align-items: center;
   height: 36px;
-  margin-bottom: 9px;
+  margin: 0 10px 6px;
   padding: 10px 15px;
-  width: 220px;
+  width: calc(100% - 20px);
 
-  background-color: #fff;
+  background-color: $color-finn-white;
   border-radius: 2px;
 
   &__input {
@@ -610,40 +798,28 @@ $data-sidebar-width: 240px;
   }
 }
 
-.data-sidebar-filter {
-  color: #fff;
-
-  .input-group {
-    margin: 0;
-  }
-}
-
-.data-sidebar-filter-text {
-  height: 24px;
-  width: 100px;
-
-  color: #fff;
-  font-size: 11px;
-}
-
 .data-sidebar-list-item {
-  display: flex;
+  display: block;
 
   align-items: center;
   justify-content: center;
   height: 38px;
+  overflow: hidden;
+  padding: 8px 15px 8px 20px;
   width: 100%;
 
-  border-bottom: 1px solid #e4e4e4;
-  color: #4a4a4a;
+  border-bottom: 1px solid $color-dust;
+  color: $color-storm-cloud;
   cursor: pointer;
   font-size: 13px;
   line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   &--active,
   &:hover {
     background-color: rgba(77, 134, 160, 0.1);
-    color: #004d71;
+    color: $color-iron-sea;
     font-size: 13px;
     font-weight: 500;
     line-height: 20px;
@@ -658,7 +834,7 @@ $data-sidebar-width: 240px;
   margin-bottom: 24px;
   width: 80%;
 
-  background-color: #fff;
+  background-color: $color-finn-white;
   box-shadow: 0 2px 4px 0 rgba(155, 155, 155, 0.5);
 
   @media screen and (min-width: 850px) {
@@ -674,8 +850,8 @@ $data-sidebar-width: 240px;
   padding-left: 16px;
   width: 100%;
 
-  background-color: #004d71;
-  color: #fff;
+  background-color: $color-iron-sea;
+  color: $color-finn-white;
   font-size: 13px;
   font-weight: 400;
 }
@@ -688,7 +864,7 @@ $data-sidebar-width: 240px;
   height: 108px;
   overflow: hidden;
 
-  border-bottom: 1px solid #e4e4e4;
+  border-bottom: 1px solid $color-dust;
   transition: all 0.33s ease;
 
   &:nth-of-type(3) {
@@ -702,14 +878,22 @@ $data-sidebar-width: 240px;
 
   &__header {
     display: flex;
+
     align-items: center;
+    justify-content: space-between;
     height: 36px;
     padding-left: 16px;
 
-    color: #7fba00;
+    color: $color-storm-cloud;
     cursor: pointer;
     font-size: 11px;
     font-weight: 500;
+  }
+
+  &__title {
+    padding-bottom: 4px;
+
+    color: $color-nww-green;
   }
 
   &__content {
@@ -718,19 +902,19 @@ $data-sidebar-width: 240px;
     height: 82px;
     padding: 0 16px;
 
-    color: #4a4a4a;
+    color: $color-storm-cloud;
     font-size: 13px;
   }
 }
 
 .graph-card {
-  height: 232px;
+  height: 280px;
   margin-bottom: 24px;
   padding-left: 9px;
   padding-top: 13px;
   width: 80%;
 
-  background-color: #fff;
+  background-color: $color-finn-white;
   box-shadow: 0 2px 4px 0 rgba(155, 155, 155, 0.5);
 
   @media screen and (min-width: 850px) {
@@ -740,34 +924,76 @@ $data-sidebar-width: 240px;
 
 .graph-card-title {
   display: flex;
-  align-items: flex-end;
+
+  align-items: flex-start;
+  flex-direction: column;
 
   &__primary {
-    height: 21px;
-    margin-right: 6px;
-    width: 52px;
+    display: flex;
 
-    color: #7fba00;
+    align-items: center;
+
+    height: 21px;
+
+    color: $color-iron-sea;
     font-size: 18px;
+    line-height: 21px;
   }
 
   &__secondary {
     height: 13px;
-    width: 71px;
 
-    color: #004d71;
+    color: $color-iron-sea;
     font-size: 11px;
     line-height: 13px;
+
+    &--strong {
+      @extend .graph-card-title__secondary;
+      font-weight: 500;
+    }
   }
 
   &__icon {
     height: 16px;
     width: 20px;
-
-    color: #004d71;
+    color: $color-nww-green;
+    cursor: pointer;
     font-size: 16px;
     line-height: 16px;
     text-align: center;
+  }
+}
+
+.filters-toggle {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-start;
+
+  height: 36px;
+  padding: 10px 20px;
+
+  border-bottom: 1px solid $color-dust;
+  cursor: pointer;
+  font-size: 16px;
+
+  &--secondary {
+    @extend .filters-toggle;
+    background-color: $color-warlock;
+    font-size: 14px;
+  }
+
+  &__title {
+    color: $color-finn-white;
+  }
+
+  &__icon {
+    color: $color-finn-white;
+    font-size: 20px;
+
+    &--collapsed {
+      transform: rotate(270deg);
+    }
   }
 }
 

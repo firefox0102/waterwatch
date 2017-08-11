@@ -313,15 +313,6 @@ export default {
 @import "../../scss/colors";
 @import "../../scss/collection-sites";
 
-.collection-site-body {
-  &__header {
-    height: 16px;
-    color: #4a4a4a;
-    font-size: 24px;
-    line-height: 16px;
-  }
-}
-
 .log-new-data-btn {
   text-decoration: none;
 }
@@ -340,6 +331,20 @@ export default {
 
   &__row {
     display: flex;
+  }
+
+  &__subheader-wrapper {
+    color: $color-bumble-bee;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+
+    &--strong {
+      @extend .collection-data-group__text;
+      margin-right: 4px;
+
+      font-weight: 500;
+    }
   }
 
   &__text {
@@ -362,6 +367,22 @@ export default {
     font-weight: 400;
     line-height: 18px;
     text-decoration: underline;
+  }
+}
+
+.collection-site-body {
+  &__header {
+    color: $color-iron-sea;
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    line-height: 38px;
+  }
+
+  &__subheader {
+    color: $color-bumble-bee;
+    font-size: 13px;
+    font-weight: 400;
   }
 }
 </style>

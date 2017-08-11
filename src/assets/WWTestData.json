@@ -21,11 +21,11 @@
        "stationName": "Station 1",
        "storetName": "kjhasdfkjadsf",
        "active": true,
-       "collectionSiteId": 0,
+       "collectionSiteId": "0",
        "numSamples": 0
     },
     {
-      "collectionSiteId": 1,
+      "collectionSiteId": "1",
       "stationName": "Station 2",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -41,7 +41,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 2,
+      "collectionSiteId": "2",
       "stationName": "Station 3",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -57,7 +57,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 3,
+      "collectionSiteId": "3",
       "stationName": "Station 4",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -73,7 +73,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 4,
+      "collectionSiteId": "4",
       "stationName": "Station 5",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -89,7 +89,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 5,
+      "collectionSiteId": "5",
       "stationName": "Station 6",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -105,7 +105,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 6,
+      "collectionSiteId": "6",
       "stationName": "Station 7",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -121,7 +121,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 7,
+      "collectionSiteId": "7",
       "stationName": "Station 8",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -137,7 +137,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 8,
+      "collectionSiteId": "8",
       "stationName": "Station 9",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -153,7 +153,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 9,
+      "collectionSiteId": "9",
       "stationName": "Station 10",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -169,7 +169,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 10,
+      "collectionSiteId": "10",
       "stationName": "Station 11",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -185,7 +185,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 11,
+      "collectionSiteId": "11",
       "stationName": "Station 12",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -201,7 +201,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 12,
+      "collectionSiteId": "12",
       "stationName": "Station 13",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -217,7 +217,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 13,
+      "collectionSiteId": "13",
       "stationName": "Station 14",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -233,7 +233,7 @@
        "numSamples": 0
     },
     {
-      "collectionSiteId": 14,
+      "collectionSiteId": "14",
       "stationName": "Station 15",
       "adoptAStreamName": "adoption name",
        "collectionPartner": "CRK",
@@ -257,7 +257,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -283,7 +283,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -309,7 +309,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -335,7 +335,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -361,7 +361,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -387,7 +387,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -413,7 +413,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -439,7 +439,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -465,7 +465,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -491,7 +491,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -517,7 +517,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 10,
+      "collectionSiteId": "10",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -543,7 +543,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -569,7 +569,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -595,7 +595,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -621,7 +621,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -647,7 +647,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -673,7 +673,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -699,7 +699,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -725,7 +725,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
@@ -751,7 +751,7 @@
       "coliformLargeCells": 1234,
       "coliformSmallCells": 12351324,
       "collectionDate": "12/31/2017",
-      "collectionSiteId": 0,
+      "collectionSiteId": "0",
       "collectionTime": "01:10:10 AM",
       "dilution": 1,
       "dissolvedOxygen": 1,
