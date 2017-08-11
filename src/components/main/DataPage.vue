@@ -29,6 +29,8 @@
       <div class="data-sidebar__body">
         <div
           class="data-sidebar-list-item"
+          v-on:click="selectedSite = item"
+          v-bind:class="{'data-sidebar-list-item--active': selectedSite === item}"
           v-for=" item in items">
             {{ item.stationName }}
         </div>
@@ -173,6 +175,7 @@ export default {
   name: 'data-page',
   data: function () {
     return {
+      selectedSite: null,
       filters: {
         selectedControl: 'dateRange',
         sidebar: false,
