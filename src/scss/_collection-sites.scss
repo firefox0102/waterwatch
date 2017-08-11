@@ -3,7 +3,7 @@ $toolbar-breakpoint: 1040px;
 
 .site-reports-wrapper {
   padding: 0 24px 20px;
-  background-color: #f7f7f7;
+  background-color: $color-bone;
 }
 
 .site-reports-body {
@@ -74,14 +74,14 @@ $toolbar-breakpoint: 1040px;
   padding: 6px 16px;
   width: 330px;
 
-  background-color: #fff;
+  background-color: $color-finn-white;
   border-radius: 2px;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 
   &__icon {
-    height: 17.49px;
+    height: 17px;
     margin-right: 28px;
-    width: 17.49px;
+    width: 17px;
   }
 
   &__input {
@@ -125,11 +125,11 @@ $toolbar-breakpoint: 1040px;
   padding: 22px 0 17px 32px;
 
   &__primary-content {
-    padding-left: 32px;
+    // padding-left: 32px;
   }
 
   &__header {
-    color: #004d71;
+    color: $color-iron-sea;
     font-size: 32px;
     font-weight: 300;
     letter-spacing: 1px;
@@ -154,7 +154,7 @@ $toolbar-breakpoint: 1040px;
 
   &__subheader-wrapper {
     margin-bottom: 20px;
-    
+
     color: $color-nww-green;
     font-size: 13px;
     line-height: 16px;

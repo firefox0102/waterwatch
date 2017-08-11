@@ -92,11 +92,15 @@ body {
     height: 106px;
     min-height: 106px;
 
-    background-color: #004d71;
+    background-color: $color-iron-sea;
   }
 
   &__wrapper {
     z-index: 0;
+  }
+
+  .input-group__hint { // Vuetify style override
+    color: $color-bumble-bee !important;
   }
 }
 
@@ -122,25 +126,25 @@ body {
 }
 
 .btn-nww { // Vuetify style override
-  background-color: #4d86a0 !important;
+  background-color: $color-warlock !important;
   border-radius: 2px;
-  color: #fff !important;
+  color: $color-finn-white !important;
 
   &--light {
-    background-color: #7fba00 !important;
-    color: #fff !important;
+    background-color: $color-nww-green !important;
+    color: $color-finn-white !important;
   }
 }
 
 .nww-table { // This is not great BEM but it's necessary for overriding the framework
-  background: #fff;
+  background: $color-finn-white;
 
   &__header {
-    background-color: #f7f7f7;
+    background-color: $color-bone;
   }
 
   &__primary-link {
-    color: #4d86a0;
+    color: $color-warlock;
     text-decoration: none;
   }
 
@@ -163,13 +167,13 @@ body {
   flex-direction: column;
   padding: 22px 56px;
 
-  background-color: #f7f7f7;
+  background-color: $color-bone;
 
   &__text {
     height: 38px;
     margin-bottom: 5px;
 
-    color: #004d71;
+    color: $color-iron-sea;
     font-size: 32px;
     font-weight: 300;
     letter-spacing: 1px;
@@ -181,7 +185,7 @@ body {
     @extend .page-content-header__text;
     height: 16px;
 
-    color: #4d86a0;
+    color: $color-warlock;
     font-size: 13px;
     line-height: 16px;
 
@@ -195,7 +199,7 @@ body {
 .page-content-body {
   padding: 33px 50px;
 
-  background-color: #fff;
+  background-color: $color-finn-white;
 
   &__column {
     display: flex;
@@ -219,7 +223,7 @@ body {
     height: 16px;
     margin-bottom: 46px;
 
-    color: #7fba00;
+    color: $color-nww-green;
     font-size: 18px;
     font-weight: 500;
     line-height: 16px;
@@ -235,7 +239,7 @@ body {
   margin-left: 10px;
   width: 130px;
 
-  background-color: #fff;
+  background-color: $color-finn-white;
   border-radius: 2px;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 
@@ -264,7 +268,7 @@ body {
   height: 13px;
   width: 100%;
 
-  color: #8e7630;
+  color: $color-bumble-bee;
   cursor: pointer;
   font-size: 11px;
   font-weight: 500;
