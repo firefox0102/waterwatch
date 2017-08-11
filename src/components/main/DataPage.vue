@@ -125,7 +125,7 @@
       <div class="data-sidebar__body">
         <div
           class="data-sidebar-list-item"
-          v-on:click="selectedSite = site"
+          v-on:click="setActiveSite(site)"
           v-bind:class="{'data-sidebar-list-item--active': selectedSite === site}"
           v-for=" site in collectionSites">
             {{ site.stationName }}
@@ -134,6 +134,7 @@
     </aside>
 
     <div class="data-body" v-bind:class="{ 'data-body--collapsed': controls.sidebar}">
+      <!-- TODO make a component -->
       <div class="data-body__dynamic-column">
         <div class="map-wrapper">
           <div id='menu' class="menu"></div>
@@ -142,7 +143,7 @@
       </div>
 
       <div class="data-body__fixed-column">
-        <!-- Controls Card -->
+        <!-- Controls Card TODO make a component -->
         <div class="controls-card">
           <div class="controls-card-header">
             Controls
@@ -236,7 +237,7 @@
           </div>
         </div>
 
-        <!-- Graph 1 -->
+        <!-- Graph 1 TODO make a component -->
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
@@ -276,9 +277,12 @@
               </span>
             </div>
           </div>
+          <div class="graph-card__graph-wrapper">
+            <vue-highcharts id="chart1" :options="options" ref="columnChart1"></vue-highcharts>
+          </div>
         </div>
 
-        <!-- Graph 2 -->
+        <!-- Graph 2 TODO make a component -->
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
@@ -312,10 +316,13 @@
               </span>
             </div>
           </div>
+          <div class="graph-card__graph-wrapper">
+            <vue-highcharts id="chart2" :options="options" ref="columnChart2"></vue-highcharts>
+          </div>
         </div>
 
 
-        <!-- Graph 3 -->
+        <!-- Graph 3 TODO make a component -->
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
@@ -349,9 +356,12 @@
               </span>
             </div>
           </div>
+          <div class="graph-card__graph-wrapper">
+            <vue-highcharts id="chart3" :options="options" ref="columnChart3"></vue-highcharts>
+          </div>
         </div>
 
-        <!-- Graph 4 -->
+        <!-- Graph 4 TODO make a component -->
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
@@ -385,6 +395,9 @@
               </span>
             </div>
           </div>
+          <div class="graph-card__graph-wrapper">
+            <vue-highcharts id="chart4" :options="options" ref="columnChart4"></vue-highcharts>
+          </div>
         </div>
       </div>
     </div>
@@ -393,11 +406,27 @@
 
 <script>
 import { db } from '../../helpers/firebase'
+import VueHighcharts from 'vue2-highcharts'
 
 let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
+const asyncData = {
+  marker: {
+    symbol: 'square'
+  },
+  data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
+    y: 26.5,
+    marker: {
+      symbol: 'url(http://www.highcharts.com/demo/gfx/sun.png)'
+    }
+  }, 23.3, 18.3, 13.9, 9.6]
+}
+
 export default {
   name: 'data-page',
+  components: {
+    VueHighcharts
+  },
   firebase: {
     collectionSites: collectionSitesRef,
     labs: labsRef
@@ -436,12 +465,86 @@ export default {
         labFilters: [],
         partner: false,
         partnerFilters: []
+      },
+      options: {
+        chart: {
+          type: 'column',
+          width: 290,
+          height: 220
+        },
+        legend: {
+          enabled: false
+        },
+        title: {
+          text: null
+        },
+        yAxis: {
+          title: {
+            text: null
+          },
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        xAxis: {
+          title: {
+            text: 'Collection Date'
+          },
+          labels: {
+            formatter: function () {
+              return this.value + '°'
+            }
+          }
+        },
+        tooltip: {
+          crosshairs: true,
+          shared: true
+        },
+        credits: {
+          enabled: false
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0,
+            borderWidth: 0,
+            groupPadding: 0,
+            shadow: false,
+            color: '#4D86A0'
+          }
+        },
+        series: []
       }
     }
   },
   methods: {
-    toggleSidebar: function (event) {
+    toggleSidebar (event) {
       this.controls.sidebar = !this.controls.sidebar
+    },
+    setActiveSite (site) {
+      console.log(site)
+      this.selectedSite = site
+      this.renderChart() // TODO this isn't great, but for now..
+    },
+    renderChart () {
+      let columnChart1 = this.$refs.columnChart1
+      let columnChart2 = this.$refs.columnChart2
+      let columnChart3 = this.$refs.columnChart3
+      let columnChart4 = this.$refs.columnChart4
+
+      columnChart1.delegateMethod('showLoading', 'Loading...')
+      columnChart2.delegateMethod('showLoading', 'Loading...')
+      columnChart3.delegateMethod('showLoading', 'Loading...')
+      columnChart4.delegateMethod('showLoading', 'Loading...')
+
+      setTimeout(() => {
+        columnChart1.addSeries(asyncData)
+        columnChart1.hideLoading()
+        columnChart2.addSeries(asyncData)
+        columnChart2.hideLoading()
+        columnChart3.addSeries(asyncData)
+        columnChart3.hideLoading()
+        columnChart4.addSeries(asyncData)
+        columnChart4.hideLoading()
+      }, 2000)
     }
   },
   mounted: function () {
