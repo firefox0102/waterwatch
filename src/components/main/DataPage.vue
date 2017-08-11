@@ -36,7 +36,8 @@
     <div class="data-body" v-bind:class="{ 'data-body--collapsed': filters.sidebar}">
       <div class="data-body__dynamic-column">
         <div class="map-wrapper">
-
+          <div id='menu' class="menu"></div>
+          <div id='map' class="map"></div>
         </div>
       </div>
 
@@ -166,6 +167,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'data-page',
   data: function () {
@@ -253,6 +255,125 @@ export default {
     toggleSidebar: function (event) {
       this.filters.sidebar = !this.filters.sidebar
     }
+  },
+  mounted: function () {
+    window.mapboxgl.accessToken = 'pk.eyJ1IjoibGNhY2VkYSIsImEiOiIzNmM4MGRlN2I4NDhiY2UxZjA4MmJjZjE5OWEzYjUzNSJ9.Wc5KTJpWxmpxVMZfcuEQNg'
+    var map = new window.mapboxgl.Map({
+      container: 'map', // container id
+      style: 'mapbox://styles/mapbox/light-v9', // hosted style id
+      center: [-84.387249, 33.755788], // starting position
+      zoom: 8 // starting zoom
+    })
+
+    // MAP LAYERS //
+    map.on('load', function () {
+      // CHATTAHOOCHEE RIVER BASIN//
+      map.addSource('basin', {
+        'type': 'geojson',
+        'data': 'https://s3.amazonaws.com/waterwatchcrk/Chatt_River_Basin.geojson'
+      })
+      map.addSource('sites', {
+        'type': 'geojson',
+        'data': 'https://s3.amazonaws.com/waterwatchcrk/initial_points.geojson',
+        'cluster': true,
+        'clusterMaxZoom': 14, // Max zoom to cluster points on
+        'clusterRadius': 50 // Radius of each cluster when clustering points (defaults to 50)
+      })
+
+      map.addLayer({
+        'id': 'Basin',
+        'type': 'fill',
+        'source': 'basin',
+        'layout': {},
+        'paint': {
+          'fill-outline-color': 'rgba(7, 78, 112, 1)',
+          'fill-color': 'rgba(80, 134, 158, 0.2)'
+        },
+        'properties': {
+          'description': 'Chattahoochee River Basin'
+        }
+      })
+      // COUNTIES //
+      map.addLayer({
+        'id': 'Counties',
+        'type': 'fill',
+        'source': {
+          'type': 'geojson',
+          'data': 'https://opendata.arcgis.com/datasets/53ca7db14b8f4a9193c1883247886459_67.geojson'
+        },
+        'layout': {
+          'visibility': 'none'
+        },
+        'paint': {
+          'fill-outline-color': 'rgba(7, 78, 112, 1)',
+          'fill-color': 'rgba(7, 78, 112, 0)'
+        }
+        // This is the important part of this example: the addLayer
+        // method takes 2 arguments: the layer as an object, and a string
+        // representing another layer's name. if the other layer
+        // exists in the stylesheet already, the new layer will be positioned
+        // right before that layer in the stack, making it possible to put
+        // 'overlays' anywhere in the layer stack.
+      }, 'place_label_city_small_s')
+
+      // COLLECTION SITES //
+      map.addLayer({
+        'id': 'Sites',
+        'type': 'circle',
+        'source': 'sites',
+        'paint': {
+          'circle-color': 'red'
+        },
+        'layout': {},
+        'properties': {
+          'description': 'points!'
+        }
+      })
+    })
+
+    // MENU TOGGLE//
+    var toggleableLayerIds = ['Basin', 'Counties', 'Sites']
+
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+      var id = toggleableLayerIds[i]
+
+      var link = document.createElement('a')
+      link.href = '#'
+      link.className = 'active'
+      link.textContent = id
+
+      link.onclick = function (e) {
+        var clickedLayer = this.textContent
+        e.preventDefault()
+        e.stopPropagation()
+
+        var visibility = map.getLayoutProperty(clickedLayer, 'visibility')
+
+        if (visibility === 'visible') {
+          map.setLayoutProperty(clickedLayer, 'visibility', 'none')
+          this.className = ''
+        } else {
+          this.className = 'active'
+          map.setLayoutProperty(clickedLayer, 'visibility', 'visible')
+        }
+      }
+
+      var layers = document.getElementById('menu')
+      layers.appendChild(link)
+    }
+
+    // Add zoom and rotation controls to the map. //
+    map.addControl(new window.MapboxGeocoder({
+      accessToken: window.mapboxgl.accessToken
+    }))
+    map.addControl(new window.mapboxgl.NavigationControl())
+    map.addControl(new window.mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    }))
+    map.addControl(new window.mapboxgl.FullscreenControl())
   }
 }
 </script>
@@ -577,6 +698,58 @@ $data-sidebar-width: 240px;
     font-size: 16px;
     line-height: 16px;
     text-align: center;
+  }
+}
+
+.map {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.menu {
+  display: flex;
+  position: absolute;
+  top: 40px;
+  z-index: 1;
+
+  flex-direction: column;
+  height: 70px;
+  width: 120px;
+
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+  font-family: "Open Sans", sans-serif;
+
+  a {
+    display: block;
+    margin: 0;
+    padding: 10px;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    color: #404040;
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
+
+    &:last-child {
+      border: 0;
+    }
+
+    &:hover {
+      background-color: #f8f8f8;
+      color: #404040;
+    }
+
+    &.active {
+      background-color: #3887be;
+      color: #fff;
+
+      &:hover {
+        background: #3074a4;
+      }
+    }
   }
 }
 </style>
