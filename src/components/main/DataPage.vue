@@ -429,9 +429,14 @@ $data-sidebar-width: 240px;
   }
 
   &__dynamic-column {
-    max-height: 100%;
-    min-height: 50vh;
+    height: 50vh;
     width: 100vw;
+
+    @media screen and (min-width: 850px) {
+      height: auto;
+      max-height: 100%;
+      min-height: 50vh;
+    }
   }
 
   @media screen and (min-width: 850px) {
