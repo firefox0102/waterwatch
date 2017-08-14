@@ -43,5 +43,30 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+@import "../../scss/colors";
+
+h3 {
+  color: $color-nww-green;
+  font-size: 24px;
+  font-weight: 400;
+  margin: 22px 0 4px 0;
+}
+
+h3:first-of-type {
+  margin-top: 0;
+}
+
+h4 {
+  color: $color-iron-sea;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+a {
+  color: $color-bumble-bee !important;
+  cursor: pointer;
+}
+
 </style>
