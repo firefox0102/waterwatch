@@ -403,7 +403,19 @@ export default {
 
         // Set collection site properties from logged report
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
-        // TODO last ecoli
+
+        // Last ecoli equation
+        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.newLogData.ecoliLargeCells)
+
+        // Last turbidity equation
+        this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
+
+        // Last rainfall equation
+        this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.newLogData.precipitation)
+
+        // Last specific conductivity equation
+        this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.newLogData.specifcConductivity)
+
         if (!selectedSite.firstCollectionDate) {
           this.$firebaseRefs.collectionSites.child(key).child('firstCollectionDate').set(collDate)
         }

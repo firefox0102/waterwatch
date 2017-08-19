@@ -273,7 +273,7 @@
                 Last Result:
               </span>
               <span class="graph-card-title__secondary">
-                TODO GET RESULT
+                {{ selectedSite ? selectedSite.lastEColiResult : null }}
               </span>
             </div>
           </div>
@@ -312,7 +312,7 @@
                 Last Result:
               </span>
               <span class="graph-card-title__secondary">
-                TODO
+                {{ selectedSite ? selectedSite.lastTurbidityResult : null }}
               </span>
             </div>
           </div>
@@ -352,7 +352,7 @@
                 Last Result:
               </span>
               <span class="graph-card-title__secondary">
-                TODO
+                {{ selectedSite ? selectedSite.lastRainfallResult : null }}
               </span>
             </div>
           </div>
@@ -391,7 +391,7 @@
                 Last Result:
               </span>
               <span class="graph-card-title__secondary">
-                TODO GET RESULT
+                {{ selectedSite ? selectedSite.lastConductivityResult : null }}
               </span>
             </div>
           </div>
@@ -516,7 +516,6 @@ export default {
       this.controls.sidebar = !this.controls.sidebar
     },
     setActiveSite (site) {
-      console.log(site)
       this.selectedSite = site
       this.renderChart() // TODO this isn't great, but for now..
     },
