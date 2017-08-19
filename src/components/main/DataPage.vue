@@ -1,3 +1,4 @@
+
 <template>
   <div class="data-page-wrapper">
     <aside class="data-sidebar" v-bind:class="{ 'data-sidebar--collapsed': controls.sidebar}">
@@ -124,6 +125,8 @@
       <div class="data-sidebar__body">
         <div
           class="data-sidebar-list-item"
+          v-on:click="setActiveSite(site)"
+          v-bind:class="{'data-sidebar-list-item--active': selectedSite === site}"
           v-for=" site in collectionSites">
             {{ site.stationName }}
         </div>
@@ -131,14 +134,16 @@
     </aside>
 
     <div class="data-body" v-bind:class="{ 'data-body--collapsed': controls.sidebar}">
+      <!-- TODO make a component -->
       <div class="data-body__dynamic-column">
         <div class="map-wrapper">
-
+          <div id='menu' class="menu"></div>
+          <div id='map' class="map"></div>
         </div>
       </div>
 
       <div class="data-body__fixed-column">
-        <!-- Controls Card -->
+        <!-- Controls Card TODO make a component -->
         <div class="controls-card">
           <div class="controls-card-header">
             Controls
@@ -232,7 +237,7 @@
           </div>
         </div>
 
-        <!-- Graph 1 -->
+        <!-- Graph 1 TODO make a component -->
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
@@ -272,9 +277,12 @@
               </span>
             </div>
           </div>
+          <div class="graph-card__graph-wrapper">
+            <vue-highcharts id="chart1" :options="options" ref="columnChart1"></vue-highcharts>
+          </div>
         </div>
 
-        <!-- Graph 2 -->
+        <!-- Graph 2 TODO make a component -->
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
@@ -308,10 +316,13 @@
               </span>
             </div>
           </div>
+          <div class="graph-card__graph-wrapper">
+            <vue-highcharts id="chart2" :options="options" ref="columnChart2"></vue-highcharts>
+          </div>
         </div>
 
 
-        <!-- Graph 3 -->
+        <!-- Graph 3 TODO make a component -->
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
@@ -345,9 +356,12 @@
               </span>
             </div>
           </div>
+          <div class="graph-card__graph-wrapper">
+            <vue-highcharts id="chart3" :options="options" ref="columnChart3"></vue-highcharts>
+          </div>
         </div>
 
-        <!-- Graph 4 -->
+        <!-- Graph 4 TODO make a component -->
         <div class="graph-card">
           <div class="graph-card-title">
             <span class="graph-card-title__primary">
@@ -381,6 +395,9 @@
               </span>
             </div>
           </div>
+          <div class="graph-card__graph-wrapper">
+            <vue-highcharts id="chart4" :options="options" ref="columnChart4"></vue-highcharts>
+          </div>
         </div>
       </div>
     </div>
@@ -389,12 +406,27 @@
 
 <script>
 import { db } from '../../helpers/firebase'
+import VueHighcharts from 'vue2-highcharts'
 
 let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
+const asyncData = {
+  marker: {
+    symbol: 'square'
+  },
+  data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
+    y: 26.5,
+    marker: {
+      symbol: 'url(http://www.highcharts.com/demo/gfx/sun.png)'
+    }
+  }, 23.3, 18.3, 13.9, 9.6]
+}
 
 export default {
   name: 'data-page',
+  components: {
+    VueHighcharts
+  },
   firebase: {
     collectionSites: collectionSitesRef,
     labs: labsRef
@@ -410,6 +442,7 @@ export default {
   },
   data: function () {
     return {
+      selectedSite: null,
       collectionSites: [], // Placeholder for sites watching
       controls: {
         showFilters: false,
@@ -432,13 +465,259 @@ export default {
         labFilters: [],
         partner: false,
         partnerFilters: []
+      },
+      options: {
+        chart: {
+          type: 'column',
+          width: 290,
+          height: 220
+        },
+        legend: {
+          enabled: false
+        },
+        title: {
+          text: null
+        },
+        yAxis: {
+          title: {
+            text: null
+          },
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        xAxis: {
+          title: {
+            text: 'Collection Date'
+          },
+          labels: {
+            formatter: function () {
+              return this.value + '°'
+            }
+          }
+        },
+        tooltip: {
+          crosshairs: true,
+          shared: true
+        },
+        credits: {
+          enabled: false
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0,
+            borderWidth: 0,
+            groupPadding: 0,
+            shadow: false,
+            color: '#4D86A0'
+          }
+        },
+        series: []
       }
     }
   },
   methods: {
-    toggleSidebar: function (event) {
+    toggleSidebar (event) {
       this.controls.sidebar = !this.controls.sidebar
+    },
+    setActiveSite (site) {
+      console.log(site)
+      this.selectedSite = site
+      this.renderChart() // TODO this isn't great, but for now..
+    },
+    renderChart () {
+      let columnChart1 = this.$refs.columnChart1
+      let columnChart2 = this.$refs.columnChart2
+      let columnChart3 = this.$refs.columnChart3
+      let columnChart4 = this.$refs.columnChart4
+
+      columnChart1.delegateMethod('showLoading', 'Loading...')
+      columnChart2.delegateMethod('showLoading', 'Loading...')
+      columnChart3.delegateMethod('showLoading', 'Loading...')
+      columnChart4.delegateMethod('showLoading', 'Loading...')
+
+      setTimeout(() => {
+        columnChart1.addSeries(asyncData)
+        columnChart1.hideLoading()
+        columnChart2.addSeries(asyncData)
+        columnChart2.hideLoading()
+        columnChart3.addSeries(asyncData)
+        columnChart3.hideLoading()
+        columnChart4.addSeries(asyncData)
+        columnChart4.hideLoading()
+      }, 2000)
     }
+  },
+  mounted: function () {
+    window.mapboxgl.accessToken = 'pk.eyJ1IjoibGNhY2VkYSIsImEiOiIzNmM4MGRlN2I4NDhiY2UxZjA4MmJjZjE5OWEzYjUzNSJ9.Wc5KTJpWxmpxVMZfcuEQNg'
+    var map = new window.mapboxgl.Map({
+      container: 'map', // container id
+      style: 'mapbox://styles/mapbox/light-v9', // hosted style id
+      center: [-84.387249, 33.755788], // starting position
+      zoom: 8 // starting zoom
+    })
+
+    // MAP LAYERS //
+    map.on('load', function () {
+      // CHATTAHOOCHEE RIVER BASIN//
+      map.addSource('basin', {
+        'type': 'geojson',
+        'data': 'https://s3.amazonaws.com/waterwatchcrk/Chatt_River_Basin.geojson'
+      })
+      map.addSource('sites', {
+        'type': 'geojson',
+        'data': 'https://s3.amazonaws.com/waterwatchcrk/initial_points.geojson',
+        'cluster': true,
+        'clusterMaxZoom': 14, // Max zoom to cluster points on
+        'clusterRadius': 50 // Radius of each cluster when clustering points (defaults to 50)
+      })
+
+      map.addLayer({
+        'id': 'Basin',
+        'type': 'fill',
+        'source': 'basin',
+        'layout': {},
+        'paint': {
+          'fill-outline-color': 'rgba(7, 78, 112, 1)',
+          'fill-color': 'rgba(80, 134, 158, 0.2)'
+        },
+        'properties': {
+          'description': 'Chattahoochee River Basin'
+        }
+      })
+      // COUNTIES //
+      map.addLayer({
+        'id': 'Counties',
+        'type': 'fill',
+        'source': {
+          'type': 'geojson',
+          'data': 'https://opendata.arcgis.com/datasets/53ca7db14b8f4a9193c1883247886459_67.geojson'
+        },
+        'layout': {
+          'visibility': 'none'
+        },
+        'paint': {
+          'fill-outline-color': 'rgba(7, 78, 112, 1)',
+          'fill-color': 'rgba(7, 78, 112, 0)'
+        }
+        // This is the important part of this example: the addLayer
+        // method takes 2 arguments: the layer as an object, and a string
+        // representing another layer's name. if the other layer
+        // exists in the stylesheet already, the new layer will be positioned
+        // right before that layer in the stack, making it possible to put
+        // 'overlays' anywhere in the layer stack.
+      }, 'place_label_city_small_s')
+
+      // COLLECTION SITES //
+      map.addLayer({
+        'id': 'Sites',
+        'type': 'circle',
+        'source': 'sites',
+        'paint': {
+          'circle-color': '#50869E',
+          'circle-radius': {
+            'property': 'point_count',
+            'type': 'interval',
+            'stops': [
+              [0, 10],
+              [15, 15],
+              [30, 20]
+            ]
+          }
+        },
+        'layout': {},
+        'properties': {
+          'description': 'points!'
+        }
+      })
+    })
+
+    // // Cluster labels //
+    // map.addLayer({
+    //   'id': 'sites-count',
+    //   'type': 'symbol',
+    //   'source': 'sites',
+    //   'filter': ['has', 'point_count'],
+    //   'layout': {
+    //     'text-field': '{point_count_abbreviated}',
+    //     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+    //     'text-size': 12,
+    //     'color': '#ee3311'
+    //   }
+    // })
+
+    // map.addLayer({
+    //   'id': 'unclustered-sites',
+    //   'type': 'circle',
+    //   'source': 'sites',
+    //   'filter': ['!has', 'point-count'],
+    //   'paint': {
+    //     'circle-color': '#50869E',
+    //     'circle-radius': 4,
+    //     'circle-stroke-width': 1,
+    //     'circle-stroke-color': '#fff'
+    //   }
+    // })
+
+    // MENU TOGGLE//
+    var toggleableLayerIds = ['Basin', 'Counties', 'Sites']
+
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+      var id = toggleableLayerIds[i]
+
+      var link = document.createElement('a')
+      link.href = '#'
+      link.className = 'active'
+      link.textContent = id
+
+      link.onclick = function (e) {
+        var clickedLayer = this.textContent
+        e.preventDefault()
+        e.stopPropagation()
+
+        var visibility = map.getLayoutProperty(clickedLayer, 'visibility')
+
+        if (visibility === 'visible') {
+          map.setLayoutProperty(clickedLayer, 'visibility', 'none')
+          this.className = ''
+        } else {
+          this.className = 'active'
+          map.setLayoutProperty(clickedLayer, 'visibility', 'visible')
+        }
+      }
+
+      var layers = document.getElementById('menu')
+      layers.appendChild(link)
+    }
+
+    // Pop up //
+    // map.on('click', 'Sites', function (e) {
+    //   new mapboxgl.Popup()
+    //     .setLngLat(e.features[0].geometry.coordinates)
+    //     .setHTML(e.features[0].properties.description)
+    //     .addTo(map)
+    // })
+    //  // Change the cursor to a pointer when the mouse is over the places layer.
+    // map.on('mouseenter', 'places', function () {
+    //   map.getCanvas().style.cursor = 'pointer'
+    // })
+
+    // // Change it back to a pointer when it leaves.
+    // map.on('mouseleave', 'places', function () {
+    //   map.getCanvas().style.cursor = ''
+    // })
+
+    // Add zoom and rotation controls to the map. //
+    map.addControl(new window.MapboxGeocoder({
+      accessToken: window.mapboxgl.accessToken
+    }))
+    map.addControl(new window.mapboxgl.NavigationControl())
+    map.addControl(new window.mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    }))
+    map.addControl(new window.mapboxgl.FullscreenControl())
   }
 }
 </script>
@@ -447,6 +726,11 @@ export default {
 @import "../../scss/colors";
 
 $data-sidebar-width: 240px;
+
+.mapboxgl-popup {
+  max-width: 400px;
+  font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
 
 .data-page-wrapper {
   display: flex;
@@ -761,6 +1045,7 @@ $data-sidebar-width: 240px;
 
   &__secondary {
     height: 13px;
+
     color: $color-iron-sea;
     font-size: 11px;
     line-height: 13px;
@@ -815,31 +1100,56 @@ $data-sidebar-width: 240px;
   }
 }
 
-.filter-body {
+.map {
+  position: relative;
+  z-index: 0;
+
+  height: 100%;
+  width: 100%;
+}
+
+.menu {
   display: flex;
+  position: absolute;
+  top: 40px;
+  z-index: 1;
 
   flex-direction: column;
+  height: 70px;
+  width: 120px;
 
-  padding: 10px 18px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+  font-family: "Open Sans", sans-serif;
 
-  background-color: #dfdfdf;
-
-  &__list-item {
+  a {
     display: block;
+    margin: 0;
+    padding: 10px;
 
-    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    color: #404040;
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
 
-    height: 16px;
-    overflow: hidden;
-    width: 100%;
+    &:last-child {
+      border: 0;
+    }
 
-    color: $color-storm-cloud;
-    font-size: 11px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    &:hover {
+      background-color: #f8f8f8;
+      color: #404040;
+    }
 
-    input[type=checkbox] { //I know this isn't great BEM but I'm okay with it for now
-      margin-right: 8px;
+    &.active {
+      background-color: #3887be;
+      color: #fff;
+
+      &:hover {
+        background: #3074a4;
+      }
     }
   }
 }
