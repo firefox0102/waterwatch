@@ -1,9 +1,22 @@
 {
-  "labs": [
-    "Atlanta",
-    "Gainesville",
-    "LaGrange"
-  ],
+  "labs": {
+    "0": "Atlanta",
+    "1": "Gainesville",
+    "2": "LaGrange"
+  },
+  "metaData": {
+    "activeSites": 0,
+    "inactiveSites": 0
+  },
+  "hucList": 
+  {
+    "0": "0123456789",
+    "1": "0123456788",
+    "2": "0123456787",
+    "3": "0123456786",
+    "4": "0123456785",
+    "5": "0123456784"
+  },
   "partners": [
     "CRK"
   ],
