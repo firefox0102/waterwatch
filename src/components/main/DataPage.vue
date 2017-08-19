@@ -410,6 +410,9 @@ import VueHighcharts from 'vue2-highcharts'
 
 let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
+let partnerRef = db.ref('partners')
+let hucRef = db.ref('hucList')
+
 const asyncData = {
   marker: {
     symbol: 'square'
@@ -429,16 +432,9 @@ export default {
   },
   firebase: {
     collectionSites: collectionSitesRef,
-    labs: labsRef
-  },
-  watch: {
-    collectionSites: {
-      deep: true,
-      handler (newArray) {
-        this.partnerList = this._.uniq(this._.map(this.collectionSites, 'collectionPartner'))
-        this.hucList = this._.uniq(this._.map(this.collectionSites, 'huc'))
-      }
-    }
+    labs: labsRef,
+    hucList: hucRef,
+    partnerList: partnerRef
   },
   data: function () {
     return {
