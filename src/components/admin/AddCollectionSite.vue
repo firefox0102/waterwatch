@@ -73,13 +73,15 @@ import { db } from '../../helpers/firebase'
 let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
 let partnersRef = db.ref('partners')
+let metaRef = db.ref('metaData')
 
 export default {
   name: 'site-reports',
   firebase: {
     collectionSites: collectionSitesRef,
     labs: labsRef,
-    partners: partnersRef
+    partners: partnersRef,
+    metaData: metaRef
   },
   data: function () {
     return {
@@ -112,6 +114,12 @@ export default {
     submitForm: function () {
       try {
         this.$firebaseRefs.collectionSites.push(this.newCollectionSite)
+
+        let newActive = this.metaData[0]['.value'] + 1
+        this.$firebaseRefs.metaData.child('activeSites').set(newActive)
+        let newTotalSites = this.metaData[0]['.value'] + 1
+        this.$firebaseRefs.metaData.child('totalSites').set(newTotalSites)
+
         this.snackbar.successVisible = true
         this.controls.showDialog = false
       } catch (e) {
