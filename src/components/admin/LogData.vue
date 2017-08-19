@@ -397,9 +397,21 @@ export default {
       try {
         // Parse collection site data
         let selectedSite = this.newLogData.collectionSite
+        // let collDate = new Date(this.newLogData.collectionDate).getTime() / 1000
+        let collDate = this.newLogData.collectionDate
+        let key = selectedSite['.key']
+
+        // Set collection site properties from logged report
+        this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
+        // TODO last ecoli
+        if (!selectedSite.firstCollectionDate) {
+          this.$firebaseRefs.collectionSites.child(key).child('firstCollectionDate').set(collDate)
+        }
+
         this.newLogData.stationName = selectedSite.stationName
         this.newLogData.logbookAbbv = selectedSite.logbookAbbv
         this.newLogData.collectionSiteId = this.newLogData.collectionSite['.key']
+        this.newLogData.collectionDate = collDate
         this.newLogData.collectionSite = null
 
         this.$firebaseRefs.reports.push(this.newLogData)
