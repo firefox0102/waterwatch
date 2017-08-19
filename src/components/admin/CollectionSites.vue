@@ -7,7 +7,7 @@
         </div>
 
         <div class="collection-sites-header__subheader--bold">
-          {{ metaData[0]['.value'] }} active of {{ metaData[1]['.value'] }}
+          {{ this.metaData[0] ? metaData[0]['.value'] : 0 }} active of {{ this.metaData[1] ? metaData[1]['.value'] : 0 }}
         </div>
         <div class="collection-sites-header__subheader">
           Select a site to view logged data. Create and export reports of logged data for one or many collection sites.
