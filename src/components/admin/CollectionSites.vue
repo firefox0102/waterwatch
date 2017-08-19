@@ -7,7 +7,7 @@
         </div>
 
         <div class="collection-sites-header__subheader--bold">
-          {{ activeSites.length }} active of {{ collectionSites.length }}
+          {{ metaData[0]['.value'] }} active of {{ metaData[1]['.value'] }}
         </div>
         <div class="collection-sites-header__subheader">
           Select a site to view logged data. Create and export reports of logged data for one or many collection sites.
@@ -121,10 +121,9 @@
                </th>
                <th v-for="header in props.headers" :key="header.text"
                  :class="['text-sm-left', 'column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                 @click="changeSort(header.value)"
-               >
-                 {{ header.text }}
-                 <v-icon>arrow_upward</v-icon>
+                 @click="changeSort(header.value)">
+                  {{ header.text }}
+                  <v-icon>arrow_upward</v-icon>
                </th>
              </tr>
             </template>
@@ -173,6 +172,7 @@ import { db } from '../../helpers/firebase'
 import AddCollectionSite from './AddCollectionSite'
 
 let collectionSitesRef = db.ref('collectionSites')
+let metaRef = db.ref('metaData')
 
 export default {
   name: 'site-reports',
@@ -181,10 +181,8 @@ export default {
   },
   firebase () {
     return {
-      collectionSites: collectionSitesRef,
-      activeSites: {
-        source: collectionSitesRef.orderByChild('active').equalTo(true)
-      }
+      collectionSites: collectionSitesRef.limitToFirst(5),
+      metaData: metaRef
     }
   },
   data: function () {
@@ -192,13 +190,13 @@ export default {
       pagination: {
         sortBy: 'stationName',
         descending: false,
-        totalItems: 0, // TODO
-        loading: true // TODO
+        totalItems: 0,
+        loading: true
       },
       controls: {
         search: '',
-        startDate: null, // TODO with firebase
-        endDate: null, // TODO with firebase
+        startDate: null,
+        endDate: null,
         startDateModal: false,
         endDateModal: false,
         exportAction: { label: 'Export' },
@@ -233,7 +231,7 @@ export default {
         { text: 'Adopt-A-Stream Name', value: 'adoptAStreamName' },
         { text: 'STORET Name', value: 'storetName' },
         { text: '# Samples Collected', value: 'numSamples' },
-        { text: 'First Collection Data', value: 'firstCollectionDate' },
+        { text: 'First Collection Date', value: 'firstCollectionDate' },
         { text: 'Google Maps URL', value: 'googleMapsUrl' },
         { text: 'Latitude', value: 'latitude' },
         { text: 'Longitude', value: 'longitude' },
