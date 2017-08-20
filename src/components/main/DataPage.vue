@@ -55,7 +55,7 @@
                 v-bind:value="huc"
                 v-model="filters.hucFilters"
               ></input>
-              {{ huc }}
+              {{ huc['.value'] }}
             </div>
           </div>
         </div>
@@ -115,7 +115,7 @@
                 v-bind:value="partner"
                 v-model="filters.partnerFilters"
               ></input>
-              {{ partner }}
+              {{ partner['.value'] }}
             </div>
           </div>
         </div>
