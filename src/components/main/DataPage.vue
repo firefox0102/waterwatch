@@ -146,7 +146,7 @@
         <!-- Controls Card TODO make a component -->
         <div class="controls-card">
           <div class="controls-card-header">
-            Controls
+            Chart Controls
           </div>
           <div class="controls-card-body">
             <div
