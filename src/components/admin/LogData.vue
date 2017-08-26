@@ -210,6 +210,25 @@
               <div class="page-content-body__header page-content-body__header--space-above">
                 Additional Parameters
               </div>
+               <v-text-field
+                  label="Air Temperature"
+                  class="input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.airTemp">
+              </v-text-field>
+              <v-text-field
+                  label="Water Temp"
+                  class="input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.waterTemp">
+              </v-text-field>
+               <v-text-field
+                  label="Secchi Depth"
+                  class="input-group--limit-height"
+                  type="number"
+                  v-model="newLogData.secchiDepth">
+              </v-text-field>
+
               <v-text-field
                   label="Dissolved Oxygen"
                   class="input-group--limit-height"
@@ -355,6 +374,7 @@ export default {
         showDateicker: false
       },
       newLogData: {
+        airTemp: null,
         ammonium: null,
         analyst: '',
         chlorophyll: null,
@@ -375,10 +395,12 @@ export default {
         nitrate: null,
         phosphate: null,
         precipitation: null,
+        secchiDepth: null,
         specifcConductivity: null,
         turbidity: null,
         totalChlorine: null,
-        notes: ''
+        notes: '',
+        waterTemp: null
       },
       snackbar: {
         errorVisible: false,
@@ -443,6 +465,7 @@ export default {
     resetForm: function () {
       var newLogNum = this.newLogData.logbookNumber + 1
       this.newLogData = {
+        airTemp: null,
         ammonium: null,
         analyst: '',
         chlorophyll: null,
@@ -463,10 +486,12 @@ export default {
         nitrate: null,
         phosphate: null,
         precipitation: null,
+        secchiDepth: null,
         specifcConductivity: null,
         turbidity: null,
         totalChlorine: null,
-        notes: ''
+        notes: '',
+        waterTemp: null
       }
     },
     getTotal: function (num1, num2) {
