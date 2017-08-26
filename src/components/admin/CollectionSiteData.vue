@@ -85,10 +85,10 @@
                   <div
                     class="site-reports-toolbar-datepicker__activator"
                     slot="activator">
-                    <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.startDate ? controls.startDate : "Start Date"}}</span>
+                    <span class="site-reports-toolbar-datepicker__activator-text">{{ startDate ? startDate : "Start Date"}}</span>
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <v-date-picker v-model="controls.startDate" scrollable >
+                  <v-date-picker v-model="startDate" scrollable >
                     <template scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -107,10 +107,10 @@
                   <div
                     class="site-reports-toolbar-datepicker__activator"
                     slot="activator">
-                    <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.endDate ? controls.endDate : "End Date"}}</span>
+                    <span class="site-reports-toolbar-datepicker__activator-text">{{ endDate ? endDate : "End Date"}}</span>
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <v-date-picker v-model="controls.endDate" scrollable >
+                  <v-date-picker v-model="endDate" scrollable >
                     <template scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -155,7 +155,7 @@
               v-bind:pagination.sync="pagination"
             >
             <template slot="headers" scope="props">
-              <tr>
+              <tr class="nww-table__header">
                 <th>
                   <v-checkbox
                     primary
@@ -166,11 +166,11 @@
                   ></v-checkbox>
                 </th>
                 <th v-for="header in props.headers" :key="header"
-                  :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+                  :class="['text-sm-left', 'column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                   @click="changeSort(header.value)"
                 >
-                  <v-icon>arrow_upward</v-icon>
                   {{ header.text }}
+                  <v-icon>arrow_upward</v-icon>
                 </th>
               </tr>
             </template>
@@ -182,23 +182,35 @@
                   :input-value="props.selected"
                 ></v-checkbox>
               </td>
-              <td class="text-xs-right">{{ props.item.logbookNumber }}</td>
-              <td class="text-xs-right">{{ props.item.collectionDate }}</td>
-              <td class="text-xs-right">{{ props.item.collectionTime }}</td>
-              <td class="text-xs-right">{{ props.item.totalEcoli }}</td>
-              <td class="text-xs-right">{{ props.item.fluorometry }}</td>
-              <td class="text-xs-right">{{ props.item.turbidity }}</td>
-              <td class="text-xs-right">{{ props.item.specifcConductivity }}</td>
-              <td class="text-xs-right">{{ props.item.precipitation }}</td>
-              <td class="text-xs-right">{{ props.item.totalColiform }}</td>
-              <td class="text-xs-right">{{ props.item.notes }}</td>
-              <td class="text-xs-right">{{ props.item.dilution }}</td>
-              <td class="text-xs-right">{{ props.item.incubationTime }}</td>
-              <td class="text-xs-right">{{ props.item.incubationTemp }}</td>
-              <td class="text-xs-right">{{ props.item.incubationOut }}</td>
-              <td class="text-xs-right">{{ props.item.incubationTime }}</td>
-              <td class="text-xs-right">{{ props.item.dilution }}</td>
-              <td class="text-xs-right">{{ props.item.analyst }}</td>
+              <td>{{ props.item.logbookNumber }}</td>
+              <td>{{ props.item.collectionDate }}</td>
+              <td>{{ props.item.collectionTime }}</td>
+              <td>{{ props.item.totalEcoli }}</td>
+              <td>{{ props.item.fluorometry }}</td>
+              <td>{{ props.item.turbidity }}</td>
+              <td>{{ props.item.specifcConductivity }}</td>
+              <td>{{ props.item.precipitation }}</td>
+              <td>{{ props.item.totalColiform }}</td>
+              <td>{{ props.item.notes }}</td>
+              <td>{{ props.item.dilution }}</td>
+              <td>{{ props.item.incubationTime }}</td>
+              <td>{{ props.item.incubationTemp }}</td>
+              <td>{{ props.item.incubationOut }}</td>
+              <td>{{ props.item.incubationTime }}</td>
+              <td>{{ props.item.dilution }}</td>
+              <td>{{ props.item.analyst }}</td>
+              <td>
+                <v-menu bottom left>
+                  <v-btn icon slot="activator">
+                    <v-icon>more_horiz</v-icon>
+                  </v-btn>
+                  <v-list>
+                    <v-list-tile>
+                      <v-list-tile-title>Edit</v-list-tile-title>
+                    </v-list-tile>
+                  </v-list>
+                </v-menu>
+              </td>
             </template>
           </v-data-table>
         </v-card>
@@ -209,9 +221,11 @@
 
 <script>
 import { db } from '../../helpers/firebase'
+import moment from 'moment'
 
 let collectionSitesRef = db.ref('collectionSites')
-let reportsRef = db.ref('reports')
+let todaysDate = moment(new Date()).format('YYYY-MM-DD')
+let oldDate = moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'collection-sites',
@@ -220,9 +234,7 @@ export default {
       firebaseSite: {
         source: collectionSitesRef.orderByKey().equalTo(this.$route.params.siteId)
       },
-      reports: {
-        source: reportsRef.orderByChild('collectionSiteId').equalTo(this.$route.params.siteId)
-      }
+      reports: db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(oldDate).endAt(todaysDate)
     }
   },
   watch: {
@@ -231,11 +243,19 @@ export default {
       handler (newArray) {
         this.site = newArray[0]
       }
+    },
+    startDate (val) {
+      this.filterByDate()
+    },
+    endDate (val) {
+      this.filterByDate()
     }
   },
   data: function () {
     return {
       firebaseSite: [],
+      startDate: oldDate,
+      endDate: todaysDate,
       site: {},
       pagination: {
         sortBy: 'name',
@@ -245,8 +265,6 @@ export default {
       },
       controls: {
         search: '',
-        startDate: null, // TODO with firebase
-        endDate: null, // TODO with firebase
         startDateModal: false,
         endDateModal: false,
         exportAction: { label: 'Export' },
@@ -287,7 +305,8 @@ export default {
         { text: 'Incubation Out Time', value: 'incubationOut' },
         { text: 'Incubation In Time', value: 'incubationTime' },
         { text: '# mL/10incubationTemp0mL (Dilution)', value: 'dilution' },
-        { text: 'Analyst', value: 'analyst' }
+        { text: 'Analyst', value: 'analyst' },
+        { text: '', value: '' }
       ]
     }
   },
@@ -303,6 +322,10 @@ export default {
         this.pagination.sortBy = column
         this.pagination.descending = false
       }
+    },
+    filterByDate () {
+      this.$unbind('reports')
+      this.$bindAsArray('reports', db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(this.startDate).endAt(this.endDate))
     }
   }
 }
