@@ -531,6 +531,8 @@ export default {
       columnChart3.delegateMethod('showLoading', 'Loading...')
       columnChart4.delegateMethod('showLoading', 'Loading...')
 
+      this.getReports()
+
       setTimeout(() => {
         columnChart1.addSeries(asyncData)
         columnChart1.hideLoading()
@@ -541,6 +543,13 @@ export default {
         columnChart4.addSeries(asyncData)
         columnChart4.hideLoading()
       }, 2000)
+    },
+    getReports () {
+      if (this.$firebaseRefs.reports) {
+        this.$unbind('reports')
+      }
+
+      this.$bindAsArray('reports', db.ref('reports/' + this.selectedSite['.key']).orderByChild('collectionDate').limitToLast(10))
     }
   },
   mounted: function () {
