@@ -82,7 +82,6 @@
               class="input-group--limit-height"
               bottom>
             </v-select>
-            <a class="form-input-sub-text--hug-input">Add New Lab (TODO)</a>
           </div>
 
           <!-- Column 2 -->
@@ -324,6 +323,7 @@
 
 <script>
 import { db } from '../../helpers/firebase'
+import moment from 'moment'
 
 let collectionSitesRef = db.ref('collectionSites')
 let reportsRef = db.ref('reports')
@@ -380,7 +380,7 @@ export default {
         chlorophyll: null,
         coliformLargeCells: '',
         coliformSmallCells: '',
-        collectionDate: '',
+        collectionDate: moment(new Date().toISOString()).format('YYYY-MM-DD'),
         collectionSite: null,
         collectionTime: '',
         dilution: null,
@@ -391,6 +391,7 @@ export default {
         incubationOut: '',
         incubationTemp: null,
         incubationTime: '',
+        lab: 'Atlanta',
         logbookNumber: 1,
         nitrate: null,
         phosphate: null,
@@ -471,7 +472,7 @@ export default {
         chlorophyll: null,
         coliformLargeCells: '',
         coliformSmallCells: '',
-        collectionDate: '',
+        collectionDate: moment(new Date().toISOString()).format('YYYY-MM-DD'),
         collectionSite: null,
         collectionTime: '',
         dilution: null,
@@ -482,6 +483,7 @@ export default {
         incubationOut: '',
         incubationTemp: null,
         incubationTime: '',
+        lab: 'Atlanta',
         logbookNumber: newLogNum,
         nitrate: null,
         phosphate: null,
