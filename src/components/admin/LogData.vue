@@ -54,7 +54,7 @@
               v-bind:items="collectionSites"
               item-text="stationName"
               item-value="$index"
-              v-model="newLogData.collectionSite"
+              v-model="selectedSite"
               label="Station Name"
               single-line
               class="input-group--limit-height"
@@ -323,26 +323,39 @@
 
 <script>
 import { db } from '../../helpers/firebase'
+import _ from 'lodash'
 import moment from 'moment'
 
 let collectionSitesRef = db.ref('collectionSites')
-let reportsRef = db.ref('reports')
+let logbookNumberRef = db.ref('metaData/logbookNumber')
 let labsRef = db.ref('labs')
 
 export default {
   name: 'log-data',
   firebase: {
     collectionSites: collectionSitesRef,
-    reports: reportsRef,
+    logbookNumber: logbookNumberRef,
     labs: labsRef
   },
   watch: {
-    reports: {
+    logbookNumber: {
       deep: true,
-      handler (newArray) {
-        this.newLogData.logbookNumber = this.getLastLogbookNumber(newArray)
+      handler () {
+        console.log('handler')
+        this.setLogbookNumber()
+      }
+    },
+    selectedSite: {
+      handler (newSite) {
+        if (this.$firebaseRefs.reports) {
+          this.$unbind('reports')
+        }
+        this.$bindAsArray('reports', db.ref('reports/' + newSite['.key']))
       }
     }
+  },
+  mounted () {
+    this.setLogbookNumber()
   },
   computed: {
     getTotalColiform: function () {
@@ -366,8 +379,8 @@ export default {
   },
   data: function () {
     return {
-      reports: [], // Placeholder for sites watching
-      lastReport: 1,
+      selectedSite: null,
+      logbookNumber: null,
       controls: {
         showAdditionalParams: false,
         showDialog: false,
@@ -419,37 +432,20 @@ export default {
     submitLog: function () {
       try {
         // Parse collection site data
-        let selectedSite = this.newLogData.collectionSite
         // let collDate = new Date(this.newLogData.collectionDate).getTime() / 1000
         let collDate = this.newLogData.collectionDate
-        let key = selectedSite['.key']
+        let key = this.selectedSite['.key']
 
-        // Set collection site properties from logged report
-        this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
+        this.updateCollectionSite(collDate, key)
 
-        // Last ecoli equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.newLogData.ecoliLargeCells)
-
-        // Last turbidity equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
-
-        // Last rainfall equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.newLogData.precipitation)
-
-        // Last specific conductivity equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.newLogData.specifcConductivity)
-
-        if (!selectedSite.firstCollectionDate) {
-          this.$firebaseRefs.collectionSites.child(key).child('firstCollectionDate').set(collDate)
-        }
-
-        this.newLogData.stationName = selectedSite.stationName
-        this.newLogData.logbookAbbv = selectedSite.logbookAbbv
-        this.newLogData.collectionSiteId = this.newLogData.collectionSite['.key']
+        this.newLogData.stationName = this.selectedSite.stationName
+        this.newLogData.logbookAbbv = this.selectedSite.logbookAbbv
+        this.newLogData.collectionSiteId = key
         this.newLogData.collectionDate = collDate
         this.newLogData.collectionSite = null
 
         this.$firebaseRefs.reports.push(this.newLogData)
+        this.incrementLogbookNumber(this.newLogData.logbookNumber)
 
         // Success!
         this.snackbar.successVisible = true
@@ -459,9 +455,6 @@ export default {
         this.snackbar.errorVisible = true
         this.controls.showDialog = false
       }
-    },
-    getLastLogbookNumber: function (newArray) {
-      return (newArray[newArray.length - 1] ? newArray[newArray.length - 1].logbookNumber : 0) + 1
     },
     resetForm: function () {
       var newLogNum = this.newLogData.logbookNumber + 1
@@ -504,6 +497,34 @@ export default {
       } else {
         return ''
       }
+    },
+    setLogbookNumber (logbookObject) {
+      _.each(this.logbookNumber, (currentLogbookNumber) => {
+        this.newLogData.logbookNumber = currentLogbookNumber['.value'] + 1
+      })
+    },
+    updateCollectionSite (collDate, key) {
+      // Set collection site properties from logged report
+      this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
+
+      // Last ecoli equation
+      this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.newLogData.ecoliLargeCells)
+
+      // Last turbidity equation
+      this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
+
+      // Last rainfall equation
+      this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.newLogData.precipitation)
+
+      // Last specific conductivity equation
+      this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.newLogData.specifcConductivity)
+
+      if (!this.selectedSite.firstCollectionDate) {
+        this.$firebaseRefs.collectionSites.child(key).child('firstCollectionDate').set(collDate)
+      }
+    },
+    incrementLogbookNumber (newLogbookNum) {
+      this.$firebaseRefs.logbookNumber.child('currentLogbookNumber').set(newLogbookNum)
     }
   }
 }
