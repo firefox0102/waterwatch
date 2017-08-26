@@ -39,10 +39,10 @@
                   <div
                     class="site-reports-toolbar-datepicker__activator"
                     slot="activator">
-                    <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.startDate ? controls.startDate : "Start Date"}}</span>
+                    <span class="site-reports-toolbar-datepicker__activator-text">{{ startDate ? startDate : "Start Date"}}</span>
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <v-date-picker v-model="controls.startDate" scrollable >
+                  <v-date-picker v-model="startDate" scrollable >
                     <template scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -61,10 +61,10 @@
                   <div
                     class="site-reports-toolbar-datepicker__activator"
                     slot="activator">
-                    <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.endDate ? controls.endDate : "End Date"}}</span>
+                    <span class="site-reports-toolbar-datepicker__activator-text">{{ endDate ? endDate : "End Date"}}</span>
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <v-date-picker v-model="controls.endDate" scrollable >
+                  <v-date-picker v-model="endDate" scrollable >
                     <template scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -158,6 +158,21 @@
                 <td>{{ props.item.latitude }}</td>
                 <td>{{ props.item.longitude }}</td>
                 <td>{{ props.item.huc }}</td>
+                <td>
+                  <v-menu bottom left>
+                    <v-btn icon slot="activator">
+                      <v-icon>more_horiz</v-icon>
+                    </v-btn>
+                    <v-list>
+                      <v-list-tile>
+                        <v-list-tile-title>Archive</v-list-tile-title>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-title>Edit</v-list-tile-title>
+                      </v-list-tile>
+                    </v-list>
+                  </v-menu>
+                </td>
               </tr>
             </template>
           </v-data-table>
@@ -170,9 +185,12 @@
 <script>
 import { db } from '../../helpers/firebase'
 import AddCollectionSite from './AddCollectionSite'
+import moment from 'moment'
 
 let collectionSitesRef = db.ref('collectionSites')
 let metaRef = db.ref('metaData')
+let todaysDate = moment(new Date()).format('YYYY-MM-DD')
+let oldDate = moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'site-reports',
@@ -181,12 +199,22 @@ export default {
   },
   firebase () {
     return {
-      collectionSites: collectionSitesRef.limitToFirst(5),
+      collectionSites: collectionSitesRef.orderByChild('lastCollectionDate').startAt(oldDate).endAt(todaysDate),
       metaData: metaRef
+    }
+  },
+  watch: {
+    startDate (val) {
+      this.filterByDate()
+    },
+    endDate (val) {
+      this.filterByDate()
     }
   },
   data: function () {
     return {
+      startDate: oldDate,
+      endDate: todaysDate,
       pagination: {
         sortBy: 'stationName',
         descending: false,
@@ -195,8 +223,6 @@ export default {
       },
       controls: {
         search: '',
-        startDate: null,
-        endDate: null,
         startDateModal: false,
         endDateModal: false,
         exportAction: { label: 'Export' },
@@ -235,26 +261,31 @@ export default {
         { text: 'Google Maps URL', value: 'googleMapsUrl' },
         { text: 'Latitude', value: 'latitude' },
         { text: 'Longitude', value: 'longitude' },
-        { text: 'HUC', value: 'huc' }
+        { text: 'HUC', value: 'huc' },
+        { text: '', value: '' }
       ],
       selected: []
     }
   },
   methods: {
-    toggleAll: function () {
+    toggleAll () {
       if (this.selected.length) {
         this.selected = []
       } else {
         this.selected = this.collectionSites.slice()
       }
     },
-    changeSort: function (column) {
+    changeSort (column) {
       if (this.pagination.sortBy === column) {
         this.pagination.descending = !this.pagination.descending
       } else {
         this.pagination.sortBy = column
         this.pagination.descending = false
       }
+    },
+    filterByDate () {
+      this.$unbind('collectionSites')
+      this.$bindAsArray('collectionSites', collectionSitesRef.orderByChild('lastCollectionDate').startAt(this.startDate).endAt(this.endDate))
     }
   }
 }
