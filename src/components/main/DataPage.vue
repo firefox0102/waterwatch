@@ -47,9 +47,7 @@
           <div
             v-if="filters.huc"
             class="filter-body">
-            <div
-              v-for="huc in hucList"
-              class="filter-body__list-item">
+            <div v-for="huc in hucList" v-bind:key="huc.key" class="filter-body__list-item">
               <input
                 type="checkbox"
                 v-bind:value="huc"
@@ -79,6 +77,7 @@
             class="filter-body">
             <div
               v-for="lab in labs"
+              v-bind:key="lab.key"
               class="filter-body__list-item">
               <input
                 type="checkbox"
@@ -109,6 +108,7 @@
             class="filter-body">
             <div
               v-for="partner in partnerList"
+              v-bind:key="partner.key"
               class="filter-body__list-item">
               <input
                 type="checkbox"
@@ -127,6 +127,7 @@
           class="data-sidebar-list-item"
           v-on:click="setActiveSite(site)"
           v-bind:class="{'data-sidebar-list-item--active': selectedSite === site}"
+           v-bind:key="site.key"
           v-for=" site in collectionSites">
             {{ site.stationName }}
         </div>
