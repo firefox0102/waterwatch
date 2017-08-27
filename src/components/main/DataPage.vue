@@ -170,10 +170,10 @@
                       <div
                         class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
-                        <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.startDate ? controls.startDate : "Start Date"}}</span>
+                        <span class="site-reports-toolbar-datepicker__activator-text">{{ startDate ? startDate : "Start Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <v-date-picker v-model="controls.startDate" scrollable >
+                      <v-date-picker v-model="startDate" scrollable >
                         <template scope="{ save, cancel }">
                           <v-card-actions>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -192,10 +192,10 @@
                       <div
                         class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
-                        <span class="site-reports-toolbar-datepicker__activator-text">{{ controls.endDate ? controls.endDate : "End Date"}}</span>
+                        <span class="site-reports-toolbar-datepicker__activator-text">{{ endDate ? endDate : "End Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <v-date-picker v-model="controls.endDate" scrollable >
+                      <v-date-picker v-model="endDate" scrollable >
                         <template scope="{ save, cancel }">
                           <v-card-actions>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -221,184 +221,16 @@
                 Reports stuff here
               </div>
             </div>
-            <div
-              class="controls-card-control-group"
-              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControl != 'mapLayer'}">
-              <div
-                class="controls-card-control-group__header"
-                v-on:click="controls.selectedControl = 'mapLayer'">
-                Map Layer
-                <i class="material-icons">arrow_drop_up</i>
-              </div>
-              <div class="controls-card-control-group__content">
-                Map Layer Content
-              </div>
-            </div>
           </div>
         </div>
 
-        <!-- Graph 1 TODO make a component -->
-        <div class="graph-card">
-          <div class="graph-card-title">
-            <span class="graph-card-title__primary">
-              E. coli
-              <v-dialog v-model="controls.ecoliDialog" persistent>
-                <i
-                  slot="activator"
-                  class="material-icons graph-card-title__icon">
-                  info_outline
-                </i>
-                <v-card>
-                  <v-card-title class="headline">What is E. coli?</v-card-title>
-                  <v-card-text>
-                    <p>
-                      Escherichia coli (E. coli) is a bacteria that is commonly found in the gastrointestinal tract and feces of warm-blooded animals and humans. According to the U.S. EPA, E. coli is the best indicator of the presence of pathogens in surface waters and its presence provides direct evidence of fecal contamination of the water.
-                    </p>
-                    <h5>
-                      How are the E. coli results interpreted to determine if they are acceptable?
-                    </h5>
-                    <p>
-                      EPA recommends an E. coli recreational safety level for primary contact of a geometric average of 126 cfu/100ml or less. Because it is common to find high bacteria counts in urban areas, Georgia Adopt-A-Stream advises that counts that exceed a 1000 cfu/100 ml threshold may warrant special attention. NWW results that show a “high” bacterial count may be a one-time event or occurrence or may be a part of a chronic problem. This information is useful, but before taking further action additional sampling is necessary to document bacterial levels over a long period to determine seasonal fluctuations and in response to rain events. This long term information is vital in assessing the overall health of the stream and determining if special attention is warranted to investigate potential pollution sources.
-                    </p>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn class="green--text darken-1" flat="flat" @click.native="controls.ecoliDialog = false">Close</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </span>
-            <div>
-              <span class="graph-card-title__secondary--strong">
-                Last Result:
-              </span>
-              <span class="graph-card-title__secondary">
-                {{ selectedSite ? selectedSite.lastEColiResult : null }}
-              </span>
-            </div>
-          </div>
-          <div class="graph-card__graph-wrapper">
-            <vue-highcharts id="chart1" :options="options" ref="columnChart1"></vue-highcharts>
-          </div>
-        </div>
+        <ecoli-chart :selected-site="selectedSite" :reports="reports"></ecoli-chart>
 
-        <!-- Graph 2 TODO make a component -->
-        <div class="graph-card">
-          <div class="graph-card-title">
-            <span class="graph-card-title__primary">
-              Turbidity
-              <v-dialog v-model="controls.turbidityDialog" persistent>
-                <i
-                  slot="activator"
-                  class="material-icons graph-card-title__icon">
-                  info_outline
-                </i>
-                <v-card>
-                  <v-card-title class="headline">Turbidity</v-card-title>
-                  <v-card-text>
-                    <p>
-                      Turbidity copy
-                    </p>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn class="green--text darken-1" flat="flat" @click.native="controls.turbidityDialog = false">Close</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </span>
-            <div>
-              <span class="graph-card-title__secondary--strong">
-                Last Result:
-              </span>
-              <span class="graph-card-title__secondary">
-                {{ selectedSite ? selectedSite.lastTurbidityResult : null }}
-              </span>
-            </div>
-          </div>
-          <div class="graph-card__graph-wrapper">
-            <vue-highcharts id="chart2" :options="options" ref="columnChart2"></vue-highcharts>
-          </div>
-        </div>
+        <turbidity-chart :selected-site="selectedSite" :reports="reports"></turbidity-chart>
 
+        <rainfall-chart :selected-site="selectedSite" :reports="reports"></rainfall-chart>
 
-        <!-- Graph 3 TODO make a component -->
-        <div class="graph-card">
-          <div class="graph-card-title">
-            <span class="graph-card-title__primary">
-              Rainfall (inches)
-              <v-dialog v-model="controls.rainDialog" persistent>
-                <i
-                  slot="activator"
-                  class="material-icons graph-card-title__icon">
-                  info_outline
-                </i>
-                <v-card>
-                  <v-card-title class="headline">Rainfall</v-card-title>
-                  <v-card-text>
-                    <p>
-                      Rainfall copy
-                    </p>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn class="green--text darken-1" flat="flat" @click.native="controls.rainDialog = false">Close</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </span>
-            <div>
-              <span class="graph-card-title__secondary--strong">
-                Last Result:
-              </span>
-              <span class="graph-card-title__secondary">
-                {{ selectedSite ? selectedSite.lastRainfallResult : null }}
-              </span>
-            </div>
-          </div>
-          <div class="graph-card__graph-wrapper">
-            <vue-highcharts id="chart3" :options="options" ref="columnChart3"></vue-highcharts>
-          </div>
-        </div>
-
-        <!-- Graph 4 TODO make a component -->
-        <div class="graph-card">
-          <div class="graph-card-title">
-            <span class="graph-card-title__primary">
-              Specific Conductivity (uS)
-              <v-dialog v-model="controls.conductiveDialog" persistent>
-                <i
-                  slot="activator"
-                  class="material-icons graph-card-title__icon">
-                  info_outline
-                </i>
-                <v-card>
-                  <v-card-title class="headline">Specific Conductivity (uS)</v-card-title>
-                  <v-card-text>
-                    <p>
-                      Specific Conductivity (uS) copy
-                    </p>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn class="green--text darken-1" flat="flat" @click.native="controls.conductiveDialog = false">Close</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </span>
-            <div>
-              <span class="graph-card-title__secondary--strong">
-                Last Result:
-              </span>
-              <span class="graph-card-title__secondary">
-                {{ selectedSite ? selectedSite.lastConductivityResult : null }}
-              </span>
-            </div>
-          </div>
-          <div class="graph-card__graph-wrapper">
-            <vue-highcharts id="chart4" :options="options" ref="columnChart4"></vue-highcharts>
-          </div>
-        </div>
+        <conductivity-chart :selected-site="selectedSite" :reports="reports"></conductivity-chart>
       </div>
     </div>
   </div>
@@ -406,30 +238,27 @@
 
 <script>
 import { db } from '../../helpers/firebase'
-import VueHighcharts from 'vue2-highcharts'
 import { MapHelper } from '../../helpers/mapHelper'
+import moment from 'moment'
+import VueHighcharts from 'vue2-highcharts'
+import EcoliChart from '../charts/EcoliChart'
+import TurbidityChart from '../charts/TurbidityChart'
+import RainfallChart from '../charts/RainfallChart'
+import ConductivityChart from '../charts/ConductivityChart'
 
 let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
 let partnerRef = db.ref('partners')
 let hucRef = db.ref('hucList')
 
-const asyncData = {
-  marker: {
-    symbol: 'square'
-  },
-  data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
-    y: 26.5,
-    marker: {
-      symbol: 'url(http://www.highcharts.com/demo/gfx/sun.png)'
-    }
-  }, 23.3, 18.3, 13.9, 9.6]
-}
-
 export default {
   name: 'data-page',
   components: {
-    VueHighcharts
+    VueHighcharts,
+    EcoliChart,
+    TurbidityChart,
+    RainfallChart,
+    ConductivityChart
   },
   firebase: {
     collectionSites: collectionSitesRef,
@@ -437,23 +266,28 @@ export default {
     hucList: hucRef,
     partnerList: partnerRef
   },
-  data: function () {
+  watch: {
+    startDate (val) {
+      this.getReports()
+    },
+    endDate (val) {
+      this.getReports()
+    }
+  },
+  data () {
     return {
       selectedSite: null,
+      reports: null,
       collectionSites: [], // Placeholder for sites watching
+      startDate: moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD'),
+      endDate: moment(new Date()).format('YYYY-MM-DD'),
       controls: {
         showFilters: false,
         selectedControl: 'dateRange',
         sidebar: false,
         selectedItem: null,
         search: '',
-        filterSites: [ 'HUC', 'Lab', 'Partner' ],
-        startDate: null,
-        endDate: null,
-        ecoliDialog: false,
-        turbidityDialog: false,
-        rainDialog: false,
-        conductiveDialog: false
+        filterSites: [ 'HUC', 'Lab', 'Partner' ]
       },
       filters: {
         huc: false,
@@ -462,53 +296,6 @@ export default {
         labFilters: [],
         partner: false,
         partnerFilters: []
-      },
-      options: {
-        chart: {
-          type: 'column',
-          width: 290,
-          height: 220
-        },
-        legend: {
-          enabled: false
-        },
-        title: {
-          text: null
-        },
-        yAxis: {
-          title: {
-            text: null
-          },
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-        xAxis: {
-          title: {
-            text: 'Collection Date'
-          },
-          labels: {
-            formatter: function () {
-              return this.value + '°'
-            }
-          }
-        },
-        tooltip: {
-          crosshairs: true,
-          shared: true
-        },
-        credits: {
-          enabled: false
-        },
-        plotOptions: {
-          column: {
-            pointPadding: 0,
-            borderWidth: 0,
-            groupPadding: 0,
-            shadow: false,
-            color: '#4D86A0'
-          }
-        },
-        series: []
       }
     }
   },
@@ -518,38 +305,18 @@ export default {
     },
     setActiveSite (site) {
       this.selectedSite = site
-      this.renderChart() // TODO this isn't great, but for now..
-    },
-    renderChart () {
-      let columnChart1 = this.$refs.columnChart1
-      let columnChart2 = this.$refs.columnChart2
-      let columnChart3 = this.$refs.columnChart3
-      let columnChart4 = this.$refs.columnChart4
-
-      columnChart1.delegateMethod('showLoading', 'Loading...')
-      columnChart2.delegateMethod('showLoading', 'Loading...')
-      columnChart3.delegateMethod('showLoading', 'Loading...')
-      columnChart4.delegateMethod('showLoading', 'Loading...')
-
       this.getReports()
-
-      setTimeout(() => {
-        columnChart1.addSeries(asyncData)
-        columnChart1.hideLoading()
-        columnChart2.addSeries(asyncData)
-        columnChart2.hideLoading()
-        columnChart3.addSeries(asyncData)
-        columnChart3.hideLoading()
-        columnChart4.addSeries(asyncData)
-        columnChart4.hideLoading()
-      }, 2000)
     },
     getReports () {
       if (this.$firebaseRefs.reports) {
         this.$unbind('reports')
       }
 
-      this.$bindAsArray('reports', db.ref('reports/' + this.selectedSite['.key']).orderByChild('collectionDate').limitToLast(10))
+      if (this.startDate && this.endDate) {
+        this.$bindAsArray('reports', db.ref('reports/' + this.selectedSite['.key']).orderByChild('collectionDate').startAt(this.startDate).endAt(this.endDate))
+      } else {
+        this.$bindAsArray('reports', db.ref('reports/' + this.selectedSite['.key']).orderByChild('collectionDate').limitToLast(10))
+      }
     }
   },
   mounted: function () {
@@ -801,7 +568,7 @@ $data-sidebar-width: 240px;
 }
 
 .controls-card-control-group {
-  height: 108px;
+  height: 150px;
   overflow: hidden;
 
   border-bottom: 1px solid $color-dust;
