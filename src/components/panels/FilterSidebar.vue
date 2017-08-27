@@ -6,7 +6,7 @@
         <i class="data-sidebar-toggle__caret material-icons">arrow_drop_down</i>
       </div>
       <div class="data-sidebar-search">
-        <input class="data-sidebar-search__input" v-model="controls.search" placeholder="Search collection sites" />
+        <input class="data-sidebar-search__input" v-on:input="debounceInput" placeholder="Search collection sites" />
         <i class="data-sidebar-search__icon material-icons">search</i>
       </div>
       <div class="filters-toggle" v-on:click="controls.showFilters = !controls.showFilters">
@@ -33,7 +33,7 @@
         </div>
         <div v-if="filters.huc" class="filter-body">
           <div v-for="huc in hucList" v-bind:key="huc.key" class="filter-body__list-item">
-            <input type="checkbox" v-bind:value="huc" v-model="filters.hucFilters"></input>
+            <input type="checkbox" v-bind:value="huc['.value']" v-model="filters.hucFilters"></input>
             {{ huc['.value'] }}
           </div>
         </div>
@@ -69,7 +69,7 @@
         </div>
         <div v-if="filters.partner" class="filter-body">
           <div v-for="partner in partnerList" v-bind:key="partner.key" class="filter-body__list-item">
-            <input type="checkbox" v-bind:value="partner" v-model="filters.partnerFilters"></input>
+            <input type="checkbox" v-bind:value="partner['.value']" v-model="filters.partnerFilters"></input>
             {{ partner['.value'] }}
           </div>
         </div>
@@ -78,7 +78,11 @@
 
     <!-- List items -->
     <div class="data-sidebar__body">
-      <div class="data-sidebar-list-item" v-on:click="selectActiveSite(site)" v-bind:class="{'data-sidebar-list-item--active': selectedSite === site}" v-bind:key="site.key" v-for=" site in collectionSites">
+      <div class="data-sidebar-list-item" 
+        v-on:click="selectActiveSite(site)"
+        v-bind:class="{'data-sidebar-list-item--active': selectedSite === site}"
+        v-bind:key="site.key"
+        v-for=" site in filteredResults">
         {{ site.stationName }}
       </div>
     </div>
@@ -87,6 +91,7 @@
 
 <script>
 import { db } from '../../helpers/firebase'
+import _ from 'lodash'
 
 let labsRef = db.ref('labs')
 let partnerRef = db.ref('partners')
@@ -105,14 +110,33 @@ export default {
     hucList: hucRef,
     partnerList: partnerRef
   },
+  computed: {
+    filteredResults () {
+      let sites = this.collectionSites
+      console.log(this.filters.partnerFilters)
+      sites = _.filter(sites, (site) => {
+        let containsSearch = site.stationName.toLowerCase().includes(this.filters.search)
+        let containsHuc = this.filters.hucFilters.length ? this.filters.hucFilters.indexOf(parseInt(site.huc)) : 0
+        let containsLab = this.filters.labFilters.length ? this.filters.labFilters.indexOf(site.lab) : 0
+        let containsPartner = this.filters.partnerFilters.length ? this.filters.partnerFilters.indexOf(site.collectionPartner) : 0
+
+        console.log('containsLab', containsLab)
+        console.log('containsPartner', containsPartner)
+        return containsSearch && !(containsHuc === -1) && !(containsLab === -1) && !(containsPartner === -1)
+      })
+      console.log(sites)
+
+      return sites
+    }
+  },
   data () {
     return {
       controls: {
         showFilters: false,
-        search: '',
         filterSites: ['HUC', 'Lab', 'Partner']
       },
       filters: {
+        search: '',
         huc: false,
         hucFilters: [],
         lab: false,
@@ -128,7 +152,10 @@ export default {
     },
     selectActiveSite (site) {
       this.$emit('selected', site)
-    }
+    },
+    debounceInput: _.debounce(function (e) {
+      this.filters.search = e.target.value
+    }, 500)
   }
 }
 </script>
