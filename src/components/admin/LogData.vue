@@ -117,7 +117,7 @@
                 label="Conductivity (uS)"
                 class="input-group--limit-height"
                 type="number"
-                v-model="newLogData.specifcConductivity">
+                v-model="newLogData.specificConductivity">
             </v-text-field>
             <v-text-field
                 label="Rainfall (in)"
@@ -410,7 +410,7 @@ export default {
         phosphate: null,
         precipitation: null,
         secchiDepth: null,
-        specifcConductivity: null,
+        specificConductivity: null,
         turbidity: null,
         totalChlorine: null,
         notes: '',
@@ -480,9 +480,9 @@ export default {
         logbookNumber: newLogNum,
         nitrate: null,
         phosphate: null,
-        precipitation: null,
+        precipitation: 0.00,
         secchiDepth: null,
-        specifcConductivity: null,
+        specificConductivity: null,
         turbidity: null,
         totalChlorine: null,
         notes: '',
@@ -508,6 +508,7 @@ export default {
       this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
       // Last ecoli equation
+      // TODO ECOLI EQUATION
       this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.newLogData.ecoliLargeCells)
 
       // Last turbidity equation
@@ -517,7 +518,7 @@ export default {
       this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.newLogData.precipitation)
 
       // Last specific conductivity equation
-      this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.newLogData.specifcConductivity)
+      this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.newLogData.specificConductivity)
 
       if (!this.selectedSite.firstCollectionDate) {
         this.$firebaseRefs.collectionSites.child(key).child('firstCollectionDate').set(collDate)
