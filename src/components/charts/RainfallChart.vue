@@ -39,6 +39,7 @@
 
 <script>
 import _ from 'lodash'
+import moment from 'moment'
 import VueHighcharts from 'vue2-highcharts'
 
 export default {
@@ -65,28 +66,35 @@ export default {
         title: {
           text: null
         },
-        yAxis: {
-          title: {
-            text: null
-          }
+        credits: {
+          enabled: false
         },
         xAxis: {
+          type: 'datetime',
+          dateTimeLabelFormats: {
+            month: '%e. %b',
+            year: '%b'
+          },
           title: {
             text: 'Collection Date'
           }
         },
+        yAxis: {
+          title: {
+            text: null
+          },
+          min: 0
+        },
         tooltip: {
           crosshairs: true,
-          shared: true
-        },
-        credits: {
-          enabled: false
+          shared: true,
+          pointFormat: '{point.y}'
         },
         plotOptions: {
           column: {
-            pointPadding: 0,
+            pointPadding: 0.1,
             borderWidth: 0,
-            groupPadding: 0.1,
+            groupPadding: 0,
             shadow: false,
             color: '#4D86A0'
           }
@@ -119,18 +127,16 @@ export default {
       rainfallChart.hideLoading()
     },
     parseChartData (reports) {
-      let categories = []
       let chartObj = {
         data: []
       }
 
       _.each(reports, function (report) {
         let rainfall = parseInt(report.precipitation)
-        chartObj.data.push(rainfall)
-        categories.push(report.collectionDate)
-      })
+        let date = moment.utc(report.collectionDate).valueOf()
 
-      this.options.xAxis.categories = categories
+        chartObj.data.push([date, rainfall])
+      })
 
       return chartObj
     }

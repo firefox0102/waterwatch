@@ -50,6 +50,7 @@
 
 <script>
 import _ from 'lodash'
+import moment from 'moment'
 import VueHighcharts from 'vue2-highcharts'
 
 export default {
@@ -76,22 +77,29 @@ export default {
         title: {
           text: null
         },
-        yAxis: {
-          title: {
-            text: null
-          }
+        credits: {
+          enabled: false
         },
         xAxis: {
+          type: 'datetime',
+          dateTimeLabelFormats: { // don't display the dummy year
+            month: '%e. %b',
+            year: '%b'
+          },
           title: {
             text: 'Collection Date'
           }
         },
+        yAxis: {
+          title: {
+            text: null
+          },
+          min: 0
+        },
         tooltip: {
           crosshairs: true,
-          shared: true
-        },
-        credits: {
-          enabled: false
+          shared: true,
+          pointFormat: '{point.y}'
         },
         plotOptions: {
           column: {
@@ -129,18 +137,16 @@ export default {
       ecoliChart.hideLoading()
     },
     parseChartData (reports) {
-      let categories = []
       let chartObj = {
         data: []
       }
 
       _.each(reports, function (report) {
-        let fakeEcoliData = parseInt(report.ecoliLargeCells + report.ecoliSmallCells)
-        chartObj.data.push(fakeEcoliData)
-        categories.push(report.collectionDate)
-      })
+        let fakeEcoliData = parseInt(report.ecoliLargeCells)
+        let date = moment.utc(report.collectionDate).valueOf()
 
-      this.options.xAxis.categories = categories
+        chartObj.data.push([date, fakeEcoliData])
+      })
 
       return chartObj
     }
