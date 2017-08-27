@@ -523,6 +523,10 @@ $data-sidebar-width: 240px;
   text-overflow: ellipsis;
   white-space: nowrap;
 
+  &:nth-of-type(1) {
+    border-top: 1px solid $color-dust;
+  }
+
   &--active,
   &:hover {
     background-color: rgba(77, 134, 160, 0.1);
@@ -703,6 +707,11 @@ $data-sidebar-width: 240px;
     }
   }
 }
+
+.filter-body {
+  padding: 5px 10px;
+}
+
 
 .map {
   position: relative;
