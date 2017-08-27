@@ -241,10 +241,10 @@ import { db } from '../../helpers/firebase'
 import { MapHelper } from '../../helpers/mapHelper'
 import moment from 'moment'
 import VueHighcharts from 'vue2-highcharts'
-import EcoliChart from '../charts/EcoliChart'
-import TurbidityChart from '../charts/TurbidityChart'
-import RainfallChart from '../charts/RainfallChart'
-import ConductivityChart from '../charts/ConductivityChart'
+import EcoliChart from '../panels/EcoliChart'
+import TurbidityChart from '../panels/TurbidityChart'
+import RainfallChart from '../panels/RainfallChart'
+import ConductivityChart from '../panels/ConductivityChart'
 
 let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
