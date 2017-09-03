@@ -6,9 +6,10 @@
     <div class="data-body" v-bind:class="{ 'data-body--collapsed': controls.sidebar}">
       <!-- TODO make a component -->
       <div class="data-body__dynamic-column">
-        <div class="map-wrapper">
-          <div id='menu' class="menu"></div>
-          <div id='map' class="map"></div>
+        <div class="data-map">
+          <data-map-banner :selected-site="selectedSite"></data-map-banner>
+          <div id='menu' class="data-map__menu"></div>
+          <div id='map' class="data-map__map"></div>
         </div>
       </div>
 
@@ -117,6 +118,7 @@ import TurbidityChart from '../panels/TurbidityChart'
 import RainfallChart from '../panels/RainfallChart'
 import ConductivityChart from '../panels/ConductivityChart'
 import FilterSidebar from '../panels/FilterSidebar'
+import DataMapBanner from '../map/DataMapBanner'
 
 let collectionSitesRef = db.ref('collectionSites')
 
@@ -128,7 +130,8 @@ export default {
     TurbidityChart,
     RainfallChart,
     ConductivityChart,
-    FilterSidebar
+    FilterSidebar,
+    DataMapBanner
   },
   firebase: {
     collectionSites: collectionSitesRef
@@ -156,12 +159,9 @@ export default {
   },
   methods: {
     toggleSidebar () {
-      console.log('hai')
       this.controls.sidebar = !this.controls.sidebar
     },
     setActiveSite (site) {
-      console.log('select site callback!')
-
       this.selectedSite = site
       this.getReports()
     },
@@ -186,6 +186,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../scss/colors";
+@import "../../scss/map";
 
 $data-sidebar-width: 240px;
 
@@ -212,15 +213,9 @@ $data-sidebar-width: 240px;
   margin-left: -10px;
 }
 
-.map-wrapper {
-  flex: 1;
-  height: 100%;
-  width: 100%;
-  background: #808080;
-}
-
 .data-body {
   display: flex;
+  z-index: 1;
 
   flex-direction: column;
   flex-wrap: wrap;
@@ -354,60 +349,6 @@ $data-sidebar-width: 240px;
 
     color: $color-storm-cloud;
     font-size: 13px;
-  }
-}
-
-.map {
-  position: relative;
-  z-index: 0;
-
-  height: 100%;
-  width: 100%;
-}
-
-.menu {
-  display: flex;
-  position: absolute;
-  top: 40px;
-  z-index: 1;
-
-  flex-direction: column;
-  height: 70px;
-  width: 120px;
-
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  border-radius: 3px;
-  font-family: "Open Sans", sans-serif;
-
-  a {
-    display: block;
-    margin: 0;
-    padding: 10px;
-
-    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-    color: #404040;
-    font-size: 13px;
-    text-align: center;
-    text-decoration: none;
-
-    &:last-child {
-      border: 0;
-    }
-
-    &:hover {
-      background-color: #f8f8f8;
-      color: #404040;
-    }
-
-    &.active {
-      background-color: #3887be;
-      color: #fff;
-
-      &:hover {
-        background: #3074a4;
-      }
-    }
   }
 }
 </style>
