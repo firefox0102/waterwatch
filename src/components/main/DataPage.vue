@@ -237,8 +237,10 @@ $data-sidebar-width: 240px;
   }
 
   &__dynamic-column {
-    height: 50vh;
+    height: 500px;
     width: 100vw;
+
+    overflow: hidden;
 
     @media screen and (min-width: 850px) {
       height: auto;
