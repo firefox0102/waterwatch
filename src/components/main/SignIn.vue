@@ -122,8 +122,6 @@ export default {
       this.$router.push('/logData')
     },
     resetPassword () {
-      console.log('test')
-      console.log(this.formUser.email)
       firebase.auth().sendPasswordResetEmail(this.formUser.email).then(() => {
         this.showResetPassword = false
         this.passwordSnackbar.visible = true

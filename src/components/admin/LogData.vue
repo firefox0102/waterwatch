@@ -341,7 +341,6 @@ export default {
     logbookNumber: {
       deep: true,
       handler () {
-        console.log('handler')
         this.setLogbookNumber()
       }
     },

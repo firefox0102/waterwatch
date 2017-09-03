@@ -116,7 +116,6 @@
     },
     methods: {
       logout () {
-        console.log('login outtt')
         firebase.auth().signOut().then(function () {
           window.location.href = '/signIn'
         }, function (error) {
