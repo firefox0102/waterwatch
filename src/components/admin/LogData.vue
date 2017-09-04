@@ -210,56 +210,56 @@
                 Additional Parameters
               </div>
                <v-text-field
-                  label="Air Temperature"
+                  label="Air Temperature (*C)"
                   class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.airTemp">
               </v-text-field>
               <v-text-field
-                  label="Water Temp"
+                  label="Water Temperature (*C)"
                   class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.waterTemp">
               </v-text-field>
                <v-text-field
-                  label="Secchi Depth"
+                  label="Secchi Depth (meters)"
                   class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.secchiDepth">
               </v-text-field>
 
               <v-text-field
-                  label="Dissolved Oxygen"
+                  label="Dissolved Oxygen (mg/L)"
                   class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.dissolvedOxygen">
               </v-text-field>
               <v-text-field
-                  label="Nitrate"
+                  label="Nitrate (mg/L)"
                   class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.nitrate">
               </v-text-field>
               <v-text-field
-                  label="Phosphate"
+                  label="Phosphate (mg/L)"
                   class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.phosphate">
               </v-text-field>
               <v-text-field
-                  label="Ammonium"
+                  label="Ammonium (mg/L)"
                   class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.ammonium">
               </v-text-field>
               <v-text-field
-                  label="Total Chlorine"
+                  label="Total Chlorine (mg/L)"
                   class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.totalChlorine">
               </v-text-field>
               <v-text-field
-                  label="Chlorophyll"
+                  label="Chlorophyll (µg/L)"
                   class="input-group--limit-height"
                   type="number"
                   v-model="newLogData.chlorophyll">
