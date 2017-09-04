@@ -7,7 +7,7 @@
         </div>
 
         <div class="collection-sites-header__subheader--bold">
-          {{ this.metaData[0] ? metaData[0]['.value'] : 0 }} active of {{ this.metaData[1] ? metaData[1]['.value'] : 0 }}
+          {{ this.metaData[0] ? metaData[0]['.value'] : 0 }} active of {{ this.metaData[2] ? metaData[2]['.value'] : 0 }}
         </div>
         <div class="collection-sites-header__subheader">
           Select a site to view logged data. Create and export reports of logged data for one or many collection sites.
@@ -15,6 +15,12 @@
       </div>
       <div class="collection-sites-header__secondary-content">
         <add-collection-site></add-collection-site>
+        <v-btn
+          slot="activator"
+          class="btn-nww--light"
+          v-on:click.native="toggleArchived()">
+            {{ archivedText() }}
+        </v-btn>
       </div>
     </div>
     <v-card>
@@ -77,6 +83,17 @@
             </div>
           </div>
           <div class="site-reports-body-toolbar__secondary-content">
+            <div class="site-reports-actions">
+              <edit-collection-site class="site-reports-actions__action" v-if="selected.length === 1" v-bind:collection-site="selected[0]"></edit-collection-site>
+              <v-btn v-if="selected.length === 1 && !showArchived" v-on:click.native="archiveSite(selected[0])" class="site-reports-actions__action success white--text">
+                Archive
+                <v-icon right dark>archive</v-icon>
+              </v-btn>
+              <v-btn v-if="selected.length === 1 && showArchived" v-on:click.native="unArchiveSite(selected[0])" class="site-reports-actions__action success white--text">
+                Unarchive
+                <v-icon right dark>unarchive</v-icon>
+              </v-btn>
+            </div>
             <div class="site-reports-toolbar-export">
               <v-menu
                 offset-y
@@ -158,24 +175,6 @@
                 <td>{{ props.item.latitude }}</td>
                 <td>{{ props.item.longitude }}</td>
                 <td>{{ props.item.huc }}</td>
-                <td>
-                  <v-menu bottom left>
-                    <v-btn icon slot="activator">
-                      <v-icon>more_horiz</v-icon>
-                    </v-btn>
-                    <v-list>
-                      <v-list-tile v-if="!props.item.archived" v-on:click.native="archiveSite(props.item)">
-                        <v-list-tile-title>Archive</v-list-tile-title>
-                      </v-list-tile>
-                      <v-list-tile v-if="props.item.archived" v-on:click.native="unArchiveSite(props.item)">
-                        <v-list-tile-title>Un-Archive</v-list-tile-title>
-                      </v-list-tile>
-                      <v-list-tile>
-                        <v-list-tile-title>Edit</v-list-tile-title>
-                      </v-list-tile>
-                    </v-list>
-                  </v-menu>
-                </td>
               </tr>
             </template>
           </v-data-table>
@@ -188,9 +187,11 @@
 <script>
 import { db } from '../../helpers/firebase'
 import AddCollectionSite from './AddCollectionSite'
+import EditCollectionSite from './EditCollectionSite'
 import moment from 'moment'
 
 let collectionSitesRef = db.ref('collectionSites')
+let archivedRef = db.ref('archivedSites')
 let metaRef = db.ref('metaData')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
 let oldDate = moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD')
@@ -198,7 +199,8 @@ let oldDate = moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD')
 export default {
   name: 'site-reports',
   components: {
-    'add-collection-site': AddCollectionSite
+    AddCollectionSite,
+    EditCollectionSite
   },
   firebase () {
     return {
@@ -264,8 +266,7 @@ export default {
         { text: 'Google Maps URL', value: 'googleMapsUrl' },
         { text: 'Latitude', value: 'latitude' },
         { text: 'Longitude', value: 'longitude' },
-        { text: 'HUC', value: 'huc' },
-        { text: '', value: '' }
+        { text: 'HUC', value: 'huc' }
       ],
       selected: []
     }
@@ -290,29 +291,51 @@ export default {
       this.$unbind('collectionSites')
       this.$bindAsArray('collectionSites', collectionSitesRef.orderByChild('lastCollectionDate').startAt(this.startDate).endAt(this.endDate))
     },
-    archiveSite (item, value) {
-      if (!this.$firebaseRefs.archivedSites) {
-        this.$bindAsArray('archivedSites', db.ref('archivedSites'))
-      }
+    archiveSite (item) {
+      this.$bindAsArray('setArchivedSites', archivedRef)
+      this.$bindAsArray('setCollectionSites', collectionSitesRef)
 
       let itemCopy = { ...item }
       delete itemCopy['.key']
       itemCopy.archived = true
-      this.$firebaseRefs.archivedSites.child(item['.key']).set(itemCopy)
+      this.$firebaseRefs.setArchivedSites.child(item['.key']).set(itemCopy)
 
-      this.$firebaseRefs.collectionSites.child(item['.key']).remove()
+      this.$firebaseRefs.setCollectionSites.child(item['.key']).remove()
+
+      let testing = this.metaData
+      console.log(testing)
+
+      this.$unbind('setArchivedSites')
+      this.$unbind('setCollectionSites')
     },
     unArchiveSite (item) {
-      if (!this.$firebaseRefs.archivedSites) {
-        this.$bindAsArray('archivedSites', db.ref('archivedSites'))
-      }
+      this.$bindAsArray('setArchivedSites', archivedRef)
+      this.$bindAsArray('setCollectionSites', collectionSitesRef)
 
       let itemCopy = { ...item }
       delete itemCopy['.key']
       itemCopy.archived = false
-      this.$firebaseRefs.collectionSites.child(item['.key']).set(itemCopy)
+      this.$firebaseRefs.setCollectionSites.child(item['.key']).set(itemCopy)
 
-      this.$firebaseRefs.archivedSites.child(item['.key']).remove()
+      this.$firebaseRefs.setArchivedSites.child(item['.key']).remove()
+
+      this.$unbind('setArchivedSites')
+      this.$unbind('setCollectionSites')
+    },
+    toggleArchived () {
+      this.showArchived = !this.showArchived
+      this.selected = []
+
+      if (this.showArchived) {
+        this.$unbind('collectionSites')
+        this.$bindAsArray('collectionSites', archivedRef.orderByChild('lastCollectionDate').startAt(this.startDate).endAt(this.endDate))
+      } else if (!this.showArchived) {
+        this.$unbind('collectionSites')
+        this.$bindAsArray('collectionSites', collectionSitesRef.orderByChild('lastCollectionDate').startAt(this.startDate).endAt(this.endDate))
+      }
+    },
+    archivedText () {
+      return this.showArchived ? 'Hide Archived' : 'View Archived'
     }
   }
 }

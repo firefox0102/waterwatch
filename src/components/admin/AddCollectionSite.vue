@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-dialog v-model="controls.showDialog"  :overlay=false>
+    <v-dialog v-model="controls.showDialog"  :overlay="false">
       <v-btn
         slot="activator"
         class="btn-nww--light">
@@ -76,7 +76,7 @@ let partnersRef = db.ref('partners')
 let metaRef = db.ref('metaData')
 
 export default {
-  name: 'site-reports',
+  name: 'add-collection-site',
   firebase: {
     collectionSites: collectionSitesRef,
     labs: labsRef,
