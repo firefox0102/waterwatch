@@ -164,8 +164,11 @@
                       <v-icon>more_horiz</v-icon>
                     </v-btn>
                     <v-list>
-                      <v-list-tile>
+                      <v-list-tile v-if="!props.item.archived" v-on:click.native="archiveSite(props.item)">
                         <v-list-tile-title>Archive</v-list-tile-title>
+                      </v-list-tile>
+                      <v-list-tile v-if="props.item.archived" v-on:click.native="unArchiveSite(props.item)">
+                        <v-list-tile-title>Un-Archive</v-list-tile-title>
                       </v-list-tile>
                       <v-list-tile>
                         <v-list-tile-title>Edit</v-list-tile-title>
@@ -286,6 +289,30 @@ export default {
     filterByDate () {
       this.$unbind('collectionSites')
       this.$bindAsArray('collectionSites', collectionSitesRef.orderByChild('lastCollectionDate').startAt(this.startDate).endAt(this.endDate))
+    },
+    archiveSite (item, value) {
+      if (!this.$firebaseRefs.archivedSites) {
+        this.$bindAsArray('archivedSites', db.ref('archivedSites'))
+      }
+
+      let itemCopy = { ...item }
+      delete itemCopy['.key']
+      itemCopy.archived = true
+      this.$firebaseRefs.archivedSites.child(item['.key']).set(itemCopy)
+
+      this.$firebaseRefs.collectionSites.child(item['.key']).remove()
+    },
+    unArchiveSite (item) {
+      if (!this.$firebaseRefs.archivedSites) {
+        this.$bindAsArray('archivedSites', db.ref('archivedSites'))
+      }
+
+      let itemCopy = { ...item }
+      delete itemCopy['.key']
+      itemCopy.archived = false
+      this.$firebaseRefs.collectionSites.child(item['.key']).set(itemCopy)
+
+      this.$firebaseRefs.archivedSites.child(item['.key']).remove()
     }
   }
 }
