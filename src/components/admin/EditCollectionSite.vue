@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-dialog v-model="controls.showDialog" :overlay="false">
-      <v-btn 
+      <v-btn
         slot="activator"
         class="site-reports-actions__action site-reports-actions__action--no-margin success white--text">
         Edit
@@ -75,7 +75,6 @@ export default {
   methods: {
     submitForm () {
       try {
-        // TODO fix this
         let itemCopy = { ...this.collectionSite }
         delete itemCopy['.key']
         this.$firebaseRefs.collectionSites.child(this.collectionSite['.key']).set(itemCopy)

@@ -3,13 +3,22 @@ $toolbar-breakpoint: 1450px;
 
 .site-reports-actions {
   display: flex;
-  
+
   height: 100%;
   margin-right: 20px;
 
   &__action {
     margin: 0 5px;
     color: $color-iron-sea;
+
+    .btn__content a {
+      display: flex;
+
+      align-items: center;
+
+      color: $color-finn-white;
+      text-decoration: none !important;
+    }
 
     &--no-margin {
       margin: 0;

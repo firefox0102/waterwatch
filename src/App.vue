@@ -279,7 +279,7 @@ body {
 
   &--hug-input {
     @extend .form-input-sub-text;
-    margin: -24px 0 24px;
+    margin: -12px 0 12px;
   }
 }
 </style>

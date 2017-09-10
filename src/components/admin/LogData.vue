@@ -27,7 +27,7 @@
             <v-menu
               lazy
               :close-on-content-click="false"
-              v-model="controls.showDateicker"
+              v-model="controls.showDatepicker"
               transition="scale-transition"
               offset-y
               full-width
@@ -52,11 +52,11 @@
 
             <v-select
               v-bind:items="collectionSites"
-              item-text="stationName"
-              item-value="$index"
               v-model="selectedSite"
-              label="Station Name"
-              single-line
+              item-disabled="editingExistingLog"
+              label="Collection Site"
+              autocomplete
+              item-text="stationName"
               class="input-group--limit-height"
               bottom>
             </v-select>
@@ -73,12 +73,10 @@
                 v-model="newLogData.analyst">
             </v-text-field>
             <v-select
-              v-bind:items="labs"
+              v-if="labSet"
+              v-bind:items="labSet"
               v-model="newLogData.lab"
-              item-text=".value"
-              item-value=".value"
               label="Lab"
-              single-line
               class="input-group--limit-height"
               bottom>
             </v-select>
@@ -277,7 +275,7 @@
                 slot="activator"
                 type="submit"
                 class="btn-nww log-data-submit-btn">
-                Log Data
+                {{ editingExistingLog ? "Save Data" : "Log Data" }}
               </v-btn>
               <v-card>
                 <v-card-title>
@@ -346,15 +344,34 @@ export default {
     },
     selectedSite: {
       handler (newSite) {
-        if (this.$firebaseRefs.reports) {
-          this.$unbind('reports')
+        if (newSite) {
+          if (this.$firebaseRefs.reports) {
+            this.$unbind('reports')
+          }
+          this.$bindAsArray('reports', db.ref('reports/' + newSite['.key']))
         }
-        this.$bindAsArray('reports', db.ref('reports/' + newSite['.key']))
+      }
+    },
+    labs: {
+      handler (newSite) {
+        this.labSet = _.map(this.labs, '.value')
+      }
+    },
+    newLogData: {
+      handler (logData) {
+        if (this.editingExistingLog && this.collectionSites) {
+          this.selectedSite = _.find(this.collectionSites, '.key', logData.collectionSiteId)
+        }
       }
     }
   },
   mounted () {
     this.setLogbookNumber()
+
+    if (this.$route.params.siteId && this.$route.params.reportId) {
+      this.editingExistingLog = true
+      this.$bindAsObject('newLogData', db.ref('reports/' + this.$route.params.siteId + '/' + this.$route.params.reportId))
+    }
   },
   computed: {
     getTotalColiform: function () {
@@ -378,12 +395,15 @@ export default {
   },
   data: function () {
     return {
+      labs: [],
+      labSet: [],
       selectedSite: null,
       logbookNumber: null,
+      editingExistingLog: false,
       controls: {
         showAdditionalParams: false,
         showDialog: false,
-        showDateicker: false
+        showDatepicker: false
       },
       newLogData: {
         airTemp: null,
@@ -428,10 +448,16 @@ export default {
     toggleAdditionalParmas: function () {
       this.controls.showAdditionalParams = !this.controls.showAdditionalParams
     },
-    submitLog: function () {
+    submitLog () {
+      if (this.editingExistingLog) {
+        this.updateExistingLog()
+      } else {
+        this.saveNewLog()
+      }
+    },
+    saveNewLog: function () {
       try {
         // Parse collection site data
-        // let collDate = new Date(this.newLogData.collectionDate).getTime() / 1000
         let collDate = this.newLogData.collectionDate
         let key = this.selectedSite['.key']
 
@@ -439,6 +465,8 @@ export default {
 
         this.newLogData.stationName = this.selectedSite.stationName
         this.newLogData.logbookAbbv = this.selectedSite.logbookAbbv
+        this.newLogData.totalEcoli = this.getTotalEcoli
+        this.newLogData.totalColiform = this.getTotalColiform
         this.newLogData.collectionSiteId = key
         this.newLogData.collectionDate = collDate
         this.newLogData.collectionSite = null
@@ -449,6 +477,30 @@ export default {
         // Success!
         this.snackbar.successVisible = true
         this.controls.showDialog = false
+
+        this.resetForm()
+      } catch (e) {
+        console.log(e)
+        this.snackbar.errorVisible = true
+        this.controls.showDialog = false
+      }
+    },
+    updateExistingLog () {
+      try {
+        this.newLogData.totalEcoli = this.getTotalEcoli
+        this.newLogData.totalColiform = this.getTotalColiform
+        this.newLogData.collectionSite = null
+
+        let itemCopy = { ...this.newLogData }
+        delete itemCopy['.key']
+        this.$firebaseRefs.newLogData.set(itemCopy)
+        this.$unbind('newLogData')
+
+        // Success!
+        this.snackbar.successVisible = true
+        this.controls.showDialog = false
+
+        this.resetForm()
       } catch (e) {
         console.log(e)
         this.snackbar.errorVisible = true
@@ -456,7 +508,10 @@ export default {
       }
     },
     resetForm: function () {
-      var newLogNum = this.newLogData.logbookNumber + 1
+      if (this.editingExistingLog) {
+        this.editingExistingLog = false
+      }
+
       this.newLogData = {
         airTemp: null,
         ammonium: null,
@@ -476,7 +531,7 @@ export default {
         incubationTemp: null,
         incubationTime: '',
         lab: 'Atlanta',
-        logbookNumber: newLogNum,
+        logbookNumber: 0,
         nitrate: null,
         phosphate: null,
         precipitation: 0.00,
@@ -487,15 +542,8 @@ export default {
         notes: '',
         waterTemp: null
       }
-    },
-    getTotal: function (num1, num2) {
-      var n1 = parseInt(num1)
-      var n2 = parseInt(num2)
-      if (n1 + n2 > 0) {
-        return n1 + n2
-      } else {
-        return ''
-      }
+
+      this.setLogbookNumber()
     },
     setLogbookNumber (logbookObject) {
       _.each(this.logbookNumber, (currentLogbookNumber) => {
@@ -503,6 +551,8 @@ export default {
       })
     },
     updateCollectionSite (collDate, key) {
+      // this.$firebaseRefs.collectionSites.child(key).child('totalSamples').set(this.newLogData.collectionSite.totalSamples ? this.newLogData.collectionSite.totalSamples + 1 : 1)
+
       // Set collection site properties from logged report
       this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 

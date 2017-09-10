@@ -33,7 +33,6 @@
             </span>
             <span class="collection-data-group__text">
               {{ site ? site.totalSamples : '' }}
-              <!-- TODO this doesn't exist yet, increment when logging new data -->
             </span>
             <span class="collection-data-group__divider">|</span>
             <span class="collection-data-group__text--strong">
@@ -41,7 +40,6 @@
             </span>
             <span class="collection-data-group__text">
               {{ site ? site.firstCollectionDate : '' }}
-              <!-- TODO this doesn't exist yet, set when logging new data -->
             </span>
           </div>
           <div class="collection-data-group__row">
@@ -123,6 +121,17 @@
             </div>
           </div>
           <div class="site-reports-body-toolbar__secondary-content">
+            <div class="site-reports-actions">
+              <router-link
+                class="log-new-data-btn"
+                v-if="selected.length === 1"
+                :to="{ name: 'Edit Log Data',  params: { siteId: selected[0].collectionSiteId, reportId: selected[0]['.key'] } }">
+                <v-btn class="site-reports-actions__action site-reports-actions__action--no-margin btn-nww--light btn btn--raised">
+                  Edit
+                  <v-icon right dark>edit</v-icon>
+                </v-btn>
+              </router-link>
+            </div>
             <div class="site-reports-toolbar-export">
               <v-menu
                 offset-y
@@ -136,7 +145,7 @@
                   <i class="material-icons">arrow_drop_down</i>
                 </div>
                 <v-list>
-                  <v-list-tile v-for="action in controls.exportActions" :key="action">
+                  <v-list-tile v-for="action in controls.exportActions" :key="action.title">
                     <v-list-tile-title>{{ action.title }}</v-list-tile-title>
                   </v-list-tile>
                 </v-list>
@@ -148,14 +157,15 @@
           <v-data-table
               v-model="selected"
               v-bind:headers="headers"
-              :items="reports"
-              select-all
-              class="elevation-1"
-              selected-key="logbookNumber"
+              v-bind:items="reports"
               v-bind:pagination.sync="pagination"
+              v-bind:search="controls.search"
+              select-all
+              selected-key="logbookNumber"
+              class="elevation-1"
             >
             <template slot="headers" scope="props">
-              <tr class="nww-table__header">
+              <tr class="nww-table__header" :active="props.selected" @click="props.selected = !props.selected">
                 <th>
                   <v-checkbox
                     primary
@@ -165,7 +175,7 @@
                     :indeterminate="props.indeterminate"
                   ></v-checkbox>
                 </th>
-                <th v-for="header in props.headers" :key="header"
+                <th v-for="header in props.headers" :key="header.value"
                   :class="['text-sm-left', 'column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                   @click="changeSort(header.value)"
                 >
@@ -175,42 +185,32 @@
               </tr>
             </template>
             <template slot="items" scope="props">
-              <td>
-                <v-checkbox
-                  primary
-                  hide-details
-                  :input-value="props.selected"
-                ></v-checkbox>
-              </td>
-              <td>{{ props.item.logbookNumber }}</td>
-              <td>{{ props.item.collectionDate }}</td>
-              <td>{{ props.item.collectionTime }}</td>
-              <td>{{ props.item.totalEcoli }}</td>
-              <td>{{ props.item.fluorometry }}</td>
-              <td>{{ props.item.turbidity }}</td>
-              <td>{{ props.item.specifcConductivity }}</td>
-              <td>{{ props.item.precipitation }}</td>
-              <td>{{ props.item.totalColiform }}</td>
-              <td>{{ props.item.notes }}</td>
-              <td>{{ props.item.dilution }}</td>
-              <td>{{ props.item.incubationTime }}</td>
-              <td>{{ props.item.incubationTemp }}</td>
-              <td>{{ props.item.incubationOut }}</td>
-              <td>{{ props.item.incubationTime }}</td>
-              <td>{{ props.item.dilution }}</td>
-              <td>{{ props.item.analyst }}</td>
-              <td>
-                <v-menu bottom left>
-                  <v-btn icon slot="activator">
-                    <v-icon>more_horiz</v-icon>
-                  </v-btn>
-                  <v-list>
-                    <v-list-tile>
-                      <v-list-tile-title>Edit</v-list-tile-title>
-                    </v-list-tile>
-                  </v-list>
-                </v-menu>
-              </td>
+              <tr :active="props.selected" @click="props.selected = !props.selected">
+                <td>
+                  <v-checkbox
+                    primary
+                    hide-detail
+                    :input-value="props.selected"
+                  ></v-checkbox>
+                </td>
+                <td>{{ props.item.logbookNumber }}</td>
+                <td>{{ props.item.collectionDate }}</td>
+                <td>{{ props.item.collectionTime }}</td>
+                <td>{{ props.item.totalEcoli }}</td>
+                <td>{{ props.item.fluorometry }}</td>
+                <td>{{ props.item.turbidity }}</td>
+                <td>{{ props.item.specifcConductivity }}</td>
+                <td>{{ props.item.precipitation }}</td>
+                <td>{{ props.item.totalColiform }}</td>
+                <td>{{ props.item.notes }}</td>
+                <td>{{ props.item.dilution }}</td>
+                <td>{{ props.item.incubationTime }}</td>
+                <td>{{ props.item.incubationTemp }}</td>
+                <td>{{ props.item.incubationOut }}</td>
+                <td>{{ props.item.incubationTime }}</td>
+                <td>{{ props.item.dilution }}</td>
+                <td>{{ props.item.analyst }}</td>
+              </tr>
             </template>
           </v-data-table>
         </v-card>
@@ -258,10 +258,10 @@ export default {
       endDate: todaysDate,
       site: {},
       pagination: {
-        sortBy: 'name',
+        sortBy: 'logbookNumber',
         descending: 'asc',
-        totalItems: 0, // TODO
-        loading: true // TODO
+        totalItems: 0,
+        loading: true
       },
       controls: {
         search: '',
@@ -287,7 +287,6 @@ export default {
           }
         ]
       },
-      selected: [],
       headers: [
         { text: 'Logbook #', value: 'logbookNumber' },
         { text: 'Collection Date', value: 'collectionDate' },
@@ -305,9 +304,9 @@ export default {
         { text: 'Incubation Out Time', value: 'incubationOut' },
         { text: 'Incubation In Time', value: 'incubationTime' },
         { text: '# mL/10incubationTemp0mL (Dilution)', value: 'dilution' },
-        { text: 'Analyst', value: 'analyst' },
-        { text: '', value: '' }
-      ]
+        { text: 'Analyst', value: 'analyst' }
+      ],
+      selected: []
     }
   },
   methods: {

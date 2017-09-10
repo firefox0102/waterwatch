@@ -47,6 +47,12 @@ export default new Router({
       meta: { requiresAuth: true }
     },
     {
+      path: '/logData/:siteId/:reportId',
+      name: 'Edit Log Data',
+      component: LogData,
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/collectionSites',
       name: 'Collection Sites',
       component: CollectionSites,
