@@ -32,7 +32,7 @@
               Total Samples:
             </span>
             <span class="collection-data-group__text">
-              {{ site ? site.totalSamples : '' }}
+              {{ site ? site.numSamples : '' }}
             </span>
             <span class="collection-data-group__divider">|</span>
             <span class="collection-data-group__text--strong">

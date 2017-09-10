@@ -551,7 +551,8 @@ export default {
       })
     },
     updateCollectionSite (collDate, key) {
-      // this.$firebaseRefs.collectionSites.child(key).child('totalSamples').set(this.newLogData.collectionSite.totalSamples ? this.newLogData.collectionSite.totalSamples + 1 : 1)
+      var newNumberSamples = this.selectedSite.numSamples ? this.selectedSite.numSamples + 1 : 1
+      this.$firebaseRefs.collectionSites.child(key).child('numSamples').set(newNumberSamples)
 
       // Set collection site properties from logged report
       this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
