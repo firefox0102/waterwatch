@@ -290,12 +290,15 @@ export default {
       let itemCopy = { ...item }
       delete itemCopy['.key']
       itemCopy.archived = true
-      this.$firebaseRefs.setArchivedSites.child(item['.key']).set(itemCopy)
 
+      this.$firebaseRefs.setArchivedSites.child(item['.key']).set(itemCopy)
       this.$firebaseRefs.setCollectionSites.child(item['.key']).remove()
 
-      let testing = this.metaData
-      console.log(testing)
+      // Decrement active sites number
+      let newActive = this.metaData[0]['.value'] - 1
+      this.$firebaseRefs.metaData.child('activeSites').set(newActive)
+
+      this.selected = []
 
       this.$unbind('setArchivedSites')
       this.$unbind('setCollectionSites')
@@ -308,8 +311,13 @@ export default {
       delete itemCopy['.key']
       itemCopy.archived = false
       this.$firebaseRefs.setCollectionSites.child(item['.key']).set(itemCopy)
-
       this.$firebaseRefs.setArchivedSites.child(item['.key']).remove()
+
+      // Increment active sites number
+      let newActive = this.metaData[0]['.value'] + 1
+      this.$firebaseRefs.metaData.child('activeSites').set(newActive)
+
+      this.selected = []
 
       this.$unbind('setArchivedSites')
       this.$unbind('setCollectionSites')

@@ -130,7 +130,7 @@ export default {
 
         let newActive = this.metaData[0]['.value'] + 1
         this.$firebaseRefs.metaData.child('activeSites').set(newActive)
-        let newTotalSites = this.metaData[0]['.value'] + 1
+        let newTotalSites = this.metaData[2]['.value'] + 1
         this.$firebaseRefs.metaData.child('totalSites').set(newTotalSites)
 
         this.snackbar.successVisible = true
