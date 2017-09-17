@@ -23,8 +23,8 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn 
-                class="green--text darken-1" 
+              <v-btn
+                class="green--text darken-1"
                 flat="flat"
                 @click.native="controls.ecoliDialog = false">
                 Close
@@ -142,7 +142,7 @@ export default {
       }
 
       _.each(reports, function (report) {
-        let fakeEcoliData = parseInt(report.ecoliLargeCells)
+        let fakeEcoliData = parseInt(report.totalEcoli)
         let date = moment.utc(report.collectionDate).valueOf()
 
         chartObj.data.push([date, fakeEcoliData])
