@@ -20,9 +20,22 @@
           <v-text-field label="Latitude" v-model="collectionSite.latitude" required></v-text-field>
           <v-text-field label="Longitude" v-model="collectionSite.longitude" required></v-text-field>
           <v-text-field label="Storet Name" v-model="collectionSite.storetName" required></v-text-field>
-          <v-select v-bind:items="partners" v-model="collectionSite.collectionPartner" item-text=".value" item-value=".value" label="Collection Partner" single-line class="input-group--limit-height" required bottom>
+          <v-select
+            v-bind:items="partnerSet"
+            v-model="collectionSite.collectionPartner"
+            item-text=".value"
+            item-value=".value"
+            label="Collection Partner"
+            required
+            bottom>
           </v-select>
-          <v-select v-bind:items="labs" v-model="collectionSite.lab" item-text=".value" item-value=".value" label="Lab" single-line class="input-group--limit-height" bottom>
+          <v-select
+            v-bind:items="labSet"
+            v-model="collectionSite.lab"
+            item-text=".value"
+            item-value=".value"
+            label="Lab"
+            bottom>
           </v-select>
           <v-btn class="btn-nww" type="submit">
             Update Site
@@ -43,6 +56,7 @@
 
 <script>
 import { db } from '../../helpers/firebase'
+import _ from 'lodash'
 
 let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
@@ -58,8 +72,24 @@ export default {
     partners: partnersRef,
     metaData: metaRef
   },
+  watch: {
+    labs: {
+      handler () {
+        this.labSet = _.map(this.labs, '.value')
+      }
+    },
+    partners: {
+      handler () {
+        this.partnerSet = _.map(this.partners, '.value')
+      }
+    }
+  },
   data () {
     return {
+      labs: [],
+      labSet: [],
+      partners: [],
+      partnerSet: [],
       controls: {
         showDialog: false
       },

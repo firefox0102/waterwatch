@@ -22,24 +22,20 @@
           <v-text-field label="Longitude" v-model="newCollectionSite.longitude" required></v-text-field>
           <v-text-field label="Storet Name" v-model="newCollectionSite.storetName" required></v-text-field>
           <v-select
-            v-bind:items="partners"
+            v-bind:items="partnerSet"
             v-model="newCollectionSite.collectionPartner"
             item-text=".value"
             item-value=".value"
             label="Collection Partner"
-            single-line
-            class="input-group--limit-height"
             required
             bottom>
           </v-select>
           <v-select
-            v-bind:items="labs"
+            v-bind:items="labSet"
             v-model="newCollectionSite.lab"
             item-text=".value"
             item-value=".value"
             label="Lab"
-            single-line
-            class="input-group--limit-height"
             bottom>
           </v-select>
           <v-btn
@@ -69,6 +65,7 @@
 
 <script>
 import { db } from '../../helpers/firebase'
+import _ from 'lodash'
 
 let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
@@ -83,8 +80,24 @@ export default {
     partners: partnersRef,
     metaData: metaRef
   },
+  watch: {
+    labs: {
+      handler () {
+        this.labSet = _.map(this.labs, '.value')
+      }
+    },
+    partners: {
+      handler () {
+        this.partnerSet = _.map(this.partners, '.value')
+      }
+    }
+  },
   data: function () {
     return {
+      labs: [],
+      labSet: [],
+      partners: [],
+      partnerSet: [],
       controls: {
         showDialog: false
       },
