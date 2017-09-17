@@ -155,7 +155,7 @@
                 <td>{{ props.item.logbookAbbv }}</td>
                 <td>{{ props.item.lab }}</td>
                 <td>{{ props.item.lastCollectionDate }}</td>
-                <td>{{ props.item.lastEColi }}</td>
+                <td>{{ props.item.lastEColiResult }}</td>
                 <td>{{ props.item.active ? 'active' : 'inactive' }}</td>
                 <td>{{ props.item.collectionPartner }}</td>
                 <td>{{ props.item.hucName }}</td>
