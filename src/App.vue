@@ -222,7 +222,7 @@ body {
 
   &__header {
     height: 16px;
-    margin-bottom: 46px;
+    margin-bottom: 20px;
 
     color: $color-nww-green;
     font-size: 18px;

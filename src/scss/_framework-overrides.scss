@@ -1,3 +1,12 @@
+.log-data .input-group--limit-height:first-of-type {
+  margin-top: 0 !important;
+  max-height: none !important;
+}
+
+.page-content-body__header {
+  margin-top: 20px;
+}
+
 .application--light .input-group input,
 .input-group--text-field label { // Vuetify style override
   color: $color-sad-grey !important;
