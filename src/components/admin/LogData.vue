@@ -123,7 +123,7 @@
                 type="number"
                 v-model="newLogData.precipitation">
             </v-text-field>
-            <a class="form-input-sub-text--hug-input">Rainfall value from Weather Underground (TODO)</a>
+            <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
             <v-text-field
                 label="Incubation Temp (*C)"
                 class="input-group--limit-height"

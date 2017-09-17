@@ -276,10 +276,5 @@ body {
   line-height: 13px;
   text-align: left;
   text-decoration: underline;
-
-  &--hug-input {
-    @extend .form-input-sub-text;
-    margin: -12px 0 12px;
-  }
 }
 </style>

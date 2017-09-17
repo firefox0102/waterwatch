@@ -26,7 +26,7 @@
           </v-text-field>
 
         <v-dialog v-model="showResetPassword" persistent>
-          <a class="form-input-sub-text--hug-input" slot="activator">Forget Password?</a>
+          <a class="form-input-sub-text" slot="activator">Forget Password?</a>
           <v-card>
             <v-card-title class="headline">Reset Password</v-card-title>
             <v-card-text>
