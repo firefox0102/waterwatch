@@ -434,7 +434,7 @@ export default {
         logbookNumber: 1,
         nitrate: null,
         phosphate: null,
-        precipitation: null,
+        precipitation: 0.00,
         secchiDepth: null,
         specificConductivity: null,
         turbidity: null,
@@ -524,10 +524,12 @@ export default {
         this.editingExistingLog = false
       }
 
+      let oldLog = {...this.newLogData}
+
       this.newLogData = {
         airTemp: null,
         ammonium: null,
-        analyst: '',
+        analyst: oldLog.analyst,
         chlorophyll: null,
         coliformLargeCells: '',
         coliformSmallCells: '',
@@ -540,13 +542,13 @@ export default {
         eColiSmallCells: null,
         fluorometry: null,
         incubationOut: '',
-        incubationTemp: null,
+        incubationTemp: oldLog.incubationTemp,
         incubationTime: '',
         lab: 'Atlanta',
         logbookNumber: 0,
         nitrate: null,
         phosphate: null,
-        precipitation: 0.00,
+        precipitation: oldLog.precipitation,
         secchiDepth: null,
         specificConductivity: null,
         turbidity: null,
