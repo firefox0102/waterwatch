@@ -99,6 +99,7 @@
               label="# mL/100mL (Dilution)"
               class="input-group--limit-height"
               type="number"
+              :rules="formRules.dilutionRules"
               v-model="newLogData.dilution">
           </v-text-field>
           <v-text-field
@@ -413,7 +414,6 @@
         formRules: {
           incubationTimeRules: [
             (startTime) => {
-              console.log('testing')
               let startDate = dateObj(startTime)
 
               function dateObj (d) {
@@ -425,6 +425,12 @@
               }
 
               return moment(startDate).isAfter(moment().subtract(6, 'hours')) || 'Incubation Time should be within last 6 hours'
+            }
+          ],
+          dilutionRules: [
+            (input) => {
+              let dilution = parseFloat(input)
+              return (Number.isInteger(dilution) && dilution >= 0) || 'Dilution must be a whole number'
             }
           ]
         },
