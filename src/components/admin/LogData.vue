@@ -22,8 +22,7 @@
             <v-text-field
               label="Logbook Number"
               v-model="newLogData.logbookNumber"
-              class="input-group--limit-height"
-              disabled>
+              class="input-group--limit-height">
             </v-text-field>
 
             <v-menu
@@ -48,8 +47,8 @@
               <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
                 <template scope="{ save, cancel }">
                   <v-card-actions>
-                    <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                    <v-btn flat primary @click.native="save()">Save</v-btn>
+                    <v-btn flat accent @click.native="cancel()">Cancel</v-btn>
+                    <v-btn flat accent @click.native="save()">Save</v-btn>
                   </v-card-actions>
                 </template>
               </v-date-picker>
@@ -97,7 +96,7 @@
                 label="Incubation In Time"
                 v-model="newLogData.incubationTime"
                 type="time"
-                class="input-group--limit-height">
+                class="">
             </v-text-field>
             <v-text-field
                 label="# mL/100mL (Dilution)"
@@ -152,7 +151,7 @@
               </div>
               <v-text-field
                   label="Large Cells"
-                  class="input-group--limit-height"
+                  class=""
                   type="number"
                   hint="Should be between 0-49 (Leave empty if not recorded)"
                   persistent-hint
@@ -160,15 +159,14 @@
               </v-text-field>
               <v-text-field
                   label="Small Cells"
-                  class="input-group--limit-height"
+                  class=""
                   type="number"
                   hint="Should be between 0-48 (Leave empty if not recorded)"
                   persistent-hint
                   v-model="newLogData.coliformSmallCells">
               </v-text-field>
+              <a class="log-data-total">Total Coliform = {{ getTotalColiform }}</a>
             </div>
-
-            <a class="log-data-total">Total Coliform = {{ getTotalColiform }}</a>
 
             <div class="log-data-section-wrapper">
               <div class="page-content-body__header">
@@ -176,7 +174,7 @@
               </div>
               <v-text-field
                   label="Large Cells"
-                  class="input-group--limit-height"
+                  class=""
                   type="number"
                   hint="Should be between 0-49 (Leave empty if not recorded)"
                   persistent-hint
@@ -184,27 +182,30 @@
               </v-text-field>
               <v-text-field
                   label="Small Cells"
-                  class="input-group--limit-height"
+                  class=""
                   type="number"
                   hint="Should be between 0-48 (Leave empty if not recorded)"
                   persistent-hint
                   v-model="newLogData.ecoliSmallCells">
               </v-text-field>
+              <a class="log-data-total">Total E. coli = {{ getTotalEcoli }}</a>
             </div>
 
-            <a class="log-data-total">Total E. coli = {{ getTotalEcoli }}</a>
-
-            <div
-              class="form-input-sub-text"
-              v-if="controls.showAdditionalParams === false"
-              v-on:click="toggleAdditionalParmas">
-              See More Parameters
-            </div>
-            <div
-              class="form-input-sub-text"
-              v-if="controls.showAdditionalParams === true"
-              v-on:click="toggleAdditionalParmas">
-              Hide More Parameters
+            <div class="log-data-section-wrapper">
+              <div class="page-content-body__header">
+              </div>
+              <div
+                class="form-input-sub-text"
+                v-if="controls.showAdditionalParams === false"
+                v-on:click="toggleAdditionalParmas">
+                See More Parameters
+              </div>
+              <div
+                class="form-input-sub-text"
+                v-if="controls.showAdditionalParams === true"
+                v-on:click="toggleAdditionalParmas">
+                Hide More Parameters
+              </div>
             </div>
 
             <div
