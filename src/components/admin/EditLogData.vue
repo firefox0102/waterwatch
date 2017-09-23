@@ -104,12 +104,10 @@
                     label="Incubation In Time"
                     v-model="targetLogData.incubationTime"
                     :rules="formRules.incubationTimeRules"
-                    type="time"
-                    class="input-group--limit-height">
+                    type="time">
                 </v-text-field>
                 <v-text-field
                     label="# mL/100mL (Dilution)"
-                    class="input-group--limit-height"
                     type="number"
                     :rules="formRules.dilutionRules"
                     v-model="targetLogData.dilution">
@@ -280,47 +278,25 @@
                     ></v-text-field>
                 </div>
 
-                <v-dialog v-model="controls.showConfirmDialog" content-class="top-dialog" lazy absolute>
-                  <v-btn
-                    slot="activator"
-                    type="submit"
-                    class="btn-nww log-data-submit-btn">
-                    {{  "Edit Data"}}
-                  </v-btn>
-                  <v-card>
-                    <v-card-title>
-                      <div class="headline log-data-confirm__header">Log Data?</div>
-                    </v-card-title>
-                    <v-card-text>Please confirm that you would like to log data</v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        class="green--text darken-1"
-                        flat="flat"
-                        v-on:click.native="controls.showConfirmDialog = false">
-                        Cancel
-                      </v-btn>
-                      <v-btn
-                        class="btn-nww"
-                        v-on:click.native="submitLog"
-                        type="submit">
-                        Confirm
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+                <v-btn
+                  slot="activator"
+                  type="submit"
+                  v-on:click.native="submitLog"
+                  class="btn-nww log-data-submit-btn">
+                  {{  "Save Data"}}
+                </v-btn>
               </div>
             </v-form>
           </div>
       </v-card>
+      <v-snackbar
+        :timeout="snackbar.timeout"
+        :error="true"
+        v-model="snackbar.errorVisible">
+        {{snackbar.errorMessage}}
+        <v-btn dark flat @click.native="snackbar.errorVisible = false">Close</v-btn>
+      </v-snackbar>
     </v-dialog>
-    <v-snackbar
-      :timeout="snackbar.timeout"
-      :error="true"
-      v-model="snackbar.errorVisible">
-      {{snackbar.errorMessage}}
-      <v-btn dark flat @click.native="snackbar.errorVisible = false">Close</v-btn>
-    </v-snackbar>
     <v-snackbar
       :timeout="snackbar.timeout"
       :info="true"
@@ -339,7 +315,6 @@
   import moment from 'moment'
 
   let collectionSitesRef = db.ref('collectionSites')
-  let logbookNumberRef = db.ref('metaData/logbookNumber')
   let labsRef = db.ref('labs')
 
   export default {
@@ -347,34 +322,18 @@
     props: ['targetLogData'],
     firebase: {
       collectionSites: collectionSitesRef,
-      logbookNumber: logbookNumberRef,
       labs: labsRef
     },
     watch: {
-      logbookNumber: {
-        deep: true,
-        handler () {
-          this.setLogbookNumber()
-        }
-      },
       labs: {
         handler (newSite) {
           this.labSet = _.map(this.labs, '.value')
         }
       },
-      targetLogData: {
-        handler (logData) {
-          if (this.collectionSites) {
-            this.selectedSite = _.find(this.collectionSites, '.key', logData.collectionSiteId)
-          }
+      collectionSites: {
+        handler (newSites) {
+          this.selectedSite = _.find(newSites, '.key', this.targetLogData.collectionSiteId)
         }
-      }
-    },
-    mounted () {
-      this.setLogbookNumber()
-
-      if (this.$route.params.siteId && this.$route.params.reportId) {
-        this.$bindAsObject('targetLogData', db.ref('reports/' + this.$route.params.siteId + '/' + this.$route.params.reportId))
       }
     },
     computed: { // TODO fix these equations
@@ -401,8 +360,8 @@
       return {
         labs: [],
         labSet: [],
+        collectionSites: [],
         selectedSite: null,
-        logbookNumber: null,
         formValid: false,
         ecoliLargeCells: null,
         ecoliSmallCells: null,
@@ -443,6 +402,7 @@
           ],
           incubationTimeRules: [
             (startTime) => {
+              if (/^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
 
               function dateObj (d) {
@@ -458,6 +418,7 @@
           ],
           incubationOutTimeRules: [
             (outTime) => {
+              if (/^\s*$/.test(outTime)) { return true } // If value is empty, return
               let format = 'hh:mm:ss'
               let startDate = dateObj(this.targetLogData.incubationTime)
 
@@ -498,7 +459,6 @@
             }
           ]
         },
-        targetLogData: {},
         snackbar: {
           errorVisible: false,
           successVisible: false,
@@ -522,6 +482,8 @@
       },
       updateExistingLog () {
         try {
+          this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.targetLogData.collectionSiteId + '/' + this.targetLogData['.key']))
+
           this.targetLogData.totalEcoli = this.getTotalEcoli
           this.targetLogData.totalColiform = this.getTotalColiform
           this.targetLogData.collectionSite = null
@@ -529,24 +491,17 @@
           let itemCopy = { ...this.targetLogData
           }
           delete itemCopy['.key']
-          this.$firebaseRefs.targetLogData.set(itemCopy)
-          this.$unbind('targetLogData')
+          this.$firebaseRefs.firebaseLogObject.set(itemCopy)
+          this.$unbind('firebaseLogObject')
 
           // Success!
           this.snackbar.successVisible = true
-          this.controls.showConfirmDialog = false
-
-          this.resetForm()
+          this.controls.showDialog = false
         } catch (e) {
           console.log(e)
           this.snackbar.errorVisible = true
           this.controls.showConfirmDialog = false
         }
-      },
-      setLogbookNumber (logbookObject) {
-        _.each(this.logbookNumber, (currentLogbookNumber) => {
-          this.targetLogData.logbookNumber = currentLogbookNumber['.value'] + 1
-        })
       },
       updateCollectionSite (collDate, key) {
         var newNumberSamples = this.selectedSite.numSamples ? this.selectedSite.numSamples + 1 : 1
@@ -566,13 +521,6 @@
 
         // Last specific conductivity equation
         this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.targetLogData.specificConductivity)
-
-        if (!this.selectedSite.firstCollectionDate) {
-          this.$firebaseRefs.collectionSites.child(key).child('firstCollectionDate').set(collDate)
-        }
-      },
-      incrementLogbookNumber (newLogbookNum) {
-        this.$firebaseRefs.logbookNumber.child('currentLogbookNumber').set(newLogbookNum)
       }
     }
   }
@@ -610,9 +558,5 @@
     &__cancel {
       color: $color-nww-green;
     }
-  }
-
-  .top-dialog {
-    z-index: 6;
   }
 </style>

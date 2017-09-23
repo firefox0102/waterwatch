@@ -276,7 +276,7 @@
               slot="activator"
               type="submit"
               class="btn-nww log-data-submit-btn">
-              {{  "Log Data" }}
+              {{ "Log Data" }}
             </v-btn>
             <v-card>
               <v-card-title>
@@ -364,7 +364,7 @@
     mounted () {
       this.setLogbookNumber()
     },
-    computed: { // TODO fix these equations
+    computed: {
       getTotalColiform: function () {
         var num1 = parseInt(this.newLogData.coliformLargeCells)
         var num2 = parseInt(this.newLogData.coliformSmallCells)
@@ -429,6 +429,7 @@
           ],
           incubationTimeRules: [
             (startTime) => {
+              if (/^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
 
               function dateObj (d) {
@@ -444,6 +445,7 @@
           ],
           incubationOutTimeRules: [
             (outTime) => {
+              if (/^\s*$/.test(outTime)) { return true } // If value is empty, return
               let format = 'hh:mm:ss'
               let startDate = dateObj(this.newLogData.incubationTime)
 
@@ -617,7 +619,8 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.getTotalEcoli)
+        // TODO ECOLI EQUATION
+        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.ecoliLargeCells)
 
         // Last turbidity equation
         this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
