@@ -11,323 +11,43 @@
         <v-card-title>
           <span class="headline">Edit Collection Site</span>
         </v-card-title>
-          <div class="page-content-header">
-            <div class="page-content-header__text">
-              Log Data
-            </div>
-            <div class="page-content-header__subtext--dark">
-              Log new data for a collection site
-            </div>
-          </div>
-          <div class="page-content-body">
-            <v-form
-              v-model="formValid"
-              ref="form"
-              v-on:submit.prevent="controls.showConfirmDialog = true"
-              class="page-content-body__form">
-              <!-- Column 1 -->
-              <div class="page-content-body__column">
-                <div class="page-content-body__header">
-                  Collection Details
-                </div>
-                <v-text-field
-                  label="Logbook Number"
-                  v-model="newLogData.logbookNumber"
-                  class="input-group--limit-height"
-                  disabled>
-                </v-text-field>
-
-                <v-menu
-                  lazy
-                  :close-on-content-click="false"
-                  v-model="controls.showDatepicker"
-                  transition="scale-transition"
-                  offset-y
-                  full-width
-                  :nudge-left="40"
-                  max-width="290px">
-                  <v-text-field
-                    slot="activator"
-                    label="Date"
-                    v-model="newLogData.collectionDate"
-                    append-icon="event"
-                    class="input-group--limit-height"
-                    :rules="[(v) => !!v || 'Collection Date is required']"
-                    required>
-                  </v-text-field>
-                  <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
-                          <v-card-actions>
-                            <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                            <v-btn flat primary @click.native="save()">Save</v-btn>
-                          </v-card-actions>
-                    </template>
-                    </v-date-picker>
-                </v-menu>
-
-                <v-select
-                  v-bind:items="collectionSites"
-                  v-model="selectedSite"
-                  item-disabled="true"
-                  label="Collection Site"
-                  autocomplete
-                  item-text="stationName"
-                  class="input-group--limit-height"
-                  :rules="[(v) => !!v || 'Collection Site is required']"
-                  bottom>
-                </v-select>
-                <v-text-field
-                    label="Collection Time"
-                    v-model="newLogData.collectionTime"
-                    type="time"
-                    suffix="EST"
-                    class="input-group--limit-height">
-                </v-text-field>
-                <v-text-field
-                    label="Analyst (Initials)"
-                    class="input-group--limit-height"
-                    v-model="newLogData.analyst">
-                </v-text-field>
-                <v-select
-                  v-if="labSet"
-                  v-bind:items="labSet"
-                  v-model="newLogData.lab"
-                  label="Lab"
-                  class="input-group--limit-height"
-                  bottom>
-                </v-select>
-              </div>
-
-              <!-- Column 2 -->
-              <div class="page-content-body__column">
-                <div class="page-content-body__header">
-                  Incubation and Parameters
-                </div>
-                <v-text-field
-                    label="Incubation In Time"
-                    v-model="newLogData.incubationTime"
-                    :rules="formRules.incubationTimeRules"
-                    type="time"
-                    class="input-group--limit-height">
-                </v-text-field>
-                <v-text-field
-                    label="# mL/100mL (Dilution)"
-                    class="input-group--limit-height"
-                    type="number"
-                    :rules="formRules.dilutionRules"
-                    v-model="newLogData.dilution">
-                </v-text-field>
-                <v-text-field
-                    label="Fluorometry"
-                    class="input-group--limit-height"
-                    type="number"
-                    :rules="formRules.fluorometryRules"
-                    v-model="newLogData.fluorometry">
-                </v-text-field>
-                <v-text-field
-                    label="Turbidity (NTU)"
-                    class="input-group--limit-height"
-                    type="number"
-                    :rules="formRules.turbidityRules"
-                    v-model="newLogData.turbidity">
-                </v-text-field>
-                <v-text-field
-                    label="Conductivity (uS)"
-                    class="input-group--limit-height"
-                    type="number"
-                    :rules="formRules.conductivityRules"
-                    v-model="newLogData.specificConductivity">
-                </v-text-field>
-                <v-text-field
-                    label="Rainfall (in)"
-                    class="input-group--limit-height"
-                    type="number"
-                    v-model="newLogData.precipitation">
-                </v-text-field>
-                <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
-                <v-text-field
-                    label="Incubation Temp (*C)"
-                    class="input-group--limit-height"
-                    type="number"
-                    :rules="formRules.incubationTempRules"
-                    v-model="newLogData.incubationTemp">
-                </v-text-field>
-                <v-text-field
-                    label="Incubation Out"
-                    v-model="newLogData.incubationOut"
-                    :rules="formRules.incubationOutTimeRules"
-                    type="time"
-                    class="input-group--limit-height">
-                </v-text-field>
-              </div>
-
-              <!-- Column 3 -->
-              <div class="page-content-body__column page-content-body__column--end">
-                <div class="log-data-section-wrapper">
-                  <div class="page-content-body__header">
-                    Total Coliform
-                  </div>
-                  <v-text-field
-                      label="Large Cells"
-                      type="number"
-                      v-model="newLogData.coliformLargeCells">
-                  </v-text-field>
-                  <v-text-field
-                      label="Small Cells"
-                      type="number"
-                      v-model="newLogData.coliformSmallCells">
-                  </v-text-field>
-                </div>
-
-                <a class="log-data-total">Total Coliform = {{ getTotalColiform }}</a>
-
-                <div class="log-data-section-wrapper">
-                  <div class="page-content-body__header">
-                    E. coli
-                  </div>
-                  <v-text-field
-                      label="Large Cells"
-                      type="number"
-                      :rules="formRules.largeCellsRules"
-                      v-model="ecoliLargeCells">
-                  </v-text-field>
-                  <v-text-field
-                      label="Small Cells"
-                      type="number"
-                      :rules="formRules.smallCellsRules"
-                      v-model="ecoliSmallCells">
-                  </v-text-field>
-                </div>
-
-                <a class="log-data-total">Total E. coli = {{ getTotalEcoli }}</a>
-
-                <div
-                  class="form-input-sub-text"
-                  v-if="controls.showAdditionalParams === false"
-                  v-on:click="toggleAdditionalParmas">
-                  See More Parameters
-                </div>
-                <div
-                  class="form-input-sub-text"
-                  v-if="controls.showAdditionalParams === true"
-                  v-on:click="toggleAdditionalParmas">
-                  Hide More Parameters
-                </div>
-
-                <div
-                  class="log-data-section-wrapper"
-                  v-if="controls.showAdditionalParams === true">
-                  <div class="page-content-body__header page-content-body__header--space-above">
-                    Additional Parameters
-                  </div>
-                    <v-text-field
-                      label="Air Temperature (*C)"
-                      class="input-group--limit-height"
-                      type="number"
-                      v-model="newLogData.airTemp">
-                  </v-text-field>
-                  <v-text-field
-                      label="Water Temperature (*C)"
-                      class="input-group--limit-height"
-                      type="number"
-                      v-model="newLogData.waterTemp">
-                  </v-text-field>
-                    <v-text-field
-                      label="Secchi Depth (meters)"
-                      class="input-group--limit-height"
-                      type="number"
-                      v-model="newLogData.secchiDepth">
-                  </v-text-field>
-
-                  <v-text-field
-                      label="Dissolved Oxygen (mg/L)"
-                      class="input-group--limit-height"
-                      type="number"
-                      v-model="newLogData.dissolvedOxygen">
-                  </v-text-field>
-                  <v-text-field
-                      label="Nitrate (mg/L)"
-                      class="input-group--limit-height"
-                      type="number"
-                      v-model="newLogData.nitrate">
-                  </v-text-field>
-                  <v-text-field
-                      label="Phosphate (mg/L)"
-                      class="input-group--limit-height"
-                      type="number"
-                      v-model="newLogData.phosphate">
-                  </v-text-field>
-                  <v-text-field
-                      label="Ammonium (mg/L)"
-                      class="input-group--limit-height"
-                      type="number"
-                      v-model="newLogData.ammonium">
-                  </v-text-field>
-                  <v-text-field
-                      label="Total Chlorine (mg/L)"
-                      class="input-group--limit-height"
-                      type="number"
-                      v-model="newLogData.totalChlorine">
-                  </v-text-field>
-                  <v-text-field
-                      label="Chlorophyll (µg/L)"
-                      class="input-group--limit-height"
-                      type="number"
-                      v-model="newLogData.chlorophyll">
-                  </v-text-field>
-                  <v-text-field
-                      name="input-5-1"
-                      label="Notes"
-                      v-model="newLogData.notes"
-                      class="input-group--limit-height"
-                    ></v-text-field>
-                </div>
-
-                <v-dialog v-model="controls.showConfirmDialog" lazy absolute>
-                  <v-btn
-                    slot="activator"
-                    type="submit"
-                    class="btn-nww log-data-submit-btn">
-                    {{  "Edit Data"}}
-                  </v-btn>
-                  <v-card>
-                    <v-card-title>
-                      <div class="headline log-data-confirm__header">Log Data?</div>
-                    </v-card-title>
-                    <v-card-text>Please confirm that you would like to log data</v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        class="green--text darken-1"
-                        flat="flat"
-                        v-on:click.native="controls.showConfirmDialog = false">
-                        Cancel
-                      </v-btn>
-                      <v-btn
-                        class="btn-nww"
-                        v-on:click.native="submitLog"
-                        type="submit">
-                        Confirm
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </div>
-            </v-form>
-          </div>
+        <form class="add-form" v-on:submit.prevent="submitForm">
+          <v-text-field label="Station Name" v-model="collectionSite.stationName" required></v-text-field>
+          <v-text-field label="Logbook Abbreviation" v-model="collectionSite.logbookAbbv" required></v-text-field>
+          <v-text-field label="Adopt A Stream Name" v-model="collectionSite.adoptAStreamName" required></v-text-field>
+          <v-text-field label="HUC Name" v-model="collectionSite.hucName" required></v-text-field>
+          <v-text-field label="HUC" type="number" v-model="collectionSite.huc" required></v-text-field>
+          <v-text-field label="Latitude" v-model="collectionSite.latitude" required></v-text-field>
+          <v-text-field label="Longitude" v-model="collectionSite.longitude" required></v-text-field>
+          <v-text-field label="Storet Name" v-model="collectionSite.storetName" required></v-text-field>
+          <v-select
+            v-bind:items="partnerSet"
+            v-model="collectionSite.collectionPartner"
+            item-text=".value"
+            item-value=".value"
+            label="Collection Partner"
+            required
+            bottom>
+          </v-select>
+          <v-select
+            v-bind:items="labSet"
+            v-model="collectionSite.lab"
+            item-text=".value"
+            item-value=".value"
+            label="Lab"
+            bottom>
+          </v-select>
+          <v-btn class="btn-nww" type="submit">
+            Update Site
+          </v-btn>
+        </form>
       </v-card>
     </v-dialog>
-    <v-snackbar
-      :timeout="snackbar.timeout"
-      :error="true"
-      v-model="snackbar.errorVisible">
+    <v-snackbar :timeout="snackbar.timeout" :error="true" v-model="snackbar.errorVisible">
       {{snackbar.errorMessage}}
       <v-btn dark flat @click.native="snackbar.errorVisible = false">Close</v-btn>
     </v-snackbar>
-    <v-snackbar
-      :timeout="snackbar.timeout"
-      :info="true"
-      v-model="snackbar.successVisible">
+    <v-snackbar :timeout="snackbar.timeout" :info="true" v-model="snackbar.successVisible">
       {{snackbar.successMessage}}
       <v-btn dark flat @click.native="snackbar.successVisible = false">Close</v-btn>
     </v-snackbar>

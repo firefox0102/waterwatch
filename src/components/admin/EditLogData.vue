@@ -488,8 +488,7 @@
           this.targetLogData.totalColiform = this.getTotalColiform
           this.targetLogData.collectionSite = null
 
-          let itemCopy = { ...this.targetLogData
-          }
+          let itemCopy = { ...this.targetLogData }
           delete itemCopy['.key']
           this.$firebaseRefs.firebaseLogObject.set(itemCopy)
           this.$unbind('firebaseLogObject')
