@@ -114,15 +114,10 @@
           </div>
           <div class="site-reports-body-toolbar__secondary-content">
             <div class="site-reports-actions">
-              <router-link
-                class="log-new-data-btn"
-                v-if="selected.length === 1"
-                :to="{ name: 'Edit Log Data',  params: { siteId: selected[0].collectionSiteId, reportId: selected[0]['.key'] } }">
-                <v-btn class="site-reports-actions__action site-reports-actions__action--no-margin btn-nww--light btn btn--raised">
-                  Edit
-                  <v-icon right dark>edit</v-icon>
-                </v-btn>
-              </router-link>
+              <edit-log-data
+                v-bind:target-log-data="selected[0]"
+                v-if="selected.length === 1">
+              </edit-log-data>
             </div>
             <div class="site-reports-toolbar-export">
               <v-menu
@@ -214,6 +209,7 @@
 <script>
 import { db } from '../../helpers/firebase'
 import moment from 'moment'
+import EditLogData from './EditLogData'
 
 let collectionSitesRef = db.ref('collectionSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
@@ -221,6 +217,9 @@ let oldDate = moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'collection-sites',
+  components: {
+    EditLogData
+  },
   firebase () {
     return {
       firebaseSite: {

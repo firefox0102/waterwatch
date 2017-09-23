@@ -57,7 +57,6 @@
           <v-select
             v-bind:items="collectionSites"
             v-model="selectedSite"
-            item-disabled="editingExistingLog"
             label="Collection Site"
             autocomplete
             item-text="stationName"
@@ -277,7 +276,7 @@
               slot="activator"
               type="submit"
               class="btn-nww log-data-submit-btn">
-              {{ editingExistingLog ? "Save Data" : "Log Data" }}
+              {{  "Log Data" }}
             </v-btn>
             <v-card>
               <v-card-title>
@@ -360,24 +359,12 @@
         handler (newSite) {
           this.labSet = _.map(this.labs, '.value')
         }
-      },
-      newLogData: {
-        handler (logData) {
-          if (this.editingExistingLog && this.collectionSites) {
-            this.selectedSite = _.find(this.collectionSites, '.key', logData.collectionSiteId)
-          }
-        }
       }
     },
     mounted () {
       this.setLogbookNumber()
-
-      if (this.$route.params.siteId && this.$route.params.reportId) {
-        this.editingExistingLog = true
-        this.$bindAsObject('newLogData', db.ref('reports/' + this.$route.params.siteId + '/' + this.$route.params.reportId))
-      }
     },
-    computed: {
+    computed: { // TODO fix these equations
       getTotalColiform: function () {
         var num1 = parseInt(this.newLogData.coliformLargeCells)
         var num2 = parseInt(this.newLogData.coliformSmallCells)
@@ -403,7 +390,6 @@
         labSet: [],
         selectedSite: null,
         logbookNumber: null,
-        editingExistingLog: false,
         formValid: false,
         ecoliLargeCells: null,
         ecoliSmallCells: null,
@@ -543,11 +529,7 @@
       },
       submitLog () {
         if (this.$refs.form.validate()) {
-          if (this.editingExistingLog) {
-            this.updateExistingLog()
-          } else {
-            this.saveNewLog()
-          }
+          this.saveNewLog()
         } else {
           this.controls.showDialog = false
           this.snackbar.errorVisible = true
@@ -585,34 +567,7 @@
           this.controls.showDialog = false
         }
       },
-      updateExistingLog () {
-        try {
-          this.newLogData.totalEcoli = this.getTotalEcoli
-          this.newLogData.totalColiform = this.getTotalColiform
-          this.newLogData.collectionSite = null
-
-          let itemCopy = { ...this.newLogData
-          }
-          delete itemCopy['.key']
-          this.$firebaseRefs.newLogData.set(itemCopy)
-          this.$unbind('newLogData')
-
-          // Success!
-          this.snackbar.successVisible = true
-          this.controls.showDialog = false
-
-          this.resetForm()
-        } catch (e) {
-          console.log(e)
-          this.snackbar.errorVisible = true
-          this.controls.showDialog = false
-        }
-      },
       resetForm: function () {
-        if (this.editingExistingLog) {
-          this.editingExistingLog = false
-        }
-
         let oldLog = { ...this.newLogData
         }
 
@@ -662,8 +617,7 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
-        // TODO ECOLI EQUATION
-        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.ecoliLargeCells)
+        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.getTotalEcoli)
 
         // Last turbidity equation
         this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
