@@ -110,18 +110,21 @@
               label="Fluorometry"
               class="input-group--limit-height"
               type="number"
+              :rules="formRules.fluorometryRules"
               v-model="newLogData.fluorometry">
           </v-text-field>
           <v-text-field
               label="Turbidity (NTU)"
               class="input-group--limit-height"
               type="number"
+              :rules="formRules.turbidityRules"
               v-model="newLogData.turbidity">
           </v-text-field>
           <v-text-field
               label="Conductivity (uS)"
               class="input-group--limit-height"
               type="number"
+              :rules="formRules.conductivityRules"
               v-model="newLogData.specificConductivity">
           </v-text-field>
           <v-text-field
@@ -135,6 +138,7 @@
               label="Incubation Temp (*C)"
               class="input-group--limit-height"
               type="number"
+              :rules="formRules.incubationTempRules"
               v-model="newLogData.incubationTemp">
           </v-text-field>
           <v-text-field
@@ -154,18 +158,12 @@
             </div>
             <v-text-field
                 label="Large Cells"
-                class="input-group--limit-height"
                 type="number"
-                hint="Should be between 0-49 (Leave empty if not recorded)"
-                persistent-hint
                 v-model="newLogData.coliformLargeCells">
             </v-text-field>
             <v-text-field
                 label="Small Cells"
-                class="input-group--limit-height"
                 type="number"
-                hint="Should be between 0-48 (Leave empty if not recorded)"
-                persistent-hint
                 v-model="newLogData.coliformSmallCells">
             </v-text-field>
           </div>
@@ -178,19 +176,15 @@
             </div>
             <v-text-field
                 label="Large Cells"
-                class="input-group--limit-height"
                 type="number"
-                hint="Should be between 0-49 (Leave empty if not recorded)"
-                persistent-hint
-                v-model="newLogData.ecoliLargeCells">
+                :rules="formRules.largeCellsRules"
+                v-model="ecoliLargeCells">
             </v-text-field>
             <v-text-field
                 label="Small Cells"
-                class="input-group--limit-height"
                 type="number"
-                hint="Should be between 0-48 (Leave empty if not recorded)"
-                persistent-hint
-                v-model="newLogData.ecoliSmallCells">
+                :rules="formRules.smallCellsRules"
+                v-model="ecoliSmallCells">
             </v-text-field>
           </div>
 
@@ -394,8 +388,8 @@
         }
       },
       getTotalEcoli: function () {
-        var num1 = parseInt(this.newLogData.ecoliLargeCells)
-        var num2 = parseInt(this.newLogData.ecoliSmallCells)
+        var num1 = parseInt(this.ecoliLargeCells)
+        var num2 = parseInt(this.ecoliSmallCells)
         if (num1 + num2) {
           return num1 + num2
         } else {
@@ -411,12 +405,42 @@
         logbookNumber: null,
         editingExistingLog: false,
         formValid: false,
+        ecoliLargeCells: null,
+        ecoliSmallCells: null,
         controls: {
           showAdditionalParams: false,
           showDialog: false,
           showDatepicker: false
         },
         formRules: {
+          conductivityRules: [
+            (input) => {
+              let conductivity = parseFloat(input)
+              if (isNaN(conductivity)) { return true }
+              return (conductivity >= 0 && conductivity <= 750) || 'That number seems high. Normal range is 0 - 750'
+            }
+          ],
+          dilutionRules: [
+            (input) => {
+              let dilution = parseFloat(input)
+              if (isNaN(dilution)) { return true }
+              return (Number.isInteger(dilution) && dilution >= 0) || 'Dilution must be a whole number'
+            }
+          ],
+          fluorometryRules: [
+            (input) => {
+              let fluorometry = parseFloat(input)
+              if (isNaN(fluorometry)) { return true }
+              return (fluorometry >= 0 && fluorometry <= 200) || 'That number seems high. Normal range is 0 - 200'
+            }
+          ],
+          incubationTempRules: [
+            (input) => {
+              let turbidity = parseFloat(input)
+              if (isNaN(turbidity)) { return true }
+              return (turbidity >= 10 && turbidity <= 50) || 'Normal range is 10 - 50'
+            }
+          ],
           incubationTimeRules: [
             (startTime) => {
               let startDate = dateObj(startTime)
@@ -452,10 +476,25 @@
               return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Incubation Out should be within 18 to 22 hours of Incubation In'
             }
           ],
-          dilutionRules: [
+          largeCellsRules: [
+            (v) => {
+              let value = parseFloat(v)
+              if (isNaN(value)) { return true }
+              return (Number.isInteger(value) && value >= 0 && value <= 49) || 'Should be between 0-49 (Leave empty if not recorded)'
+            }
+          ],
+          smallCellsRules: [
+            (v) => {
+              let value = parseFloat(v)
+              if (isNaN(value)) { return true }
+              return (Number.isInteger(value) && value >= 0 && value <= 48) || 'Should be between 0-48 (Leave empty if not recorded)'
+            }
+          ],
+          turbidityRules: [
             (input) => {
-              let dilution = parseFloat(input)
-              return (Number.isInteger(dilution) && dilution >= 0) || 'Dilution must be a whole number'
+              let turbidity = parseFloat(input)
+              if (isNaN(turbidity)) { return true }
+              return (turbidity >= 0 && turbidity <= 1000) || 'That number seems high. Normal range is 0 - 1000'
             }
           ]
         },
@@ -524,6 +563,8 @@
 
           this.newLogData.stationName = this.selectedSite.stationName
           this.newLogData.logbookAbbv = this.selectedSite.logbookAbbv
+          this.newLogData.ecoliLargeCells = this.ecoliLargeCells
+          this.newLogData.ecoliSmallCells = this.ecoliSmallCells
           this.newLogData.totalEcoli = this.getTotalEcoli
           this.newLogData.totalColiform = this.getTotalColiform
           this.newLogData.collectionSiteId = key
@@ -622,7 +663,7 @@
 
         // Last ecoli equation
         // TODO ECOLI EQUATION
-        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.newLogData.ecoliLargeCells)
+        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.ecoliLargeCells)
 
         // Last turbidity equation
         this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
