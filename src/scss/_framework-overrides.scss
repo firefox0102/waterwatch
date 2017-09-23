@@ -49,3 +49,12 @@ a.list__tile:hover,
 .dialog.dialog--active {
   width: 500px !important;
 }
+
+.application--light .input-group.input-group--disabled .input-group__details:before {
+  background-color: rgba(0,0,0,0.42);
+  background-image: none;
+}
+
+.input-group__selections__comma {
+  color: #7d7d7d !important;
+}

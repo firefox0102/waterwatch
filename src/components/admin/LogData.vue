@@ -9,9 +9,11 @@
       </div>
     </div>
     <div class="page-content-body">
-      <form
-          v-on:submit.prevent="controls.showDialog = true"
-          class="page-content-body__form">
+      <v-form
+        v-model="formValid"
+        ref="form"
+        v-on:submit.prevent="controls.showDialog = true"
+        class="page-content-body__form">
           <!-- Column 1 -->
           <div class="page-content-body__column">
             <div class="page-content-body__header">
@@ -37,7 +39,10 @@
                 label="Date"
                 v-model="newLogData.collectionDate"
                 append-icon="event"
-                class="input-group--limit-height">
+                class="input-group--limit-height"
+                :rules="[(v) => !!v || 'Collection Date is required']"
+                required
+              >
               </v-text-field>
               <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
                 <template scope="{ save, cancel }">
@@ -57,6 +62,7 @@
               autocomplete
               item-text="stationName"
               class="input-group--limit-height"
+              :rules="[(v) => !!v || 'Collection Site is required']"
               bottom>
             </v-select>
             <v-text-field
@@ -301,7 +307,7 @@
               </v-card>
             </v-dialog>
           </div>
-        </form>
+        </v-form>
     </div>
     <v-snackbar
       :timeout="snackbar.timeout"
@@ -401,6 +407,7 @@ export default {
       selectedSite: null,
       logbookNumber: null,
       editingExistingLog: false,
+      formValid: false,
       controls: {
         showAdditionalParams: false,
         showDialog: false,
@@ -428,7 +435,7 @@ export default {
         logbookNumber: 1,
         nitrate: null,
         phosphate: null,
-        precipitation: null,
+        precipitation: 0.00,
         secchiDepth: null,
         specificConductivity: null,
         turbidity: null,
@@ -450,10 +457,15 @@ export default {
       this.controls.showAdditionalParams = !this.controls.showAdditionalParams
     },
     submitLog () {
-      if (this.editingExistingLog) {
-        this.updateExistingLog()
+      if (this.$refs.form.validate()) {
+        if (this.editingExistingLog) {
+          this.updateExistingLog()
+        } else {
+          this.saveNewLog()
+        }
       } else {
-        this.saveNewLog()
+        this.controls.showDialog = false
+        this.snackbar.errorVisible = true
       }
     },
     saveNewLog: function () {
@@ -513,10 +525,12 @@ export default {
         this.editingExistingLog = false
       }
 
+      let oldLog = {...this.newLogData}
+
       this.newLogData = {
         airTemp: null,
         ammonium: null,
-        analyst: '',
+        analyst: oldLog.analyst,
         chlorophyll: null,
         coliformLargeCells: '',
         coliformSmallCells: '',
@@ -529,13 +543,13 @@ export default {
         eColiSmallCells: null,
         fluorometry: null,
         incubationOut: '',
-        incubationTemp: null,
+        incubationTemp: oldLog.incubationTemp,
         incubationTime: '',
         lab: 'Atlanta',
         logbookNumber: 0,
         nitrate: null,
         phosphate: null,
-        precipitation: 0.00,
+        precipitation: oldLog.precipitation,
         secchiDepth: null,
         specificConductivity: null,
         turbidity: null,
