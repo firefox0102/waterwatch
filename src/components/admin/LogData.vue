@@ -9,7 +9,11 @@
       </div>
     </div>
     <div class="page-content-body">
-      <v-form v-model="formValid" ref="form" v-on:submit.prevent="controls.showDialog = true" class="page-content-body__form">
+      <v-form
+        v-model="formValid"
+        ref="form"
+        v-on:submit.prevent="controls.showDialog = true"
+        class="page-content-body__form">
         <!-- Column 1 -->
         <div class="page-content-body__column">
           <div class="page-content-body__header">
@@ -136,6 +140,7 @@
           <v-text-field
               label="Incubation Out"
               v-model="newLogData.incubationOut"
+              :rules="formRules.incubationOutTimeRules"
               type="time"
               class="input-group--limit-height">
           </v-text-field>
@@ -425,6 +430,26 @@
               }
 
               return moment(startDate).isAfter(moment().subtract(6, 'hours')) || 'Incubation Time should be within last 6 hours'
+            }
+          ],
+          incubationOutTimeRules: [
+            (outTime) => {
+              let format = 'hh:mm:ss'
+              let startDate = dateObj(this.newLogData.incubationTime)
+
+              let endDateMin = moment(startDate).add(18, 'hours').format(format)
+              let endDateMax = moment(startDate).add(22, 'hours').format(format)
+              let outMoment = dateObj(outTime).format(format)
+
+              function dateObj (d, format) {
+                let date = moment()
+                let parts = d.split(/:|\s/)
+                date.hour(+parts.shift())
+                date.minutes(+parts.shift())
+                return date
+              }
+
+              return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Incubation Out should be within 18 to 22 hours of Incubation In'
             }
           ],
           dilutionRules: [
