@@ -484,6 +484,8 @@
         try {
           this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.targetLogData.collectionSiteId + '/' + this.targetLogData['.key']))
 
+          this.targetLogData.ecoliLargeCells = this.ecoliLargeCells
+          this.targetLogData.ecoliSmallCells = this.ecoliSmallCells
           this.targetLogData.totalEcoli = this.getTotalEcoli
           this.targetLogData.totalColiform = this.getTotalColiform
           this.targetLogData.collectionSite = null
