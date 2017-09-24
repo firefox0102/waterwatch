@@ -413,7 +413,6 @@
         formRules: {
           incubationTimeRules: [
             (startTime) => {
-              console.log('testing')
               let startDate = dateObj(startTime)
 
               function dateObj (d) {
