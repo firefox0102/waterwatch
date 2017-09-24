@@ -171,5 +171,11 @@ export class MapHelper {
       trackUserLocation: true
     }))
     map.addControl(new window.mapboxgl.FullscreenControl())
+
+    this.map = map
+  }
+
+  resizeMap () {
+    setTimeout(() => this.map.resize(), 500)
   }
 }

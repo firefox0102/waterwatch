@@ -160,6 +160,7 @@ export default {
   methods: {
     toggleSidebar () {
       this.controls.sidebar = !this.controls.sidebar
+      this.mapy.resizeMap()
     },
     setActiveSite (site) {
       this.selectedSite = site
@@ -175,11 +176,13 @@ export default {
       } else {
         this.$bindAsArray('reports', db.ref('reports/' + this.selectedSite['.key']).orderByChild('collectionDate').limitToLast(10))
       }
+    },
+    initializeMap () {
+      this.mapy = new MapHelper()
     }
   },
   mounted: function () {
-    const mapy = new MapHelper()
-    console.log(mapy)
+    this.initializeMap()
   }
 }
 </script>
