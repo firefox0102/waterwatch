@@ -38,6 +38,7 @@
             label="Lab"
             bottom>
           </v-select>
+          <v-checkbox v-bind:label="`Is Private: ${ newCollectionSite.isPrivate ? 'true' : 'false' }`" v-model="newCollectionSite.isPrivate" success></v-checkbox>
           <v-btn
             class="btn-nww"
             type="submit">
@@ -112,7 +113,8 @@ export default {
         longitude: '',
         stationName: '',
         storetName: '',
-        numSamples: 0
+        numSamples: 0,
+        isPrivate: false
       },
       snackbar: {
         errorVisible: false,
