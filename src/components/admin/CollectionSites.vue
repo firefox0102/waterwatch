@@ -163,10 +163,17 @@
                 <td>{{ props.item.storetName }}</td>
                 <td>{{ props.item.numSamples }}</td>
                 <td>{{ props.item.firstCollectionDate }}</td>
-                <td>{{ props.item.googleMapsUrl }}</td>
+                <td class="table-cell--truncate">
+                  <a
+                    v-bind:href="props.item.googleMapsUrl"
+                    target="_blank">
+                    {{ props.item.googleMapsUrl }}
+                  </a>
+                </td>
                 <td>{{ props.item.latitude }}</td>
                 <td>{{ props.item.longitude }}</td>
                 <td>{{ props.item.huc }}</td>
+                <td>{{ props.item.isPrivate }}</td>
               </tr>
             </template>
           </v-data-table>
@@ -259,7 +266,8 @@ export default {
         { text: 'Google Maps URL', value: 'googleMapsUrl' },
         { text: 'Latitude', value: 'latitude' },
         { text: 'Longitude', value: 'longitude' },
-        { text: 'HUC', value: 'huc' }
+        { text: 'HUC', value: 'huc' },
+        { text: 'Is Private', value: 'isPrivate' }
       ],
       selected: []
     }
