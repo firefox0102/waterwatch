@@ -9,7 +9,11 @@
       </div>
     </div>
     <div class="page-content-body">
-      <v-form v-model="formValid" ref="form" v-on:submit.prevent="controls.showDialog = true" class="page-content-body__form">
+      <v-form
+        v-model="formValid"
+        ref="form"
+        v-on:submit.prevent="controls.showDialog = true"
+        class="page-content-body__form">
         <!-- Column 1 -->
         <div class="page-content-body__column">
           <div class="page-content-body__header">
@@ -53,7 +57,6 @@
           <v-select
             v-bind:items="collectionSites"
             v-model="selectedSite"
-            item-disabled="editingExistingLog"
             label="Collection Site"
             autocomplete
             item-text="stationName"
@@ -99,24 +102,28 @@
               label="# mL/100mL (Dilution)"
               class="input-group--limit-height"
               type="number"
+              :rules="formRules.dilutionRules"
               v-model="newLogData.dilution">
           </v-text-field>
           <v-text-field
               label="Fluorometry"
               class="input-group--limit-height"
               type="number"
+              :rules="formRules.fluorometryRules"
               v-model="newLogData.fluorometry">
           </v-text-field>
           <v-text-field
               label="Turbidity (NTU)"
               class="input-group--limit-height"
               type="number"
+              :rules="formRules.turbidityRules"
               v-model="newLogData.turbidity">
           </v-text-field>
           <v-text-field
               label="Conductivity (uS)"
               class="input-group--limit-height"
               type="number"
+              :rules="formRules.conductivityRules"
               v-model="newLogData.specificConductivity">
           </v-text-field>
           <v-text-field
@@ -130,11 +137,13 @@
               label="Incubation Temp (*C)"
               class="input-group--limit-height"
               type="number"
+              :rules="formRules.incubationTempRules"
               v-model="newLogData.incubationTemp">
           </v-text-field>
           <v-text-field
               label="Incubation Out"
               v-model="newLogData.incubationOut"
+              :rules="formRules.incubationOutTimeRules"
               type="time"
               class="input-group--limit-height">
           </v-text-field>
@@ -148,18 +157,12 @@
             </div>
             <v-text-field
                 label="Large Cells"
-                class="input-group--limit-height"
                 type="number"
-                hint="Should be between 0-49 (Leave empty if not recorded)"
-                persistent-hint
                 v-model="newLogData.coliformLargeCells">
             </v-text-field>
             <v-text-field
                 label="Small Cells"
-                class="input-group--limit-height"
                 type="number"
-                hint="Should be between 0-48 (Leave empty if not recorded)"
-                persistent-hint
                 v-model="newLogData.coliformSmallCells">
             </v-text-field>
           </div>
@@ -172,19 +175,15 @@
             </div>
             <v-text-field
                 label="Large Cells"
-                class="input-group--limit-height"
                 type="number"
-                hint="Should be between 0-49 (Leave empty if not recorded)"
-                persistent-hint
-                v-model="newLogData.ecoliLargeCells">
+                :rules="formRules.largeCellsRules"
+                v-model="ecoliLargeCells">
             </v-text-field>
             <v-text-field
                 label="Small Cells"
-                class="input-group--limit-height"
                 type="number"
-                hint="Should be between 0-48 (Leave empty if not recorded)"
-                persistent-hint
-                v-model="newLogData.ecoliSmallCells">
+                :rules="formRules.smallCellsRules"
+                v-model="ecoliSmallCells">
             </v-text-field>
           </div>
 
@@ -277,7 +276,7 @@
               slot="activator"
               type="submit"
               class="btn-nww log-data-submit-btn">
-              {{ editingExistingLog ? "Save Data" : "Log Data" }}
+              {{ "Log Data" }}
             </v-btn>
             <v-card>
               <v-card-title>
@@ -360,22 +359,10 @@
         handler (newSite) {
           this.labSet = _.map(this.labs, '.value')
         }
-      },
-      newLogData: {
-        handler (logData) {
-          if (this.editingExistingLog && this.collectionSites) {
-            this.selectedSite = _.find(this.collectionSites, '.key', logData.collectionSiteId)
-          }
-        }
       }
     },
     mounted () {
       this.setLogbookNumber()
-
-      if (this.$route.params.siteId && this.$route.params.reportId) {
-        this.editingExistingLog = true
-        this.$bindAsObject('newLogData', db.ref('reports/' + this.$route.params.siteId + '/' + this.$route.params.reportId))
-      }
     },
     computed: {
       getTotalColiform: function () {
@@ -388,8 +375,8 @@
         }
       },
       getTotalEcoli: function () {
-        var num1 = parseInt(this.newLogData.ecoliLargeCells)
-        var num2 = parseInt(this.newLogData.ecoliSmallCells)
+        var num1 = parseInt(this.ecoliLargeCells)
+        var num2 = parseInt(this.ecoliSmallCells)
         if (num1 + num2) {
           return num1 + num2
         } else {
@@ -403,17 +390,46 @@
         labSet: [],
         selectedSite: null,
         logbookNumber: null,
-        editingExistingLog: false,
         formValid: false,
+        ecoliLargeCells: null,
+        ecoliSmallCells: null,
         controls: {
           showAdditionalParams: false,
           showDialog: false,
           showDatepicker: false
         },
         formRules: {
+          conductivityRules: [
+            (input) => {
+              let conductivity = parseFloat(input)
+              if (isNaN(conductivity)) { return true }
+              return (conductivity >= 0 && conductivity <= 750) || 'That number seems high. Normal range is 0 - 750'
+            }
+          ],
+          dilutionRules: [
+            (input) => {
+              let dilution = parseFloat(input)
+              if (isNaN(dilution)) { return true }
+              return (Number.isInteger(dilution) && dilution >= 0) || 'Dilution must be a whole number'
+            }
+          ],
+          fluorometryRules: [
+            (input) => {
+              let fluorometry = parseFloat(input)
+              if (isNaN(fluorometry)) { return true }
+              return (fluorometry >= 0 && fluorometry <= 200) || 'That number seems high. Normal range is 0 - 200'
+            }
+          ],
+          incubationTempRules: [
+            (input) => {
+              let turbidity = parseFloat(input)
+              if (isNaN(turbidity)) { return true }
+              return (turbidity >= 10 && turbidity <= 50) || 'Normal range is 10 - 50'
+            }
+          ],
           incubationTimeRules: [
             (startTime) => {
-              console.log('testing')
+              if (/^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
 
               function dateObj (d) {
@@ -425,6 +441,48 @@
               }
 
               return moment(startDate).isAfter(moment().subtract(6, 'hours')) || 'Incubation Time should be within last 6 hours'
+            }
+          ],
+          incubationOutTimeRules: [
+            (outTime) => {
+              if (/^\s*$/.test(outTime)) { return true } // If value is empty, return
+              let format = 'hh:mm:ss'
+              let startDate = dateObj(this.newLogData.incubationTime)
+
+              let endDateMin = moment(startDate).add(18, 'hours').format(format)
+              let endDateMax = moment(startDate).add(22, 'hours').format(format)
+              let outMoment = dateObj(outTime).format(format)
+
+              function dateObj (d, format) {
+                let date = moment()
+                let parts = d.split(/:|\s/)
+                date.hour(+parts.shift())
+                date.minutes(+parts.shift())
+                return date
+              }
+
+              return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Incubation Out should be within 18 to 22 hours of Incubation In'
+            }
+          ],
+          largeCellsRules: [
+            (v) => {
+              let value = parseFloat(v)
+              if (isNaN(value)) { return true }
+              return (Number.isInteger(value) && value >= 0 && value <= 49) || 'Should be between 0-49 (Leave empty if not recorded)'
+            }
+          ],
+          smallCellsRules: [
+            (v) => {
+              let value = parseFloat(v)
+              if (isNaN(value)) { return true }
+              return (Number.isInteger(value) && value >= 0 && value <= 48) || 'Should be between 0-48 (Leave empty if not recorded)'
+            }
+          ],
+          turbidityRules: [
+            (input) => {
+              let turbidity = parseFloat(input)
+              if (isNaN(turbidity)) { return true }
+              return (turbidity >= 0 && turbidity <= 1000) || 'That number seems high. Normal range is 0 - 1000'
             }
           ]
         },
@@ -473,11 +531,7 @@
       },
       submitLog () {
         if (this.$refs.form.validate()) {
-          if (this.editingExistingLog) {
-            this.updateExistingLog()
-          } else {
-            this.saveNewLog()
-          }
+          this.saveNewLog()
         } else {
           this.controls.showDialog = false
           this.snackbar.errorVisible = true
@@ -493,6 +547,8 @@
 
           this.newLogData.stationName = this.selectedSite.stationName
           this.newLogData.logbookAbbv = this.selectedSite.logbookAbbv
+          this.newLogData.ecoliLargeCells = this.ecoliLargeCells
+          this.newLogData.ecoliSmallCells = this.ecoliSmallCells
           this.newLogData.totalEcoli = this.getTotalEcoli
           this.newLogData.totalColiform = this.getTotalColiform
           this.newLogData.collectionSiteId = key
@@ -513,34 +569,7 @@
           this.controls.showDialog = false
         }
       },
-      updateExistingLog () {
-        try {
-          this.newLogData.totalEcoli = this.getTotalEcoli
-          this.newLogData.totalColiform = this.getTotalColiform
-          this.newLogData.collectionSite = null
-
-          let itemCopy = { ...this.newLogData
-          }
-          delete itemCopy['.key']
-          this.$firebaseRefs.newLogData.set(itemCopy)
-          this.$unbind('newLogData')
-
-          // Success!
-          this.snackbar.successVisible = true
-          this.controls.showDialog = false
-
-          this.resetForm()
-        } catch (e) {
-          console.log(e)
-          this.snackbar.errorVisible = true
-          this.controls.showDialog = false
-        }
-      },
       resetForm: function () {
-        if (this.editingExistingLog) {
-          this.editingExistingLog = false
-        }
-
         let oldLog = { ...this.newLogData
         }
 
@@ -591,7 +620,7 @@
 
         // Last ecoli equation
         // TODO ECOLI EQUATION
-        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.newLogData.ecoliLargeCells)
+        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.ecoliLargeCells)
 
         // Last turbidity equation
         this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
