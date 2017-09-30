@@ -277,4 +277,13 @@ body {
   text-align: left;
   text-decoration: underline;
 }
+
+.table-cell {
+  &--truncate {
+    max-width: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
 </style>

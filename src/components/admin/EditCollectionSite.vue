@@ -3,7 +3,7 @@
     <v-dialog v-model="controls.showDialog" :overlay="false">
       <v-btn
         slot="activator"
-        class="site-reports-actions__action site-reports-actions__action--no-margin success white--text">
+        class="site-reports-actions__action site-reports-actions__action--no-margin btn btn-nww--light btn--raised">
         Edit
         <v-icon right dark>edit</v-icon>
       </v-btn>
@@ -37,6 +37,7 @@
             label="Lab"
             bottom>
           </v-select>
+          <v-checkbox v-bind:label="`Is Private: ${ collectionSite.isPrivate ? 'true' : 'false' }`" v-model="collectionSite.isPrivate" success></v-checkbox>
           <v-btn class="btn-nww" type="submit">
             Update Site
           </v-btn>

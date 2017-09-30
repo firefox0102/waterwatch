@@ -114,12 +114,13 @@ export default {
     filteredResults () {
       let sites = this.collectionSites
       sites = _.filter(sites, (site) => {
+        let isPrivate = site.isPrivate
         let containsSearch = site.stationName.toLowerCase().includes(this.filters.search)
         let containsHuc = this.filters.hucFilters.length ? this.filters.hucFilters.indexOf(parseInt(site.huc)) : 0
         let containsLab = this.filters.labFilters.length ? this.filters.labFilters.indexOf(site.lab) : 0
         let containsPartner = this.filters.partnerFilters.length ? this.filters.partnerFilters.indexOf(site.collectionPartner) : 0
 
-        return containsSearch && !(containsHuc === -1) && !(containsLab === -1) && !(containsPartner === -1)
+        return containsSearch && !isPrivate && !(containsHuc === -1) && !(containsLab === -1) && !(containsPartner === -1)
       })
 
       return sites

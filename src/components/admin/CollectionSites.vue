@@ -77,11 +77,11 @@
           <div class="site-reports-body-toolbar__secondary-content">
             <div class="site-reports-actions">
               <edit-collection-site class="site-reports-actions__action" v-if="selected.length === 1" v-bind:collection-site="selected[0]"></edit-collection-site>
-              <v-btn v-if="selected.length === 1 && !showArchived" v-on:click.native="archiveSite(selected[0])" class="site-reports-actions__action success white--text">
+              <v-btn v-if="selected.length === 1 && !showArchived" v-on:click.native="archiveSite(selected[0])" class="site-reports-actions__action btn-nww--light btn btn--raised">
                 Archive
                 <v-icon right dark>archive</v-icon>
               </v-btn>
-              <v-btn v-if="selected.length === 1 && showArchived" v-on:click.native="unArchiveSite(selected[0])" class="site-reports-actions__action success white--text">
+              <v-btn v-if="selected.length === 1 && showArchived" v-on:click.native="unArchiveSite(selected[0])" class="site-reports-actions__action btn-nww--light btn btn--raised">
                 Unarchive
                 <v-icon right dark>unarchive</v-icon>
               </v-btn>
@@ -99,7 +99,7 @@
                   <i class="material-icons">arrow_drop_down</i>
                 </div>
                 <v-list>
-                  <v-list-tile v-for="action in controls.exportActions" :key="action">
+                  <v-list-tile v-for="action in controls.exportActions" :key="action['.key']">
                     <v-list-tile-title>{{ action.title }}</v-list-tile-title>
                   </v-list-tile>
                 </v-list>
@@ -163,10 +163,17 @@
                 <td>{{ props.item.storetName }}</td>
                 <td>{{ props.item.numSamples }}</td>
                 <td>{{ props.item.firstCollectionDate }}</td>
-                <td>{{ props.item.googleMapsUrl }}</td>
+                <td class="table-cell--truncate">
+                  <a
+                    v-bind:href="props.item.googleMapsUrl"
+                    target="_blank">
+                    {{ props.item.googleMapsUrl }}
+                  </a>
+                </td>
                 <td>{{ props.item.latitude }}</td>
                 <td>{{ props.item.longitude }}</td>
                 <td>{{ props.item.huc }}</td>
+                <td>{{ props.item.isPrivate }}</td>
               </tr>
             </template>
           </v-data-table>
@@ -212,6 +219,7 @@ export default {
     return {
       startDate: oldDate,
       endDate: todaysDate,
+      showArchived: false,
       pagination: {
         sortBy: 'stationName',
         descending: false,
@@ -258,7 +266,8 @@ export default {
         { text: 'Google Maps URL', value: 'googleMapsUrl' },
         { text: 'Latitude', value: 'latitude' },
         { text: 'Longitude', value: 'longitude' },
-        { text: 'HUC', value: 'huc' }
+        { text: 'HUC', value: 'huc' },
+        { text: 'Is Private', value: 'isPrivate' }
       ],
       selected: []
     }

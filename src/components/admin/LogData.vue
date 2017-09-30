@@ -431,7 +431,7 @@
             (startTime) => {
               if (/^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
-
+              
               function dateObj (d) {
                 let date = moment()
                 let parts = d.split(/:|\s/)
@@ -439,9 +439,10 @@
                 date.minutes(+parts.shift())
                 return date
               }
-
+              
               return moment(startDate).isAfter(moment().subtract(6, 'hours')) || 'Incubation Time should be within last 6 hours'
             }
+            
           ],
           incubationOutTimeRules: [
             (outTime) => {

@@ -1,6 +1,5 @@
 export class MapHelper {
   constructor () {
-    console.log('constusadf')
     window.mapboxgl.accessToken = 'pk.eyJ1IjoibGNhY2VkYSIsImEiOiIzNmM4MGRlN2I4NDhiY2UxZjA4MmJjZjE5OWEzYjUzNSJ9.Wc5KTJpWxmpxVMZfcuEQNg'
     var map = new window.mapboxgl.Map({
       container: 'map', // container id
