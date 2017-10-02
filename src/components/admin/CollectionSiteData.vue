@@ -75,7 +75,7 @@
             <div class="site-reports-datepickers">
               <span class="site-reports-body-toolbar__text-content">Select date range:</span>
               <div class="site-reports-toolbar-datepicker">
-                <v-menu lazy :close-on-content-click="false" v-model="controls.startDateModal" transition="scale-transition" offset-y full-width :nudge-left="40" max-width="290px">
+                <v-menu lazy :close-on-content-click="false" v-model="controls.startDateModal" transition="scale-transition" offset-y full-width :nudge-left="0" max-width="290px">
                   <div
                     class="site-reports-toolbar-datepicker__activator"
                     slot="activator">
@@ -93,7 +93,7 @@
                 </v-menu>
               </div>
               <div class="site-reports-toolbar-datepicker">
-                <v-menu lazy :close-on-content-click="false" v-model="controls.endDateModal" transition="scale-transition" offset-y full-width :nudge-left="40" max-width="290px">
+                <v-menu lazy :close-on-content-click="false" v-model="controls.endDateModal" transition="scale-transition" offset-y full-width :nudge-left="0" max-width="290px">
                   <div
                     class="site-reports-toolbar-datepicker__activator"
                     slot="activator">
