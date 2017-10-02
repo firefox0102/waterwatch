@@ -38,8 +38,8 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="green--text darken-1" flat="flat" @click.native="showResetPassword = false">Cancel</v-btn>
-              <v-btn class="green--text darken-1" flat="flat" @click.native="resetPassword">Send Reset Email</v-btn>
+              <v-btn primary flat="flat" @click.native="showResetPassword = false">Cancel</v-btn>
+              <v-btn class="md-raised btn-nww" @click.native="resetPassword">Send Reset Email</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -135,18 +135,13 @@ export default {
 @import "../../scss/colors";
 $small-screen-breakpoint: 401px;
 
-.reset-password-input {
-  width: 100%;
-
-}
-
 .sign-in {
   display: flex;
   align-items: center;
   flex-direction: column;
 
   @media screen and (min-width: $small-screen-breakpoint) {
-    padding-top: 73px;
+    padding-top: 48px;
   }
 }
 
@@ -154,9 +149,9 @@ $small-screen-breakpoint: 401px;
   display: flex;
 
   flex-direction: column;
-  height: 100px;
+  /* height: 100px; */
   min-width: 30px;
-  padding: 28px 30px;
+  padding: 34px 30px 44px;
   width: 100%;
 
   background-color: $color-iron-sea;
@@ -176,7 +171,7 @@ $small-screen-breakpoint: 401px;
     &--large {
       @extend .sign-in-header__text;
       font-size: 28px;
-      line-height: 28px;
+      line-height: 36px;
     }
   }
 }
@@ -186,14 +181,14 @@ $small-screen-breakpoint: 401px;
   flex-direction: column;
   height: 455px;
   min-width: 30px;
-  padding: 65px 30px 46px;
+  padding: 40px 30px 40px;
   width: 100%;
 
   background-color: $color-finn-white;
   box-shadow: 0 1px 3px 0 rgba(155, 155, 155, 0.5);
 
   @media screen and (min-width: $small-screen-breakpoint) {
-    height: 420px;
+    height: 360px;
     max-height: 420px;
     max-width: 360px;
     width: 360px;
@@ -211,4 +206,16 @@ $small-screen-breakpoint: 401px;
     width: 88px;
   }
 }
+
+.reset-password-input {
+  width: 100%;
+}
+
+.card {
+
+  &__text {
+    padding: 0 16px;
+  }
+}
+
 </style>

@@ -32,7 +32,7 @@ $toolbar-breakpoint: 1450px;
 }
 
 .site-reports-body {
-  padding: 21px 24px 24px;
+  padding: 24px;
 }
 
 .site-reports-body-toolbar {
@@ -186,4 +186,12 @@ $toolbar-breakpoint: 1450px;
     font-size: 13px;
     line-height: 16px;
   }
+}
+
+.col-med {
+  min-width: 200px;
+}
+
+.col-long {
+  min-width: 300px;
 }

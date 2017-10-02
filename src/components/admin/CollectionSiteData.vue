@@ -183,20 +183,18 @@
                 <td>{{ props.item.logbookNumber }}</td>
                 <td>{{ props.item.collectionDate }}</td>
                 <td>{{ props.item.collectionTime }}</td>
+                <td>{{ props.item.analyst }}</td>
+                <td>{{ props.item.totalColiform }}</td>
                 <td>{{ props.item.totalEcoli }}</td>
                 <td>{{ props.item.fluorometry }}</td>
                 <td>{{ props.item.turbidity }}</td>
                 <td>{{ props.item.specifcConductivity }}</td>
                 <td>{{ props.item.precipitation }}</td>
-                <td>{{ props.item.totalColiform }}</td>
-                <td>{{ props.item.notes }}</td>
-                <td>{{ props.item.dilution }}</td>
                 <td>{{ props.item.incubationTime }}</td>
+                <td>{{ props.item.dilution }}</td>
                 <td>{{ props.item.incubationTemp }}</td>
                 <td>{{ props.item.incubationOut }}</td>
-                <td>{{ props.item.incubationTime }}</td>
-                <td>{{ props.item.dilution }}</td>
-                <td>{{ props.item.analyst }}</td>
+                <td>{{ props.item.notes }}</td>
               </tr>
             </template>
           </v-data-table>
@@ -282,20 +280,18 @@ export default {
         { text: 'Logbook #', value: 'logbookNumber' },
         { text: 'Collection Date', value: 'collectionDate' },
         { text: 'Collection Time', value: 'collectionTime' },
+        { text: 'Analyst', value: 'analyst' },
+        { text: 'Total Coliform', value: 'totalColiform' }, // TODO
         { text: 'E. coli', value: 'totalEcoli' }, // TODO
         { text: 'Fluorometry', value: 'fluorometry' },
         { text: 'Turbidity (NTU)', value: 'turbidity' },
         { text: 'Conductivity (uS)', value: 'specifcConductivity' },
         { text: 'Rainfall', value: 'precipitation' },
-        { text: 'Total Coliform', value: 'totalColiform' }, // TODO
-        { text: 'Notes', value: 'notes' },
-        { text: '# mL/100mL (Dilution)', value: 'dilution' },
         { text: 'Incubation In Time', value: 'incubationTime' },
+        { text: '# mL/100mL (Dilution)', value: 'dilution' },
         { text: 'Incubation Temp', value: 'incubationTemp' },
         { text: 'Incubation Out Time', value: 'incubationOut' },
-        { text: 'Incubation In Time', value: 'incubationTime' },
-        { text: '# mL/10incubationTemp0mL (Dilution)', value: 'dilution' },
-        { text: 'Analyst', value: 'analyst' }
+        { text: 'Notes', value: 'notes' }
       ],
       selected: []
     }
