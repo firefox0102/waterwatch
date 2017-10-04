@@ -7,9 +7,21 @@
   margin-top: 20px;
 }
 
+.headline {
+  color: $color-iron-sea !important;
+}
+
+.flat-action {
+  color: $color-iron-sea !important;
+}
+
 .application--light .input-group input,
 .input-group--text-field label { // Vuetify style override
   color: $color-sad-grey !important;
+}
+
+.application--light .input-group--selection-controls {
+  color: $color-warlock !important;
 }
 
 .input-group--text-field label {
@@ -35,10 +47,16 @@ a.list__tile {
 }
 
 a.list__tile:hover,
+.list__tile:hover,
+.list__tile--link:hover,
 .list__tile--highlighted {
   transition: 0;
   background-color: #EDF2F5 !important;
   color: #004D71 !important;
+}
+
+.nww-table {
+  margin-top: 8px;
 }
 
 .picker__title,
@@ -46,8 +64,18 @@ a.list__tile:hover,
   background: #004D71;
 }
 
+.dialog .card {
+  padding: 16px;
+}
+
 .dialog.dialog--active {
-  width: 500px !important;
+  /* width: 500px !important; */
+  min-width: 460px !important;
+  width: 90% !important;
+}
+
+.dialog.dialog--active .card {
+  padding: 0 !important;
 }
 
 .application--light .input-group.input-group--disabled .input-group__details:before {
