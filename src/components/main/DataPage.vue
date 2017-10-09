@@ -112,7 +112,6 @@ import { db } from '../../helpers/firebase'
 import { MapHelper } from '../../helpers/mapHelper'
 import moment from 'moment'
 import VueHighcharts from 'vue2-highcharts'
-
 import EcoliChart from '../panels/EcoliChart'
 import TurbidityChart from '../panels/TurbidityChart'
 import RainfallChart from '../panels/RainfallChart'
@@ -142,7 +141,8 @@ export default {
     },
     endDate (val) {
       this.getReports()
-    }
+    },
+    'sharedState.Selected': 'styleMap'
   },
   data () {
     return {

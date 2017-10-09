@@ -32,7 +32,7 @@
           </i>
         </div>
         <div v-if="filters.huc" class="filter-body">
-          <div v-for="huc in hucList" v-bind:key="huc.key" class="filter-body__list-item">
+          <div v-for="huc in huc" v-bind:key="huc.key" class="filter-body__list-item">
             <input type="checkbox" v-bind:value="huc['.value']" v-model="filters.hucFilters"></input>
             {{ huc['.value'] }}
           </div>
@@ -78,7 +78,7 @@
 
     <!-- List items -->
     <div class="data-sidebar__body">
-      <div class="data-sidebar-list-item" 
+      <div class="data-sidebar-list-item"
         v-on:click="selectActiveSite(site)"
         v-bind:class="{'data-sidebar-list-item--active': selectedSite === site}"
         v-bind:key="site.key"
@@ -95,7 +95,7 @@ import _ from 'lodash'
 
 let labsRef = db.ref('labs')
 let partnerRef = db.ref('partners')
-let hucRef = db.ref('hucList')
+let hucRef = db.ref('huc')
 
 export default {
   name: 'data-page',
@@ -107,7 +107,7 @@ export default {
   ],
   firebase: {
     labs: labsRef,
-    hucList: hucRef,
+    huc: hucRef,
     partnerList: partnerRef
   },
   computed: {

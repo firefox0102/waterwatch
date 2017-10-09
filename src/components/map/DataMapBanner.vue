@@ -3,7 +3,7 @@
     <div class="data-map-banner__header">
       {{ selectedSite.stationName }}
     </div>
-    
+
     <div class="data-map-banner__row">
       <div class="data-map-banner__text data-map-banner__text--strong">
         Collected by:

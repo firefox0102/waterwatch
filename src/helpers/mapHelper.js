@@ -4,46 +4,39 @@ export class MapHelper {
     var map = new window.mapboxgl.Map({
       container: 'map', // container id
       style: 'mapbox://styles/mapbox/light-v9', // hosted style id
-      center: [-84.387249, 33.755788], // starting position
+      center: [-84.387249, 33.455788], // starting position
       zoom: 8 // starting zoom
     })
 
     // MAP LAYERS //
     map.on('load', function () {
       // CHATTAHOOCHEE RIVER BASIN//
+// MAP SOURCES
       map.addSource('basin', {
         'type': 'geojson',
-        'data': 'https://s3.amazonaws.com/waterwatchcrk/Chatt_River_Basin.geojson'
-      })
-      map.addSource('sites', {
-        'type': 'geojson',
-        'data': 'https://s3.amazonaws.com/waterwatchcrk/initial_points.geojson',
-        'cluster': true,
-        'clusterMaxZoom': 14, // Max zoom to cluster points on
-        'clusterRadius': 50 // Radius of each cluster when clustering points (defaults to 50)
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Chatt_River_Basin.geojson?alt=media&token=88e79a45-47fb-4be3-90d8-abaeeed4d5f7'
       })
 
-      map.addLayer({
-        'id': 'Basin',
-        'type': 'fill',
-        'source': 'basin',
-        'layout': {},
-        'paint': {
-          'fill-outline-color': 'rgba(7, 78, 112, 1)',
-          'fill-color': 'rgba(80, 134, 158, 0.2)'
-        },
-        'properties': {
-          'description': 'Chattahoochee River Basin'
-        }
+      map.addSource('sites', {
+        'type': 'geojson',
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/sites.geojson?alt=media&token=8b0b1d0f-a844-4dfb-b97f-37c5787dba51',
+        'cluster': true,
+        'clusterMaxZoom': 14, // Max zoom to cluster points on
+        'clusterRadius': 25 // Radius of each cluster when clustering points (defaults to 50)
       })
+
+      map.addSource('counties', {
+        'type': 'geojson',
+        'data': 'https://opendata.arcgis.com/datasets/53ca7db14b8f4a9193c1883247886459_67.geojson'
+      })
+
+// MAP LAYERS
+
       // COUNTIES //
       map.addLayer({
         'id': 'Counties',
         'type': 'fill',
-        'source': {
-          'type': 'geojson',
-          'data': 'https://opendata.arcgis.com/datasets/53ca7db14b8f4a9193c1883247886459_67.geojson'
-        },
+        'source': 'counties',
         'layout': {
           'visibility': 'none'
         },
@@ -51,12 +44,19 @@ export class MapHelper {
           'fill-outline-color': 'rgba(7, 78, 112, 1)',
           'fill-color': 'rgba(7, 78, 112, 0)'
         }
-        // This is the important part of this example: the addLayer
-        // method takes 2 arguments: the layer as an object, and a string
-        // representing another layer's name. if the other layer
-        // exists in the stylesheet already, the new layer will be positioned
-        // right before that layer in the stack, making it possible to put
-        // 'overlays' anywhere in the layer stack.
+      })
+
+      // County labels //
+      map.addLayer({
+        'id': 'Counties-label',
+        'type': 'symbol',
+        'source': 'counties',
+        'filter': ['has', 'Label'],
+        'text-field': '{Label}',
+        'layout': {
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-size': 12
+        }
       }, 'place_label_city_small_s')
 
       // COLLECTION SITES //
@@ -81,21 +81,34 @@ export class MapHelper {
           'description': 'points!'
         }
       })
-    })
 
     // // Cluster labels //
-    // map.addLayer({
-    //   'id': 'sites-count',
-    //   'type': 'symbol',
-    //   'source': 'sites',
-    //   'filter': ['has', 'point_count'],
-    //   'layout': {
-    //     'text-field': '{point_count_abbreviated}',
-    //     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-    //     'text-size': 12,
-    //     'color': '#ee3311'
-    //   }
-    // })
+      map.addLayer({
+        'id': 'sites-count',
+        'type': 'symbol',
+        'source': 'sites',
+        'filter': ['has', 'point_count'],
+        'layout': {
+          'text-field': '{point_count_abbreviated}',
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-size': 12
+        }
+      })
+
+      // BASIN
+      map.addLayer({
+        'id': 'Basin',
+        'type': 'fill',
+        'source': 'basin',
+        'layout': {},
+        'paint': {
+          'fill-outline-color': 'rgba(7, 78, 112, 1)',
+          'fill-color': 'rgba(80, 134, 158, 0.2)'
+        },
+        'properties': {
+          'description': 'Chattahoochee River Basin'
+        }
+      })
 
     // map.addLayer({
     //   'id': 'unclustered-sites',
@@ -109,6 +122,7 @@ export class MapHelper {
     //     'circle-stroke-color': '#fff'
     //   }
     // })
+    })
 
     // MENU TOGGLE//
     var toggleableLayerIds = ['Basin', 'Counties', 'Sites']

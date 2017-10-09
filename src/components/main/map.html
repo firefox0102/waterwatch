@@ -77,6 +77,36 @@ Counties, Hydrography (12 digit HUCs, high res flowlines, waterbodies), Sewer sp
   </style>
   <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
   <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+<!--   <script>
+    var firebaseData = {}
+
+    var firebaseGeojsonFeatures = [];
+    for (var key in firebaseData.collectionSites) {
+      var f = firebaseData.collectionSites[key];
+      f.type = "Feature";
+      firebaseGeojsonFeatures.pull(f);
+    }
+    map.on('load', function() {
+      map.addSource('firebase', {
+      type: 'geojson',
+      data: {type: 'FeatureCollection',
+             features: firebaseGeojsonFeatures
+           }
+      });
+
+      map.addLayer({
+        id: 'firebase',
+        source: 'firebase',
+        type: 'circle',
+        paint: {
+          "circle-color":'blue',
+          'circle-radius': 15
+        }
+      })
+    })
+
+  </script> -->
+
   <div id='menu'></div>
   <div id='map'></div>
   <script>
@@ -94,11 +124,11 @@ Counties, Hydrography (12 digit HUCs, high res flowlines, waterbodies), Sewer sp
     //// CHATTAHOOCHEE RIVER BASIN/////
     map.addSource('basin', {
       'type': 'geojson',
-      'data': 'https://s3.amazonaws.com/waterwatchcrk/Chatt_River_Basin.geojson'
+      // 'data': 'https://s3.amazonaws.com/waterwatchcrk/Chatt_River_Basin.geojson'
     });
     map.addSource('sites', {
       'type': 'geojson',
-      'data': 'https://s3.amazonaws.com/waterwatchcrk/initial_points.geojson',
+      'data': 'gs://waterwatch-cb707.appspot.com/initial_points.geojson',
       'cluster': true,
       'clusterMaxZoom': 14, // Max zoom to cluster points on
       'clusterRadius': 50 // Radius of each cluster when clustering points (defaults to 50)

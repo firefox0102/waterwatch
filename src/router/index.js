@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import CollectionSites from '../components/admin/CollectionSites'
+// import CollectionSites from '@/components/admin/CollectionSites'
 import CollectionSiteData from '../components/admin/CollectionSiteData'
 import LogData from '../components/admin/LogData'
 import About from '../components/main/About'
