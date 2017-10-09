@@ -142,7 +142,7 @@ export default {
       }
 
       _.each(reports, function (report) {
-        let fakeEcoliData = parseInt(report.totalEcoli)
+        let fakeEcoliData = parseInt(report.eColiTotal)
         let date = moment.utc(report.collectionDate).valueOf()
 
         chartObj.data.push([date, fakeEcoliData])
