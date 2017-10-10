@@ -109,19 +109,18 @@ export class MapHelper {
           'description': 'Chattahoochee River Basin'
         }
       })
-
-    // map.addLayer({
-    //   'id': 'unclustered-sites',
-    //   'type': 'circle',
-    //   'source': 'sites',
-    //   'filter': ['!has', 'point-count'],
-    //   'paint': {
-    //     'circle-color': '#50869E',
-    //     'circle-radius': 4,
-    //     'circle-stroke-width': 1,
-    //     'circle-stroke-color': '#fff'
-    //   }
-    // })
+      map.addLayer({
+        'id': 'unclustered-sites',
+        'type': 'circle',
+        'source': 'sites',
+        'filter': ['!has', 'point-count'],
+        'paint': {
+          'circle-color': '#50869E',
+          'circle-radius': 4,
+          'circle-stroke-width': 1,
+          'circle-stroke-color': ''
+        }
+      })
     })
 
     // MENU TOGGLE//

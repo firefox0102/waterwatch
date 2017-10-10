@@ -32,7 +32,7 @@
           </i>
         </div>
         <div v-if="filters.huc" class="filter-body">
-          <div v-for="huc in huc" v-bind:key="huc.key" class="filter-body__list-item">
+          <div v-for="huc in hucList" v-bind:key="huc.key" class="filter-body__list-item">
             <input type="checkbox" v-bind:value="huc['.value']" v-model="filters.hucFilters"></input>
             {{ huc['.value'] }}
           </div>
@@ -107,7 +107,7 @@ export default {
   ],
   firebase: {
     labs: labsRef,
-    huc: hucRef,
+    hucList: hucRef,
     partnerList: partnerRef
   },
   computed: {
