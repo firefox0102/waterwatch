@@ -16,7 +16,7 @@ export class MapHelper {
 // MAP SOURCES
       map.addSource('basin', {
         'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/sites.geojson?alt=media&token=b5d44f79-e66e-4088-9741-7498c93f25e6'
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Chatt_River_Basin.geojson?alt=media&token=88e79a45-47fb-4be3-90d8-abaeeed4d5f7'
       })
 
       map.addSource('sites', {
@@ -112,18 +112,18 @@ export class MapHelper {
         }
       })
 
-      // map.addLayer({
-      //   'id': 'unclustered-sites',
-      //   'type': 'circle',
-      //   'source': 'sites',
-      //   'filter': ['!has', 'point-count'],
-      //   'paint': {
-      //     'circle-color': '#50869E',
-      //     'circle-radius': 4,
-      //     'circle-stroke-width': 1,
-      //     'circle-stroke-color': '#50869E'
-      //   }
-      // })
+      map.addLayer({
+        'id': 'Sites',
+        'type': 'circle',
+        'source': 'sites',
+        'filter': ['!has', 'point-count'],
+        'paint': {
+          'circle-color': '#50869E',
+          'circle-radius': 4,
+          'circle-stroke-width': 1,
+          'circle-stroke-color': ''
+        }
+      })
     })
 
     // MENU TOGGLE//
