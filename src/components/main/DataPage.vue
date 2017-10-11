@@ -149,7 +149,7 @@ export default {
       selectedSite: null,
       reports: null,
       collectionSites: [], // Placeholder for sites watching
-      startDate: moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD'),
+      startDate: moment(new Date()).subtract(24, 'months').format('YYYY-MM-DD'),
       endDate: moment(new Date()).format('YYYY-MM-DD'),
       controls: {
         sidebar: false,

@@ -49,17 +49,17 @@ export class MapHelper {
       })
 
       // County labels //
-      map.addLayer({
-        'id': 'Counties-label',
-        'type': 'symbol',
-        'source': 'counties',
-        'filter': ['has', 'Label'],
-        'text-field': '{Label}',
-        'layout': {
-          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-          'text-size': 12
-        }
-      }, 'place_label_city_small_s')
+      // map.addLayer({
+      //   'id': 'Counties-label',
+      //   'type': 'symbol',
+      //   'source': 'counties',
+      //   'filter': ['has', 'Label'],
+      //   'text-field': '{Label}',
+      //   'layout': {
+      //     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+      //     'text-size': 12
+      //   }
+      // }, 'place_label_city_small_s')
 
       // COLLECTION SITES //
       map.addLayer({
@@ -78,7 +78,6 @@ export class MapHelper {
             ]
           }
         },
-        'layout': {},
         'properties': {
           'description': 'points!'
         }
@@ -94,6 +93,9 @@ export class MapHelper {
           'text-field': '{point_count_abbreviated}',
           'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
           'text-size': 12
+        },
+        'paint': {
+          'text-color': '#FFFFFF'
         }
       })
 
@@ -112,17 +114,26 @@ export class MapHelper {
         }
       })
 
+      // map.addLayer({
+      //   'id': 'sites-clicked',
+      //   'type': 'circle',
+      //   'source': 'sites',
+      //   'paint': {
+      //     'circle-color': '#81B822',
+      //     'circle-radius': 5
+      //   },
+      //   'filter': ['==', 'name', '']
+      // })
+
       map.addLayer({
-        'id': 'Sites',
+        'id': 'sitesClicked',
         'type': 'circle',
         'source': 'sites',
-        'filter': ['!has', 'point-count'],
         'paint': {
-          'circle-color': '#50869E',
-          'circle-radius': 4,
-          'circle-stroke-width': 1,
-          'circle-stroke-color': ''
-        }
+          'circle-color': '#ca0002',
+          'circle-radius': 5
+        },
+        'filter': ['==', 'name', '']
       })
     })
 
@@ -160,8 +171,42 @@ export class MapHelper {
     // Pop up //
     map.on('click', 'Sites', (e) => {
       var name = e.features[0].properties.Name
+      console.log(name)
       this.selectSiteCallback(name)
+      // map.setFilter('sites-clicked', ['==', 'name', name])
+      // if (this.sharedState.name.lnglat) {
+      //   this.addMarker()
+      // }
     })
+
+    // var selectedSite = ['Sites', 'sitesClicked']
+    // for (var n = 0; n < selectedSite.length; n++) {
+    //   var cs = selectedSite[n]
+    //   var green = document.createElement('e')
+    //   green.href = '#'
+    //   green.className = 'clicked'
+    //   green.textContent = cs
+
+    //   green.onclick = function (e) {
+    //     var selectedSite = this.textContent
+    //     e.preventDefault()
+    //     e.stopPropagation()
+
+    //     var name = map.getLayoutProperty(selectedSite, 'visibility')
+
+    //     if (name === 'Name') {
+    //       map.setLayoutProperty(selectedSite, 'visibility', 'visible')
+    //       this.className = ''
+    //     } else {
+    //       this.className = 'notActive'
+    //       map.setLayoutProperty(selectedSite, 'visibility', 'none')
+    //     }
+    //   }
+
+    //   var site = document.getElementById('click')
+    //   site.appendChild(green)
+    // }
+
      // Change the cursor to a pointer when the mouse is over the places layer.
     // map.on('mouseenter', 'places', function () {
     //   map.getCanvas().style.cursor = 'pointer'
@@ -194,7 +239,6 @@ export class MapHelper {
 
   zoomIn (selectedSite) {
     var latLong = [selectedSite.longitude, selectedSite.latitude]
-
     this.map.flyTo({
       center: latLong,
       zoom: 17
