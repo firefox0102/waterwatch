@@ -25,7 +25,7 @@
       </div>
       <div class="footer-info__text">
         Phone (404) 352-9828 |
-        <span class="footer-info__text--underline footer-info__text--active">info@chattachoochee.org</span>
+        <a href="mailto:info@chattachoochee.org" class="footer-info__text--underline footer-info__text--active">info@chattachoochee.org</a>
       </div>
     </div>
   </footer>

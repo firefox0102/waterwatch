@@ -5,22 +5,23 @@
         <div class="collection-sites-header__header">
           Collection Sites
         </div>
-
         <div class="collection-sites-header__subheader--bold">
-          {{ this.metaData[0] ? metaData[0]['.value'] : 0 }} active of {{ this.metaData[2] ? metaData[2]['.value'] : 0 }}
+          {{ this.metaData[0] ? metaData[0]['.value'] : 0 }} active of {{ this.metaData[2] ? metaData[2]['.value'] : 0 }} total sites
         </div>
         <div class="collection-sites-header__subheader">
           Select a site to view logged data. Create and export reports of logged data for one or many collection sites.
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
-        <add-collection-site></add-collection-site>
-        <v-btn
-          slot="activator"
-          class="btn-nww--light"
-          v-on:click.native="toggleArchived()">
-            {{ archivedText() }}
-        </v-btn>
+        <v-layout row justify-center>
+          <v-btn flat
+            slot="activator"
+            class="flat-action"
+            v-on:click.native="toggleArchived()">
+              {{ archivedText() }}
+          </v-btn>
+          <add-collection-site></add-collection-site>
+        </v-layout>
       </div>
     </div>
     <v-card>
@@ -37,7 +38,7 @@
             <div class="site-reports-datepickers">
               <span class="site-reports-body-toolbar__text-content">Select date range:</span>
               <div class="site-reports-toolbar-datepicker">
-                <v-menu lazy :close-on-content-click="false" v-model="controls.startDateModal" transition="scale-transition" offset-y full-width :nudge-left="40" max-width="290px">
+                <v-menu lazy :close-on-content-click="false" v-model="controls.startDateModal" transition="scale-transition" offset-y full-width :nudge-left="0" max-width="290px">
                   <div
                     class="site-reports-toolbar-datepicker__activator"
                     slot="activator">
@@ -47,15 +48,15 @@
                   <v-date-picker v-model="startDate" no-title scrollable actions>
                     <template scope="{ save, cancel }">
                       <v-card-actions>
+                        <v-btn success @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                        <v-btn flat primary @click.native="save()">Save</v-btn>
                       </v-card-actions>
                     </template>
                   </v-date-picker>
                 </v-menu>
               </div>
               <div class="site-reports-toolbar-datepicker">
-                <v-menu lazy :close-on-content-click="false" v-model="controls.endDateModal" transition="scale-transition" offset-y full-width :nudge-left="40" max-width="290px">
+                <v-menu lazy :close-on-content-click="false" v-model="controls.endDateModal" transition="scale-transition" offset-y full-width :nudge-left="0" max-width="290px">
                   <div
                     class="site-reports-toolbar-datepicker__activator"
                     slot="activator">
@@ -65,8 +66,8 @@
                   <v-date-picker v-model="endDate" no-title scrollable actions>
                     <template scope="{ save, cancel }">
                       <v-card-actions>
+                        <v-btn success @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                        <v-btn flat primary @click.native="save()">Save</v-btn>
                       </v-card-actions>
                     </template>
                   </v-date-picker>
@@ -77,7 +78,7 @@
           <div class="site-reports-body-toolbar__secondary-content">
             <div class="site-reports-actions">
               <edit-collection-site class="site-reports-actions__action" v-if="selected.length === 1" v-bind:collection-site="selected[0]"></edit-collection-site>
-              <v-btn v-if="selected.length === 1 && !showArchived" v-on:click.native="archiveSite(selected[0])" class="site-reports-actions__action btn-nww--light btn btn--raised">
+              <v-btn v-if="selected.length === 1 && !showArchived" v-on:click.native="archiveSite(selected[0])" class="site-reports-actions__action btn btn-nww">
                 Archive
                 <v-icon right dark>archive</v-icon>
               </v-btn>
@@ -145,27 +146,28 @@
                     :input-value="props.selected"
                   ></v-checkbox>
                 </td>
-                <td>
+                <td class="col-long table-cell__truncate--long">
                   <router-link
                     class="nww-table__primary-link"
                     :to="{ name: 'Collection Site Data', params: { siteId: props.item['.key'] } }">
                     {{ props.item.stationName }}
                   </router-link>
                 </td>
-                <td>{{ props.item.logbookAbbv }}</td>
+                <td class="col-med table-cell__truncate-med">{{ props.item.logbookAbbv }}</td>
                 <td>{{ props.item.lab }}</td>
                 <td>{{ props.item.lastCollectionDate }}</td>
                 <td>{{ props.item.lastEColiResult }}</td>
                 <td>{{ props.item.active ? 'active' : 'inactive' }}</td>
                 <td>{{ props.item.collectionPartner }}</td>
                 <td>{{ props.item.hucName }}</td>
-                <td>{{ props.item.adoptAStreamName }}</td>
-                <td>{{ props.item.storetName }}</td>
+                <td class="col-long table-cell__truncate--long">{{ props.item.adoptAStreamName }}</td>
+                <td class="col-long table-cell__truncate--long">{{ props.item.storetName }}</td>
                 <td>{{ props.item.numSamples }}</td>
                 <td>{{ props.item.firstCollectionDate }}</td>
-                <td class="table-cell--truncate">
+                <td class="table-cell__truncate--long">
                   <a
                     v-bind:href="props.item.googleMapsUrl"
+                    class="nww-table__primary-link"
                     target="_blank">
                     {{ props.item.googleMapsUrl }}
                   </a>

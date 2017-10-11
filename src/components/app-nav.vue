@@ -238,6 +238,7 @@ $nav-split-breakpoint: 820px;
 
       .material-icons {
         font-size: 12px;
+        margin-right: 2px;
       }
     }
   }
