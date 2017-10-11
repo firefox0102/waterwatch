@@ -110,6 +110,7 @@
 <script>
 import { db } from '../../helpers/firebase'
 import { MapHelper } from '../../helpers/mapHelper'
+import _ from 'lodash'
 import moment from 'moment'
 import VueHighcharts from 'vue2-highcharts'
 import EcoliChart from '../panels/EcoliChart'
@@ -178,8 +179,14 @@ export default {
         this.$bindAsArray('reports', db.ref('reports/' + this.selectedSite['.key']).orderByChild('collectionDate').limitToLast(10))
       }
     },
+    selectedSiteCallbackFunc (name) {
+      let site = _.find(this.collectionSites, { 'stationName': name })
+      if (site) {
+        this.setActiveSite(site)
+      }
+    },
     initializeMap () {
-      this.mapy = new MapHelper()
+      this.mapy = new MapHelper(this.selectedSiteCallbackFunc)
     }
   },
   mounted: function () {

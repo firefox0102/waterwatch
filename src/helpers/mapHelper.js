@@ -1,5 +1,7 @@
 export class MapHelper {
-  constructor () {
+  constructor (selectSiteCallback) {
+    this.selectSiteCallback = selectSiteCallback
+
     window.mapboxgl.accessToken = 'pk.eyJ1IjoibGNhY2VkYSIsImEiOiIzNmM4MGRlN2I4NDhiY2UxZjA4MmJjZjE5OWEzYjUzNSJ9.Wc5KTJpWxmpxVMZfcuEQNg'
     var map = new window.mapboxgl.Map({
       container: 'map', // container id
@@ -14,7 +16,7 @@ export class MapHelper {
 // MAP SOURCES
       map.addSource('basin', {
         'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Chatt_River_Basin.geojson?alt=media&token=88e79a45-47fb-4be3-90d8-abaeeed4d5f7'
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/sites.geojson?alt=media&token=b5d44f79-e66e-4088-9741-7498c93f25e6'
       })
 
       map.addSource('sites', {
@@ -110,18 +112,18 @@ export class MapHelper {
         }
       })
 
-      map.addLayer({
-        'id': 'unclustered-sites',
-        'type': 'circle',
-        'source': 'sites',
-        'filter': ['!has', 'point-count'],
-        'paint': {
-          'circle-color': '#50869E',
-          'circle-radius': 4,
-          'circle-stroke-width': 1,
-          'circle-stroke-color': '#50869E'
-        }
-      })
+      // map.addLayer({
+      //   'id': 'unclustered-sites',
+      //   'type': 'circle',
+      //   'source': 'sites',
+      //   'filter': ['!has', 'point-count'],
+      //   'paint': {
+      //     'circle-color': '#50869E',
+      //     'circle-radius': 4,
+      //     'circle-stroke-width': 1,
+      //     'circle-stroke-color': '#50869E'
+      //   }
+      // })
     })
 
     // MENU TOGGLE//
@@ -156,13 +158,11 @@ export class MapHelper {
     }
 
     // Pop up //
-    // map.on('click', 'Sites', function (e) {
-    //   new mapboxgl.Popup()
-    //     .setLngLat(e.features[0].geometry.coordinates)
-    //     .setHTML(e.features[0].properties.description)
-    //     .addTo(map)
-    // })
-    //  // Change the cursor to a pointer when the mouse is over the places layer.
+    map.on('click', 'Sites', (e) => {
+      var name = e.features[0].properties.Name
+      this.selectSiteCallback(name)
+    })
+     // Change the cursor to a pointer when the mouse is over the places layer.
     // map.on('mouseenter', 'places', function () {
     //   map.getCanvas().style.cursor = 'pointer'
     // })
@@ -193,7 +193,6 @@ export class MapHelper {
   }
 
   zoomIn (selectedSite) {
-    console.log(selectedSite)
     var latLong = [selectedSite.longitude, selectedSite.latitude]
 
     this.map.flyTo({
