@@ -326,6 +326,7 @@
   } from '../../helpers/firebase'
   import _ from 'lodash'
   import moment from 'moment'
+  import { matrix } from '../../helpers/coeffecient'
 
   let collectionSitesRef = db.ref('collectionSites')
   let logbookNumberRef = db.ref('metaData/logbookNumber')
@@ -366,21 +367,18 @@
     },
     computed: {
       getTotalColiform: function () {
-        var num1 = parseInt(this.newLogData.coliformLargeCells)
-        var num2 = parseInt(this.newLogData.coliformSmallCells)
-        if (num1 + num2) {
-          return num1 + num2
-        } else {
-          return ''
+        if (this.newLogData.coliformLargeCells && this.newLogData.coliformSmallCells && this.newLogData.dilution) {
+          let matrixValue = matrix[this.newLogData.coliformLargeCells][this.newLogData.coliformSmallCells]
+          let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
+          return matrixValue * dilutionFactor
         }
+        return 0
       },
       getTotalEcoli: function () {
-        var num1 = parseInt(this.ecoliLargeCells)
-        var num2 = parseInt(this.ecoliSmallCells)
-        if (num1 + num2) {
-          return num1 + num2
-        } else {
-          return ''
+        if (this.ecoliLargeCells && this.ecoliSmallCells && this.newLogData.dilution) {
+          let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
+          let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
+          return matrixValue * dilutionFactor
         }
       }
     },

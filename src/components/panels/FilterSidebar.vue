@@ -116,7 +116,7 @@ export default {
       sites = _.filter(sites, (site) => {
         let isPrivate = site.isPrivate
         let containsSearch = site.stationName.toLowerCase().includes(this.filters.search)
-        let containsHuc = this.filters.hucFilters.length ? this.filters.hucFilters.indexOf(parseInt(site.huc)) : 0
+        let containsHuc = this.filters.hucFilters.length ? this.filters.hucFilters.indexOf(site.huc) : 0
         let containsLab = this.filters.labFilters.length ? this.filters.labFilters.indexOf(site.lab) : 0
         let containsPartner = this.filters.partnerFilters.length ? this.filters.partnerFilters.indexOf(site.collectionPartner) : 0
 
