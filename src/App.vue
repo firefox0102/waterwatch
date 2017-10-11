@@ -54,6 +54,7 @@ export default {
 
 <style lang="stylus">
   @import './stylus/main'
+  @import './stylus/_colors'
 </style>
 
 <style lang="scss">
@@ -108,7 +109,7 @@ body {
 .input-group {
   &--limit-height {
     margin: 18px 0 20px;
-    max-height: 48px;
+    max-height: 50px;
   }
 }
 
@@ -193,6 +194,7 @@ body {
     &--dark {
       @extend .page-content-header__subtext;
       color: $color-sad-grey;
+      font-weight: 400;
     }
   }
 }
@@ -271,7 +273,7 @@ body {
 
   color: $color-bumble-bee;
   cursor: pointer;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 13px;
   text-align: left;
@@ -279,11 +281,24 @@ body {
 }
 
 .table-cell {
-  &--truncate {
-    max-width: 100px;
+  &__truncate {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+
+    &--med {
+      max-width: 200px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    &--long {
+      max-width: 300px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 }
 </style>

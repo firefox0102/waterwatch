@@ -34,10 +34,11 @@
             offset-y
             full-width
             :nudge-left="40"
+            class="input-group--limit-height"
             max-width="290px">
             <v-text-field
               slot="activator"
-              label="Date"
+              label="Collection Date "
               v-model="newLogData.collectionDate"
               append-icon="event"
               class="input-group--limit-height"
@@ -47,17 +48,17 @@
             <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
               <template scope="{ save, cancel }">
                     <v-card-actions>
-                      <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                      <v-btn flat primary @click.native="save()">Save</v-btn>
+                      <v-btn success @click.native="save()">Save</v-btn>
+                      <v-btn primary flat @click.native="cancel()">Cancel</v-btn>
                     </v-card-actions>
               </template>
-              </v-date-picker>
+            </v-date-picker>
           </v-menu>
 
           <v-select
             v-bind:items="collectionSites"
             v-model="selectedSite"
-            label="Collection Site"
+            label="Collection Site *"
             autocomplete
             item-text="stationName"
             class="input-group--limit-height"
@@ -141,7 +142,7 @@
               v-model="newLogData.incubationTemp">
           </v-text-field>
           <v-text-field
-              label="Incubation Out"
+              label="Incubation Out Time"
               v-model="newLogData.incubationOut"
               :rules="formRules.incubationOutTimeRules"
               type="time"
@@ -158,11 +159,13 @@
             <v-text-field
                 label="Large Cells"
                 type="number"
+                class="input-group--limit-height"
                 v-model="newLogData.coliformLargeCells">
             </v-text-field>
             <v-text-field
                 label="Small Cells"
                 type="number"
+                class="input-group--limit-height"
                 v-model="newLogData.coliformSmallCells">
             </v-text-field>
           </div>
@@ -208,25 +211,24 @@
             <div class="page-content-body__header page-content-body__header--space-above">
               Additional Parameters
             </div>
-              <v-text-field
-                label="Air Temperature (*C)"
-                class="input-group--limit-height"
-                type="number"
-                v-model="newLogData.airTemp">
+            <v-text-field
+              label="Air Temperature (*C)"
+              class="input-group--limit-height"
+              type="number"
+              v-model="newLogData.airTemp">
             </v-text-field>
             <v-text-field
-                label="Water Temperature (*C)"
+                label="Ammonium (mg/L)"
                 class="input-group--limit-height"
                 type="number"
-                v-model="newLogData.waterTemp">
+                v-model="newLogData.ammonium">
             </v-text-field>
-              <v-text-field
-                label="Secchi Depth (meters)"
+            <v-text-field
+                label="Chlorophyll a (µg/L)"
                 class="input-group--limit-height"
                 type="number"
-                v-model="newLogData.secchiDepth">
+                v-model="newLogData.chlorophyll">
             </v-text-field>
-
             <v-text-field
                 label="Dissolved Oxygen (mg/L)"
                 class="input-group--limit-height"
@@ -246,10 +248,10 @@
                 v-model="newLogData.phosphate">
             </v-text-field>
             <v-text-field
-                label="Ammonium (mg/L)"
-                class="input-group--limit-height"
-                type="number"
-                v-model="newLogData.ammonium">
+              label="Secchi Depth (meters)"
+              class="input-group--limit-height"
+              type="number"
+              v-model="newLogData.secchiDepth">
             </v-text-field>
             <v-text-field
                 label="Total Chlorine (mg/L)"
@@ -258,17 +260,17 @@
                 v-model="newLogData.totalChlorine">
             </v-text-field>
             <v-text-field
-                label="Chlorophyll (µg/L)"
+                label="Water Temperature (*C)"
                 class="input-group--limit-height"
                 type="number"
-                v-model="newLogData.chlorophyll">
+                v-model="newLogData.waterTemp">
             </v-text-field>
             <v-text-field
                 name="input-5-1"
                 label="Notes"
                 v-model="newLogData.notes"
-                class="input-group--limit-height"
-              ></v-text-field>
+                class="input-group--limit-height">
+            </v-text-field>
           </div>
 
           <v-dialog v-model="controls.showDialog" lazy absolute>
@@ -286,7 +288,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                  class="green--text darken-1"
+                  primary
                   flat="flat"
                   v-on:click.native="controls.showDialog = false">
                   Cancel
@@ -640,7 +642,7 @@
 <style lang="scss" scoped>
   @import "../../scss/colors";
   .log-data {
-    margin: 24px;
+    /* margin: 24px; */
     box-shadow: 0 1px 3px 0 rgba(155, 155, 155, 0.5);
   }
 

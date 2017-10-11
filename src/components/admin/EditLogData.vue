@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-dialog v-model="controls.showDialog" :overlay="false">
+    <v-dialog full-width v-model="controls.showDialog" :overlay="true">
       <v-btn
         slot="activator"
-        class="site-reports-actions__action site-reports-actions__action--no-margin btn-nww--light btn btn--raised">
+        class="site-reports-actions__action site-reports-actions__action--no-margin btn btn-nww">
         Edit
         <v-icon right dark>edit</v-icon>
       </v-btn>
@@ -41,7 +41,7 @@
                   transition="scale-transition"
                   offset-y
                   full-width
-                  :nudge-left="40"
+                  :nudge-left="0"
                   max-width="290px">
                   <v-text-field
                     slot="activator"
@@ -54,12 +54,12 @@
                   </v-text-field>
                   <v-date-picker v-model="targetLogData.collectionDate" no-title scrollable actions>
                     <template scope="{ save, cancel }">
-                          <v-card-actions>
-                            <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                            <v-btn flat primary @click.native="save()">Save</v-btn>
-                          </v-card-actions>
+                      <v-card-actions>
+                        <v-btn @click.native="save()" class="btn btn-nww">Save</v-btn>
+                        <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
+                      </v-card-actions>
                     </template>
-                    </v-date-picker>
+                  </v-date-picker>
                 </v-menu>
 
                 <v-select
@@ -277,13 +277,12 @@
                       class="input-group--limit-height"
                     ></v-text-field>
                 </div>
-
                 <v-btn
                   slot="activator"
                   type="submit"
                   v-on:click.native="submitLog"
-                  class="btn-nww log-data-submit-btn">
-                  {{  "Save Data"}}
+                  class="btn-nww">
+                  {{ "Save Data" }}
                 </v-btn>
               </div>
             </v-form>
