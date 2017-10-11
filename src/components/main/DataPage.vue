@@ -1,4 +1,3 @@
-
 <template>
   <div class="data-page-wrapper">
     <filter-sidebar :selected-site="selectedSite" :show-sidebar="controls.sidebar" :collection-sites="collectionSites" v-on:selected="setActiveSite" v-on:toggleside="toggleSidebar"></filter-sidebar>

@@ -21,7 +21,7 @@ export class MapHelper {
 
       map.addSource('sites', {
         'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/sites.geojson?alt=media&token=afb98188-b93e-46a0-8083-7e150ce43e61',
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/sites.geojson?alt=media&token=8b0b1d0f-a844-4dfb-b97f-37c5787dba51',
         'cluster': true,
         'clusterMaxZoom': 14, // Max zoom to cluster points on
         'clusterRadius': 25 // Radius of each cluster when clustering points (defaults to 50)
@@ -105,24 +105,25 @@ export class MapHelper {
         'layout': {},
         'paint': {
           'fill-outline-color': 'rgba(7, 78, 112, 1)',
-          'fill-color': 'rgba(80, 134, 158, 0.2)',
+          'fill-color': 'rgba(80, 134, 158, 0.2)'
         },
         'properties': {
           'description': 'Chattahoochee River Basin'
         }
       })
-      map.addLayer({
-        'id': 'unclustered-sites',
-        'type': 'circle',
-        'source': 'sites',
-        'filter': ['!has', 'point-count'],
-        'paint': {
-          'circle-color': '#50869E',
-          'circle-radius': 4,
-          'circle-stroke-width': 1,
-          'circle-stroke-color': ''
-        }
-      })
+
+      // map.addLayer({
+      //   'id': 'unclustered-sites',
+      //   'type': 'circle',
+      //   'source': 'sites',
+      //   'filter': ['!has', 'point-count'],
+      //   'paint': {
+      //     'circle-color': '#50869E',
+      //     'circle-radius': 4,
+      //     'circle-stroke-width': 1,
+      //     'circle-stroke-color': '#50869E'
+      //   }
+      // })
     })
 
     // MENU TOGGLE//
