@@ -165,6 +165,7 @@ export default {
     setActiveSite (site) {
       this.selectedSite = site
       this.getReports()
+      this.mapy.zoomIn(this.selectedSite)
     },
     getReports () {
       if (this.$firebaseRefs.reports) {

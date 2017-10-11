@@ -110,18 +110,18 @@ export class MapHelper {
         }
       })
 
-    // map.addLayer({
-    //   'id': 'unclustered-sites',
-    //   'type': 'circle',
-    //   'source': 'sites',
-    //   'filter': ['!has', 'point-count'],
-    //   'paint': {
-    //     'circle-color': '#50869E',
-    //     'circle-radius': 4,
-    //     'circle-stroke-width': 1,
-    //     'circle-stroke-color': '#fff'
-    //   }
-    // })
+      map.addLayer({
+        'id': 'unclustered-sites',
+        'type': 'circle',
+        'source': 'sites',
+        'filter': ['!has', 'point-count'],
+        'paint': {
+          'circle-color': '#50869E',
+          'circle-radius': 4,
+          'circle-stroke-width': 1,
+          'circle-stroke-color': '#50869E'
+        }
+      })
     })
 
     // MENU TOGGLE//
@@ -190,5 +190,15 @@ export class MapHelper {
 
   resizeMap () {
     setTimeout(() => this.map.resize(), 500)
+  }
+
+  zoomIn (selectedSite) {
+    console.log(selectedSite)
+    var latLong = [selectedSite.longitude, selectedSite.latitude]
+
+    this.map.flyTo({
+      center: latLong,
+      zoom: 17
+    })
   }
 }
