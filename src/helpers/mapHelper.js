@@ -124,7 +124,7 @@ export class MapHelper {
         }
       })
       map.addLayer({
-        'id': 'HUCs',
+        'id': 'HUCs Layer',
         'type': 'fill',
         'layout': {
           'visibility': 'none'
@@ -178,11 +178,7 @@ export class MapHelper {
     })
 
     // MENU TOGGLE//
-<<<<<<< HEAD
-    var toggleableLayerIds = ['Basin Layer', 'Counties Layer', 'Collection Sites Layer']
-=======
-    var toggleableLayerIds = ['Basin', 'Counties', 'Sites', 'HUCs']
->>>>>>> 4f1f9d63215c0ede346f03eb4b9646d7f6425215
+    var toggleableLayerIds = ['Basin Layer', 'Collection Sites Layer', 'Counties Layer', 'HUCs Layer']
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
       var id = toggleableLayerIds[i]
