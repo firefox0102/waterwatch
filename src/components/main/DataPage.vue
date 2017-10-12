@@ -88,7 +88,16 @@
                 <i class="material-icons">arrow_drop_up</i>
               </div>
               <div class="controls-card-control-group__content">
-                Reports stuff here
+                <v-btn
+                  type="submit"
+                  class="md-raised btn-nww sign-in-body__btn">
+                  Download  XLSX
+                </v-btn>
+                <v-btn
+                  type="submit"
+                  class="md-raised btn-nww sign-in-body__btn">
+                  Download  CSV
+                </v-btn>
               </div>
             </div>
           </div>
