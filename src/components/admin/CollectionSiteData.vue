@@ -47,8 +47,8 @@
               View Data on NWW Map (TODO)
             </a>
             <span class="collection-data-group__divider">|</span>
-            <a class="collection-data-group__link">
-              View Site on Google Maps (TODO)
+            <a class="collection-data-group__link" v-bind:href="site.googleMapsUrl">
+              View Site on Google Maps
             </a>
           </div>
         </div>
