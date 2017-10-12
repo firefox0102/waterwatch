@@ -163,11 +163,13 @@ export default {
 $data-sidebar-width: 240px;
 
 .data-sidebar {
+  display: flex;
   left: 0;
   position: absolute;
   top: 0;
   z-index: 2;
 
+  flex-direction: column;
   height: 100%;
   width: 240px;
 
@@ -187,6 +189,7 @@ $data-sidebar-width: 240px;
 
   &__body {
     overflow-y: auto;
+    flex: 1;
   }
 
   &--collapsed {

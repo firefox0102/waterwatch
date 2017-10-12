@@ -263,11 +263,10 @@ $nav-split-breakpoint: 820px;
     padding: 12px 20px;
     width: 100%;
 
-    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(155, 155, 155, 0.5);
+    box-shadow: none;
 
     @media screen and (min-width: $nav-split-breakpoint) {
       width: 30%;
-      box-shadow: none;
     }
   }
 
