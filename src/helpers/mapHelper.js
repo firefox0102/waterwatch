@@ -36,7 +36,7 @@ export class MapHelper {
 
       // COUNTIES //
       map.addLayer({
-        'id': 'Counties',
+        'id': 'Counties Layer',
         'type': 'fill',
         'source': 'counties',
         'layout': {
@@ -63,7 +63,7 @@ export class MapHelper {
 
       // COLLECTION SITES //
       map.addLayer({
-        'id': 'Sites',
+        'id': 'Collection Sites Layer',
         'type': 'circle',
         'source': 'sites',
         'paint': {
@@ -101,7 +101,7 @@ export class MapHelper {
 
       // BASIN
       map.addLayer({
-        'id': 'Basin',
+        'id': 'Basin Layer',
         'type': 'fill',
         'source': 'basin',
         'layout': {},
@@ -138,7 +138,7 @@ export class MapHelper {
     })
 
     // MENU TOGGLE//
-    var toggleableLayerIds = ['Basin', 'Counties', 'Sites']
+    var toggleableLayerIds = ['Basin Layer', 'Counties Layer', 'Collection Sites Layer']
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
       var id = toggleableLayerIds[i]
@@ -219,17 +219,17 @@ export class MapHelper {
 
     // Add zoom and rotation controls to the map. //
     map.addControl(new window.MapboxGeocoder({
-      accessToken: window.mapboxgl.accessToken
+      accessToken: window.mapboxgl.accessToken,
+      placeholder: 'Search Address'
     }))
-    map.addControl(new window.mapboxgl.NavigationControl())
+    map.addControl(new window.mapboxgl.FullscreenControl(), 'bottom-right')
     map.addControl(new window.mapboxgl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true
       },
       trackUserLocation: true
-    }))
-    map.addControl(new window.mapboxgl.FullscreenControl())
-
+    }), 'bottom-right')
+    map.addControl(new window.mapboxgl.NavigationControl(), 'bottom-right')
     this.map = map
   }
 
