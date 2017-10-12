@@ -32,6 +32,17 @@ export class MapHelper {
         'data': 'https://opendata.arcgis.com/datasets/53ca7db14b8f4a9193c1883247886459_67.geojson'
       })
 
+      map.addSource('hucs', {
+        'type': 'geojson',
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/hucClip.geojson?alt=media&token=b6ecd28c-8235-45b5-b10b-56ac2b2a30a0'
+        // 'data': 'https://opendata.arcgis.com/datasets/a2954c6f77f54a4eb97d25407209c72c_80.geojson'
+      })
+
+      // map.addSource('rivers', {
+      //   'type': 'geojson',
+      //   'data': 'https://opendata.arcgis.com/datasets/a2954c6f77f54a4eb97d25407209c72c_80.geojson'
+      // })
+
 // MAP LAYERS
 
       // COUNTIES //
@@ -47,7 +58,6 @@ export class MapHelper {
           'fill-color': 'rgba(7, 78, 112, 0)'
         }
       })
-
       // County labels //
       // map.addLayer({
       //   'id': 'Counties-label',
@@ -113,6 +123,36 @@ export class MapHelper {
           'description': 'Chattahoochee River Basin'
         }
       })
+      map.addLayer({
+        'id': 'Hucs',
+        'type': 'fill',
+        'layout': {
+          'visibility': 'none'
+        },
+        'source': 'hucs',
+        'paint': {
+          'fill-color': 'rgba(248, 219, 114, 0)',
+          'fill-outline-color': 'rgba(190, 118, 48, 1)'
+        },
+        'properties': {
+          'description': 'Hucs'
+        }
+      })
+      // map.addLayer({
+      //   'id': 'Rivers',
+      //   'type': 'fill',
+      //   'layout': {
+      //     'visibility': 'none'
+      //   },
+      //   'source': 'rivers',
+      //   'paint': {
+      //     'fill-color': 'rgba(80, 134, 158, 0.2)'
+      //     // 'fill-outline-color': 'rgba(190, 118, 48, 1)'
+      //   },
+      //   'properties': {
+      //     'description': 'Hucs'
+      //   }
+      // })
 
       // map.addLayer({
       //   'id': 'sites-clicked',
@@ -138,7 +178,7 @@ export class MapHelper {
     })
 
     // MENU TOGGLE//
-    var toggleableLayerIds = ['Basin', 'Counties', 'Sites']
+    var toggleableLayerIds = ['Basin', 'Counties', 'Sites', 'Hucs']
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
       var id = toggleableLayerIds[i]
