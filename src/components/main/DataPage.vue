@@ -98,6 +98,11 @@
                   class="md-raised btn-nww sign-in-body__btn">
                   Download  CSV
                 </v-btn>
+                <v-btn
+                  type="submit"
+                  class="md-raised btn-nww sign-in-body__btn">
+                  Print Map
+                </v-btn>
               </div>
             </div>
           </div>
