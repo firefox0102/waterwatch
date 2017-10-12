@@ -26,7 +26,7 @@
                 class="controls-card-control-group__header"
                 v-on:click="controls.selectedControl = 'dateRange'">
                 Date Range
-                <i class="material-icons">arrow_drop_up</i>
+                <i class="material-icons">arrow_drop_down</i>
               </div>
               <div class="controls-card-control-group__content">
                 <span class="controls-card-control-group__title">Select date range:</span>
@@ -85,22 +85,22 @@
                 class="controls-card-control-group__header"
                 v-on:click="controls.selectedControl = 'report'">
                 Reports
-                <i class="material-icons">arrow_drop_up</i>
+                <i class="material-icons">arrow_drop_down</i>
               </div>
               <div class="controls-card-control-group__content">
                 <v-btn
                   type="submit"
-                  class="md-raised btn-nww sign-in-body__btn">
+                  class="md-raised btn-nww--light">
                   Download  XLSX
                 </v-btn>
                 <v-btn
                   type="submit"
-                  class="md-raised btn-nww sign-in-body__btn">
+                  class="md-raised btn-nww--light">
                   Download  CSV
                 </v-btn>
                 <v-btn
                   type="submit"
-                  class="md-raised btn-nww sign-in-body__btn">
+                  class="md-raised btn-nww--light">
                   Print Map
                 </v-btn>
               </div>
@@ -301,7 +301,7 @@ $data-sidebar-width: 240px;
   display: flex;
 
   flex-direction: column;
-  height: 211px;
+
   margin-bottom: 24px;
   width: 80%;
 
@@ -328,11 +328,10 @@ $data-sidebar-width: 240px;
 }
 
 .controls-card-body {
-  height: 184px;
 }
 
 .controls-card-control-group {
-  height: 150px;
+
   overflow: hidden;
 
   border-bottom: 1px solid $color-dust;
@@ -343,7 +342,7 @@ $data-sidebar-width: 240px;
   }
 
   &--collapsed {
-    height: 36px;
+    height: 40px;
     transition: 0.33s;
   }
 
@@ -352,13 +351,14 @@ $data-sidebar-width: 240px;
 
     align-items: center;
     justify-content: space-between;
-    height: 36px;
+    height: 40px;
     padding-left: 16px;
 
     color: $color-storm-cloud;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 500;
+    line-height: 18px;
   }
 
   &__title {
@@ -370,8 +370,8 @@ $data-sidebar-width: 240px;
   &__content {
     display: flex;
     flex-direction: column;
-    height: 82px;
-    padding: 0 16px;
+
+    padding: 0 16px 16px 16px;
 
     color: $color-storm-cloud;
     font-size: 13px;

@@ -41,7 +41,7 @@
 
 	height: 100px;
   padding: 11px 40px;
-  width: 100%;
+  max-width: 368px;
 
 	background-color: $color-finn-white;
   box-shadow: 0 2px 4px 0 rgba(155,155,155,0.5);
@@ -52,7 +52,6 @@
 
     margin: 15px;
     padding: 11px 15px;
-    width: 313px;
   }
 
   &__header {
@@ -60,9 +59,12 @@
     margin-bottom: 4px;
 
     color: $color-iron-sea;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 21px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &__row {
