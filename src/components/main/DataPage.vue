@@ -253,7 +253,7 @@ $data-sidebar-width: 240px;
     overflow: hidden;
 
     @media screen and (min-width: 850px) {
-      height: auto;
+      height: 90vh;
       max-height: 100%;
       min-height: 50vh;
     }
