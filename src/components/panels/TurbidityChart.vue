@@ -12,12 +12,12 @@
             <v-card-title class="headline">Turbidity</v-card-title>
             <v-card-text>
               <p>
-                Turbidity copy
+                Turbidity is one of the indicators used to assess the environmental health of water bodies. Turbidity is caused by the presence of suspended and dissolved matter, such as clay, silt, finely divided organic matter, plankton and other microscopic organisms, organic acids, and dyes.
               </p>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="green--text darken-1" flat="flat" @click.native="controls.turbidityDialog = false">Close</v-btn>
+              <v-btn class="btn-nww btn btn--raised" @click.native="controls.turbidityDialog = false">Okay</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>

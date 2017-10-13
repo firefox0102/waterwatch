@@ -122,3 +122,8 @@ button.mapboxgl-ctrl-icon {
 .mapboxgl-ctrl-geocoder input[type='text'] {
   font-size: 14px;
 }
+
+.controls-card-header,
+.controls-card-control-group__header {
+  text-transform: uppercase;
+}

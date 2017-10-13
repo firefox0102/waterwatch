@@ -12,12 +12,12 @@
             <v-card-title class="headline">Specific Conductivity (uS)</v-card-title>
             <v-card-text>
               <p>
-                Specific Conductivity (uS) copy
+                Electrical conductance is a measure of the capacity of a substance to conduct an electrical current. The specific electrical conductance (conductivity) of water is a function of the types and quantities of dissolved substances it contains, normalized to a unit length and unit cross section at a specified temperature.
               </p>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="green--text darken-1" flat="flat" @click.native="controls.conductiveDialog = false">Close</v-btn>
+              <v-btn class="btn-nww btn btn--raised" @click.native="controls.conductiveDialog = false">Okay</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
