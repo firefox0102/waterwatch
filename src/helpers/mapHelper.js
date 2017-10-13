@@ -38,11 +38,6 @@ export class MapHelper {
         // 'data': 'https://opendata.arcgis.com/datasets/a2954c6f77f54a4eb97d25407209c72c_80.geojson'
       })
 
-      // map.addSource('rivers', {
-      //   'type': 'geojson',
-      //   'data': 'https://opendata.arcgis.com/datasets/a2954c6f77f54a4eb97d25407209c72c_80.geojson'
-      // })
-
 // MAP LAYERS
 
       // COUNTIES //
@@ -58,18 +53,6 @@ export class MapHelper {
           'fill-color': 'rgba(7, 78, 112, 0)'
         }
       })
-      // County labels //
-      // map.addLayer({
-      //   'id': 'Counties-label',
-      //   'type': 'symbol',
-      //   'source': 'counties',
-      //   'filter': ['has', 'Label'],
-      //   'text-field': '{Label}',
-      //   'layout': {
-      //     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-      //     'text-size': 12
-      //   }
-      // }, 'place_label_city_small_s')
 
       // COLLECTION SITES //
       map.addLayer({
@@ -93,7 +76,18 @@ export class MapHelper {
         }
       })
 
-    // // Cluster labels //
+      map.addLayer({
+        'id': 'site-clicked',
+        'type': 'circle',
+        'source': 'sites',
+        'paint': {
+          'circle-color': '#7FBA00',
+          'circle-radius': 12
+        },
+        'filter': ['in', 'Name', '']
+      })
+
+      // Cluster labels //
       map.addLayer({
         'id': 'sites-count',
         'type': 'symbol',
@@ -138,44 +132,25 @@ export class MapHelper {
           'description': 'Hucs'
         }
       })
-      // map.addLayer({
-      //   'id': 'Rivers',
-      //   'type': 'fill',
-      //   'layout': {
-      //     'visibility': 'none'
-      //   },
-      //   'source': 'rivers',
-      //   'paint': {
-      //     'fill-color': 'rgba(80, 134, 158, 0.2)'
-      //     // 'fill-outline-color': 'rgba(190, 118, 48, 1)'
-      //   },
-      //   'properties': {
-      //     'description': 'Hucs'
-      //   }
-      // })
-
-      // map.addLayer({
-      //   'id': 'sites-clicked',
-      //   'type': 'circle',
-      //   'source': 'sites',
-      //   'paint': {
-      //     'circle-color': '#81B822',
-      //     'circle-radius': 5
-      //   },
-      //   'filter': ['==', 'name', '']
-      // })
-
-      map.addLayer({
-        'id': 'sitesClicked',
-        'type': 'circle',
-        'source': 'sites',
-        'paint': {
-          'circle-color': '#ca0002',
-          'circle-radius': 5
-        },
-        'filter': ['==', 'name', '']
-      })
     })
+
+    // Pop up //
+    map.on('click', 'Collection Sites Layer', (e) => {
+      var name = e.features[0].properties.Name
+      console.log(name)
+      this.selectSiteCallback(name)
+      map.setFilter('site-clicked', ['in', 'Name', name])
+    })
+
+    // Change the cursor to a pointer when the mouse is over the places layer.
+    // map.on('mouseenter', 'places', function () {
+    //   map.getCanvas().style.cursor = 'pointer'
+    // })
+
+    // // Change it back to a pointer when it leaves.
+    // map.on('mouseleave', 'places', function () {
+    //   map.getCanvas().style.cursor = ''
+    // })
 
     // MENU TOGGLE//
     var toggleableLayerIds = ['Basin Layer', 'Collection Sites Layer', 'Counties Layer', 'HUCs Layer']
@@ -207,56 +182,6 @@ export class MapHelper {
       var layers = document.getElementById('menu')
       layers.appendChild(link)
     }
-
-    // Pop up //
-    map.on('click', 'Collection Sites Layer', (e) => {
-      var name = e.features[0].properties.Name
-      console.log(name)
-      this.selectSiteCallback(name)
-      // map.setFilter('sites-clicked', ['==', 'name', name])
-      // if (this.sharedState.name.lnglat) {
-      //   this.addMarker()
-      // }
-    })
-
-    // var selectedSite = ['Sites', 'sitesClicked']
-    // for (var n = 0; n < selectedSite.length; n++) {
-    //   var cs = selectedSite[n]
-    //   var green = document.createElement('e')
-    //   green.href = '#'
-    //   green.className = 'clicked'
-    //   green.textContent = cs
-
-    //   green.onclick = function (e) {
-    //     var selectedSite = this.textContent
-    //     e.preventDefault()
-    //     e.stopPropagation()
-
-    //     var name = map.getLayoutProperty(selectedSite, 'visibility')
-
-    //     if (name === 'Name') {
-    //       map.setLayoutProperty(selectedSite, 'visibility', 'visible')
-    //       this.className = ''
-    //     } else {
-    //       this.className = 'notActive'
-    //       map.setLayoutProperty(selectedSite, 'visibility', 'none')
-    //     }
-    //   }
-
-    //   var site = document.getElementById('click')
-    //   site.appendChild(green)
-    // }
-
-     // Change the cursor to a pointer when the mouse is over the places layer.
-    // map.on('mouseenter', 'places', function () {
-    //   map.getCanvas().style.cursor = 'pointer'
-    // })
-
-    // // Change it back to a pointer when it leaves.
-    // map.on('mouseleave', 'places', function () {
-    //   map.getCanvas().style.cursor = ''
-    // })
-
     // Add zoom and rotation controls to the map. //
     map.addControl(new window.MapboxGeocoder({
       accessToken: window.mapboxgl.accessToken,
