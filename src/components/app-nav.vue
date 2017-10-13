@@ -117,7 +117,7 @@
     methods: {
       logout () {
         firebase.auth().signOut().then(function () {
-          window.location.href = '*'
+          window.location.href = '/*'
         }, function (error) {
           console.log(error)
         })
