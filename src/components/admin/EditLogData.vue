@@ -277,13 +277,24 @@
                       class="input-group--limit-height"
                     ></v-text-field>
                 </div>
-                <v-btn
-                  slot="activator"
-                  type="submit"
-                  v-on:click.native="submitLog"
-                  class="btn-nww">
-                  {{ "Save Data" }}
-                </v-btn>
+                <div class="flex log-data-btn-row">
+                  <v-btn
+                    slot="activator"
+                    type="submit"
+                    v-on:click.native="close"
+                    flat
+                    primary
+                    class="btn">
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    slot="activator"
+                    type="submit"
+                    v-on:click.native="submitLog"
+                    class="btn-nww">
+                    Save Data
+                  </v-btn>
+                </div>
               </div>
             </v-form>
           </div>
@@ -468,6 +479,9 @@
       }
     },
     methods: {
+      close () {
+        this.controls.showDialog = false
+      },
       toggleAdditionalParmas: function () {
         this.controls.showAdditionalParams = !this.controls.showAdditionalParams
       },
@@ -536,6 +550,10 @@
   .log-data-submit-btn {
     margin-top: 26px;
     width: 96px;
+  }
+
+  .log-data-btn-row {
+    margin-top: 15px;
   }
 
   .log-data-section-wrapper {

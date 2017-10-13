@@ -301,4 +301,8 @@ body {
     }
   }
 }
+
+.rotated-icon {
+  transform: rotate(270deg);
+}
 </style>

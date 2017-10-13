@@ -21,12 +21,16 @@
           <div class="controls-card-body">
             <div
               class="controls-card-control-group"
-              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControl != 'dateRange'}">
+              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControlDates}">
               <div
                 class="controls-card-control-group__header"
-                v-on:click="controls.selectedControl = 'dateRange'">
+                v-on:click="controls.selectedControlDates = !controls.selectedControlDates">
                 Date Range
-                <i class="material-icons">arrow_drop_down</i>
+                <i
+                  class="material-icons  filters-toggle__icon "
+                  v-bind:class="{ 'rotated-icon': controls.selectedControlDates}">
+                  arrow_drop_down
+                </i>
               </div>
               <div class="controls-card-control-group__content">
                 <span class="controls-card-control-group__title">Select date range:</span>
@@ -80,12 +84,16 @@
             </div>
             <div
               class="controls-card-control-group"
-              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControl != 'report'}">
+              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControlReport}">
               <div
                 class="controls-card-control-group__header"
-                v-on:click="controls.selectedControl = 'report'">
+                v-on:click="controls.selectedControlReport = !controls.selectedControlReport">
                 Reports
-                <i class="material-icons">arrow_drop_down</i>
+                <i
+                  class="material-icons"
+                  v-bind:class="{ 'rotated-icon': controls.selectedControlReport}">
+                  arrow_drop_down
+                </i>
               </div>
               <div class="controls-card-control-group__content">
                 <v-btn
@@ -167,7 +175,8 @@ export default {
       endDate: moment(new Date()).format('YYYY-MM-DD'),
       controls: {
         sidebar: false,
-        selectedControl: 'dateRange'
+        selectedControlDates: false,
+        selectedControlReport: true
       }
     }
   },

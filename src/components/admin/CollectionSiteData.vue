@@ -47,8 +47,11 @@
               View Data on NWW Map (TODO)
             </a>
             <span class="collection-data-group__divider">|</span>
-            <a class="collection-data-group__link">
-              View Site on Google Maps (TODO)
+            <a
+              class="collection-data-group__link"
+              v-bind:href="site.googleMapsUrl"
+              target="_blank">
+              View Site on Google Maps
             </a>
           </div>
         </div>
@@ -281,8 +284,8 @@ export default {
         { text: 'Collection Date', value: 'collectionDate' },
         { text: 'Collection Time', value: 'collectionTime' },
         { text: 'Analyst', value: 'analyst' },
-        { text: 'Total Coliform', value: 'totalColiform' }, // TODO
-        { text: 'E. coli', value: 'totalEcoli' }, // TODO
+        { text: 'Total Coliform', value: 'totalColiform' },
+        { text: 'E. coli', value: 'totalEcoli' },
         { text: 'Fluorometry', value: 'fluorometry' },
         { text: 'Turbidity (NTU)', value: 'turbidity' },
         { text: 'Conductivity (uS)', value: 'specifcConductivity' },
