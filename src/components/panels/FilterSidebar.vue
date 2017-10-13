@@ -95,7 +95,7 @@ import _ from 'lodash'
 
 let labsRef = db.ref('labs')
 let partnerRef = db.ref('partners')
-let hucRef = db.ref('huc')
+let hucRef = db.ref('hucList')
 
 export default {
   name: 'data-page',
