@@ -261,18 +261,21 @@ $data-sidebar-width: 240px;
   flex-direction: column;
   flex-wrap: wrap;
 
-  height: 100%;
+  height: calc(100vh - 170px);
   margin-left: 0;
   padding: 0;
   width: 100%;
 
   transition: 0.5s;
+  overflow-y: auto;
 
   &__fixed-column {
     display: flex;
     align-items: center;
     flex-direction: column;
 
+    min-height: 1422px;
+    max-height: 1800px;
     margin-top: 24px;
     width: auto;
   }
