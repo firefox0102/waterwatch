@@ -57,7 +57,7 @@
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
-        <router-link class="log-new-data-btn" to="/logData">
+        <router-link class="log-new-data-btn" :to="{ name: 'Log Data Id', params: { 'id': $route.params.siteId } }">
           <v-btn class="btn-nww--light">
             Log New Data
           </v-btn>

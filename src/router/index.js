@@ -48,6 +48,12 @@ export default new Router({
       meta: { requiresAuth: true }
     },
     {
+      path: '/logData/:id',
+      name: 'Log Data Id',
+      component: LogData,
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/collectionSites',
       name: 'Collection Sites',
       component: CollectionSites,

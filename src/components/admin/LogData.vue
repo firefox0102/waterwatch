@@ -362,6 +362,14 @@
         handler (newSite) {
           this.labSet = _.map(this.labs, '.value')
         }
+      },
+      collectionSites: {
+        handler () {
+          if (this.collectionSites.length !== 0 && this.$route.params.id && !this.controls.initialSiteSet) {
+            this.selectedSite = _.find(this.collectionSites, ['.key', this.$route.params.id])
+            this.controls.initialSiteSet = true
+          }
+        }
       }
     },
     mounted () {
@@ -387,6 +395,7 @@
     data: function () {
       return {
         labs: [],
+        collectionSites: [],
         labSet: [],
         selectedSite: null,
         logbookNumber: null,
@@ -396,7 +405,8 @@
         controls: {
           showAdditionalParams: false,
           showDialog: false,
-          showDatepicker: false
+          showDatepicker: false,
+          initialSiteSet: false
         },
         formRules: {
           conductivityRules: [
