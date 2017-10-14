@@ -4,7 +4,11 @@
     <div class="graph-card-title">
       <span class="graph-card-title__primary">
         E. coli
-        <v-dialog v-model="controls.ecoliDialog" persistent>
+        <v-dialog
+          v-model="controls.ecoliDialog"
+          content-class="nww-dialog"
+          persistent
+        >
           <i slot="activator" class="material-icons graph-card-title__icon">
             info_outline
           </i>

@@ -4,7 +4,11 @@
     <div class="graph-card-title">
       <span class="graph-card-title__primary">
         Specific Conductivity (uS)
-        <v-dialog v-model="controls.conductiveDialog" persistent>
+        <v-dialog
+          v-model="controls.conductiveDialog"
+          content-class="nww-dialog"
+          persistent
+        >
           <i slot="activator" class="material-icons graph-card-title__icon">
             info_outline
           </i>

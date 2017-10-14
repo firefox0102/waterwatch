@@ -4,7 +4,11 @@
     <div class="graph-card-title">
       <span class="graph-card-title__primary">
         Rainfall (inches)
-        <v-dialog v-model="controls.rainDialog" persistent>
+        <v-dialog
+          v-model="controls.rainDialog"
+          content-class="nww-dialog"
+          persisten
+        t>
           <i slot="activator" class="material-icons graph-card-title__icon">
             info_outline
           </i>

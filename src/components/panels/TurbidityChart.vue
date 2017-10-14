@@ -4,7 +4,11 @@
     <div class="graph-card-title">
       <span class="graph-card-title__primary">
         Turbidity
-        <v-dialog v-model="controls.turbidityDialog" persistent>
+        <v-dialog
+          v-model="controls.turbidityDialog"
+          content-class="nww-dialog"
+          persistent
+        >
           <i slot="activator" class="material-icons graph-card-title__icon">
             info_outline
           </i>
