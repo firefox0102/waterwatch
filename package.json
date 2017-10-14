@@ -20,6 +20,7 @@
     "firebaseui": "^2.2.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
+    "print-js": "^1.0.20",
     "vue": "^2.3.4",
     "vue-lodash": "^1.0.3",
     "vue-router": "^2.3.1",
