@@ -36,18 +36,22 @@
                 <span class="controls-card-control-group__title">Select date range:</span>
                 <div class="date-picker-wrapper">
                   <div class="site-reports-toolbar-datepicker">
-                    <v-dialog
-                      persistent
-                      v-model="controls.startDateModal"
+                    <v-menu
                       lazy
-                      full-width>
+                      :close-on-content-click="false"
+                      v-model="controls.startDateModal"
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      :nudge-left="40"
+                      max-width="290px">
                       <div
                         class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
                         <span class="site-reports-toolbar-datepicker__activator-text">{{ startDate ? startDate : "Start Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <v-date-picker v-model="startDate" scrollable >
+                      <v-date-picker v-model="startDate" no-title scrollable actions>
                         <template scope="{ save, cancel }">
                           <v-card-actions>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -55,21 +59,25 @@
                           </v-card-actions>
                         </template>
                       </v-date-picker>
-                    </v-dialog>
+                    </v-menu>
                   </div>
                   <div class="site-reports-toolbar-datepicker">
-                    <v-dialog
-                      persistent
-                      v-model="controls.endDateModal"
+                    <v-menu
                       lazy
-                      full-width>
+                      :close-on-content-click="false"
+                      v-model="controls.endDateModal"
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      :nudge-left="40"
+                      max-width="290px">
                       <div
                         class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
                         <span class="site-reports-toolbar-datepicker__activator-text">{{ endDate ? endDate : "End Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <v-date-picker v-model="endDate" scrollable >
+                      <v-date-picker v-model="endDate" no-title scrollable actions>
                         <template scope="{ save, cancel }">
                           <v-card-actions>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -77,7 +85,7 @@
                           </v-card-actions>
                         </template>
                       </v-date-picker>
-                    </v-dialog>
+                    </v-menu>
                   </div>
                 </div>
               </div>
