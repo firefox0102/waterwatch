@@ -151,7 +151,7 @@
               v-bind:pagination.sync="pagination"
               v-bind:search="controls.search"
               select-all
-              selected-key="logbookNumber"
+              selected-key=".key"
               class="elevation-1"
             >
             <template slot="headers" scope="props">
@@ -175,7 +175,10 @@
               </tr>
             </template>
             <template slot="items" scope="props">
-              <tr :active="props.selected" @click="props.selected = !props.selected">
+              <tr
+                :active="props.selected"
+                @click="props.selected = !props.selected"
+              >
                 <td>
                   <v-checkbox
                     primary

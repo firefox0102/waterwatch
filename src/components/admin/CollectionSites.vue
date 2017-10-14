@@ -138,7 +138,10 @@
              </tr>
             </template>
             <template slot="items" scope="props">
-              <tr :active="props.selected" @click="props.selected = !props.selected">
+              <tr
+                :active="props.selected"
+                @click="props.selected = !props.selected"
+              >
                 <td>
                   <v-checkbox
                     primary
