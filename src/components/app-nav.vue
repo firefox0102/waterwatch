@@ -9,7 +9,7 @@
       enable-resize-watcher
       v-model="controls.sidebarOpen">
       <router-link
-        class="app-sidebar__link"
+        class="app-sidebar__link list__tile--active"
         v-for="(item, index) in arrNav"
         v-if="item.auth === !!user"
         v-bind:to="item.path"
@@ -19,14 +19,14 @@
       </router-link>
       <a
         v-if="user"
-        class="app-sidebar__link"
+        class="app-sidebar__link list__tile--active"
         v-on:click="logout()">
         <i class="material-icons app-sidebar__icon">lock</i>
         Sign Out
       </a>
       <router-link
         v-else
-        class="app-sidebar__link"
+        class="app-sidebar__link list__tile--active"
         to="/signIn">
         <i class="material-icons app-sidebar__icon">lock</i>
         Admin
@@ -156,6 +156,11 @@ $nav-split-breakpoint: 820px;
     font-weight: 500;
     line-height: 24px;
     text-decoration: none;
+
+    &:hover,
+    &:hover i {
+      color: $color-warlock !important;
+    }
 
     &:nth-of-type(1) {
       margin-top: 24px;
