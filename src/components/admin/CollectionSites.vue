@@ -6,7 +6,7 @@
           Collection Sites
         </div>
         <div class="collection-sites-header__subheader--bold">
-          {{ this.metaData[0] ? metaData[0]['.value'] : 0 }} active of {{ this.metaData[2] ? metaData[2]['.value'] : 0 }} total sites
+          {{ this.metaData[0] ? metaData[0]['.value'] : 0 }} active of {{ this.metaData[3] ? metaData[3]['.value'] : 0 }} total sites
         </div>
         <div class="collection-sites-header__subheader">
           Select a site to view logged data. Create and export reports of logged data for one or many collection sites.
@@ -197,6 +197,7 @@ import moment from 'moment'
 let collectionSitesRef = db.ref('collectionSites')
 let archivedRef = db.ref('archivedSites')
 let metaRef = db.ref('metaData')
+let activeSitesRef = db.ref('metaData/actuveSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
 let oldDate = moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD')
 
@@ -209,6 +210,7 @@ export default {
   firebase () {
     return {
       collectionSites: collectionSitesRef.orderByChild('lastCollectionDate').startAt(oldDate).endAt(todaysDate),
+      activeSitesFB: activeSitesRef,
       metaData: metaRef
     }
   },
