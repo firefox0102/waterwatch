@@ -77,14 +77,6 @@
               class="input-group--limit-height"
               v-model="newLogData.analyst">
           </v-text-field>
-          <v-select
-            v-if="labSet"
-            v-bind:items="labSet"
-            v-model="newLogData.lab"
-            label="Lab"
-            class="input-group--limit-height"
-            bottom>
-          </v-select>
         </div>
 
         <!-- Column 2 -->
@@ -332,14 +324,12 @@
 
   let collectionSitesRef = db.ref('collectionSites')
   let logbookNumberRef = db.ref('metaData/logbookNumber')
-  let labsRef = db.ref('labs')
 
   export default {
     name: 'log-data',
     firebase: {
       collectionSites: collectionSitesRef,
-      logbookNumber: logbookNumberRef,
-      labs: labsRef
+      logbookNumber: logbookNumberRef
     },
     watch: {
       logbookNumber: {
@@ -356,11 +346,6 @@
             }
             this.$bindAsArray('reports', db.ref('reports/' + newSite['.key']))
           }
-        }
-      },
-      labs: {
-        handler (newSite) {
-          this.labSet = _.map(this.labs, '.value')
         }
       },
       collectionSites: {
@@ -394,9 +379,7 @@
     },
     data: function () {
       return {
-        labs: [],
         collectionSites: [],
-        labSet: [],
         selectedSite: null,
         logbookNumber: null,
         formValid: false,
@@ -511,7 +494,6 @@
           incubationOut: '',
           incubationTemp: null,
           incubationTime: '',
-          lab: 'Atlanta',
           logbookNumber: 1,
           nitrate: null,
           phosphate: null,
@@ -598,7 +580,6 @@
           incubationOut: '',
           incubationTemp: oldLog.incubationTemp,
           incubationTime: '',
-          lab: 'Atlanta',
           logbookNumber: 0,
           nitrate: null,
           phosphate: null,

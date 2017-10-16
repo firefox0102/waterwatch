@@ -15,12 +15,12 @@
           v-on:submit.prevent="submitForm">
           <v-text-field label="Station Name" v-model="newCollectionSite.stationName" required></v-text-field>
           <v-text-field label="Logbook Abbreviation" v-model="newCollectionSite.logbookAbbv" required></v-text-field>
-          <v-text-field label="Adopt A Stream Name" v-model="newCollectionSite.adoptAStreamName" required></v-text-field>
+          <v-text-field label="Adopt A Stream Name" v-model="newCollectionSite.adoptAStreamName"></v-text-field>
           <v-text-field label="HUC Name" v-model="newCollectionSite.hucName" required></v-text-field>
           <v-text-field label="HUC" type="number" v-model="newCollectionSite.huc" required></v-text-field>
-          <v-text-field label="Latitude" v-model="newCollectionSite.latitude" required></v-text-field>
-          <v-text-field label="Longitude" v-model="newCollectionSite.longitude" required></v-text-field>
-          <v-text-field label="Storet Name" v-model="newCollectionSite.storetName" required></v-text-field>
+          <v-text-field label="Latitude (eg. 34.004401)" v-model="newCollectionSite.latitude" required></v-text-field>
+          <v-text-field label="Longitude (eg. -84.350555)" v-model="newCollectionSite.longitude" required></v-text-field>
+          <v-text-field label="Storet Name" v-model="newCollectionSite.storetName"></v-text-field>
           <v-select
             v-bind:items="partnerSet"
             v-model="newCollectionSite.collectionPartner"
@@ -36,6 +36,7 @@
             item-text=".value"
             item-value=".value"
             label="Lab"
+            required
             bottom>
           </v-select>
           <v-checkbox v-bind:label="`Is Private: ${ newCollectionSite.isPrivate ? 'true' : 'false' }`" v-model="newCollectionSite.isPrivate" success></v-checkbox>

@@ -37,7 +37,7 @@
         <v-toolbar-title class="app-sidebar-toggle">
           <v-toolbar-side-icon @click.native.stop="controls.sidebarOpen = !controls.sidebarOpen"></v-toolbar-side-icon>
         </v-toolbar-title>
-        <img class="app-nav__crk-logo" src="../assets/client-logo-crk.png"/>
+        <a href="http://www.chattahoochee.org" target="_blank"><img class="app-nav__crk-logo" src="../assets/client-logo-crk.png"/></a>
         <img class="app-nav__nww-logo" src="../assets/nww-logo.png"/>
       </div>
       <div class="app-nav__secondary-section">
