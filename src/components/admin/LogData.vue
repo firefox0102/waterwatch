@@ -162,7 +162,7 @@
             </v-text-field>
           </div>
 
-          <a class="log-data-total">Coliform (MPN/100mL) = {{ getTotalColiform }}</a>
+          <a class="log-data-total">Total Coliform (MPN/100mL) = {{ getTotalColiform }}</a>
 
           <div class="log-data-section-wrapper">
             <div class="page-content-body__header">

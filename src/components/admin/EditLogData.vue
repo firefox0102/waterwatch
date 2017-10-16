@@ -85,14 +85,6 @@
                     class="input-group--limit-height"
                     v-model="targetLogData.analyst">
                 </v-text-field>
-                <v-select
-                  v-if="labSet"
-                  v-bind:items="labSet"
-                  v-model="targetLogData.lab"
-                  label="Lab"
-                  class="input-group--limit-height"
-                  bottom>
-                </v-select>
               </div>
 
               <!-- Column 2 -->
@@ -174,7 +166,7 @@
                   </v-text-field>
                 </div>
 
-                <a class="log-data-total">Total Coliform = {{ getTotalColiform }}</a>
+                <a class="log-data-total">Total Coliform (MPN/100mL) = {{ getTotalColiform }}</a>
 
                 <div class="log-data-section-wrapper">
                   <div class="page-content-body__header">
@@ -194,7 +186,7 @@
                   </v-text-field>
                 </div>
 
-                <a class="log-data-total">Total E. coli = {{ getTotalEcoli }}</a>
+                <a class="log-data-total">E. coli (MPN/100mL) = {{ getTotalEcoli }}</a>
 
                 <div
                   class="form-input-sub-text"
@@ -322,23 +314,17 @@
   } from '../../helpers/firebase'
   import _ from 'lodash'
   import moment from 'moment'
+  import { matrix } from '../../helpers/coeffecient'
 
   let collectionSitesRef = db.ref('collectionSites')
-  let labsRef = db.ref('labs')
 
   export default {
     name: 'edit-log-data',
     props: ['targetLogData'],
     firebase: {
-      collectionSites: collectionSitesRef,
-      labs: labsRef
+      collectionSites: collectionSitesRef
     },
     watch: {
-      labs: {
-        handler (newSite) {
-          this.labSet = _.map(this.labs, '.value')
-        }
-      },
       collectionSites: {
         handler (newSites) {
           this.selectedSite = _.find(newSites, '.key', this.targetLogData.collectionSiteId)
@@ -346,29 +332,24 @@
       }
     },
     computed: { // TODO fix these equations
-      getTotalColiform: function () {
-        var num1 = parseInt(this.targetLogData.coliformLargeCells)
-        var num2 = parseInt(this.targetLogData.coliformSmallCells)
-        if (num1 + num2) {
-          return num1 + num2
-        } else {
-          return ''
+      getTotalColiform () {
+        if (this.targetLogData.coliformLargeCells && this.targetLogData.coliformSmallCells && this.targetLogData.dilution) {
+          let matrixValue = matrix[this.targetLogData.coliformLargeCells][this.targetLogData.coliformSmallCells]
+          let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
+          return matrixValue * dilutionFactor
         }
+        return 0
       },
-      getTotalEcoli: function () {
-        var num1 = parseInt(this.ecoliLargeCells)
-        var num2 = parseInt(this.ecoliSmallCells)
-        if (num1 + num2) {
-          return num1 + num2
-        } else {
-          return ''
+      getTotalEcoli () {
+        if (this.ecoliLargeCells && this.ecoliSmallCells && this.targetLogData.dilution) {
+          let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
+          let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
+          return matrixValue * dilutionFactor
         }
       }
     },
     data: function () {
       return {
-        labs: [],
-        labSet: [],
         collectionSites: [],
         selectedSite: null,
         formValid: false,

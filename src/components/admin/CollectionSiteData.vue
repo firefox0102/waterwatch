@@ -15,10 +15,17 @@
         <div class="collection-data-group">
           <div class="collection-data-group__row">
             <span class="collection-data-group__text--strong">
-              HUC:
+              Subwatershed (HUC12):
             </span>
             <span class="collection-data-group__text">
               {{ site ? site.huc : '' }}
+            </span>
+            <span class="collection-data-group__divider">|</span>
+            <span class="collection-data-group__text--strong">
+              Lab:
+            </span>
+            <span class="collection-data-group__text">
+              {{ site ? site.lab : '' }}
             </span>
             <span class="collection-data-group__divider">|</span>
             <span class="collection-data-group__text--strong">
@@ -287,12 +294,12 @@ export default {
         { text: 'Collection Date', value: 'collectionDate' },
         { text: 'Collection Time', value: 'collectionTime' },
         { text: 'Analyst', value: 'analyst' },
-        { text: 'Total Coliform', value: 'totalColiform' },
-        { text: 'E. coli', value: 'totalEcoli' },
+        { text: 'Total Coliform (MPN/100mL)', value: 'totalColiform' },
+        { text: 'E. coli (MPN/100mL)', value: 'totalEcoli' },
         { text: 'Fluorometry', value: 'fluorometry' },
         { text: 'Turbidity (NTU)', value: 'turbidity' },
         { text: 'Conductivity (uS)', value: 'specifcConductivity' },
-        { text: 'Rainfall', value: 'precipitation' },
+        { text: 'Rainfall (in)', value: 'precipitation' },
         { text: 'Incubation In Time', value: 'incubationTime' },
         { text: '# mL/100mL (Dilution)', value: 'dilution' },
         { text: 'Incubation Temp', value: 'incubationTemp' },
