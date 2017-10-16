@@ -9,6 +9,7 @@
           <data-map-banner :selected-site="selectedSite"></data-map-banner>
           <div id='menu' class="data-map__menu"></div>
           <div id='map' class="data-map__map"></div>
+
         </div>
       </div>
 
@@ -139,6 +140,7 @@
 <script>
 import { db } from '../../helpers/firebase'
 import { MapHelper } from '../../helpers/mapHelper'
+// import {FullExtent} from '../../helpers/map-fullextent'
 import _ from 'lodash'
 import moment from 'moment'
 import VueHighcharts from 'vue2-highcharts'
