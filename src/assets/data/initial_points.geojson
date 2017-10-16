@@ -1,0 +1,3290 @@
+{
+   "type": "FeatureCollection",
+   "features": [
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.87846,34.3625 ]
+    },
+    "properties": {
+    "Name":"Ada Creek @ Ledan Rd",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":1545,
+    "Turbidity (NTU)":40.62,
+    "Specific Conductivity (�S)":334.3
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.3762,33.793801 ]
+    },
+    "properties": {
+    "Name":"Ansley Stream at The Dell",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.378662,33.791386 ]
+    },
+    "properties": {
+    "Name":"Ansley Stream at Winn Park ",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.09799,34.24471 ]
+    },
+    "properties": {
+    "Name":"Baldridge Creek Trib @ Central Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.321018,33.978694 ]
+    },
+    "properties": {
+    "Name":"Ball Mill Creek at Spalding",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.88286,34.2458 ]
+    },
+    "properties": {
+    "Name":"Balus Creek @ Mundy Mill Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.868576,34.242034 ]
+    },
+    "properties": {
+    "Name":"Balus Creek @ Old Oakwood Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.89055,34.24744 ]
+    },
+    "properties": {
+    "Name":"Balus Creek @ Stephens Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.88242,34.23288 ]
+    },
+    "properties": {
+    "Name":"Balus Trib @ Old Oakwood Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.420681,33.816536 ]
+    },
+    "properties": {
+    "Name":"Beaverbrook Park",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":805,
+    "Turbidity (NTU)":5.09,
+    "Specific Conductivity (�S)":135.9
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.009952,33.097885 ]
+    },
+    "properties": {
+    "Name":"Beech Creek @ Youngs Mill Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.303087,34.037469 ]
+    },
+    "properties": {
+    "Name":"Big Creek at Big Creek Park",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":100,
+    "Turbidity (NTU)":19.42,
+    "Specific Conductivity (�S)":84.6
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.284718,34.042034 ]
+    },
+    "properties": {
+    "Name":"Big Creek at Haynes Bridge Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.269473,34.050577 ]
+    },
+    "properties": {
+    "Name":"Big Creek at Kimball Bridge Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.32666,34.029362 ]
+    },
+    "properties": {
+    "Name":"Big Creek at Old Holcomb Bridge Rd",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":205,
+    "Turbidity (NTU)":8.29,
+    "Specific Conductivity (�S)":103.2
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.350204,34.006291 ]
+    },
+    "properties": {
+    "Name":"Big Creek at Riverside Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.952362,34.157178 ]
+    },
+    "properties": {
+    "Name":"Big Creek North Fork @ Gainesville Hwy",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.952363,34.15718 ]
+    },
+    "properties": {
+    "Name":"Big Creek South Fork @ Gainesville Hwy",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.142811,34.201846 ]
+    },
+    "properties": {
+    "Name":"Big Creek Trib @ Cumming Fairgrounds",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.323928,34.030691 ]
+    },
+    "properties": {
+    "Name":"Big Creek Wetland at Old Holcomb Bridge",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":315,
+    "Turbidity (NTU)":14.51,
+    "Specific Conductivity (�S)":74.7
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.051846,32.998903 ]
+    },
+    "properties": {
+    "Name":"Blue John Creek @ Orchard Hill Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.30371,33.805 ]
+    },
+    "properties": {
+    "Name":"Burnt Fork Creek at Mason Mill Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.267052,33.83164 ]
+    },
+    "properties": {
+    "Name":"Burnt Fork Creek Near Frazier Road",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.44212,33.657168 ]
+    },
+    "properties": {
+    "Name":"Camp Creek at Adams/Hawthorne",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.467229,33.657735 ]
+    },
+    "properties": {
+    "Name":"Camp Creek at Fairway Drive",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.82125,33.481904 ]
+    },
+    "properties": {
+    "Name":"Cedar Creek at Hwy 70N",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.104608,33.311158 ]
+    },
+    "properties": {
+    "Name":"Centralhatchee creek @ Franklin Pkway",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.996492,32.472598 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee @ Riverwalk",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.68527,34.67821 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River @ Bottom Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.808415,33.578918 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River at Capps Ferry Bridge (S. Fulton Pkwy)",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.180221,32.877685 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River at City of West Point (LaGrange Sierra Club)",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.443142,33.90292 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River at Cochran Shoals - Powers Island",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.10121,33.278245 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River at Franklin",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.26276,33.973652 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River at Holcomb Bridge Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.40528,33.943813 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River at Johnson Ferry Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.502084,33.800979 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River at Riverview boat ramp",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.350555,34.004401 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River at Roswell Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.480244,33.817541 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River at S Cobb Dr",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.50785,33.795557 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River at Veterans Memorial Bridge",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.901097,33.47662 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River at Whitesburg",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.384585,33.995199 ]
+    },
+    "properties": {
+    "Name":"Chattahoochee River at Willeo Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.386344,33.806736 ]
+    },
+    "properties": {
+    "Name":"Clear Creek at Brookwood",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":4935,
+    "Turbidity (NTU)":17.56,
+    "Specific Conductivity (�S)":134
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.370882,33.78968 ]
+    },
+    "properties": {
+    "Name":"Clear Creek at Daylight Tunnel in Piedmont Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.369799,33.796159 ]
+    },
+    "properties": {
+    "Name":"Clear Creek at Piedmont Ave",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.425298,33.760295 ]
+    },
+    "properties": {
+    "Name":"CSO at Greensferry",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":1615,
+    "Turbidity (NTU)":14.18,
+    "Specific Conductivity (�S)":0.5
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.42594,33.768604 ]
+    },
+    "properties": {
+    "Name":"CSO at North Ave. ",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.39655,33.800018 ]
+    },
+    "properties": {
+    "Name":"CSO at Tanyard Creek",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.044409,33.073324 ]
+    },
+    "properties": {
+    "Name":"Dixie Creek @ Mooty Bridge Road",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.377219,33.829024 ]
+    },
+    "properties": {
+    "Name":"E Wesley Tributary at Garden Hills Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.79957,34.45743 ]
+    },
+    "properties": {
+    "Name":"East Fork Little River @ Green Cir",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.79799,34.39416 ]
+    },
+    "properties": {
+    "Name":"East Fork Little River @ Honeysuckle Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.384535,33.952178 ]
+    },
+    "properties": {
+    "Name":"Falling Branches at Brandon Mill",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":260,
+    "Turbidity (NTU)":1.41,
+    "Specific Conductivity (�S)":71.9
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.390043,33.952283 ]
+    },
+    "properties": {
+    "Name":"Falling Branches at Riverside",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.322044,33.776458 ]
+    },
+    "properties": {
+    "Name":"Fernbank Creek @ Fernbank Forest",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":315,
+    "Turbidity (NTU)":11.31,
+    "Specific Conductivity (�S)":93
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.83934,34.28204 ]
+    },
+    "properties": {
+    "Name":"Flat Creek @ Atlanta Hwy",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.848595,34.271696 ]
+    },
+    "properties": {
+    "Name":"Flat Creek @ Dixie Drive",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.832433,34.281333 ]
+    },
+    "properties": {
+    "Name":"Flat Creek @ Dorsey St",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.82288,34.28308 ]
+    },
+    "properties": {
+    "Name":"Flat Creek @ Georgia Ave",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.73651,34.42352 ]
+    },
+    "properties": {
+    "Name":"Flat Creek @ Glade Farm Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.83012,34.28132 ]
+    },
+    "properties": {
+    "Name":"Flat Creek @ Industrial Blvd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.88435,34.26614 ]
+    },
+    "properties": {
+    "Name":"Flat Creek @�McEver Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.81726,34.29006 ]
+    },
+    "properties": {
+    "Name":"Flat Creek @ Moreno St",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.86837,34.26896 ]
+    },
+    "properties": {
+    "Name":"Flat Creek @ Old Flowery Branch Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.83131,34.28222 ]
+    },
+    "properties": {
+    "Name":"Flat Creek Trib @ Davis St",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.115997,32.836891 ]
+    },
+    "properties": {
+    "Name":"Flat Shoals Creek at GA 103N",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.330543,34.061122 ]
+    },
+    "properties": {
+    "Name":"Foe Killer at Hembree Rd",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":2340,
+    "Turbidity (NTU)":12.48,
+    "Specific Conductivity (�S)":39.4
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.802071,32.793935 ]
+    },
+    "properties": {
+    "Name":"Fort Creek @ Hwy 116",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.810911,32.805695 ]
+    },
+    "properties": {
+    "Name":"Fort Creek @ J Street",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.01103,34.25776 ]
+    },
+    "properties": {
+    "Name":"Four Mile Creek @ Avery Bridge Ln",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.266923,32.697494 ]
+    },
+    "properties": {
+    "Name":"Halawakee Creek at Hwy 29",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.193773,32.912224 ]
+    },
+    "properties": {
+    "Name":"Hardley Creek at Stateline Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.428653,33.924339 ]
+    },
+    "properties": {
+    "Name":"Heards Creek at River Chase Circle",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.35053,34.029589 ]
+    },
+    "properties": {
+    "Name":"Hogwallow at Charles Place",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.365976,34.036047 ]
+    },
+    "properties": {
+    "Name":"Hogwallow at Roswell Area Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.909,34.35994 ]
+    },
+    "properties": {
+    "Name":"Johnson Creek @ Ledan Ext",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.512232,33.84519 ]
+    },
+    "properties": {
+    "Name":"Laurel Lake Tributary at Cooper Lake Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.80471,34.32628 ]
+    },
+    "properties": {
+    "Name":"Limestone Creek @ Limestone Pkwy",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.364987,33.868226 ]
+    },
+    "properties": {
+    "Name":"Little Nancy Creek at Ivy Bridge",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.132694,32.944034 ]
+    },
+    "properties": {
+    "Name":"Long Cane Creek at Gabbettville Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.072256,32.966233 ]
+    },
+    "properties": {
+    "Name":"Long Cane Creek at New Hutchinson Mill Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.159356,32.865796 ]
+    },
+    "properties": {
+    "Name":"Long Cane Creek at Old West Point Rd. (LaGrange Sierra Club)",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.025478,32.972412 ]
+    },
+    "properties": {
+    "Name":"Long Cane Creek at Whitesville Rd - GA 219",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.383211,33.90818 ]
+    },
+    "properties": {
+    "Name":"Long Island Creek at Kingsport Dr (WASS)",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":2275,
+    "Turbidity (NTU)":14,
+    "Specific Conductivity (�S)":100.1
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.396679,33.901952 ]
+    },
+    "properties": {
+    "Name":"Long Island Creek at Long Island Dr (WASS)",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":1230,
+    "Turbidity (NTU)":12.57,
+    "Specific Conductivity (�S)":90.4
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.42644,33.886195 ]
+    },
+    "properties": {
+    "Name":"Long Island Creek at Northside Drive",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.83981,34.31382 ]
+    },
+    "properties": {
+    "Name":"Longwood Park Creek @ Wessell Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.336149,33.773945 ]
+    },
+    "properties": {
+    "Name":"Lullwater Creek at Ponce de Leon",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":2130,
+    "Turbidity (NTU)":13.42,
+    "Specific Conductivity (�S)":143.2
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.325569,33.775925 ]
+    },
+    "properties": {
+    "Name":"Lullwater Creek at Wildwood",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":2915,
+    "Turbidity (NTU)":4.78,
+    "Specific Conductivity (�S)":120.2
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.373657,33.937415 ]
+    },
+    "properties": {
+    "Name":"Marsh Creek at Abernathy Rd. (WASS)",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.366514,33.940377 ]
+    },
+    "properties": {
+    "Name":"Marsh Creek at Glenridge Dr (WASS)",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.395207,33.946043 ]
+    },
+    "properties": {
+    "Name":"Marsh Creek at Riverside Dr.",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.374786,33.940878 ]
+    },
+    "properties": {
+    "Name":"Marsh Creek at Roswell Rd (WASS)",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.34721,33.950011 ]
+    },
+    "properties": {
+    "Name":"Marsh Creek at Winding Branch (WASS)",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.3666974,33.9389453 ]
+    },
+    "properties": {
+    "Name":"Marsh Tributary Glenridge @ Glenridge Dr. (WASS)",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.373975,33.861725 ]
+    },
+    "properties": {
+    "Name":"Mill Creek at Land O Lakes",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":1725,
+    "Turbidity (NTU)":12.31,
+    "Specific Conductivity (�S)":96.3
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.38045,33.86592 ]
+    },
+    "properties": {
+    "Name":"Mill Creek at Nancy Creek",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":3560,
+    "Turbidity (NTU)":7.86,
+    "Specific Conductivity (�S)":60.4
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.17043,32.812739 ]
+    },
+    "properties": {
+    "Name":"Moores Creek at Hwy29",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.91933,34.21463 ]
+    },
+    "properties": {
+    "Name":"Mud Creek @ Rafe Ct",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.923156,34.221732 ]
+    },
+    "properties": {
+    "Name":"Mud Creek @ Stephens Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.3312,33.90357 ]
+    },
+    "properties": {
+    "Name":"Nancy Creek at Ashford Dunwoody",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.310838,33.911351 ]
+    },
+    "properties": {
+    "Name":"Nancy Creek at Chamblee-Dunwoody",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.424437,33.8597 ]
+    },
+    "properties": {
+    "Name":"Nancy Creek at Randall Mill Rd",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":2865,
+    "Turbidity (NTU)":45.44,
+    "Specific Conductivity (�S)":35.1
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.378566,33.869231 ]
+    },
+    "properties": {
+    "Name":"Nancy Creek at Rickenbacker Dr",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":1820,
+    "Turbidity (NTU)":26.86,
+    "Specific Conductivity (�S)":73.1
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.360148,33.89708 ]
+    },
+    "properties": {
+    "Name":"Nancy Creek at Ridgeview Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.380912,33.866148 ]
+    },
+    "properties": {
+    "Name":"Nancy Creek at Roswell Rd",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":1635,
+    "Turbidity (NTU)":25.97,
+    "Specific Conductivity (�S)":71.3
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.439248,33.838381 ]
+    },
+    "properties": {
+    "Name":"Nancy Creek at West Wesley Rd",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":1895,
+    "Turbidity (NTU)":48.18,
+    "Specific Conductivity (�S)":70.3
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.52213,33.79012 ]
+    },
+    "properties": {
+    "Name":"Nickajack Creek at Discovery Blvd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.5075,33.8177 ]
+    },
+    "properties": {
+    "Name":"Nickajack Creek at Nickajack Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.5296,33.7154 ]
+    },
+    "properties": {
+    "Name":"Niskey Lake",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":50,
+    "Turbidity (NTU)":4.13,
+    "Specific Conductivity (�S)":73
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.531873,33.850417 ]
+    },
+    "properties": {
+    "Name":"North Cooper Lake Creek at King Valley",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.326263,33.915352 ]
+    },
+    "properties": {
+    "Name":"North Fork Nancy Creek",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.230762,33.867687 ]
+    },
+    "properties": {
+    "Name":"North Fork Peachtree Creek at Henderson Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.358494,33.820788 ]
+    },
+    "properties": {
+    "Name":"North Fork Peachtree Creek at Lindberg",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.360602,33.785494 ]
+    },
+    "properties": {
+    "Name":"Orme Creek @ Orme Park",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":2070,
+    "Turbidity (NTU)":3.92,
+    "Specific Conductivity (�S)":199.7
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.370477,33.792272 ]
+    },
+    "properties": {
+    "Name":"Orme Creek at Clear Creek in Piedmont Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.161514,32.757702 ]
+    },
+    "properties": {
+    "Name":"Osanippa Creek at Hopewell Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.196544,32.901629 ]
+    },
+    "properties": {
+    "Name":"Oseligee Creek at Fredonia Hwy",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.184398,32.889404 ]
+    },
+    "properties": {
+    "Name":"Oseligee Creek at Stateline Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.273355,34.042574 ]
+    },
+    "properties": {
+    "Name":"Palisades Creek at Alpharetta Big Creek Greenway Trail",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.407499,33.82028 ]
+    },
+    "properties": {
+    "Name":"Peachtree Creek at Northside Drive",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.366659,33.817242 ]
+    },
+    "properties": {
+    "Name":"Peachtree Creek at Piedmont Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.449747,33.826519 ]
+    },
+    "properties": {
+    "Name":"Peachtree Creek at Ridgewood Rd",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":5085,
+    "Turbidity (NTU)":44.49,
+    "Specific Conductivity (�S)":34.5
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.327611,33.787621 ]
+    },
+    "properties": {
+    "Name":"Peavine Creek @ N. Decatur",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":3770,
+    "Turbidity (NTU)":7.54,
+    "Specific Conductivity (�S)":109.8
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.335133,33.801323 ]
+    },
+    "properties": {
+    "Name":"Peavine Creek at Old Briarcliff Road",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.305197,33.777772 ]
+    },
+    "properties": {
+    "Name":"Peavine Tributary at Tanyard Garden",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":3745,
+    "Turbidity (NTU)":20.46,
+    "Specific Conductivity (�S)":163.8
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.384223,33.825906 ]
+    },
+    "properties": {
+    "Name":"PHENA Duck Pond East",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":545,
+    "Turbidity (NTU)":3.02,
+    "Specific Conductivity (�S)":202
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.385046,33.825384 ]
+    },
+    "properties": {
+    "Name":"PHENA Duck Pond West",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":1230,
+    "Turbidity (NTU)":2.28,
+    "Specific Conductivity (�S)":234.3
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.73268,33.912603 ]
+    },
+    "properties": {
+    "Name":"Powder Springs Creek North",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.733476,33.911505 ]
+    },
+    "properties": {
+    "Name":"Powder Springs Creek South",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.362717,33.964128 ]
+    },
+    "properties": {
+    "Name":"Powers Branch at Big Trees Preserve",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.428253,33.753102 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at Burbank Dr",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":1005,
+    "Turbidity (NTU)":5.38,
+    "Specific Conductivity (�S)":192.9
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.421905,33.744593 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at Dean Rusk Park",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":4800,
+    "Turbidity (NTU)":27.44,
+    "Specific Conductivity (�S)":27.2
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.429956,33.771809 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at Donald Lee Hollowell",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":1725,
+    "Turbidity (NTU)":11.84,
+    "Specific Conductivity (�S)":176.7
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.437788,33.7761 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at Francis",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.440846,33.77586 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at Hortense Way",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":3855,
+    "Turbidity (NTU)":9.27,
+    "Specific Conductivity (�S)":50.4
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.474154,33.794546 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at James Jackson Pkwy",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":2915,
+    "Turbidity (NTU)":13.26,
+    "Specific Conductivity (�S)":174.4
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.450569,33.783977 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at Johnson Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.428162,33.763599 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at Joseph E Boone",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.452206,33.792407 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at Kerry Circle (Westside Atlanta Charter School)",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":3585,
+    "Turbidity (NTU)":17.84,
+    "Specific Conductivity (�S)":147.6
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.426658,33.783746 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at Knight Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.42757,33.768105 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at North Ave",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":3970,
+    "Turbidity (NTU)":8.83,
+    "Specific Conductivity (�S)":208.9
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.486901,33.799301 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at Northwest Drive",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":2480,
+    "Turbidity (NTU)":11.72,
+    "Specific Conductivity (�S)":196.8
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.432866,33.747396 ]
+    },
+    "properties": {
+    "Name":"Proctor Creek at Westview Dr",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.486105,33.796356 ]
+    },
+    "properties": {
+    "Name":"Proctor Tributary AD Williams at Northwest",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.479102,33.798612 ]
+    },
+    "properties": {
+    "Name":"Proctor Tributary at Lillian Cooper Shepherd Park",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":425,
+    "Turbidity (NTU)":9.34,
+    "Specific Conductivity (�S)":234
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.417658,33.779005 ]
+    },
+    "properties": {
+    "Name":"Proctor Tributary at Mopac",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.43899,33.768039 ]
+    },
+    "properties": {
+    "Name":"Proctor Tributary Grove at North (E)",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.440281,33.77391 ]
+    },
+    "properties": {
+    "Name":"Proctor Tributary Grove Park at Grove Park",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":605,
+    "Turbidity (NTU)":5.36,
+    "Specific Conductivity (�S)":174.4
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.458137,33.770282 ]
+    },
+    "properties": {
+    "Name":"Proctor Tributary Lincoln at Baker Cir",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.457523,33.770246 ]
+    },
+    "properties": {
+    "Name":"Proctor Tributary Lincoln at Baker Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.462934,33.784267 ]
+    },
+    "properties": {
+    "Name":"Proctor Tributary Lincoln at Brooks Ave NW",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.461714,33.763486 ]
+    },
+    "properties": {
+    "Name":"Proctor Tributary Lincoln at Joseph E. Boone",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.46618,33.78859 ]
+    },
+    "properties": {
+    "Name":"Proctor Tributary Lincoln at Spring St. NW",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.416163,33.769392 ]
+    },
+    "properties": {
+    "Name":"Proctor Tributary Lindsay at Lindsay ",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":1460,
+    "Turbidity (NTU)":0.04,
+    "Specific Conductivity (�S)":425.5
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.426188,33.767455 ]
+    },
+    "properties": {
+    "Name":"Proctor Tributary Lindsey @ Valley of Hawks",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.457921,33.893906 ]
+    },
+    "properties": {
+    "Name":"Rottenwood Creek at Bob Callan Trail",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":100,
+    "Turbidity (NTU)":2.9,
+    "Specific Conductivity (�S)":101.1
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.104797,32.81582 ]
+    },
+    "properties": {
+    "Name":"Sand Creek at GA 103N",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.481796,33.766835 ]
+    },
+    "properties": {
+    "Name":"Sandy Creek at Baker Ridge Dr.",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":4800,
+    "Turbidity (NTU)":16.55,
+    "Specific Conductivity (�S)":79.2
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.499276,33.779413 ]
+    },
+    "properties": {
+    "Name":"Sandy Creek at Bolton Road",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":4545,
+    "Turbidity (NTU)":21.63,
+    "Specific Conductivity (�S)":85
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.508744,33.78186 ]
+    },
+    "properties": {
+    "Name":"Sandy Creek at Fulton Industrial",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.494531,33.769402 ]
+    },
+    "properties": {
+    "Name":"Sandy Creek at Harwell Rd NW",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.486139,33.772604 ]
+    },
+    "properties": {
+    "Name":"Sandy Creek at Jennie Drake Park",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":2085,
+    "Turbidity (NTU)":12.7,
+    "Specific Conductivity (�S)":114
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.49055,33.776054 ]
+    },
+    "properties": {
+    "Name":"Sandy Creek at Skipper Dr",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":1895,
+    "Turbidity (NTU)":15.6,
+    "Specific Conductivity (�S)":157.7
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.487104,33.770926 ]
+    },
+    "properties": {
+    "Name":"Sandy Creek at Waterford/Old Know",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.495084,33.767854 ]
+    },
+    "properties": {
+    "Name":"Sandy Tributary at Collier Dr",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":2825,
+    "Turbidity (NTU)":16.85,
+    "Specific Conductivity (�S)":107.8
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.66912,34.6849 ]
+    },
+    "properties": {
+    "Name":"Sautee Creek @ Lynch Mountain Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.324701,34.002484 ]
+    },
+    "properties": {
+    "Name":"Seven Branches at Martin Lake Spillway",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":50,
+    "Turbidity (NTU)":8.45,
+    "Specific Conductivity (�S)":24.7
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.30728,34.012424 ]
+    },
+    "properties": {
+    "Name":"Seven Branches at Martin Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.32603,34.002064 ]
+    },
+    "properties": {
+    "Name":"Seven Branches at Riverside Dr",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.451808,33.977184 ]
+    },
+    "properties": {
+    "Name":"Sewell Mill Creek at E Cobb Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.83498,34.55046 ]
+    },
+    "properties": {
+    "Name":"Shoal Creek @ Asbury Mill Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.011754,33.089076 ]
+    },
+    "properties": {
+    "Name":"Shoal Creek @ Youngs Mill Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.05789,34.2592 ]
+    },
+    "properties": {
+    "Name":"Six Mile Creek @ Burruss Mill Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.371999,33.792 ]
+    },
+    "properties": {
+    "Name":"Six Springs at Boardwalk",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.84173,34.32087 ]
+    },
+    "properties": {
+    "Name":"Slaughterhouse Creek @ Hollywood Ave",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.430338,33.92654 ]
+    },
+    "properties": {
+    "Name":"Sope Creek at Columns Dr",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.52928,34.61725 ]
+    },
+    "properties": {
+    "Name":"Soque River @ Pitts Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.336888,33.800573 ]
+    },
+    "properties": {
+    "Name":"South Fork Peachtree Creek at Briarcliff",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":46040,
+    "Turbidity (NTU)":27.14,
+    "Specific Conductivity (�S)":73.4
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.322391,33.804032 ]
+    },
+    "properties": {
+    "Name":"South Fork Peachtree Creek at Houston Mill Road",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.335549,33.803201 ]
+    },
+    "properties": {
+    "Name":"South Fork Peachtree Creek at Old Briarcliff Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.302754,33.805123 ]
+    },
+    "properties": {
+    "Name":"South Peachtree Creek at Mason Mill Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.463823,33.812608 ]
+    },
+    "properties": {
+    "Name":"Spink-Collins Tributary",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.9044,34.38939 ]
+    },
+    "properties": {
+    "Name":"Squirrel Creek @ Elrod Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.626894,33.728935 ]
+    },
+    "properties": {
+    "Name":"Sweetwater Creek at Summer Lake Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.401096,33.80197 ]
+    },
+    "properties": {
+    "Name":"Tanyard Algae Pipe at The Reserve",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":945,
+    "Turbidity (NTU)":2.79,
+    "Specific Conductivity (�S)":231.1
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.033903,33.016523 ]
+    },
+    "properties": {
+    "Name":"Tanyard Creek @ Swift St (LG)",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.4022,33.8081 ]
+    },
+    "properties": {
+    "Name":"Tanyard Creek in Tanyard Creek Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.82236,34.5834 ]
+    },
+    "properties": {
+    "Name":"Tesnatee Creek @ Town Creek Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.98722,34.286 ]
+    },
+    "properties": {
+    "Name":"Two Mile Creek @ Wallace Wood Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.5685,33.743519 ]
+    },
+    "properties": {
+    "Name":"Utoy Creek at Great Southwest Pkwy",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.479184,33.739148 ]
+    },
+    "properties": {
+    "Name":"Utoy Creek North @ Peyton Rd",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":3285,
+    "Turbidity (NTU)":23.13,
+    "Specific Conductivity (�S)":84.9
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.505681,33.739389 ]
+    },
+    "properties": {
+    "Name":"Utoy Creek North at Benjamin E Mays Dr SW",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.510369,33.728859 ]
+    },
+    "properties": {
+    "Name":"Utoy Creek North at Fairburn Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.455567,33.733619 ]
+    },
+    "properties": {
+    "Name":"Utoy Creek North Trib at Beecher Rd SW",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":2440,
+    "Turbidity (NTU)":27.5,
+    "Specific Conductivity (�S)":154.5
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.510288,33.72788 ]
+    },
+    "properties": {
+    "Name":"Utoy Creek South at Fairburn Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.454895,33.692803 ]
+    },
+    "properties": {
+    "Name":"Utoy Creek South Trib. at Connally Nature Park",
+    "Date":"6/8/17",
+    "Rain (in)":0,
+    "E. coli (MPN/100mL)":28970,
+    "Turbidity (NTU)":28.55,
+    "Specific Conductivity (�S)":86.2
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.875603,33.372659 ]
+    },
+    "properties": {
+    "Name":"Wahoo Creek @ Broad St",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.87664,34.42181 ]
+    },
+    "properties": {
+    "Name":"Wahoo Creek @ Hubert Stevens Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.861445,33.428282 ]
+    },
+    "properties": {
+    "Name":"Wahoo Creek at GA Hwy 27",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.780518,33.377849 ]
+    },
+    "properties": {
+    "Name":"Wahoo Creek at Greison Trail Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.788819,33.405764 ]
+    },
+    "properties": {
+    "Name":"Wahoo Creek at Hwy 29",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.811902,33.418931 ]
+    },
+    "properties": {
+    "Name":"Wahoo Creek at Hwy 70",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.911414,33.436815 ]
+    },
+    "properties": {
+    "Name":"Wahoo Creek at Wagers Mill Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.965127,32.483081 ]
+    },
+    "properties": {
+    "Name":"Weracoba Creek @ 19th avenue",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.961291,32.495333 ]
+    },
+    "properties": {
+    "Name":"Weracoba Creek @ Camille St",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.81727,34.45032 ]
+    },
+    "properties": {
+    "Name":"West Fork Little River @ Bethel Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.81751,34.4044 ]
+    },
+    "properties": {
+    "Name":"West Fork Little River @ Jim Hood Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.457508,33.870637 ]
+    },
+    "properties": {
+    "Name":"West Nancy Creek at Paces Mill",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.454802,33.819578 ]
+    },
+    "properties": {
+    "Name":"Whetstone Creek at Adams Dr",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.453066,33.81601 ]
+    },
+    "properties": {
+    "Name":"Whetstone Creek at La Dawn Ln",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -85.154013,33.15231 ]
+    },
+    "properties": {
+    "Name":"Whitewater Creek @ Liberty Hill Glenn Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.387138,33.993526 ]
+    },
+    "properties": {
+    "Name":"Willeo Creek at Willeo Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.84348,34.305008 ]
+    },
+    "properties": {
+    "Name":"Wilshire Creek @ Wilshire Trails Park",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.431643,33.80281 ]
+    },
+    "properties": {
+    "Name":"Woodall Creek at Chattahoochee Ave NW",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.434572,33.809497 ]
+    },
+    "properties": {
+    "Name":"Woodall Creek at Collier",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.438657,33.821698 ]
+    },
+    "properties": {
+    "Name":"Woodall Creek at Defoors Ferry ",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -83.93953,34.4304 ]
+    },
+    "properties": {
+    "Name":"Yellow Creek @ Yellow Creek Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.965673,33.154794 ]
+    },
+    "properties": {
+    "Name":"Yellow Jacket Creek at Mobley Bridge Rd",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -84.928797,33.178729 ]
+    },
+    "properties": {
+    "Name":"Yellow Jacket Creek at West Main St. Bridge",
+    "Date":"",
+    "Rain (in)":null,
+    "E. coli (MPN/100mL)":null,
+    "Turbidity (NTU)":null,
+    "Specific Conductivity (�S)":null
+    }
+  }
+]
+}

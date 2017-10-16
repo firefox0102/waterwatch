@@ -1,3 +1,5 @@
+// import {FullExtent} from '/map-fullextent'
+
 export class MapHelper {
   constructor (selectSiteCallback) {
     this.selectSiteCallback = selectSiteCallback
@@ -6,8 +8,8 @@ export class MapHelper {
     var map = new window.mapboxgl.Map({
       container: 'map', // container id
       style: 'mapbox://styles/mapbox/light-v9', // hosted style id
-      center: [-84.387249, 33.455788], // starting position
-      zoom: 8 // starting zoom
+      center: [-84.057249, 33.15888], // starting position
+      zoom: 6.5 // starting zoom
     })
 
     // MAP LAYERS //
@@ -111,14 +113,14 @@ export class MapHelper {
         'layout': {},
         'paint': {
           'fill-outline-color': 'rgba(7, 78, 112, 1)',
-          'fill-color': 'rgba(80, 134, 158, 0.2)'
+          'fill-color': 'rgba(80, 134, 158, 0.1)'
         },
         'properties': {
           'description': 'Chattahoochee River Basin'
         }
       })
       map.addLayer({
-        'id': 'HUCs Layer',
+        'id': 'Subwatersheds (HUC12)',
         'type': 'fill',
         'layout': {
           'visibility': 'none'
@@ -151,9 +153,8 @@ export class MapHelper {
     // map.on('mouseleave', 'places', function () {
     //   map.getCanvas().style.cursor = ''
     // })
-
     // MENU TOGGLE//
-    var toggleableLayerIds = ['Basin Layer', 'Collection Sites Layer', 'Counties Layer', 'HUCs Layer']
+    var toggleableLayerIds = ['Counties Layer', 'Subwatersheds (HUC12)']
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
       var id = toggleableLayerIds[i]
@@ -183,6 +184,7 @@ export class MapHelper {
       layers.appendChild(link)
     }
     // Add zoom and rotation controls to the map. //
+    // map.addControl(new zoomOut({}), 'bottom-right')
     map.addControl(new window.MapboxGeocoder({
       accessToken: window.mapboxgl.accessToken,
       placeholder: 'Search Address'
@@ -207,6 +209,13 @@ export class MapHelper {
     this.map.flyTo({
       center: latLong,
       zoom: 17
+    })
+  }
+  zoomOut (home) {
+    var latLong = [home.longitude, home.latitude]
+    this.map.flyTo({
+      center: latLong,
+      zoom: 6.5
     })
   }
 }
