@@ -16,8 +16,8 @@
           <v-text-field label="Station Name" v-model="newCollectionSite.stationName" required></v-text-field>
           <v-text-field label="Logbook Abbreviation" v-model="newCollectionSite.logbookAbbv" required></v-text-field>
           <v-text-field label="Adopt A Stream Name" v-model="newCollectionSite.adoptAStreamName"></v-text-field>
-          <v-text-field label="HUC Name" v-model="newCollectionSite.hucName" required></v-text-field>
-          <v-text-field label="HUC" type="number" v-model="newCollectionSite.huc" required></v-text-field>
+          <v-text-field label="HUC 12 Name" v-model="newCollectionSite.hucName" required></v-text-field>
+          <v-text-field label="HUC 12" type="number" v-model="newCollectionSite.huc" required></v-text-field>
           <v-text-field label="Latitude (eg. 34.004401)" v-model="newCollectionSite.latitude" required></v-text-field>
           <v-text-field label="Longitude (eg. -84.350555)" v-model="newCollectionSite.longitude" required></v-text-field>
           <v-text-field label="Storet Name" v-model="newCollectionSite.storetName"></v-text-field>
@@ -160,6 +160,9 @@ export default {
         storetName: '',
         numSamples: 0
       }
+    },
+    close () {
+      this.controls.showDialog = false
     }
   }
 }

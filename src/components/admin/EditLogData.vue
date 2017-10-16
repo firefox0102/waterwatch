@@ -280,7 +280,6 @@
                 <div class="flex log-data-btn-row">
                   <v-btn
                     slot="activator"
-                    type="submit"
                     v-on:click.native="close"
                     flat
                     primary

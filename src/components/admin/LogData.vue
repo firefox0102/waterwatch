@@ -162,7 +162,7 @@
             </v-text-field>
           </div>
 
-          <a class="log-data-total">Total Coliform = {{ getTotalColiform }}</a>
+          <a class="log-data-total">Coliform (MPN/100mL) = {{ getTotalColiform }}</a>
 
           <div class="log-data-section-wrapper">
             <div class="page-content-body__header">
@@ -182,7 +182,7 @@
             </v-text-field>
           </div>
 
-          <a class="log-data-total">Total E. coli = {{ getTotalEcoli }}</a>
+          <a class="log-data-total">E. coli (MPN/100mL) = {{ getTotalEcoli }}</a>
 
           <div
             class="form-input-sub-text"
