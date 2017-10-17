@@ -21,7 +21,7 @@
           </div>
           <div class="controls-card-body">
             <div
-              class="controls-card-control-group"
+              class="controls-card-control-group dates"
               v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControlDates}">
               <div
                 class="controls-card-control-group__header"
@@ -55,8 +55,8 @@
                       <v-date-picker v-model="startDate" no-title scrollable actions>
                         <template scope="{ save, cancel }">
                           <v-card-actions>
+                            <v-btn success @click.native="save()">Save</v-btn>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                            <v-btn flat primary @click.native="save()">Save</v-btn>
                           </v-card-actions>
                         </template>
                       </v-date-picker>
@@ -81,8 +81,8 @@
                       <v-date-picker v-model="endDate" no-title scrollable actions>
                         <template scope="{ save, cancel }">
                           <v-card-actions>
+                            <v-btn success @click.native="save()">Save</v-btn>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                            <v-btn flat primary @click.native="save()">Save</v-btn>
                           </v-card-actions>
                         </template>
                       </v-date-picker>
@@ -92,12 +92,12 @@
               </div>
             </div>
             <div
-              class="controls-card-control-group"
+              class="controls-card-control-group download"
               v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControlReport}">
               <div
                 class="controls-card-control-group__header"
                 v-on:click="controls.selectedControlReport = !controls.selectedControlReport">
-                Reports
+                Download Data
                 <i
                   class="material-icons"
                   v-bind:class="{ 'rotated-icon': controls.selectedControlReport}">
@@ -114,11 +114,6 @@
                   type="submit"
                   class="md-raised btn-nww--light">
                   Download  CSV
-                </v-btn>
-                <v-btn
-                  type="submit"
-                  class="md-raised btn-nww--light">
-                  Print Map
                 </v-btn>
               </div>
             </div>
@@ -320,8 +315,6 @@ $data-sidebar-width: 240px;
 }
 
 .controls-card {
-  display: flex;
-
   flex-direction: column;
 
   margin-bottom: 24px;
@@ -398,5 +391,8 @@ $data-sidebar-width: 240px;
     color: $color-storm-cloud;
     font-size: 13px;
   }
+}
+.controls-card .download .btn {
+  text-transform: none;
 }
 </style>
