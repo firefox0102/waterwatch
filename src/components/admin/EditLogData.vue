@@ -157,11 +157,13 @@
                   <v-text-field
                       label="Large Cells"
                       type="number"
+                      :rules="formRules.largeCellsRules"
                       v-model="targetLogData.coliformLargeCells">
                   </v-text-field>
                   <v-text-field
                       label="Small Cells"
                       type="number"
+                      :rules="formRules.smallCellsRules"
                       v-model="targetLogData.coliformSmallCells">
                   </v-text-field>
                 </div>
