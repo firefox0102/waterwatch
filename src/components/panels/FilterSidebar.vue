@@ -25,7 +25,7 @@
       <div class="filters__section">
         <div v-on:click="filters.huc = !filters.huc" class="filters-toggle--secondary">
           <span class="filters-toggle__title">
-            HUC
+            Subwatersheds (HUC12)
           </span>
           <i class="material-icons filters-toggle__icon" v-bind:class="{'filters-toggle__icon--collapsed': !filters.huc }">
             arrow_drop_down
@@ -56,24 +56,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Partner Filter -->
-      <div class="filters__section">
-        <div v-on:click="filters.partner = !filters.partner" class="filters-toggle--secondary">
-          <span class="filters-toggle__title">
-            Partner
-          </span>
-          <i class="material-icons filters-toggle__icon" v-bind:class="{'filters-toggle__icon--collapsed': !filters.partner }">
-            arrow_drop_down
-          </i>
-        </div>
-        <div v-if="filters.partner" class="filter-body">
-          <div v-for="partner in partnerList" v-bind:key="partner.key" class="filter-body__list-item">
-            <input type="checkbox" v-bind:value="partner['.value']" v-model="filters.partnerFilters"></input>
-            {{ partner['.value'] }}
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- List items -->
@@ -94,7 +76,6 @@ import { db } from '../../helpers/firebase'
 import _ from 'lodash'
 
 let labsRef = db.ref('labs')
-let partnerRef = db.ref('partners')
 let hucRef = db.ref('hucList')
 
 export default {
@@ -107,8 +88,7 @@ export default {
   ],
   firebase: {
     labs: labsRef,
-    hucList: hucRef,
-    partnerList: partnerRef
+    hucList: hucRef
   },
   computed: {
     filteredResults () {
@@ -118,9 +98,8 @@ export default {
         let containsSearch = site.stationName.toLowerCase().includes(this.filters.search)
         let containsHuc = this.filters.hucFilters.length ? this.filters.hucFilters.indexOf(site.huc) : 0
         let containsLab = this.filters.labFilters.length ? this.filters.labFilters.indexOf(site.lab) : 0
-        let containsPartner = this.filters.partnerFilters.length ? this.filters.partnerFilters.indexOf(site.collectionPartner) : 0
 
-        return containsSearch && !isPrivate && !(containsHuc === -1) && !(containsLab === -1) && !(containsPartner === -1)
+        return containsSearch && !isPrivate && !(containsHuc === -1) && !(containsLab === -1)
       })
 
       return sites
@@ -130,16 +109,14 @@ export default {
     return {
       controls: {
         showFilters: false,
-        filterSites: ['HUC', 'Lab', 'Partner']
+        filterSites: ['HUC', 'Lab']
       },
       filters: {
         search: '',
         huc: false,
         hucFilters: [],
         lab: false,
-        labFilters: [],
-        partner: false,
-        partnerFilters: []
+        labFilters: []
       }
     }
   },
@@ -319,5 +296,6 @@ $data-sidebar-width: 240px;
 
 .filter-body {
   padding: 5px 10px;
+  background: #f5f5f5;
 }
 </style>
