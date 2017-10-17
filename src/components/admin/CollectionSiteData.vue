@@ -125,7 +125,8 @@
           <div class="site-reports-body-toolbar__secondary-content">
             <div class="site-reports-actions">
               <edit-log-data
-                v-bind:target-log-data="selected[0]"
+                v-bind:table-log-data="selected[0]"
+                v-bind:reset-selected="resetSelected"
                 v-bind:route-collection-site-id="$route.params.siteId"
                 v-if="selected.length === 1">
               </edit-log-data>
@@ -326,6 +327,9 @@ export default {
     filterByDate () {
       this.$unbind('reports')
       this.$bindAsArray('reports', db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(this.startDate).endAt(this.endDate))
+    },
+    resetSelected () {
+      this.selected = []
     }
   }
 }

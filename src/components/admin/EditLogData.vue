@@ -323,8 +323,9 @@
   export default {
     name: 'edit-log-data',
     props: [
-      'targetLogData',
-      'routeCollectionSiteId'
+      'tableLogData',
+      'routeCollectionSiteId',
+      'resetSelected'
     ],
     firebase: {
       collectionSites: collectionSitesRef
@@ -335,6 +336,10 @@
           this.selectedSite = _.find(newSites, '.key', this.targetLogData.collectionSiteId)
         }
       }
+    },
+    beforeMount () {
+      // Copy the targetLogData and modify the read-only-collection
+      this.targetLogData = _.cloneDeep(this.tableLogData)
     },
     mounted () {
       this.ecoliLargeCells = this.targetLogData.ecoliLargeCells
@@ -469,6 +474,7 @@
     },
     methods: {
       close () {
+        this.resetSelected()
         this.controls.showDialog = false
       },
       toggleAdditionalParmas: function () {
