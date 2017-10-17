@@ -140,7 +140,7 @@ export class MapHelper {
       var name = e.features[0].properties.Name
       console.log(name)
       this.selectSiteCallback(name)
-      map.setFilter('site-clicked', ['in', 'Name', name])
+      this.makeItGreen(name)
     })
 
     // Change the cursor to a pointer when the mouse is over the places layer.
@@ -217,17 +217,15 @@ export class MapHelper {
   }
 
   zoomIn (selectedSite) {
+    this.makeItGreen(selectedSite.stationName)
     var latLong = [selectedSite.longitude, selectedSite.latitude]
     this.map.flyTo({
       center: latLong,
       zoom: 17
     })
   }
-  // zoomOut (home) {
-  //   var latLong = [home.longitude, home.latitude]
-  //   this.map.flyTo({
-  //     center: latLong,
-  //     zoom: 6.5
-  //   })
-  // }
+
+  makeItGreen (name) {
+    this.map.setFilter('site-clicked', ['in', 'Name', name])
+  }
 }
