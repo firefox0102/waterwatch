@@ -126,6 +126,7 @@
             <div class="site-reports-actions">
               <edit-log-data
                 v-bind:target-log-data="selected[0]"
+                v-bind:route-collection-site-id="$route.params.siteId"
                 v-if="selected.length === 1">
               </edit-log-data>
             </div>
