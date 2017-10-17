@@ -9,7 +9,6 @@
           <data-map-banner :selected-site="selectedSite"></data-map-banner>
           <div id='menu' class="data-map__menu"></div>
           <div id='map' class="data-map__map"></div>
-
         </div>
       </div>
 
