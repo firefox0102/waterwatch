@@ -1,5 +1,4 @@
 // import {FullExtent} from '/map-fullextent'
-
 export class MapHelper {
   constructor (selectSiteCallback) {
     this.selectSiteCallback = selectSiteCallback
@@ -183,8 +182,21 @@ export class MapHelper {
       var layers = document.getElementById('menu')
       layers.appendChild(link)
     }
+
     // Add zoom and rotation controls to the map. //
     // map.addControl(new zoomOut({}), 'bottom-right')
+    var zoomBtn = document.createElement('button')
+    zoomBtn.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-fullextent'
+    // zoomBtn.setAttribute('background-image', 'url("/assets/home.png");')
+    zoomBtn.type = 'button'
+    zoomBtn.setAttribute('aria-label', 'zoom to full extent')
+    zoomBtn.onclick = function () {
+      map.flyTo({center: [-84.057249, 33.15888], zoom: 6.5})
+    }
+
+    var zoomContainer = document.getElementById('zoomContainer')
+    zoomContainer.appendChild(zoomBtn)
+
     map.addControl(new window.MapboxGeocoder({
       accessToken: window.mapboxgl.accessToken,
       placeholder: 'Search Address'
@@ -211,11 +223,11 @@ export class MapHelper {
       zoom: 17
     })
   }
-  zoomOut (home) {
-    var latLong = [home.longitude, home.latitude]
-    this.map.flyTo({
-      center: latLong,
-      zoom: 6.5
-    })
-  }
+  // zoomOut (home) {
+  //   var latLong = [home.longitude, home.latitude]
+  //   this.map.flyTo({
+  //     center: latLong,
+  //     zoom: 6.5
+  //   })
+  // }
 }

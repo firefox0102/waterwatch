@@ -8,6 +8,7 @@
         <div class="data-map">
           <data-map-banner :selected-site="selectedSite"></data-map-banner>
           <div id='menu' class="data-map__menu"></div>
+          <div id='zoomContainer' class="mapboxgl-ctrl mapboxgl-ctrl-group"></div>
           <div id='map' class="data-map__map"></div>
 
         </div>
@@ -394,5 +395,13 @@ $data-sidebar-width: 240px;
 }
 .controls-card .download .btn {
   text-transform: none;
+}
+
+#zoomContainer {
+  display: flex;
+  position: absolute;
+  bottom: 29px;
+  right: 50px;
+  z-index: 1;
 }
 </style>
