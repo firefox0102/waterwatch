@@ -295,7 +295,10 @@ $data-sidebar-width: 240px;
 }
 
 .filter-body {
+  max-height: 120px;
   padding: 5px 10px;
+
   background: #f5f5f5;
+  overflow-y: auto;
 }
 </style>

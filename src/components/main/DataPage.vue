@@ -257,9 +257,9 @@ $data-sidebar-width: 240px;
   z-index: 1;
 
   flex-direction: column;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 
-  height: calc(100vh - 170px);
+  height: auto;
   margin-left: 0;
   padding: 0;
   width: 100%;
@@ -293,10 +293,14 @@ $data-sidebar-width: 240px;
 
   @media screen and (min-width: 850px) {
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
 
+    height: calc(100vh - 170px);
     padding: 26px 24px;
     width: calc(100% - #{$data-sidebar-width});
+
+    overflow: hidden;
 
     &--collapsed {
       width: 100%;
@@ -304,8 +308,13 @@ $data-sidebar-width: 240px;
     }
 
     &__fixed-column {
+      height: calc(100vh - 200px);
       margin-top: 0;
       width: 302px;
+
+      overflow-y: auto;
+      max-height: unset;
+      min-height: unset;
     }
 
     &__dynamic-column {
