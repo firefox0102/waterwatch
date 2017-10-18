@@ -157,11 +157,13 @@
                   <v-text-field
                       label="Large Cells"
                       type="number"
+                      :rules="formRules.largeCellsRules"
                       v-model="targetLogData.coliformLargeCells">
                   </v-text-field>
                   <v-text-field
                       label="Small Cells"
                       type="number"
+                      :rules="formRules.smallCellsRules"
                       v-model="targetLogData.coliformSmallCells">
                   </v-text-field>
                 </div>
@@ -320,7 +322,11 @@
 
   export default {
     name: 'edit-log-data',
-    props: ['targetLogData'],
+    props: [
+      'tableLogData',
+      'routeCollectionSiteId',
+      'resetSelected'
+    ],
     firebase: {
       collectionSites: collectionSitesRef
     },
@@ -331,7 +337,15 @@
         }
       }
     },
-    computed: { // TODO fix these equations
+    beforeMount () {
+      // Copy the targetLogData and modify the read-only-collection
+      this.targetLogData = _.cloneDeep(this.tableLogData)
+    },
+    mounted () {
+      this.ecoliLargeCells = this.targetLogData.ecoliLargeCells
+      this.ecoliSmallCells = this.targetLogData.ecoliSmallCells
+    },
+    computed: {
       getTotalColiform () {
         if (this.targetLogData.coliformLargeCells && this.targetLogData.coliformSmallCells && this.targetLogData.dilution) {
           let matrixValue = matrix[this.targetLogData.coliformLargeCells][this.targetLogData.coliformSmallCells]
@@ -460,6 +474,7 @@
     },
     methods: {
       close () {
+        this.resetSelected()
         this.controls.showDialog = false
       },
       toggleAdditionalParmas: function () {
@@ -475,8 +490,7 @@
       },
       updateExistingLog () {
         try {
-          this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.targetLogData.collectionSiteId + '/' + this.targetLogData['.key']))
-
+          this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.routeCollectionSiteId + '/' + this.targetLogData['.key']))
           this.targetLogData.ecoliLargeCells = this.ecoliLargeCells
           this.targetLogData.ecoliSmallCells = this.ecoliSmallCells
           this.targetLogData.totalEcoli = this.getTotalEcoli
