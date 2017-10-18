@@ -152,12 +152,14 @@
                 label="Large Cells"
                 type="number"
                 class="input-group--limit-height"
+                :rules="formRules.largeCellsRules"
                 v-model="newLogData.coliformLargeCells">
             </v-text-field>
             <v-text-field
                 label="Small Cells"
                 type="number"
                 class="input-group--limit-height"
+                :rules="formRules.smallCellsRules"
                 v-model="newLogData.coliformSmallCells">
             </v-text-field>
           </div>
