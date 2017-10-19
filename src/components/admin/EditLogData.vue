@@ -368,6 +368,7 @@
     },
     data: function () {
       return {
+        targetLogData: {},
         collectionSites: [],
         selectedSite: null,
         formValid: false,
