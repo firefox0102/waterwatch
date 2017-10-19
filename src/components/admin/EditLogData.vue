@@ -108,6 +108,7 @@
                     label="Fluorometry"
                     class="input-group--limit-height"
                     type="number"
+                    step="0.01"
                     :rules="formRules.fluorometryRules"
                     v-model="targetLogData.fluorometry">
                 </v-text-field>
@@ -115,6 +116,7 @@
                     label="Turbidity (NTU)"
                     class="input-group--limit-height"
                     type="number"
+                    step="0.01"
                     :rules="formRules.turbidityRules"
                     v-model="targetLogData.turbidity">
                 </v-text-field>
@@ -122,6 +124,7 @@
                     label="Conductivity (uS)"
                     class="input-group--limit-height"
                     type="number"
+                    step="0.01"
                     :rules="formRules.conductivityRules"
                     v-model="targetLogData.specificConductivity">
                 </v-text-field>
@@ -129,6 +132,7 @@
                     label="Rainfall (in)"
                     class="input-group--limit-height"
                     type="number"
+                    step="0.01"
                     v-model="targetLogData.precipitation">
                 </v-text-field>
                 <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
@@ -157,11 +161,13 @@
                   <v-text-field
                       label="Large Cells"
                       type="number"
+                      :rules="formRules.largeCellsRules"
                       v-model="targetLogData.coliformLargeCells">
                   </v-text-field>
                   <v-text-field
                       label="Small Cells"
                       type="number"
+                      :rules="formRules.smallCellsRules"
                       v-model="targetLogData.coliformSmallCells">
                   </v-text-field>
                 </div>
@@ -320,7 +326,11 @@
 
   export default {
     name: 'edit-log-data',
-    props: ['targetLogData'],
+    props: [
+      'tableLogData',
+      'routeCollectionSiteId',
+      'resetSelected'
+    ],
     firebase: {
       collectionSites: collectionSitesRef
     },
@@ -331,7 +341,15 @@
         }
       }
     },
-    computed: { // TODO fix these equations
+    beforeMount () {
+      // Copy the targetLogData and modify the read-only-collection
+      this.targetLogData = _.cloneDeep(this.tableLogData)
+    },
+    mounted () {
+      this.ecoliLargeCells = this.targetLogData.ecoliLargeCells
+      this.ecoliSmallCells = this.targetLogData.ecoliSmallCells
+    },
+    computed: {
       getTotalColiform () {
         if (this.targetLogData.coliformLargeCells && this.targetLogData.coliformSmallCells && this.targetLogData.dilution) {
           let matrixValue = matrix[this.targetLogData.coliformLargeCells][this.targetLogData.coliformSmallCells]
@@ -460,6 +478,7 @@
     },
     methods: {
       close () {
+        this.resetSelected()
         this.controls.showDialog = false
       },
       toggleAdditionalParmas: function () {
@@ -475,8 +494,7 @@
       },
       updateExistingLog () {
         try {
-          this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.targetLogData.collectionSiteId + '/' + this.targetLogData['.key']))
-
+          this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.routeCollectionSiteId + '/' + this.targetLogData['.key']))
           this.targetLogData.ecoliLargeCells = this.ecoliLargeCells
           this.targetLogData.ecoliSmallCells = this.ecoliSmallCells
           this.targetLogData.totalEcoli = this.getTotalEcoli
