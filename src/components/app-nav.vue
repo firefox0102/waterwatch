@@ -9,7 +9,7 @@
       enable-resize-watcher
       v-model="controls.sidebarOpen">
       <router-link
-        class="app-sidebar__link"
+        class="app-sidebar__link list__tile--active"
         v-for="(item, index) in arrNav"
         v-if="item.auth === !!user"
         v-bind:to="item.path"
@@ -19,14 +19,14 @@
       </router-link>
       <a
         v-if="user"
-        class="app-sidebar__link"
+        class="app-sidebar__link list__tile--active"
         v-on:click="logout()">
         <i class="material-icons app-sidebar__icon">lock</i>
         Sign Out
       </a>
       <router-link
         v-else
-        class="app-sidebar__link"
+        class="app-sidebar__link list__tile--active"
         to="/signIn">
         <i class="material-icons app-sidebar__icon">lock</i>
         Admin
@@ -37,7 +37,7 @@
         <v-toolbar-title class="app-sidebar-toggle">
           <v-toolbar-side-icon @click.native.stop="controls.sidebarOpen = !controls.sidebarOpen"></v-toolbar-side-icon>
         </v-toolbar-title>
-        <img class="app-nav__crk-logo" src="../assets/client-logo-crk.png"/>
+        <a href="http://www.chattahoochee.org" target="_blank"><img class="app-nav__crk-logo" src="../assets/client-logo-crk.png"/></a>
         <img class="app-nav__nww-logo" src="../assets/nww-logo.png"/>
       </div>
       <div class="app-nav__secondary-section">
@@ -117,7 +117,7 @@
     methods: {
       logout () {
         firebase.auth().signOut().then(function () {
-          window.location.href = '/signIn'
+          window.location.href = '/*'
         }, function (error) {
           console.log(error)
         })
@@ -156,6 +156,11 @@ $nav-split-breakpoint: 820px;
     font-weight: 500;
     line-height: 24px;
     text-decoration: none;
+
+    &:hover,
+    &:hover i {
+      color: $color-warlock !important;
+    }
 
     &:nth-of-type(1) {
       margin-top: 24px;
@@ -263,11 +268,10 @@ $nav-split-breakpoint: 820px;
     padding: 12px 20px;
     width: 100%;
 
-    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(155, 155, 155, 0.5);
+    box-shadow: none;
 
     @media screen and (min-width: $nav-split-breakpoint) {
       width: 30%;
-      box-shadow: none;
     }
   }
 

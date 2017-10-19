@@ -60,6 +60,7 @@ export default {
 <style lang="scss">
 @import "scss/colors";
 @import "scss/framework-overrides";
+@import "scss/dialog";
 $toolbar-datepicker-height: 36px;
 
 body {
@@ -300,5 +301,9 @@ body {
       white-space: nowrap;
     }
   }
+}
+
+.rotated-icon {
+  transform: rotate(270deg);
 }
 </style>

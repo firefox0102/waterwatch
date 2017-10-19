@@ -77,14 +77,6 @@
               class="input-group--limit-height"
               v-model="newLogData.analyst">
           </v-text-field>
-          <v-select
-            v-if="labSet"
-            v-bind:items="labSet"
-            v-model="newLogData.lab"
-            label="Lab"
-            class="input-group--limit-height"
-            bottom>
-          </v-select>
         </div>
 
         <!-- Column 2 -->
@@ -110,6 +102,7 @@
               label="Fluorometry"
               class="input-group--limit-height"
               type="number"
+              step="0.01"
               :rules="formRules.fluorometryRules"
               v-model="newLogData.fluorometry">
           </v-text-field>
@@ -117,6 +110,7 @@
               label="Turbidity (NTU)"
               class="input-group--limit-height"
               type="number"
+              step="0.01"
               :rules="formRules.turbidityRules"
               v-model="newLogData.turbidity">
           </v-text-field>
@@ -124,6 +118,7 @@
               label="Conductivity (uS)"
               class="input-group--limit-height"
               type="number"
+              step="0.01"
               :rules="formRules.conductivityRules"
               v-model="newLogData.specificConductivity">
           </v-text-field>
@@ -131,6 +126,7 @@
               label="Rainfall (in)"
               class="input-group--limit-height"
               type="number"
+              step="0.01"
               v-model="newLogData.precipitation">
           </v-text-field>
           <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
@@ -160,17 +156,19 @@
                 label="Large Cells"
                 type="number"
                 class="input-group--limit-height"
+                :rules="formRules.largeCellsRules"
                 v-model="newLogData.coliformLargeCells">
             </v-text-field>
             <v-text-field
                 label="Small Cells"
                 type="number"
                 class="input-group--limit-height"
+                :rules="formRules.smallCellsRules"
                 v-model="newLogData.coliformSmallCells">
             </v-text-field>
           </div>
 
-          <a class="log-data-total">Total Coliform = {{ getTotalColiform }}</a>
+          <a class="log-data-total">Total Coliform (MPN/100mL) = {{ getTotalColiform }}</a>
 
           <div class="log-data-section-wrapper">
             <div class="page-content-body__header">
@@ -190,7 +188,7 @@
             </v-text-field>
           </div>
 
-          <a class="log-data-total">Total E. coli = {{ getTotalEcoli }}</a>
+          <a class="log-data-total">E. coli (MPN/100mL) = {{ getTotalEcoli }}</a>
 
           <div
             class="form-input-sub-text"
@@ -328,17 +326,16 @@
   } from '../../helpers/firebase'
   import _ from 'lodash'
   import moment from 'moment'
+  import { matrix } from '../../helpers/coeffecient'
 
   let collectionSitesRef = db.ref('collectionSites')
   let logbookNumberRef = db.ref('metaData/logbookNumber')
-  let labsRef = db.ref('labs')
 
   export default {
     name: 'log-data',
     firebase: {
       collectionSites: collectionSitesRef,
-      logbookNumber: logbookNumberRef,
-      labs: labsRef
+      logbookNumber: logbookNumberRef
     },
     watch: {
       logbookNumber: {
@@ -357,9 +354,12 @@
           }
         }
       },
-      labs: {
-        handler (newSite) {
-          this.labSet = _.map(this.labs, '.value')
+      collectionSites: {
+        handler () {
+          if (this.collectionSites.length !== 0 && this.$route.params.id && !this.controls.initialSiteSet) {
+            this.selectedSite = _.find(this.collectionSites, ['.key', this.$route.params.id])
+            this.controls.initialSiteSet = true
+          }
         }
       }
     },
@@ -368,28 +368,24 @@
     },
     computed: {
       getTotalColiform: function () {
-        var num1 = parseInt(this.newLogData.coliformLargeCells)
-        var num2 = parseInt(this.newLogData.coliformSmallCells)
-        if (num1 + num2) {
-          return num1 + num2
-        } else {
-          return ''
+        if (this.newLogData.coliformLargeCells && this.newLogData.coliformSmallCells && this.newLogData.dilution) {
+          let matrixValue = matrix[this.newLogData.coliformLargeCells][this.newLogData.coliformSmallCells]
+          let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
+          return matrixValue * dilutionFactor
         }
+        return 0
       },
       getTotalEcoli: function () {
-        var num1 = parseInt(this.ecoliLargeCells)
-        var num2 = parseInt(this.ecoliSmallCells)
-        if (num1 + num2) {
-          return num1 + num2
-        } else {
-          return ''
+        if (this.ecoliLargeCells && this.ecoliSmallCells && this.newLogData.dilution) {
+          let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
+          let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
+          return matrixValue * dilutionFactor
         }
       }
     },
     data: function () {
       return {
-        labs: [],
-        labSet: [],
+        collectionSites: [],
         selectedSite: null,
         logbookNumber: null,
         formValid: false,
@@ -398,7 +394,8 @@
         controls: {
           showAdditionalParams: false,
           showDialog: false,
-          showDatepicker: false
+          showDatepicker: false,
+          initialSiteSet: false
         },
         formRules: {
           conductivityRules: [
@@ -460,7 +457,6 @@
                 date.minutes(+parts.shift())
                 return date
               }
-
               return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Incubation Out should be within 18 to 22 hours of Incubation In'
             }
           ],
@@ -498,13 +494,12 @@
           collectionTime: '',
           dilution: null,
           dissolvedOxygen: null,
-          eColiLargeCells: null,
-          eColiSmallCells: null,
+          ecoliLargeCells: null,
+          ecoliSmallCells: null,
           fluorometry: null,
           incubationOut: '',
           incubationTemp: null,
           incubationTime: '',
-          lab: 'Atlanta',
           logbookNumber: 1,
           nitrate: null,
           phosphate: null,
@@ -585,13 +580,12 @@
           collectionTime: '',
           dilution: null,
           dissolvedOxygen: null,
-          eColiLargeCells: null,
-          eColiSmallCells: null,
+          ecoliLargeCells: null,
+          ecoliSmallCells: null,
           fluorometry: null,
           incubationOut: '',
           incubationTemp: oldLog.incubationTemp,
           incubationTime: '',
-          lab: 'Atlanta',
           logbookNumber: 0,
           nitrate: null,
           phosphate: null,
