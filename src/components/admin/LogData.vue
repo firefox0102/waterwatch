@@ -102,6 +102,7 @@
               label="Fluorometry"
               class="input-group--limit-height"
               type="number"
+              step="0.01"
               :rules="formRules.fluorometryRules"
               v-model="newLogData.fluorometry">
           </v-text-field>
@@ -109,6 +110,7 @@
               label="Turbidity (NTU)"
               class="input-group--limit-height"
               type="number"
+              step="0.01"
               :rules="formRules.turbidityRules"
               v-model="newLogData.turbidity">
           </v-text-field>
@@ -116,6 +118,7 @@
               label="Conductivity (uS)"
               class="input-group--limit-height"
               type="number"
+              step="0.01"
               :rules="formRules.conductivityRules"
               v-model="newLogData.specificConductivity">
           </v-text-field>
@@ -123,6 +126,7 @@
               label="Rainfall (in)"
               class="input-group--limit-height"
               type="number"
+              step="0.01"
               v-model="newLogData.precipitation">
           </v-text-field>
           <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
@@ -152,12 +156,14 @@
                 label="Large Cells"
                 type="number"
                 class="input-group--limit-height"
+                :rules="formRules.largeCellsRules"
                 v-model="newLogData.coliformLargeCells">
             </v-text-field>
             <v-text-field
                 label="Small Cells"
                 type="number"
                 class="input-group--limit-height"
+                :rules="formRules.smallCellsRules"
                 v-model="newLogData.coliformSmallCells">
             </v-text-field>
           </div>
