@@ -1,4 +1,3 @@
-// import {FullExtent} from '/map-fullextent'
 export class MapHelper {
   constructor (selectSiteCallback) {
     this.selectSiteCallback = selectSiteCallback
@@ -35,12 +34,32 @@ export class MapHelper {
 
       map.addSource('hucs', {
         'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/hucClip.geojson?alt=media&token=b6ecd28c-8235-45b5-b10b-56ac2b2a30a0'
-        // 'data': 'https://opendata.arcgis.com/datasets/a2954c6f77f54a4eb97d25407209c72c_80.geojson'
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/hucClip.geojson?alt=media&token=efd877f3-7e5d-4164-8153-905c7f669413'
+
       })
 
-// MAP LAYERS
+      map.addSource('labs', {
+        'type': 'geojson',
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=3e3c78ec-6af6-4358-b767-d104763fe52d'
 
+      })
+// MAP LAYERS
+      // HUC-12
+      map.addLayer({
+        'id': 'Subwatersheds (HUC12)',
+        'type': 'fill',
+        'layout': {
+          'visibility': 'none'
+        },
+        'source': 'hucs',
+        'paint': {
+          'fill-color': 'rgba(248, 219, 114, 0)',
+          'fill-outline-color': 'rgba(190, 118, 48, 1)'
+        },
+        'properties': {
+          'description': 'Hucs'
+        }
+      })
       // COUNTIES //
       map.addLayer({
         'id': 'Counties Layer',
@@ -103,7 +122,14 @@ export class MapHelper {
           'text-color': '#FFFFFF'
         }
       })
-
+      map.addLayer({
+        'id': 'Labs',
+        'type': 'symbol',
+        'source': 'labs',
+        'layout': {
+          'icon-image': 'star-15'
+        }
+      })
       // BASIN
       map.addLayer({
         'id': 'Basin Layer',
@@ -118,21 +144,6 @@ export class MapHelper {
           'description': 'Chattahoochee River Basin'
         }
       })
-      map.addLayer({
-        'id': 'Subwatersheds (HUC12)',
-        'type': 'fill',
-        'layout': {
-          'visibility': 'none'
-        },
-        'source': 'hucs',
-        'paint': {
-          'fill-color': 'rgba(248, 219, 114, 0)',
-          'fill-outline-color': 'rgba(190, 118, 48, 1)'
-        },
-        'properties': {
-          'description': 'Hucs'
-        }
-      })
     })
 
     // Pop up //
@@ -140,7 +151,7 @@ export class MapHelper {
       var name = e.features[0].properties.Name
       console.log(name)
       this.selectSiteCallback(name)
-      map.setFilter('site-clicked', ['in', 'Name', name])
+      this.makeItGreen(name)
     })
 
     // Change the cursor to a pointer when the mouse is over the places layer.
@@ -153,7 +164,7 @@ export class MapHelper {
     //   map.getCanvas().style.cursor = ''
     // })
     // MENU TOGGLE//
-    var toggleableLayerIds = ['Counties Layer', 'Subwatersheds (HUC12)']
+    var toggleableLayerIds = ['Counties Layer', 'Subwatersheds (HUC12)', 'Labs']
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
       var id = toggleableLayerIds[i]
@@ -217,17 +228,15 @@ export class MapHelper {
   }
 
   zoomIn (selectedSite) {
+    this.makeItGreen(selectedSite.stationName)
     var latLong = [selectedSite.longitude, selectedSite.latitude]
     this.map.flyTo({
       center: latLong,
       zoom: 17
     })
   }
-  // zoomOut (home) {
-  //   var latLong = [home.longitude, home.latitude]
-  //   this.map.flyTo({
-  //     center: latLong,
-  //     zoom: 6.5
-  //   })
-  // }
+
+  makeItGreen (name) {
+    this.map.setFilter('site-clicked', ['in', 'Name', name])
+  }
 }
