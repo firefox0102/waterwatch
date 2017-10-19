@@ -92,8 +92,8 @@ export class MapHelper {
         },
         'source': 'flowlines',
         'paint': {
-          'fill-color': 'rgba(128,184,34,0)',
-          'fill-outline-color': 'rgba(190, 118, 48, 1)'
+          'fill-color': 'rgba(80,134,158,0)',
+          'fill-outline-color': 'rgba(80,134,158, 1)'
         },
         'properties': {
           'description': 'Flowlines'
