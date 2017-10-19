@@ -189,6 +189,41 @@ export class MapHelper {
       this.selectSiteCallback(name)
       this.makeItGreen(name)
     })
+    // Labs popup //
+    map.on('click', 'Labs', function (e) {
+      new window.mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(e.features[0].properties.Lab)
+            .addTo(map)
+    })
+
+    // Change the cursor to a pointer when the mouse is over the states layer.
+    map.on('mouseenter', 'Labs', function () {
+      map.getCanvas().style.cursor = 'pointer'
+    })
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'Labs', function () {
+      map.getCanvas().style.cursor = ''
+    })
+
+     // HUCS popup //
+    map.on('click', 'Subwatersheds (HUC12)', function (e) {
+      new window.mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(e.features[0].properties.Name)
+            .addTo(map)
+    })
+
+    // Change the cursor to a pointer when the mouse is over the states layer.
+    map.on('mouseenter', 'Subwatersheds (HUC12)', function () {
+      map.getCanvas().style.cursor = 'pointer'
+    })
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'Subwatersheds (HUC12)', function () {
+      map.getCanvas().style.cursor = ''
+    })
 
     // Change the cursor to a pointer when the mouse is over the places layer.
     // map.on('mouseenter', 'places', function () {
