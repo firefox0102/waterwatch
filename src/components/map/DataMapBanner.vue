@@ -30,7 +30,7 @@
       </div>
 
       <div class="data-map-banner__text data-map-banner__text--nww">
-        {{ selectedSite.lastEColiResult }}
+        {{ selectedSite.lastEColiResult }} (MPN/100mL)
       </div>
     </div>
   </div>

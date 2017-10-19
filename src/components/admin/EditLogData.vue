@@ -96,13 +96,15 @@
                     label="Incubation In Time"
                     v-model="targetLogData.incubationTime"
                     :rules="formRules.incubationTimeRules"
-                    type="time">
+                    type="time"
+                    class="input-group--limit-height">
                 </v-text-field>
                 <v-text-field
                     label="# mL/100mL (Dilution)"
                     type="number"
                     :rules="formRules.dilutionRules"
-                    v-model="targetLogData.dilution">
+                    v-model="targetLogData.dilution"
+                    class="input-group--limit-height">
                 </v-text-field>
                 <v-text-field
                     label="Fluorometry"
@@ -133,6 +135,7 @@
                     class="input-group--limit-height"
                     type="number"
                     step="0.01"
+                    :rules="formRules.noNegatives"
                     v-model="targetLogData.precipitation">
                 </v-text-field>
                 <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
@@ -217,55 +220,63 @@
                       label="Air Temperature (*C)"
                       class="input-group--limit-height"
                       type="number"
+                      :rules="formRules.noNegatives"
                       v-model="targetLogData.airTemp">
                   </v-text-field>
                   <v-text-field
                       label="Water Temperature (*C)"
                       class="input-group--limit-height"
                       type="number"
+                      :rules="formRules.noNegatives"
                       v-model="targetLogData.waterTemp">
                   </v-text-field>
                     <v-text-field
                       label="Secchi Depth (meters)"
                       class="input-group--limit-height"
                       type="number"
+                      :rules="formRules.noNegatives"
                       v-model="targetLogData.secchiDepth">
                   </v-text-field>
-
                   <v-text-field
                       label="Dissolved Oxygen (mg/L)"
                       class="input-group--limit-height"
                       type="number"
+                      :rules="formRules.noNegatives"
                       v-model="targetLogData.dissolvedOxygen">
                   </v-text-field>
                   <v-text-field
                       label="Nitrate (mg/L)"
                       class="input-group--limit-height"
                       type="number"
+                      :rules="formRules.noNegatives"
                       v-model="targetLogData.nitrate">
                   </v-text-field>
                   <v-text-field
                       label="Phosphate (mg/L)"
                       class="input-group--limit-height"
                       type="number"
+                      :rules="formRules.noNegatives"
                       v-model="targetLogData.phosphate">
                   </v-text-field>
                   <v-text-field
                       label="Ammonium (mg/L)"
                       class="input-group--limit-height"
                       type="number"
+                      :rules="formRules.noNegatives"
                       v-model="targetLogData.ammonium">
                   </v-text-field>
                   <v-text-field
                       label="Total Chlorine (mg/L)"
                       class="input-group--limit-height"
                       type="number"
+                      :rules="formRules.noNegatives"
                       v-model="targetLogData.totalChlorine">
                   </v-text-field>
                   <v-text-field
                       label="Chlorophyll (µg/L)"
                       class="input-group--limit-height"
                       type="number"
+                      :rules="formRules.noNegatives"
                       v-model="targetLogData.chlorophyll">
                   </v-text-field>
                   <v-text-field
@@ -444,6 +455,13 @@
               }
 
               return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Incubation Out should be within 18 to 22 hours of Incubation In'
+            }
+          ],
+          noNegatives: [
+            (v) => {
+              let value = parseFloat(v)
+              if (isNaN(value)) { return true }
+              return (value > 0) || 'Should be greater than 0 (Leave empty if not recorded)'
             }
           ],
           largeCellsRules: [
