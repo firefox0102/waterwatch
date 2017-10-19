@@ -4,7 +4,6 @@
     <filter-sidebar :selected-site="selectedSite" :show-sidebar="controls.sidebar" :collection-sites="collectionSites" v-on:selected="setActiveSite" v-on:toggleside="toggleSidebar"></filter-sidebar>
 
     <div class="data-body" v-bind:class="{ 'data-body--collapsed': controls.sidebar}">
-      <!-- TODO make a component -->
       <div class="data-body__dynamic-column">
         <div class="data-map">
           <data-map-banner :selected-site="selectedSite"></data-map-banner>
@@ -14,7 +13,6 @@
       </div>
 
       <div class="data-body__fixed-column">
-        <!-- Controls Card TODO make a component -->
         <div class="controls-card">
           <div class="controls-card-header">
             Chart Controls

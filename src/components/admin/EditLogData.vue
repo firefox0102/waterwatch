@@ -331,7 +331,7 @@
       },
       collectionSites: {
         handler (newSites) {
-          this.selectedSite = _.find(newSites, '.key', this.targetLogData.collectionSiteId)
+          this.selectedSite = _.find(newSites, (obj) => { return obj['.key'] === this.routeCollectionSiteId }, this.routeCollectionSiteId)
         }
       }
     },

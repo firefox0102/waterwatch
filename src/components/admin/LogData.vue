@@ -543,8 +543,6 @@
           let collDate = this.newLogData.collectionDate
           let key = this.selectedSite['.key']
 
-          this.updateCollectionSite(collDate, key)
-
           this.newLogData.stationName = this.selectedSite.stationName
           this.newLogData.logbookAbbv = this.selectedSite.logbookAbbv
           this.newLogData.ecoliLargeCells = this.ecoliLargeCells
@@ -554,6 +552,8 @@
           this.newLogData.collectionSiteId = key
           this.newLogData.collectionDate = collDate
           this.newLogData.collectionSite = null
+
+          this.updateCollectionSite(collDate, key)
 
           this.$firebaseRefs.reports.push(this.newLogData)
           this.incrementLogbookNumber(this.newLogData.logbookNumber)
@@ -619,8 +619,7 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
-        // TODO ECOLI EQUATION
-        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.ecoliLargeCells)
+        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
 
         // Last turbidity equation
         this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
