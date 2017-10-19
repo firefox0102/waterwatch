@@ -46,6 +46,10 @@ export class MapHelper {
         'type': 'geojson',
         'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_Waterbodies_clip.geojson?alt=media&token=1f6ba878-757c-44e0-b226-a28c49a37cc5'
       })
+      map.addSource('flowlines', {
+        'type': 'geojson',
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_flowline_clip.geojson?alt=media&token=5edcc9f8-1d1d-480d-9dda-d813b75b8f21'
+      })
 // MAP LAYERS
       // HUC-12 //
       map.addLayer({
@@ -65,7 +69,7 @@ export class MapHelper {
       })
       // Waterbodies
       map.addLayer({
-        'id': 'Waterbodies',
+        'id': 'Waterbodies Layer',
         'type': 'fill',
         'layout': {
           'visibility': 'none'
@@ -77,6 +81,22 @@ export class MapHelper {
         },
         'properties': {
           'description': 'Waterbodies'
+        }
+      })
+      // Flowlines
+      map.addLayer({
+        'id': 'Flowlines Layer',
+        'type': 'fill',
+        'layout': {
+          'visibility': 'none'
+        },
+        'source': 'flowlines',
+        'paint': {
+          'fill-color': 'rgba(128,184,34,0)',
+          'fill-outline-color': 'rgba(190, 118, 48, 1)'
+        },
+        'properties': {
+          'description': 'Flowlines'
         }
       })
       // COUNTIES //
@@ -235,7 +255,7 @@ export class MapHelper {
     //   map.getCanvas().style.cursor = ''
     // })
     // MENU TOGGLE//
-    var toggleableLayerIds = ['Subwatersheds (HUC12)', 'Waterbodies']
+    var toggleableLayerIds = ['Subwatersheds (HUC12)', 'Waterbodies Layer', 'Flowlines Layer']
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
       var id = toggleableLayerIds[i]
