@@ -127,6 +127,7 @@
               class="input-group--limit-height"
               type="number"
               step="0.01"
+              :rules="formRules.noNegatives"
               v-model="newLogData.precipitation">
           </v-text-field>
           <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
@@ -213,54 +214,63 @@
               label="Air Temperature (*C)"
               class="input-group--limit-height"
               type="number"
+              :rules="formRules.noNegatives"
               v-model="newLogData.airTemp">
             </v-text-field>
             <v-text-field
                 label="Ammonium (mg/L)"
                 class="input-group--limit-height"
                 type="number"
+                :rules="formRules.noNegatives"
                 v-model="newLogData.ammonium">
             </v-text-field>
             <v-text-field
                 label="Chlorophyll a (µg/L)"
                 class="input-group--limit-height"
                 type="number"
+                :rules="formRules.noNegatives"
                 v-model="newLogData.chlorophyll">
             </v-text-field>
             <v-text-field
                 label="Dissolved Oxygen (mg/L)"
                 class="input-group--limit-height"
                 type="number"
+                :rules="formRules.noNegatives"
                 v-model="newLogData.dissolvedOxygen">
             </v-text-field>
             <v-text-field
                 label="Nitrate (mg/L)"
                 class="input-group--limit-height"
                 type="number"
+                :rules="formRules.noNegatives"
                 v-model="newLogData.nitrate">
             </v-text-field>
             <v-text-field
                 label="Phosphate (mg/L)"
                 class="input-group--limit-height"
                 type="number"
+                :rules="formRules.noNegatives"
                 v-model="newLogData.phosphate">
             </v-text-field>
             <v-text-field
               label="Secchi Depth (meters)"
               class="input-group--limit-height"
               type="number"
+              :rules="formRules.noNegatives"
               v-model="newLogData.secchiDepth">
             </v-text-field>
             <v-text-field
                 label="Total Chlorine (mg/L)"
                 class="input-group--limit-height"
                 type="number"
+                :rules="formRules.noNegatives"
                 v-model="newLogData.totalChlorine">
             </v-text-field>
             <v-text-field
                 label="Water Temperature (*C)"
                 class="input-group--limit-height"
                 type="number"
+                :rules="formRules.noNegatives"
                 v-model="newLogData.waterTemp">
             </v-text-field>
             <v-text-field
@@ -460,6 +470,13 @@
               return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Incubation Out should be within 18 to 22 hours of Incubation In'
             }
           ],
+          noNegatives: [
+            (v) => {
+              let value = parseFloat(v)
+              if (isNaN(value)) { return true }
+              return (value > 0) || 'Should be greater than 0 (Leave empty if not recorded)'
+            }
+          ],
           largeCellsRules: [
             (v) => {
               let value = parseFloat(v)
@@ -538,8 +555,6 @@
           let collDate = this.newLogData.collectionDate
           let key = this.selectedSite['.key']
 
-          this.updateCollectionSite(collDate, key)
-
           this.newLogData.stationName = this.selectedSite.stationName
           this.newLogData.logbookAbbv = this.selectedSite.logbookAbbv
           this.newLogData.ecoliLargeCells = this.ecoliLargeCells
@@ -549,6 +564,8 @@
           this.newLogData.collectionSiteId = key
           this.newLogData.collectionDate = collDate
           this.newLogData.collectionSite = null
+
+          this.updateCollectionSite(collDate, key)
 
           this.$firebaseRefs.reports.push(this.newLogData)
           this.incrementLogbookNumber(this.newLogData.logbookNumber)
@@ -613,8 +630,7 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
-        // TODO ECOLI EQUATION
-        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.ecoliLargeCells)
+        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
 
         // Last turbidity equation
         this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)

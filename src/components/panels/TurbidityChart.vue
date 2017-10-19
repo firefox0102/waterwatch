@@ -76,7 +76,7 @@ export default {
         xAxis: {
           type: 'datetime',
           dateTimeLabelFormats: { // don't display the dummy year
-            month: '%e. %b',
+            month: '%e/%m/%Y',
             year: '%b'
           },
           title: {
@@ -85,14 +85,15 @@ export default {
         },
         yAxis: {
           title: {
-            text: null
+            text: '(NTU)',
+            margin: 2
           },
           min: 0
         },
         tooltip: {
           crosshairs: true,
           shared: true,
-          pointFormat: '{point.y}'
+          pointFormat: '{point.y} (NTU)'
         },
         plotOptions: {
           column: {

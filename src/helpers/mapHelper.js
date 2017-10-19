@@ -21,7 +21,7 @@ export class MapHelper {
 
       map.addSource('sites', {
         'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/sites.geojson?alt=media&token=8b0b1d0f-a844-4dfb-b97f-37c5787dba51',
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/sites.geojson?alt=media&token=9b681144-92a4-442f-abf8-411dbc7bfd9d',
         'cluster': true,
         'clusterMaxZoom': 14, // Max zoom to cluster points on
         'clusterRadius': 25 // Radius of each cluster when clustering points (defaults to 50)
@@ -39,15 +39,15 @@ export class MapHelper {
 
       map.addSource('labs', {
         'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=3e3c78ec-6af6-4358-b767-d104763fe52d'
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=f88dc7c8-9569-483f-a1fa-c6828fea8d4a'
       })
 
       map.addSource('waterbodies', {
         'type': 'geojson',
-        'data': ''
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_Waterbodies_clip.geojson?alt=media&token=1f6ba878-757c-44e0-b226-a28c49a37cc5'
       })
 // MAP LAYERS
-      // HUC-12
+      // HUC-12 //
       map.addLayer({
         'id': 'Subwatersheds (HUC12)',
         'type': 'fill',
@@ -63,7 +63,22 @@ export class MapHelper {
           'description': 'Hucs'
         }
       })
-
+      // Waterbodies
+      map.addLayer({
+        'id': 'Waterbodies',
+        'type': 'fill',
+        'layout': {
+          'visibility': 'none'
+        },
+        'source': 'waterbodies',
+        'paint': {
+          'fill-color': 'rgba(128,184,34,1)',
+          'fill-outline-color': 'rgba(190, 118, 48, 0)'
+        },
+        'properties': {
+          'description': 'Waterbodies'
+        }
+      })
       // COUNTIES //
       map.addLayer({
         'id': 'Counties Layer',
@@ -126,14 +141,31 @@ export class MapHelper {
           'text-color': '#FFFFFF'
         }
       })
-      map.addLayer({
-        'id': 'Labs',
-        'type': 'symbol',
-        'source': 'labs',
-        'layout': {
-          'icon-image': 'star-15'
-        }
+
+      map.loadImage('/static/icon-star.png', function (error, image) {
+        if (error) throw error
+        map.addImage('star', image)
+        map.addLayer({
+          'id': 'Labs',
+          'type': 'symbol',
+          'source': 'labs',
+          'layout': {
+            'icon-image': 'star',
+            'icon-size': 0.8
+          },
+          'paint': {
+            'icon-color': '#FDF1BF'
+          }
+        })
       })
+
+      // map.on('click', 'Labs', function (e) {
+      //   new mapboxgl.Popup()
+      //   .setLngLat(e.features[0].geometry.coordinates)
+      //   .setHTML(e.features[0].properties.description)
+      //   .addTo(map)
+      // })
+
       // BASIN
       map.addLayer({
         'id': 'Basin Layer',
@@ -168,7 +200,7 @@ export class MapHelper {
     //   map.getCanvas().style.cursor = ''
     // })
     // MENU TOGGLE//
-    var toggleableLayerIds = ['Subwatersheds (HUC12)']
+    var toggleableLayerIds = ['Subwatersheds (HUC12)', 'Waterbodies']
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
       var id = toggleableLayerIds[i]
@@ -199,10 +231,8 @@ export class MapHelper {
     }
 
     // Add zoom and rotation controls to the map. //
-    // map.addControl(new zoomOut({}), 'bottom-right')
     var zoomBtn = document.createElement('button')
     zoomBtn.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-fullextent'
-    // zoomBtn.setAttribute('background-image', 'url("/assets/home.png");')
     zoomBtn.type = 'button'
     zoomBtn.setAttribute('aria-label', 'zoom to full extent')
     zoomBtn.onclick = function () {

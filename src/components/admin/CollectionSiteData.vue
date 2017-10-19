@@ -50,10 +50,6 @@
             </span>
           </div>
           <div class="collection-data-group__row">
-            <a class="collection-data-group__link">
-              View Data on NWW Map (TODO)
-            </a>
-            <span class="collection-data-group__divider">|</span>
             <a
               class="collection-data-group__link"
               v-bind:href="site.googleMapsUrl"
