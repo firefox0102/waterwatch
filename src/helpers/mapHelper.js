@@ -35,13 +35,11 @@ export class MapHelper {
       map.addSource('hucs', {
         'type': 'geojson',
         'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/hucClip.geojson?alt=media&token=efd877f3-7e5d-4164-8153-905c7f669413'
-
       })
 
       map.addSource('labs', {
         'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=3e3c78ec-6af6-4358-b767-d104763fe52d'
-
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=f88dc7c8-9569-483f-a1fa-c6828fea8d4a'
       })
 // MAP LAYERS
       // HUC-12
@@ -122,14 +120,31 @@ export class MapHelper {
           'text-color': '#FFFFFF'
         }
       })
-      map.addLayer({
-        'id': 'Labs',
-        'type': 'symbol',
-        'source': 'labs',
-        'layout': {
-          'icon-image': 'star-15'
-        }
+
+      map.loadImage('/static/icon-star.png', function (error, image) {
+        if (error) throw error
+        map.addImage('star', image)
+        map.addLayer({
+          'id': 'Labs',
+          'type': 'symbol',
+          'source': 'labs',
+          'layout': {
+            'icon-image': 'star',
+            'icon-size': 0.8
+          },
+          'paint': {
+            'icon-color': '#FDF1BF'
+          }
+        })
       })
+
+      // map.on('click', 'Labs', function (e) {
+      //   new mapboxgl.Popup()
+      //   .setLngLat(e.features[0].geometry.coordinates)
+      //   .setHTML(e.features[0].properties.description)
+      //   .addTo(map)
+      // })
+
       // BASIN
       map.addLayer({
         'id': 'Basin Layer',
@@ -195,10 +210,8 @@ export class MapHelper {
     }
 
     // Add zoom and rotation controls to the map. //
-    // map.addControl(new zoomOut({}), 'bottom-right')
     var zoomBtn = document.createElement('button')
     zoomBtn.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-fullextent'
-    // zoomBtn.setAttribute('background-image', 'url("/assets/home.png");')
     zoomBtn.type = 'button'
     zoomBtn.setAttribute('aria-label', 'zoom to full extent')
     zoomBtn.onclick = function () {

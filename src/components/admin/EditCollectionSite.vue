@@ -8,50 +8,46 @@
         <v-icon right dark>edit</v-icon>
       </v-btn>
       <v-card v-if="collectionSite">
-        <v-card-title>
-          <span class="headline">Edit Collection Site</span>
-        </v-card-title>
-        <form class="add-form" v-on:submit.prevent="submitForm">
-          <v-text-field label="Station Name" v-model="collectionSite.stationName" required></v-text-field>
-          <v-text-field label="Logbook Abbreviation" v-model="collectionSite.logbookAbbv" required></v-text-field>
-          <v-text-field label="Adopt A Stream Name" v-model="collectionSite.adoptAStreamName" required></v-text-field>
-          <v-text-field label="HUC 12 Name" v-model="collectionSite.hucName" required></v-text-field>
-          <v-text-field label="HUC 12" type="number" v-model="collectionSite.huc" required></v-text-field>
-          <v-text-field label="Latitude (eg. 34.004401)" v-model="collectionSite.latitude" required></v-text-field>
-          <v-text-field label="Longitude (eg. -84.350555)" v-model="collectionSite.longitude" required></v-text-field>
-          <v-text-field label="Storet Name" v-model="collectionSite.storetName"></v-text-field>
-          <v-select
-            v-bind:items="partnerSet"
-            v-model="collectionSite.collectionPartner"
-            item-text=".value"
-            item-value=".value"
-            label="Collection Partner"
-            required
-            bottom>
-          </v-select>
-          <v-select
-            v-bind:items="labSet"
-            v-model="collectionSite.lab"
-            item-text=".value"
-            item-value=".value"
-            label="Lab"
-            required
-            bottom>
-          </v-select>
-          <v-checkbox v-bind:label="`${ collectionSite.isPrivate ? 'Site is Private (uncheck to make Public)' : 'Site is Public (check to make Private)' }`" v-model="collectionSite.isPrivate" success></v-checkbox>
-          <div class="flex">
-            <v-btn
-              v-on:click.native="close"
-              flat
-              primary
-              class="btn">
-              Cancel
-            </v-btn>
-            <v-btn class="btn-nww" type="submit">
-              Update Site
-            </v-btn>
+        <div class="page-content-header">
+          <div class="page-content-header__text">
+            Edit Collection Site
           </div>
-        </form>
+        </div>
+        <div class="page-content-body">
+          <form class="add-form" v-on:submit.prevent="submitForm">
+            <v-text-field label="Station Name" v-model="collectionSite.stationName" required></v-text-field>
+            <v-text-field label="Logbook Abbreviation" v-model="collectionSite.logbookAbbv" required></v-text-field>
+            <v-text-field label="Adopt A Stream Name" v-model="collectionSite.adoptAStreamName" required></v-text-field>
+            <v-text-field label="HUC 12 Name" v-model="collectionSite.hucName" required></v-text-field>
+            <v-text-field label="HUC 12" type="number" v-model="collectionSite.huc" required></v-text-field>
+            <v-text-field label="Latitude (eg. 34.004401)" v-model="collectionSite.latitude" required></v-text-field>
+            <v-text-field label="Longitude (eg. -84.350555)" v-model="collectionSite.longitude" required></v-text-field>
+            <v-text-field label="Storet Name" v-model="collectionSite.storetName"></v-text-field>
+            <v-select
+              v-bind:items="partnerSet"
+              v-model="collectionSite.collectionPartner"
+              item-text=".value"
+              item-value=".value"
+              label="Collection Partner"
+              required
+              bottom>
+            </v-select>
+            <v-select
+              v-bind:items="labSet"
+              v-model="collectionSite.lab"
+              item-text=".value"
+              item-value=".value"
+              label="Lab"
+              required
+              bottom>
+            </v-select>
+            <v-checkbox v-bind:label="`${ collectionSite.isPrivate ? 'Site is Private (uncheck to make Public)' : 'Site is Public (check to make Private)' }`" v-model="collectionSite.isPrivate" success></v-checkbox>
+            <div class="flex">
+              <v-btn class="btn-nww" type="submit">Save Site</v-btn>
+              <v-btn v-on:click.native="close" flat primary class="btn">Cancel</v-btn>
+            </div>
+          </form>
+        </div>
       </v-card>
     </v-dialog>
     <v-snackbar :timeout="snackbar.timeout" :error="true" v-model="snackbar.errorVisible">
