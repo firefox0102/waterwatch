@@ -85,14 +85,6 @@
                     class="input-group--limit-height"
                     v-model="targetLogData.analyst">
                 </v-text-field>
-                <v-select
-                  v-if="labSet"
-                  v-bind:items="labSet"
-                  v-model="targetLogData.lab"
-                  label="Lab"
-                  class="input-group--limit-height"
-                  bottom>
-                </v-select>
               </div>
 
               <!-- Column 2 -->
@@ -116,6 +108,7 @@
                     label="Fluorometry"
                     class="input-group--limit-height"
                     type="number"
+                    step="0.01"
                     :rules="formRules.fluorometryRules"
                     v-model="targetLogData.fluorometry">
                 </v-text-field>
@@ -123,6 +116,7 @@
                     label="Turbidity (NTU)"
                     class="input-group--limit-height"
                     type="number"
+                    step="0.01"
                     :rules="formRules.turbidityRules"
                     v-model="targetLogData.turbidity">
                 </v-text-field>
@@ -130,6 +124,7 @@
                     label="Conductivity (uS)"
                     class="input-group--limit-height"
                     type="number"
+                    step="0.01"
                     :rules="formRules.conductivityRules"
                     v-model="targetLogData.specificConductivity">
                 </v-text-field>
@@ -137,6 +132,7 @@
                     label="Rainfall (in)"
                     class="input-group--limit-height"
                     type="number"
+                    step="0.01"
                     v-model="targetLogData.precipitation">
                 </v-text-field>
                 <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
@@ -165,16 +161,18 @@
                   <v-text-field
                       label="Large Cells"
                       type="number"
+                      :rules="formRules.largeCellsRules"
                       v-model="targetLogData.coliformLargeCells">
                   </v-text-field>
                   <v-text-field
                       label="Small Cells"
                       type="number"
+                      :rules="formRules.smallCellsRules"
                       v-model="targetLogData.coliformSmallCells">
                   </v-text-field>
                 </div>
 
-                <a class="log-data-total">Total Coliform = {{ getTotalColiform }}</a>
+                <a class="log-data-total">Total Coliform (MPN/100mL) = {{ getTotalColiform }}</a>
 
                 <div class="log-data-section-wrapper">
                   <div class="page-content-body__header">
@@ -194,7 +192,7 @@
                   </v-text-field>
                 </div>
 
-                <a class="log-data-total">Total E. coli = {{ getTotalEcoli }}</a>
+                <a class="log-data-total">E. coli (MPN/100mL) = {{ getTotalEcoli }}</a>
 
                 <div
                   class="form-input-sub-text"
@@ -277,13 +275,23 @@
                       class="input-group--limit-height"
                     ></v-text-field>
                 </div>
-                <v-btn
-                  slot="activator"
-                  type="submit"
-                  v-on:click.native="submitLog"
-                  class="btn-nww">
-                  {{ "Save Data" }}
-                </v-btn>
+                <div class="flex log-data-btn-row">
+                  <v-btn
+                    slot="activator"
+                    v-on:click.native="close"
+                    flat
+                    primary
+                    class="btn">
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    slot="activator"
+                    type="submit"
+                    v-on:click.native="submitLog"
+                    class="btn-nww">
+                    Save Data
+                  </v-btn>
+                </div>
               </div>
             </v-form>
           </div>
@@ -312,53 +320,54 @@
   } from '../../helpers/firebase'
   import _ from 'lodash'
   import moment from 'moment'
+  import { matrix } from '../../helpers/coeffecient'
 
   let collectionSitesRef = db.ref('collectionSites')
-  let labsRef = db.ref('labs')
 
   export default {
     name: 'edit-log-data',
-    props: ['targetLogData'],
+    props: [
+      'tableLogData',
+      'routeCollectionSiteId',
+      'resetSelected'
+    ],
     firebase: {
-      collectionSites: collectionSitesRef,
-      labs: labsRef
+      collectionSites: collectionSitesRef
     },
     watch: {
-      labs: {
-        handler (newSite) {
-          this.labSet = _.map(this.labs, '.value')
-        }
-      },
       collectionSites: {
         handler (newSites) {
           this.selectedSite = _.find(newSites, (obj) => { return obj['.key'] === this.routeCollectionSiteId }, this.routeCollectionSiteId)
         }
       }
     },
-    computed: { // TODO fix these equations
-      getTotalColiform: function () {
-        var num1 = parseInt(this.targetLogData.coliformLargeCells)
-        var num2 = parseInt(this.targetLogData.coliformSmallCells)
-        if (num1 + num2) {
-          return num1 + num2
-        } else {
-          return ''
+    beforeMount () {
+      // Copy the targetLogData and modify the read-only-collection
+      this.targetLogData = _.cloneDeep(this.tableLogData)
+    },
+    mounted () {
+      this.ecoliLargeCells = this.targetLogData.ecoliLargeCells
+      this.ecoliSmallCells = this.targetLogData.ecoliSmallCells
+    },
+    computed: {
+      getTotalColiform () {
+        if (this.targetLogData.coliformLargeCells && this.targetLogData.coliformSmallCells && this.targetLogData.dilution) {
+          let matrixValue = matrix[this.targetLogData.coliformLargeCells][this.targetLogData.coliformSmallCells]
+          let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
+          return matrixValue * dilutionFactor
         }
+        return 0
       },
-      getTotalEcoli: function () {
-        var num1 = parseInt(this.ecoliLargeCells)
-        var num2 = parseInt(this.ecoliSmallCells)
-        if (num1 + num2) {
-          return num1 + num2
-        } else {
-          return ''
+      getTotalEcoli () {
+        if (this.ecoliLargeCells && this.ecoliSmallCells && this.targetLogData.dilution) {
+          let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
+          let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
+          return matrixValue * dilutionFactor
         }
       }
     },
     data: function () {
       return {
-        labs: [],
-        labSet: [],
         collectionSites: [],
         selectedSite: null,
         formValid: false,
@@ -468,6 +477,10 @@
       }
     },
     methods: {
+      close () {
+        this.resetSelected()
+        this.controls.showDialog = false
+      },
       toggleAdditionalParmas: function () {
         this.controls.showAdditionalParams = !this.controls.showAdditionalParams
       },
@@ -481,8 +494,7 @@
       },
       updateExistingLog () {
         try {
-          this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.targetLogData.collectionSiteId + '/' + this.targetLogData['.key']))
-
+          this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.routeCollectionSiteId + '/' + this.targetLogData['.key']))
           this.targetLogData.ecoliLargeCells = this.ecoliLargeCells
           this.targetLogData.ecoliSmallCells = this.ecoliSmallCells
           this.targetLogData.totalEcoli = this.getTotalEcoli
@@ -536,6 +548,10 @@
   .log-data-submit-btn {
     margin-top: 26px;
     width: 96px;
+  }
+
+  .log-data-btn-row {
+    margin-top: 15px;
   }
 
   .log-data-section-wrapper {

@@ -1,4 +1,3 @@
-
 <template>
   <div class="data-page-wrapper">
     <filter-sidebar :selected-site="selectedSite" :show-sidebar="controls.sidebar" :collection-sites="collectionSites" v-on:selected="setActiveSite" v-on:toggleside="toggleSidebar"></filter-sidebar>
@@ -8,6 +7,7 @@
         <div class="data-map">
           <data-map-banner :selected-site="selectedSite"></data-map-banner>
           <div id='menu' class="data-map__menu"></div>
+          <div id='zoomContainer' class="mapboxgl-ctrl mapboxgl-ctrl-group"></div>
           <div id='map' class="data-map__map"></div>
         </div>
       </div>
@@ -19,75 +19,100 @@
           </div>
           <div class="controls-card-body">
             <div
-              class="controls-card-control-group"
-              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControl != 'dateRange'}">
+              class="controls-card-control-group dates"
+              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControlDates}">
               <div
                 class="controls-card-control-group__header"
-                v-on:click="controls.selectedControl = 'dateRange'">
+                v-on:click="controls.selectedControlDates = !controls.selectedControlDates">
                 Date Range
-                <i class="material-icons">arrow_drop_up</i>
+                <i
+                  class="material-icons  filters-toggle__icon "
+                  v-bind:class="{ 'rotated-icon': controls.selectedControlDates}">
+                  arrow_drop_down
+                </i>
               </div>
               <div class="controls-card-control-group__content">
                 <span class="controls-card-control-group__title">Select date range:</span>
                 <div class="date-picker-wrapper">
                   <div class="site-reports-toolbar-datepicker">
-                    <v-dialog
-                      persistent
-                      v-model="controls.startDateModal"
+                    <v-menu
                       lazy
-                      full-width>
+                      :close-on-content-click="false"
+                      v-model="controls.startDateModal"
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      :nudge-left="40"
+                      max-width="290px">
                       <div
                         class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
                         <span class="site-reports-toolbar-datepicker__activator-text">{{ startDate ? startDate : "Start Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <v-date-picker v-model="startDate" scrollable >
+                      <v-date-picker v-model="startDate" no-title scrollable actions>
                         <template scope="{ save, cancel }">
                           <v-card-actions>
+                            <v-btn success @click.native="save()">Save</v-btn>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                            <v-btn flat primary @click.native="save()">Save</v-btn>
                           </v-card-actions>
                         </template>
                       </v-date-picker>
-                    </v-dialog>
+                    </v-menu>
                   </div>
                   <div class="site-reports-toolbar-datepicker">
-                    <v-dialog
-                      persistent
-                      v-model="controls.endDateModal"
+                    <v-menu
                       lazy
-                      full-width>
+                      :close-on-content-click="false"
+                      v-model="controls.endDateModal"
+                      transition="scale-transition"
+                      offset-y
+                      full-width
+                      :nudge-left="40"
+                      max-width="290px">
                       <div
                         class="site-reports-toolbar-datepicker__activator"
                         slot="activator">
                         <span class="site-reports-toolbar-datepicker__activator-text">{{ endDate ? endDate : "End Date"}}</span>
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <v-date-picker v-model="endDate" scrollable >
+                      <v-date-picker v-model="endDate" no-title scrollable actions>
                         <template scope="{ save, cancel }">
                           <v-card-actions>
+                            <v-btn success @click.native="save()">Save</v-btn>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                            <v-btn flat primary @click.native="save()">Save</v-btn>
                           </v-card-actions>
                         </template>
                       </v-date-picker>
-                    </v-dialog>
+                    </v-menu>
                   </div>
                 </div>
               </div>
             </div>
             <div
-              class="controls-card-control-group"
-              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControl != 'report'}">
+              class="controls-card-control-group download"
+              v-bind:class="{ 'controls-card-control-group--collapsed': controls.selectedControlReport}">
               <div
                 class="controls-card-control-group__header"
-                v-on:click="controls.selectedControl = 'report'">
-                Reports
-                <i class="material-icons">arrow_drop_up</i>
+                v-on:click="controls.selectedControlReport = !controls.selectedControlReport">
+                Download Data
+                <i
+                  class="material-icons"
+                  v-bind:class="{ 'rotated-icon': controls.selectedControlReport}">
+                  arrow_drop_down
+                </i>
               </div>
               <div class="controls-card-control-group__content">
-                Reports stuff here
+                <v-btn
+                  type="submit"
+                  class="md-raised btn-nww--light">
+                  Download  XLSX
+                </v-btn>
+                <v-btn
+                  type="submit"
+                  class="md-raised btn-nww--light">
+                  Download  CSV
+                </v-btn>
               </div>
             </div>
           </div>
@@ -108,9 +133,10 @@
 <script>
 import { db } from '../../helpers/firebase'
 import { MapHelper } from '../../helpers/mapHelper'
+// import {FullExtent} from '../../helpers/map-fullextent'
+import _ from 'lodash'
 import moment from 'moment'
 import VueHighcharts from 'vue2-highcharts'
-
 import EcoliChart from '../panels/EcoliChart'
 import TurbidityChart from '../panels/TurbidityChart'
 import RainfallChart from '../panels/RainfallChart'
@@ -140,18 +166,20 @@ export default {
     },
     endDate (val) {
       this.getReports()
-    }
+    },
+    'sharedState.Selected': 'styleMap'
   },
   data () {
     return {
       selectedSite: null,
       reports: null,
       collectionSites: [], // Placeholder for sites watching
-      startDate: moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD'),
+      startDate: moment(new Date()).subtract(24, 'months').format('YYYY-MM-DD'),
       endDate: moment(new Date()).format('YYYY-MM-DD'),
       controls: {
         sidebar: false,
-        selectedControl: 'dateRange'
+        selectedControlDates: false,
+        selectedControlReport: true
       }
     }
   },
@@ -163,6 +191,7 @@ export default {
     setActiveSite (site) {
       this.selectedSite = site
       this.getReports()
+      this.mapy.zoomIn(this.selectedSite)
     },
     getReports () {
       if (this.$firebaseRefs.reports) {
@@ -175,8 +204,14 @@ export default {
         this.$bindAsArray('reports', db.ref('reports/' + this.selectedSite['.key']).orderByChild('collectionDate').limitToLast(10))
       }
     },
+    selectedSiteCallbackFunc (name) {
+      let site = _.find(this.collectionSites, { 'stationName': name })
+      if (site) {
+        this.setActiveSite(site)
+      }
+    },
     initializeMap () {
-      this.mapy = new MapHelper()
+      this.mapy = new MapHelper(this.selectedSiteCallbackFunc)
     }
   },
   mounted: function () {
@@ -219,20 +254,23 @@ $data-sidebar-width: 240px;
   z-index: 1;
 
   flex-direction: column;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 
-  height: 100%;
+  height: auto;
   margin-left: 0;
   padding: 0;
   width: 100%;
 
   transition: 0.5s;
+  overflow-y: auto;
 
   &__fixed-column {
     display: flex;
     align-items: center;
     flex-direction: column;
 
+    min-height: 1422px;
+    max-height: 1800px;
     margin-top: 24px;
     width: auto;
   }
@@ -244,7 +282,7 @@ $data-sidebar-width: 240px;
     overflow: hidden;
 
     @media screen and (min-width: 850px) {
-      height: auto;
+      height: 90vh;
       max-height: 100%;
       min-height: 50vh;
     }
@@ -252,10 +290,14 @@ $data-sidebar-width: 240px;
 
   @media screen and (min-width: 850px) {
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
 
+    height: calc(100vh - 170px);
     padding: 26px 24px;
     width: calc(100% - #{$data-sidebar-width});
+
+    overflow: hidden;
 
     &--collapsed {
       width: 100%;
@@ -263,8 +305,13 @@ $data-sidebar-width: 240px;
     }
 
     &__fixed-column {
+      height: calc(100vh - 200px);
       margin-top: 0;
       width: 302px;
+
+      overflow-y: auto;
+      max-height: unset;
+      min-height: unset;
     }
 
     &__dynamic-column {
@@ -275,10 +322,8 @@ $data-sidebar-width: 240px;
 }
 
 .controls-card {
-  display: flex;
-
   flex-direction: column;
-  height: 211px;
+
   margin-bottom: 24px;
   width: 80%;
 
@@ -305,11 +350,10 @@ $data-sidebar-width: 240px;
 }
 
 .controls-card-body {
-  height: 184px;
 }
 
 .controls-card-control-group {
-  height: 150px;
+
   overflow: hidden;
 
   border-bottom: 1px solid $color-dust;
@@ -320,7 +364,7 @@ $data-sidebar-width: 240px;
   }
 
   &--collapsed {
-    height: 36px;
+    height: 40px;
     transition: 0.33s;
   }
 
@@ -329,13 +373,14 @@ $data-sidebar-width: 240px;
 
     align-items: center;
     justify-content: space-between;
-    height: 36px;
+    height: 40px;
     padding-left: 16px;
 
     color: $color-storm-cloud;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 500;
+    line-height: 18px;
   }
 
   &__title {
@@ -347,11 +392,22 @@ $data-sidebar-width: 240px;
   &__content {
     display: flex;
     flex-direction: column;
-    height: 82px;
-    padding: 0 16px;
+
+    padding: 0 16px 16px 16px;
 
     color: $color-storm-cloud;
     font-size: 13px;
   }
+}
+.controls-card .download .btn {
+  text-transform: none;
+}
+
+#zoomContainer {
+  display: flex;
+  position: absolute;
+  bottom: 29px;
+  right: 50px;
+  z-index: 1;
 }
 </style>

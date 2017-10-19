@@ -15,10 +15,17 @@
         <div class="collection-data-group">
           <div class="collection-data-group__row">
             <span class="collection-data-group__text--strong">
-              HUC:
+              Subwatershed (HUC12):
             </span>
             <span class="collection-data-group__text">
               {{ site ? site.huc : '' }}
+            </span>
+            <span class="collection-data-group__divider">|</span>
+            <span class="collection-data-group__text--strong">
+              Lab:
+            </span>
+            <span class="collection-data-group__text">
+              {{ site ? site.lab : '' }}
             </span>
             <span class="collection-data-group__divider">|</span>
             <span class="collection-data-group__text--strong">
@@ -53,7 +60,7 @@
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
-        <router-link class="log-new-data-btn" to="/logData">
+        <router-link class="log-new-data-btn" :to="{ name: 'Log Data Id', params: { 'id': $route.params.siteId } }">
           <v-btn class="btn-nww--light">
             Log New Data
           </v-btn>
@@ -114,7 +121,9 @@
           <div class="site-reports-body-toolbar__secondary-content">
             <div class="site-reports-actions">
               <edit-log-data
-                v-bind:target-log-data="selected[0]"
+                v-bind:table-log-data="selected[0]"
+                v-bind:reset-selected="resetSelected"
+                v-bind:route-collection-site-id="$route.params.siteId"
                 v-if="selected.length === 1">
               </edit-log-data>
             </div>
@@ -147,7 +156,7 @@
               v-bind:pagination.sync="pagination"
               v-bind:search="controls.search"
               select-all
-              selected-key="logbookNumber"
+              selected-key=".key"
               class="elevation-1"
             >
             <template slot="headers" scope="props">
@@ -171,7 +180,10 @@
               </tr>
             </template>
             <template slot="items" scope="props">
-              <tr :active="props.selected" @click="props.selected = !props.selected">
+              <tr
+                :active="props.selected"
+                @click="props.selected = !props.selected"
+              >
                 <td>
                   <v-checkbox
                     primary
@@ -280,12 +292,12 @@ export default {
         { text: 'Collection Date', value: 'collectionDate' },
         { text: 'Collection Time', value: 'collectionTime' },
         { text: 'Analyst', value: 'analyst' },
-        { text: 'Total Coliform', value: 'totalColiform' }, // TODO
-        { text: 'E. coli', value: 'totalEcoli' }, // TODO
+        { text: 'Total Coliform (MPN/100mL)', value: 'totalColiform' },
+        { text: 'E. coli (MPN/100mL)', value: 'totalEcoli' },
         { text: 'Fluorometry', value: 'fluorometry' },
         { text: 'Turbidity (NTU)', value: 'turbidity' },
         { text: 'Conductivity (uS)', value: 'specifcConductivity' },
-        { text: 'Rainfall', value: 'precipitation' },
+        { text: 'Rainfall (in)', value: 'precipitation' },
         { text: 'Incubation In Time', value: 'incubationTime' },
         { text: '# mL/100mL (Dilution)', value: 'dilution' },
         { text: 'Incubation Temp', value: 'incubationTemp' },
@@ -311,6 +323,9 @@ export default {
     filterByDate () {
       this.$unbind('reports')
       this.$bindAsArray('reports', db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(this.startDate).endAt(this.endDate))
+    },
+    resetSelected () {
+      this.selected = []
     }
   }
 }

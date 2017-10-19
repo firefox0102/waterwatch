@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import CollectionSites from '../components/admin/CollectionSites'
+// import CollectionSites from '@/components/admin/CollectionSites'
 import CollectionSiteData from '../components/admin/CollectionSiteData'
 import LogData from '../components/admin/LogData'
 import About from '../components/main/About'
@@ -13,11 +14,11 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
-    {
-      path: '*',
-      component: SignIn,
-      meta: { requiresAuth: false }
-    },
+    // {
+    //   path: '*',
+    //   component: SignIn,
+    //   meta: { requiresAuth: false }
+    // },
     {
       path: '/signIn',
       component: SignIn,
@@ -30,7 +31,7 @@ export default new Router({
       meta: { requiresAuth: false }
     },
     {
-      path: '/dataPage',
+      path: '*',
       component: DataPage,
       meta: { requiresAuth: false }
     },
@@ -43,6 +44,12 @@ export default new Router({
     {
       path: '/logData',
       name: 'Log Data',
+      component: LogData,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/logData/:id',
+      name: 'Log Data Id',
       component: LogData,
       meta: { requiresAuth: true }
     },

@@ -1,49 +1,70 @@
 export class MapHelper {
-  constructor () {
+  constructor (selectSiteCallback) {
+    this.selectSiteCallback = selectSiteCallback
+
     window.mapboxgl.accessToken = 'pk.eyJ1IjoibGNhY2VkYSIsImEiOiIzNmM4MGRlN2I4NDhiY2UxZjA4MmJjZjE5OWEzYjUzNSJ9.Wc5KTJpWxmpxVMZfcuEQNg'
     var map = new window.mapboxgl.Map({
       container: 'map', // container id
       style: 'mapbox://styles/mapbox/light-v9', // hosted style id
-      center: [-84.387249, 33.755788], // starting position
-      zoom: 8 // starting zoom
+      center: [-84.057249, 33.15888], // starting position
+      zoom: 6.5 // starting zoom
     })
 
     // MAP LAYERS //
     map.on('load', function () {
       // CHATTAHOOCHEE RIVER BASIN//
+// MAP SOURCES
       map.addSource('basin', {
         'type': 'geojson',
-        'data': 'https://s3.amazonaws.com/waterwatchcrk/Chatt_River_Basin.geojson'
-      })
-      map.addSource('sites', {
-        'type': 'geojson',
-        'data': 'https://s3.amazonaws.com/waterwatchcrk/initial_points.geojson',
-        'cluster': true,
-        'clusterMaxZoom': 14, // Max zoom to cluster points on
-        'clusterRadius': 50 // Radius of each cluster when clustering points (defaults to 50)
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Chatt_River_Basin.geojson?alt=media&token=88e79a45-47fb-4be3-90d8-abaeeed4d5f7'
       })
 
+      map.addSource('sites', {
+        'type': 'geojson',
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/sites.geojson?alt=media&token=8b0b1d0f-a844-4dfb-b97f-37c5787dba51',
+        'cluster': true,
+        'clusterMaxZoom': 14, // Max zoom to cluster points on
+        'clusterRadius': 25 // Radius of each cluster when clustering points (defaults to 50)
+      })
+
+      map.addSource('counties', {
+        'type': 'geojson',
+        'data': 'https://opendata.arcgis.com/datasets/53ca7db14b8f4a9193c1883247886459_67.geojson'
+      })
+
+      map.addSource('hucs', {
+        'type': 'geojson',
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/hucClip.geojson?alt=media&token=efd877f3-7e5d-4164-8153-905c7f669413'
+
+      })
+
+      map.addSource('labs', {
+        'type': 'geojson',
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=3e3c78ec-6af6-4358-b767-d104763fe52d'
+
+      })
+// MAP LAYERS
+      // HUC-12
       map.addLayer({
-        'id': 'Basin',
+        'id': 'Subwatersheds (HUC12)',
         'type': 'fill',
-        'source': 'basin',
-        'layout': {},
+        'layout': {
+          'visibility': 'none'
+        },
+        'source': 'hucs',
         'paint': {
-          'fill-outline-color': 'rgba(7, 78, 112, 1)',
-          'fill-color': 'rgba(80, 134, 158, 0.2)'
+          'fill-color': 'rgba(248, 219, 114, 0)',
+          'fill-outline-color': 'rgba(190, 118, 48, 1)'
         },
         'properties': {
-          'description': 'Chattahoochee River Basin'
+          'description': 'Hucs'
         }
       })
       // COUNTIES //
       map.addLayer({
-        'id': 'Counties',
+        'id': 'Counties Layer',
         'type': 'fill',
-        'source': {
-          'type': 'geojson',
-          'data': 'https://opendata.arcgis.com/datasets/53ca7db14b8f4a9193c1883247886459_67.geojson'
-        },
+        'source': 'counties',
         'layout': {
           'visibility': 'none'
         },
@@ -51,17 +72,11 @@ export class MapHelper {
           'fill-outline-color': 'rgba(7, 78, 112, 1)',
           'fill-color': 'rgba(7, 78, 112, 0)'
         }
-        // This is the important part of this example: the addLayer
-        // method takes 2 arguments: the layer as an object, and a string
-        // representing another layer's name. if the other layer
-        // exists in the stylesheet already, the new layer will be positioned
-        // right before that layer in the stack, making it possible to put
-        // 'overlays' anywhere in the layer stack.
-      }, 'place_label_city_small_s')
+      })
 
       // COLLECTION SITES //
       map.addLayer({
-        'id': 'Sites',
+        'id': 'Collection Sites Layer',
         'type': 'circle',
         'source': 'sites',
         'paint': {
@@ -76,42 +91,80 @@ export class MapHelper {
             ]
           }
         },
-        'layout': {},
         'properties': {
           'description': 'points!'
         }
       })
+
+      map.addLayer({
+        'id': 'site-clicked',
+        'type': 'circle',
+        'source': 'sites',
+        'paint': {
+          'circle-color': '#7FBA00',
+          'circle-radius': 12
+        },
+        'filter': ['in', 'Name', '']
+      })
+
+      // Cluster labels //
+      map.addLayer({
+        'id': 'sites-count',
+        'type': 'symbol',
+        'source': 'sites',
+        'filter': ['has', 'point_count'],
+        'layout': {
+          'text-field': '{point_count_abbreviated}',
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-size': 12
+        },
+        'paint': {
+          'text-color': '#FFFFFF'
+        }
+      })
+      map.addLayer({
+        'id': 'Labs',
+        'type': 'symbol',
+        'source': 'labs',
+        'layout': {
+          'icon-image': 'star-15'
+        }
+      })
+      // BASIN
+      map.addLayer({
+        'id': 'Basin Layer',
+        'type': 'fill',
+        'source': 'basin',
+        'layout': {},
+        'paint': {
+          'fill-outline-color': 'rgba(7, 78, 112, 1)',
+          'fill-color': 'rgba(80, 134, 158, 0.1)'
+        },
+        'properties': {
+          'description': 'Chattahoochee River Basin'
+        }
+      })
     })
 
-    // // Cluster labels //
-    // map.addLayer({
-    //   'id': 'sites-count',
-    //   'type': 'symbol',
-    //   'source': 'sites',
-    //   'filter': ['has', 'point_count'],
-    //   'layout': {
-    //     'text-field': '{point_count_abbreviated}',
-    //     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-    //     'text-size': 12,
-    //     'color': '#ee3311'
-    //   }
+    // Pop up //
+    map.on('click', 'Collection Sites Layer', (e) => {
+      var name = e.features[0].properties.Name
+      console.log(name)
+      this.selectSiteCallback(name)
+      this.makeItGreen(name)
+    })
+
+    // Change the cursor to a pointer when the mouse is over the places layer.
+    // map.on('mouseenter', 'places', function () {
+    //   map.getCanvas().style.cursor = 'pointer'
     // })
 
-    // map.addLayer({
-    //   'id': 'unclustered-sites',
-    //   'type': 'circle',
-    //   'source': 'sites',
-    //   'filter': ['!has', 'point-count'],
-    //   'paint': {
-    //     'circle-color': '#50869E',
-    //     'circle-radius': 4,
-    //     'circle-stroke-width': 1,
-    //     'circle-stroke-color': '#fff'
-    //   }
+    // // Change it back to a pointer when it leaves.
+    // map.on('mouseleave', 'places', function () {
+    //   map.getCanvas().style.cursor = ''
     // })
-
     // MENU TOGGLE//
-    var toggleableLayerIds = ['Basin', 'Counties', 'Sites']
+    var toggleableLayerIds = ['Counties Layer', 'Subwatersheds (HUC12)', 'Labs']
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
       var id = toggleableLayerIds[i]
@@ -141,40 +194,49 @@ export class MapHelper {
       layers.appendChild(link)
     }
 
-    // Pop up //
-    // map.on('click', 'Sites', function (e) {
-    //   new mapboxgl.Popup()
-    //     .setLngLat(e.features[0].geometry.coordinates)
-    //     .setHTML(e.features[0].properties.description)
-    //     .addTo(map)
-    // })
-    //  // Change the cursor to a pointer when the mouse is over the places layer.
-    // map.on('mouseenter', 'places', function () {
-    //   map.getCanvas().style.cursor = 'pointer'
-    // })
-
-    // // Change it back to a pointer when it leaves.
-    // map.on('mouseleave', 'places', function () {
-    //   map.getCanvas().style.cursor = ''
-    // })
-
     // Add zoom and rotation controls to the map. //
+    // map.addControl(new zoomOut({}), 'bottom-right')
+    var zoomBtn = document.createElement('button')
+    zoomBtn.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-fullextent'
+    // zoomBtn.setAttribute('background-image', 'url("/assets/home.png");')
+    zoomBtn.type = 'button'
+    zoomBtn.setAttribute('aria-label', 'zoom to full extent')
+    zoomBtn.onclick = function () {
+      map.flyTo({center: [-84.057249, 33.15888], zoom: 6.5})
+    }
+
+    var zoomContainer = document.getElementById('zoomContainer')
+    zoomContainer.appendChild(zoomBtn)
+
     map.addControl(new window.MapboxGeocoder({
-      accessToken: window.mapboxgl.accessToken
+      accessToken: window.mapboxgl.accessToken,
+      placeholder: 'Search Address'
     }))
-    map.addControl(new window.mapboxgl.NavigationControl())
+    map.addControl(new window.mapboxgl.FullscreenControl(), 'bottom-right')
     map.addControl(new window.mapboxgl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true
       },
       trackUserLocation: true
-    }))
-    map.addControl(new window.mapboxgl.FullscreenControl())
-
+    }), 'bottom-right')
+    map.addControl(new window.mapboxgl.NavigationControl(), 'bottom-right')
     this.map = map
   }
 
   resizeMap () {
     setTimeout(() => this.map.resize(), 500)
+  }
+
+  zoomIn (selectedSite) {
+    this.makeItGreen(selectedSite.stationName)
+    var latLong = [selectedSite.longitude, selectedSite.latitude]
+    this.map.flyTo({
+      center: latLong,
+      zoom: 17
+    })
+  }
+
+  makeItGreen (name) {
+    this.map.setFilter('site-clicked', ['in', 'Name', name])
   }
 }
