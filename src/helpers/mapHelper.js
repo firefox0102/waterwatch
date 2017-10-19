@@ -34,14 +34,17 @@ export class MapHelper {
 
       map.addSource('hucs', {
         'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/hucClip.geojson?alt=media&token=efd877f3-7e5d-4164-8153-905c7f669413'
-
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_huc12_clip.geojson?alt=media&token=4e4f7991-4a7f-4064-884a-f076bd96be79'
       })
 
       map.addSource('labs', {
         'type': 'geojson',
         'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=3e3c78ec-6af6-4358-b767-d104763fe52d'
+      })
 
+      map.addSource('waterbodies', {
+        'type': 'geojson',
+        'data': ''
       })
 // MAP LAYERS
       // HUC-12
@@ -60,6 +63,7 @@ export class MapHelper {
           'description': 'Hucs'
         }
       })
+
       // COUNTIES //
       map.addLayer({
         'id': 'Counties Layer',
@@ -164,7 +168,7 @@ export class MapHelper {
     //   map.getCanvas().style.cursor = ''
     // })
     // MENU TOGGLE//
-    var toggleableLayerIds = ['Counties Layer', 'Subwatersheds (HUC12)', 'Labs']
+    var toggleableLayerIds = ['Subwatersheds (HUC12)']
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
       var id = toggleableLayerIds[i]
