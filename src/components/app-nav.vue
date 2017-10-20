@@ -275,7 +275,7 @@ $nav-split-breakpoint: 820px;
     display: block;
     width: 400px;
     height: 64px;
-    background-image: url('../assets/nww-logo-short.png');
+    background-image: url('../assets/nww-logo-stacked.png');
     background-repeat: no-repeat;
     background-size: auto 50px;
 
