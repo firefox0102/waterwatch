@@ -37,8 +37,10 @@
         <v-toolbar-title class="app-sidebar-toggle">
           <v-toolbar-side-icon @click.native.stop="controls.sidebarOpen = !controls.sidebarOpen"></v-toolbar-side-icon>
         </v-toolbar-title>
-        <a href="http://www.chattahoochee.org" target="_blank"><img class="app-nav__crk-logo" src="../assets/client-logo-crk.png"/></a>
-        <img class="app-nav__nww-logo" src="../assets/nww-logo.png"/>
+        <a class="app-nav__crk" href="http://www.chattahoochee.org" target="_blank"><img class="app-nav__crk-logo" src="../assets/crk-logo.png"/></a>
+        <div class="app-nav__nww">
+          <div class="app-nav__nww-logo"></div>
+        </div>
       </div>
       <div class="app-nav__secondary-section">
         <router-link
@@ -139,6 +141,7 @@ $nav-split-breakpoint: 820px;
 
   flex-direction: column;
   margin-top: $navbar-height;
+  overflow: visible;
 
   @media screen and (min-width: $nav-split-breakpoint) {
     display: none;
@@ -185,6 +188,8 @@ $nav-split-breakpoint: 820px;
 
 .app-sidebar-toggle {
   display: block;
+  margin-left: 0;
+  overflow: visible;
 
   @media screen and (min-width: $nav-split-breakpoint) {
     display: none;
@@ -249,7 +254,8 @@ $nav-split-breakpoint: 820px;
   }
 
   &__crk-logo {
-    display: none;
+    display: block;
+    height: $navbar-height;
 
     @media screen and (min-width: 1000px) {
       display: block;
@@ -257,15 +263,37 @@ $nav-split-breakpoint: 820px;
     }
   }
 
+  &__nww {
+    display: flex;
+    height: $navbar-height;
+    width: auto;
+    padding: 6px;
+  }
+
   &__nww-logo {
-    height: 40px;
+    position: relative;
+    display: block;
+    width: 400px;
+    height: 64px;
+    background-image: url('../assets/nww-logo-short.png');
+    background-repeat: no-repeat;
+    background-size: auto 50px;
+
+    @media screen and (min-width: 1000px) {
+      background-image: url('../assets/nww-logo.png');
+    }
+  }
+
+  &__nww-text {
+    position: relative;
+    display: block;
   }
 
   &__primary-section {
     display: flex;
 
     align-items: center;
-    padding: 12px 20px;
+    padding: 12px 12px;
     width: 100%;
 
     box-shadow: none;
