@@ -123,7 +123,7 @@
                     v-model="targetLogData.turbidity">
                 </v-text-field>
                 <v-text-field
-                    label="Conductivity (uS)"
+                    label="Conductivity (µS)"
                     class="input-group--limit-height"
                     type="number"
                     step="0.01"

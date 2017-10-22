@@ -7,17 +7,14 @@
         <v-dialog
           v-model="controls.turbidityDialog"
           content-class="nww-dialog"
-          persistent
-        >
+          persistent>
           <i slot="activator" class="material-icons graph-card-title__icon">
             info_outline
           </i>
           <v-card>
             <v-card-title class="headline">Turbidity</v-card-title>
             <v-card-text>
-              <p>
-                Turbidity is one of the indicators used to assess the environmental health of water bodies. Turbidity is caused by the presence of suspended and dissolved matter, such as clay, silt, finely divided organic matter, plankton and other microscopic organisms, organic acids, and dyes.
-              </p>
+              <p>Turbidity is the measure of the relative clarity of water. High levels of turbidity are a result of the presence of suspended and dissolved matter, such as clay, silt, finely divided organic matter, plankton and other microscopic organisms, organic acids, and dyes. We typically see the highest turbidity levels during and after heavy rain events. During a rainstorm, particles from the surrounding land are washed into the river making the water a muddy brown color, indicating water that has higher turbidity values. Also, during high flows, water velocities are faster and water volumes are higher, which can more easily stir up and suspend material from the stream bed, causing higher turbidity levels.</p>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -32,6 +29,8 @@
         </span>
         <span class="graph-card-title__secondary">
           {{ selectedSite ? selectedSite.lastTurbidityResult : null }}
+          on
+          {{ date }}
         </span>
       </div>
     </div>

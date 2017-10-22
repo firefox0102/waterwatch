@@ -7,17 +7,14 @@
         <v-dialog
           v-model="controls.rainDialog"
           content-class="nww-dialog"
-          persisten
-        t>
+          persistent>
           <i slot="activator" class="material-icons graph-card-title__icon">
             info_outline
           </i>
           <v-card>
             <v-card-title class="headline">Rainfall</v-card-title>
             <v-card-text>
-              <p>
-                Rainfall is the main way that the water in the skies comes down to Earth, where it fills our lakes and rivers, recharges the underground aquifers, and provides drinks to plants and animals. In the United States, an average of some 70 percent of the annual precipitation returns to the atmosphere by evaporation from land and water surfaces and by transpiration from vegetation. The remaining 30 percent eventually reaches a stream, lake, or ocean, partly by overland runoff during and immediately after rain, and partly by a much slower route by moving though the ground. Much of the rain that enters the ground filters down into subsurface water-bearing rocks (aquifers) and eventually reaches lakes, streams, and rivers where these surface-water bodies intercept the aquifers.
-              </p>
+              <p>Rain water reaches a stream, river, lake, or ocean, via overland runoff during and immediately after a rain event, and by a much slower route by soaking into the ground. Much of the rain that enters the ground filters down into subsurface water-bearing rocks (aquifers) and eventually reaches lakes, streams, and rivers where these surface-water bodies intercept the aquifers. The hard surfaces in our urban landscape dramatically increase the volume of overland flow, which leads to flooding, and erosion, and runoff of pollutants, as well as decreased groundwater recharge.</p>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -32,6 +29,8 @@
         </span>
         <span class="graph-card-title__secondary">
           {{ selectedSite ? selectedSite.lastRainfallResult : null }}
+          on 
+          {{ date }}
         </span>
       </div>
     </div>

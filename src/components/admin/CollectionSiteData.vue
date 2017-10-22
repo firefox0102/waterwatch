@@ -18,7 +18,7 @@
               Subwatershed (HUC12):
             </span>
             <span class="collection-data-group__text">
-              {{ site ? site.huc : '' }}
+              {{ site ? site.hucName : '' }}
             </span>
             <span class="collection-data-group__divider">|</span>
             <span class="collection-data-group__text--strong">
@@ -222,7 +222,8 @@ import EditLogData from './EditLogData'
 
 let collectionSitesRef = db.ref('collectionSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
-let oldDate = moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD')
+let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
+// let oldDate = moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'collection-sites',

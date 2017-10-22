@@ -266,7 +266,7 @@ export default {
         { text: 'Last E. coli Result', value: 'lastEColi' },
         { text: 'Status', value: 'active' },
         { text: 'Collection Partner', value: 'collectionPartner' },
-        { text: 'HUC Name', value: 'hucName' },
+        { text: 'Subwatershed (HUC12)', value: 'hucName' },
         { text: 'Adopt-A-Stream Name', value: 'adoptAStreamName' },
         { text: 'STORET Name', value: 'storetName' },
         { text: '# Samples Collected', value: 'numSamples' },
@@ -274,7 +274,7 @@ export default {
         { text: 'Google Maps URL', value: 'googleMapsUrl' },
         { text: 'Latitude', value: 'latitude' },
         { text: 'Longitude', value: 'longitude' },
-        { text: 'HUC', value: 'huc' },
+        { text: 'HUC 12', value: 'huc' },
         { text: 'Is Private', value: 'isPrivate' }
       ],
       selected: []

@@ -17,7 +17,7 @@
           <form class="add-form" v-on:submit.prevent="submitForm">
             <v-text-field label="Station Name" v-model="collectionSite.stationName" required></v-text-field>
             <v-text-field label="Logbook Abbreviation" v-model="collectionSite.logbookAbbv" required></v-text-field>
-            <v-text-field label="Adopt A Stream Name" v-model="collectionSite.adoptAStreamName" required></v-text-field>
+            <v-text-field label="Adopt A Stream Name" v-model="collectionSite.adoptAStreamName"></v-text-field>
             <v-text-field label="HUC 12 Name" v-model="collectionSite.hucName" required></v-text-field>
             <v-text-field label="HUC 12" type="number" v-model="collectionSite.huc" required></v-text-field>
             <v-text-field label="Latitude (eg. 34.004401)" v-model="collectionSite.latitude" required></v-text-field>

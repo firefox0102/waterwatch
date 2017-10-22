@@ -38,9 +38,9 @@
           <v-toolbar-side-icon @click.native.stop="controls.sidebarOpen = !controls.sidebarOpen"></v-toolbar-side-icon>
         </v-toolbar-title>
         <a class="app-nav__crk" href="http://www.chattahoochee.org" target="_blank"><img class="app-nav__crk-logo" src="../assets/crk-logo.png"/></a>
-        <div class="app-nav__nww">
+        <a class="app-nav__nww" href="https://chattahoochee.org/our-work/water-monitoring/neighborhood-water-watch/" target="_blank">
           <div class="app-nav__nww-logo"></div>
-        </div>
+        </a>
       </div>
       <div class="app-nav__secondary-section">
         <router-link

@@ -3,21 +3,18 @@
   <div class="graph-card">
     <div class="graph-card-title">
       <span class="graph-card-title__primary">
-        Specific Conductivity (uS)
+        Specific Conductivity (µS)
         <v-dialog
           v-model="controls.conductiveDialog"
           content-class="nww-dialog"
-          persistent
-        >
+          persistent>
           <i slot="activator" class="material-icons graph-card-title__icon">
             info_outline
           </i>
           <v-card>
-            <v-card-title class="headline">Specific Conductivity (uS)</v-card-title>
+            <v-card-title class="headline">Specific Conductivity (µS)</v-card-title>
             <v-card-text>
-              <p>
-                Electrical conductance is a measure of the capacity of a substance to conduct an electrical current. The specific electrical conductance (conductivity) of water is a function of the types and quantities of dissolved substances it contains, normalized to a unit length and unit cross section at a specified temperature.
-              </p>
+              <p>Specific Conductivity (conductivity) is a measure of the water’s ability to pass an electrical current and indicates the presence of ions. Sources of ions in streams include nutrients, heavy metals, and salts from urban and agricultural runoff, or minerals from rock weathering. Background levels of conductivity in streams in Georgia range from 50 – 1500 µS/cm. We closely monitor any deviations in conductivity at each site we monitor.</p>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -32,6 +29,8 @@
         </span>
         <span class="graph-card-title__secondary">
           {{ selectedSite ? selectedSite.lastConductivityResult : null }}
+          on
+          {{ date }}
         </span>
       </div>
     </div>
@@ -85,7 +84,7 @@ export default {
         },
         yAxis: {
           title: {
-            text: '(uS)',
+            text: '(µS)',
             margin: 2
           },
           min: 0
@@ -93,7 +92,7 @@ export default {
         tooltip: {
           crosshairs: true,
           shared: true,
-          pointFormat: '{point.y} (uS)'
+          pointFormat: '{point.y} (µS)'
         },
         plotOptions: {
           column: {

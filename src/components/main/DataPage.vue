@@ -122,9 +122,9 @@
 
         <turbidity-chart :selected-site="selectedSite" :reports="reports"></turbidity-chart>
 
-        <rainfall-chart :selected-site="selectedSite" :reports="reports"></rainfall-chart>
-
         <conductivity-chart :selected-site="selectedSite" :reports="reports"></conductivity-chart>
+
+        <rainfall-chart :selected-site="selectedSite" :reports="reports"></rainfall-chart>
       </div>
     </div>
   </div>
