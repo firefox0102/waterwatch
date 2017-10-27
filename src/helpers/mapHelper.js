@@ -235,25 +235,30 @@ export class MapHelper {
             .addTo(map)
     })
 
-    // Change the cursor to a pointer when the mouse is over the states layer.
     map.on('mouseenter', 'Subwatersheds (HUC12)', function () {
       map.getCanvas().style.cursor = 'pointer'
     })
 
-    // Change it back to a pointer when it leaves.
     map.on('mouseleave', 'Subwatersheds (HUC12)', function () {
       map.getCanvas().style.cursor = ''
     })
 
-    // Change the cursor to a pointer when the mouse is over the places layer.
-    // map.on('mouseenter', 'places', function () {
-    //   map.getCanvas().style.cursor = 'pointer'
-    // })
+    map.on('mouseenter', 'Collection Sites Layer', function () {
+      map.getCanvas().style.cursor = 'pointer'
+    })
 
-    // // Change it back to a pointer when it leaves.
-    // map.on('mouseleave', 'places', function () {
-    //   map.getCanvas().style.cursor = ''
-    // })
+    map.on('mouseleave', 'Collection Sites Layer', function () {
+      map.getCanvas().style.cursor = ''
+    })
+
+    map.on('mouseenter', 'sites-count', function () {
+      map.getCanvas().style.cursor = 'pointer'
+    })
+
+    map.on('mouseleave', 'sites-count', function () {
+      map.getCanvas().style.cursor = ''
+    })
+
     // MENU TOGGLE//
     var toggleableLayerIds = ['Subwatersheds (HUC12)', 'Waterbodies Layer', 'Flowlines Layer']
 

@@ -129,6 +129,19 @@ button.mapboxgl-ctrl-icon.mapboxgl-ctrl-fullextent {
   font-size: 14px;
 }
 
+.mapboxgl-popup-content {
+  padding: 14px;
+}
+
+.mapboxgl-popup-close-button {
+  padding: 6px 12px;
+  margin-bottom: 0;
+}
+
+.mapboxgl-popup-content p {
+  margin: 6px 0 0 0;
+}
+
 .controls-card-header,
 .controls-card-control-group__header {
   text-transform: uppercase;
