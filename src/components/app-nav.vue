@@ -255,29 +255,28 @@ $nav-split-breakpoint: 820px;
 
   &__crk-logo {
     display: block;
-    height: $navbar-height;
+    height: 46px;
 
     @media screen and (min-width: 1000px) {
       display: block;
-      height: $navbar-height;
+      height: 46px;
     }
   }
 
   &__nww {
     display: flex;
-    height: $navbar-height;
+    height: 44px;
     width: auto;
-    padding: 6px;
   }
 
   &__nww-logo {
     position: relative;
     display: block;
     width: 400px;
-    height: 64px;
+    margin-left: 10px;
     background-image: url('../assets/nww-logo-stacked.png');
     background-repeat: no-repeat;
-    background-size: auto 50px;
+    background-size: auto 44px;
 
     @media screen and (min-width: 1000px) {
       background-image: url('../assets/nww-logo.png');
@@ -293,7 +292,6 @@ $nav-split-breakpoint: 820px;
     display: flex;
 
     align-items: center;
-    padding: 12px 12px;
     width: 100%;
 
     box-shadow: none;
