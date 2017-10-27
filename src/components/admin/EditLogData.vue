@@ -92,13 +92,30 @@
                 <div class="page-content-body__header">
                   Incubation and Parameters
                 </div>
-                <v-text-field
+                <v-menu
+                  lazy
+                  :close-on-content-click="false"
+                  v-model="controls.incubationInMenu"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  :nudge-right="40"
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <v-text-field
+                    slot="activator"
                     label="Incubation In Time"
+                    readonly
                     v-model="targetLogData.incubationTime"
                     :rules="formRules.incubationTimeRules"
-                    type="time"
                     class="input-group--limit-height">
-                </v-text-field>
+                  </v-text-field>
+                  <v-time-picker
+                    v-model="targetLogData.incubationTime"
+                    format="24hr"
+                  ></v-time-picker>
+                </v-menu>
                 <v-text-field
                     label="# mL/100mL (Dilution)"
                     type="number"
@@ -146,13 +163,30 @@
                     :rules="formRules.incubationTempRules"
                     v-model="targetLogData.incubationTemp">
                 </v-text-field>
-                <v-text-field
-                    label="Incubation Out"
+                <v-menu
+                  lazy
+                  :close-on-content-click="false"
+                  v-model="controls.incubationOutMenu"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  :nudge-right="40"
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <v-text-field
+                    slot="activator"
+                    label="Incubation Out Time"
+                    readonly
                     v-model="targetLogData.incubationOut"
                     :rules="formRules.incubationOutTimeRules"
-                    type="time"
                     class="input-group--limit-height">
-                </v-text-field>
+                  </v-text-field>
+                  <v-time-picker
+                    v-model="targetLogData.incubationOut"
+                    format="24hr"
+                  ></v-time-picker>
+                </v-menu>
               </div>
 
               <!-- Column 3 -->
@@ -389,7 +423,9 @@
           showAdditionalParams: false,
           showConfirmDialog: false,
           showDatepicker: false,
-          showDialog: false
+          showDialog: false,
+          incubationInMenu: false,
+          incubationOutMenu: false
         },
         formRules: {
           conductivityRules: [
