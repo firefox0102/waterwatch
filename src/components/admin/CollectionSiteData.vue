@@ -7,7 +7,6 @@
         </div>
 
         <div class="collection-sites-header__subheader-wrapper">
-          <
           <router-link class="collection-sites-header__subheader--nww" :to="{ name: 'Collection Sites'}">
             Back to List of Collection Sites
           </router-link>
