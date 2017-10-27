@@ -42,76 +42,77 @@ export class MapHelper {
         'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=f88dc7c8-9569-483f-a1fa-c6828fea8d4a'
       })
 
-      map.addSource('waterbodies', {
-        'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_Waterbodies_clip.geojson?alt=media&token=1f6ba878-757c-44e0-b226-a28c49a37cc5'
-      })
-      map.addSource('flowlines', {
-        'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_flowline_clip.geojson?alt=media&token=5edcc9f8-1d1d-480d-9dda-d813b75b8f21'
-      })
+      // map.addSource('waterbodies', {
+      //   'type': 'geojson',
+      //   'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_Waterbodies_clip.geojson?alt=media&token=1f6ba878-757c-44e0-b226-a28c49a37cc5'
+      // })
+      // map.addSource('flowlines', {
+      //   'type': 'geojson',
+      //   'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_flowline_clip.geojson?alt=media&token=5edcc9f8-1d1d-480d-9dda-d813b75b8f21'
+      // })
 // MAP LAYERS
       // HUC-12 //
       map.addLayer({
         'id': 'Subwatersheds (HUC12)',
         'type': 'fill',
-        'layout': {
-          'visibility': 'none'
-        },
+        // 'layout': {
+        //   'visibility': 'none'
+        // },
         'source': 'hucs',
         'paint': {
           'fill-color': 'rgba(248, 219, 114, 0)',
           'fill-outline-color': 'rgba(190, 118, 48, 1)'
         },
+        'minzoom': 8,
         'properties': {
           'description': 'Hucs'
         }
       })
       // Waterbodies
-      map.addLayer({
-        'id': 'Waterbodies Layer',
-        'type': 'fill',
-        'layout': {
-          'visibility': 'none'
-        },
-        'source': 'waterbodies',
-        'paint': {
-          'fill-color': 'rgba(128,184,34,1)',
-          'fill-outline-color': 'rgba(190, 118, 48, 0)'
-        },
-        'properties': {
-          'description': 'Waterbodies'
-        }
-      })
+      // map.addLayer({
+      //   'id': 'Waterbodies Layer',
+      //   'type': 'fill',
+      //   'layout': {
+      //     'visibility': 'none'
+      //   },
+      //   'source': 'waterbodies',
+      //   'paint': {
+      //     'fill-color': 'rgba(128,184,34,1)',
+      //     'fill-outline-color': 'rgba(190, 118, 48, 0)'
+      //   },
+      //   'properties': {
+      //     'description': 'Waterbodies'
+      //   }
+      // })
       // Flowlines
-      map.addLayer({
-        'id': 'Flowlines Layer',
-        'type': 'fill',
-        'layout': {
-          'visibility': 'none'
-        },
-        'source': 'flowlines',
-        'paint': {
-          'fill-color': 'rgba(80,134,158,0)',
-          'fill-outline-color': 'rgba(80,134,158, 1)'
-        },
-        'properties': {
-          'description': 'Flowlines'
-        }
-      })
+      // map.addLayer({
+      //   'id': 'Flowlines Layer',
+      //   'type': 'fill',
+      //   'layout': {
+      //     'visibility': 'none'
+      //   },
+      //   'source': 'flowlines',
+      //   'paint': {
+      //     'fill-color': 'rgba(80,134,158,0)',
+      //     'fill-outline-color': 'rgba(80,134,158, 1)'
+      //   },
+      //   'properties': {
+      //     'description': 'Flowlines'
+      //   }
+      // })
       // COUNTIES //
-      map.addLayer({
-        'id': 'Counties Layer',
-        'type': 'fill',
-        'source': 'counties',
-        'layout': {
-          'visibility': 'none'
-        },
-        'paint': {
-          'fill-outline-color': 'rgba(7, 78, 112, 1)',
-          'fill-color': 'rgba(7, 78, 112, 0)'
-        }
-      })
+      // map.addLayer({
+      //   'id': 'Counties Layer',
+      //   'type': 'fill',
+      //   'source': 'counties',
+      //   'layout': {
+      //     'visibility': 'none'
+      //   },
+      //   'paint': {
+      //     'fill-outline-color': 'rgba(7, 78, 112, 1)',
+      //     'fill-color': 'rgba(7, 78, 112, 0)'
+      //   }
+      // })
 
       // COLLECTION SITES //
       map.addLayer({
@@ -260,35 +261,35 @@ export class MapHelper {
     })
 
     // MENU TOGGLE//
-    var toggleableLayerIds = ['Subwatersheds (HUC12)', 'Waterbodies Layer', 'Flowlines Layer']
+    // var toggleableLayerIds = ['Subwatersheds (HUC12)']
 
-    for (var i = 0; i < toggleableLayerIds.length; i++) {
-      var id = toggleableLayerIds[i]
+    // for (var i = 0; i < toggleableLayerIds.length; i++) {
+    //   var id = toggleableLayerIds[i]
 
-      var link = document.createElement('a')
-      link.href = '#'
-      link.className = 'active'
-      link.textContent = id
+    //   var link = document.createElement('a')
+    //   link.href = '#'
+    //   link.className = 'active'
+    //   link.textContent = id
 
-      link.onclick = function (e) {
-        var clickedLayer = this.textContent
-        e.preventDefault()
-        e.stopPropagation()
+    //   link.onclick = function (e) {
+    //     var clickedLayer = this.textContent
+    //     e.preventDefault()
+    //     e.stopPropagation()
 
-        var visibility = map.getLayoutProperty(clickedLayer, 'visibility')
+    //     var visibility = map.getLayoutProperty(clickedLayer, 'visibility')
 
-        if (visibility === 'visible') {
-          map.setLayoutProperty(clickedLayer, 'visibility', 'none')
-          this.className = ''
-        } else {
-          this.className = 'active'
-          map.setLayoutProperty(clickedLayer, 'visibility', 'visible')
-        }
-      }
+    //     if (visibility === 'visible') {
+    //       map.setLayoutProperty(clickedLayer, 'visibility', 'none')
+    //       this.className = ''
+    //     } else {
+    //       this.className = 'active'
+    //       map.setLayoutProperty(clickedLayer, 'visibility', 'visible')
+    //     }
+    //   }
 
-      var layers = document.getElementById('menu')
-      layers.appendChild(link)
-    }
+    //   var layers = document.getElementById('menu')
+    //   layers.appendChild(link)
+    // }
 
     // Add zoom and rotation controls to the map. //
     var zoomBtn = document.createElement('button')

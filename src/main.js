@@ -9,6 +9,7 @@ import VueHighcharts from 'vue2-highcharts'
 import store from './helpers/store'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash/dist/vue-lodash.min'
+// import Sheets from 'helpers/sheetsJS'
 
 Vue.use(Vuetify)
 Vue.use(VueFire)
