@@ -96,7 +96,8 @@ export default {
             text: '(MPN/100mL)',
             margin: 2
           },
-          min: 0
+          min: 0,
+          ceiling: 8000
         },
         tooltip: {
           crosshairs: true,
