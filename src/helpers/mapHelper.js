@@ -14,10 +14,10 @@ export class MapHelper {
     map.on('load', function () {
       // CHATTAHOOCHEE RIVER BASIN//
 // MAP SOURCES
-      map.addSource('hucs', {
-        'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_huc12_clip.geojson?alt=media&token=4e4f7991-4a7f-4064-884a-f076bd96be79'
-      })
+      // map.addSource('hucs', {
+      //   'type': 'geojson',
+      //   'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_huc12_clip.geojson?alt=media&token=4e4f7991-4a7f-4064-884a-f076bd96be79'
+      // })
 
       // map.addSource('waterbodies', {
       //   'type': 'geojson',
@@ -252,19 +252,19 @@ export class MapHelper {
     //   this.selectHuucCallback(name)
     //   this.hucSelected(name)
     // })
-    map.on('click', 'Subwatersheds (HUC12)', function (e) {
-      new window.mapboxgl.Popup()
-            .setLngLat(e.lngLat)
-            .setHTML(e.features[0].properties.Name)
-            .addTo(map)
-    })
-    map.on('mouseenter', 'Subwatersheds (HUC12)', function () {
-      map.getCanvas().style.cursor = 'pointer'
-    })
+    // map.on('click', 'Subwatersheds (HUC12)', function (e) {
+    //   new window.mapboxgl.Popup()
+    //         .setLngLat(e.lngLat)
+    //         .setHTML(e.features[0].properties.Name)
+    //         .addTo(map)
+    // })
+    // map.on('mouseenter', 'Subwatersheds (HUC12)', function () {
+    //   map.getCanvas().style.cursor = 'pointer'
+    // })
 
-    map.on('mouseleave', 'Subwatersheds (HUC12)', function () {
-      map.getCanvas().style.cursor = ''
-    })
+    // map.on('mouseleave', 'Subwatersheds (HUC12)', function () {
+    //   map.getCanvas().style.cursor = ''
+    // })
 
     map.on('mouseenter', 'Collection Sites Layer', function () {
       map.getCanvas().style.cursor = 'pointer'
