@@ -5,7 +5,7 @@ export class MapHelper {
     window.mapboxgl.accessToken = 'pk.eyJ1IjoibGNhY2VkYSIsImEiOiIzNmM4MGRlN2I4NDhiY2UxZjA4MmJjZjE5OWEzYjUzNSJ9.Wc5KTJpWxmpxVMZfcuEQNg'
     var map = new window.mapboxgl.Map({
       container: 'map', // container id
-      style: 'mapbox://styles/mapbox/light-v9', // hosted style id
+      style: 'mapbox://styles/lcaceda/cj9bqvwwu4kb52smypbx0j8f9', // hosted style id
       center: [-84.057249, 33.15888], // starting position
       zoom: 6.5 // starting zoom
     })
@@ -14,6 +14,21 @@ export class MapHelper {
     map.on('load', function () {
       // CHATTAHOOCHEE RIVER BASIN//
 // MAP SOURCES
+      map.addSource('hucs', {
+        'type': 'geojson',
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_huc12_clip.geojson?alt=media&token=4e4f7991-4a7f-4064-884a-f076bd96be79'
+      })
+
+      // map.addSource('waterbodies', {
+      //   'type': 'geojson',
+      //   'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/waterbodies.geojson?alt=media&token=1cfdda3f-05e0-4083-9845-c9560ee2793e'
+      // })
+
+      // map.addSource('flowlines', {
+      //   'type': 'geojson',
+      //   'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/flowlines.geojson?alt=media&token=4fe3b7a0-cfa8-4ee1-8d54-4442d01cb97a'
+      // })
+
       map.addSource('basin', {
         'type': 'geojson',
         'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Chatt_River_Basin.geojson?alt=media&token=88e79a45-47fb-4be3-90d8-abaeeed4d5f7'
@@ -32,70 +47,72 @@ export class MapHelper {
         'data': 'https://opendata.arcgis.com/datasets/53ca7db14b8f4a9193c1883247886459_67.geojson'
       })
 
-      map.addSource('hucs', {
-        'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_huc12_clip.geojson?alt=media&token=4e4f7991-4a7f-4064-884a-f076bd96be79'
-      })
-
       map.addSource('labs', {
         'type': 'geojson',
         'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=f88dc7c8-9569-483f-a1fa-c6828fea8d4a'
       })
-
-      // map.addSource('waterbodies', {
-      //   'type': 'geojson',
-      //   'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_Waterbodies_clip.geojson?alt=media&token=1f6ba878-757c-44e0-b226-a28c49a37cc5'
-      // })
-      // map.addSource('flowlines', {
-      //   'type': 'geojson',
-      //   'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_flowline_clip.geojson?alt=media&token=5edcc9f8-1d1d-480d-9dda-d813b75b8f21'
-      // })
 // MAP LAYERS
       // HUC-12 //
       map.addLayer({
         'id': 'Subwatersheds (HUC12)',
         'type': 'fill',
-        // 'layout': {
-        //   'visibility': 'none'
-        // },
         'source': 'hucs',
         'paint': {
           'fill-color': 'rgba(248, 219, 114, 0)',
           'fill-outline-color': 'rgba(190, 118, 48, 1)'
         },
-        'minzoom': 8,
+        'minzoom': 9,
         'properties': {
           'description': 'Hucs'
         }
       })
+      map.addLayer({
+        'id': 'huc-clicked',
+        'type': 'fill',
+        'source': 'sites',
+        'paint': {
+          'fill-color': 'rgba(248, 219, 114, 1)',
+          'fill-outline-color': 'rgba(190, 118, 48, 1)'
+        },
+        'filter': ['in', 'Name', '']
+      })
+      // map.addLayer({
+      //   'id': 'huc-clicked',
+      //   'type': 'fill',
+      //   'source': 'hucs',
+      //   'paint': {
+      //     'fill-color': 'rgba(248, 219, 114, 1)',
+      //     'fill-outline-color': 'rgba(190, 118, 48, 1)'
+      //   },
+      //   'minzoom': 9,
+      //   'properties': {
+      //     'description': 'huc-clicked'
+      //   }
+      // })
       // Waterbodies
       // map.addLayer({
       //   'id': 'Waterbodies Layer',
       //   'type': 'fill',
-      //   'layout': {
-      //     'visibility': 'none'
-      //   },
       //   'source': 'waterbodies',
       //   'paint': {
-      //     'fill-color': 'rgba(128,184,34,1)',
+      //     'fill-color': 'rgba(302,310,311,1)',
       //     'fill-outline-color': 'rgba(190, 118, 48, 0)'
       //   },
+      //   'minzoom': 10,
       //   'properties': {
       //     'description': 'Waterbodies'
       //   }
       // })
-      // Flowlines
+      // // Flowlines
       // map.addLayer({
       //   'id': 'Flowlines Layer',
       //   'type': 'fill',
-      //   'layout': {
-      //     'visibility': 'none'
-      //   },
       //   'source': 'flowlines',
       //   'paint': {
-      //     'fill-color': 'rgba(80,134,158,0)',
-      //     'fill-outline-color': 'rgba(80,134,158, 1)'
+      //     'fill-color': 'rgba(128,184,34,0)',
+      //     'fill-outline-color': 'rgba(128,184,34,1)'
       //   },
+      //   'minzoom': 9,
       //   'properties': {
       //     'description': 'Flowlines'
       //   }
@@ -229,13 +246,18 @@ export class MapHelper {
     })
 
      // HUCS popup //
+    // map.on('click', 'Subwatersheds (HUC12)', (e) => {
+    //   var name = e.features[0].properties.Name
+    //   console.log(name)
+    //   this.selectHuucCallback(name)
+    //   this.hucSelected(name)
+    // })
     map.on('click', 'Subwatersheds (HUC12)', function (e) {
       new window.mapboxgl.Popup()
             .setLngLat(e.lngLat)
             .setHTML(e.features[0].properties.Name)
             .addTo(map)
     })
-
     map.on('mouseenter', 'Subwatersheds (HUC12)', function () {
       map.getCanvas().style.cursor = 'pointer'
     })
@@ -327,7 +349,7 @@ export class MapHelper {
     var latLong = [selectedSite.longitude, selectedSite.latitude]
     this.map.flyTo({
       center: latLong,
-      zoom: 17
+      zoom: 13
     })
   }
 
@@ -335,3 +357,4 @@ export class MapHelper {
     this.map.setFilter('site-clicked', ['in', 'Name', name])
   }
 }
+
