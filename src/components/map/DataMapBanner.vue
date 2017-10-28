@@ -30,16 +30,21 @@
       </div>
 
       <div class="data-map-banner__text data-map-banner__text--nww">
-        {{ selectedSite.lastEColiResult }} (MPN/100mL)
+        {{ selectedSite.lastEColiResult }} (MPN/100mL) on ({{selectedSite.lastCollectionDate | formatDate}})
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import formatDateFilter from '../../filters/formatDateFilter'
+
 export default {
   name: 'data-map-banner',
-  props: ['selectedSite']
+  props: ['selectedSite'],
+  filters: {
+    formatDateFilter
+  }
 }
 </script>
 
