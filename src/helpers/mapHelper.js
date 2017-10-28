@@ -245,7 +245,7 @@ export class MapHelper {
     var latLong = [selectedSite.longitude, selectedSite.latitude]
     this.map.flyTo({
       center: latLong,
-      zoom: 17
+      zoom: 13
     })
   }
 
