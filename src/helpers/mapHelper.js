@@ -14,10 +14,10 @@ export class MapHelper {
     map.on('load', function () {
       // CHATTAHOOCHEE RIVER BASIN//
 // MAP SOURCES
-      // map.addSource('hucs', {
-      //   'type': 'geojson',
-      //   'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_huc12_clip.geojson?alt=media&token=4e4f7991-4a7f-4064-884a-f076bd96be79'
-      // })
+      map.addSource('hucs', {
+        'type': 'geojson',
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Georgia_huc12_clip.geojson?alt=media&token=4e4f7991-4a7f-4064-884a-f076bd96be79'
+      })
 
       // map.addSource('waterbodies', {
       //   'type': 'geojson',
