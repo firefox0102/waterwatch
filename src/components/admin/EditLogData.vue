@@ -395,19 +395,32 @@
       this.ecoliSmallCells = this.targetLogData.ecoliSmallCells
     },
     computed: {
-      getTotalColiform () {
-        if (this.targetLogData.coliformLargeCells && this.targetLogData.coliformSmallCells && this.targetLogData.dilution) {
-          let matrixValue = matrix[this.targetLogData.coliformLargeCells][this.targetLogData.coliformSmallCells]
-          let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
-          return matrixValue * dilutionFactor
+      getTotalColiform: function () {
+        try {
+          if (this.newLogData.coliformLargeCells && this.newLogData.coliformSmallCells && this.newLogData.dilution) {
+            let matrixValue = matrix[this.newLogData.coliformLargeCells][this.newLogData.coliformSmallCells]
+            let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
+            let computedValue = matrixValue * dilutionFactor
+            let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
+
+            return roundedValue
+          }
+        } catch (e) {
+          return 0
         }
-        return 0
       },
-      getTotalEcoli () {
-        if (this.ecoliLargeCells && this.ecoliSmallCells && this.targetLogData.dilution) {
-          let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
-          let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
-          return matrixValue * dilutionFactor
+      getTotalEcoli: function () {
+        try {
+          if (this.ecoliLargeCells && this.ecoliSmallCells && this.newLogData.dilution) {
+            let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
+            let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
+            let computedValue = matrixValue * dilutionFactor
+            let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
+
+            return roundedValue
+          }
+        } catch (e) {
+          return 0
         }
       }
     },
