@@ -41,7 +41,6 @@
 
   min-height: 115px;
   padding: 11px 40px;
-  max-width: 368px;
 
 	background-color: $color-finn-white;
   box-shadow: 0 2px 4px 0 rgba(155,155,155,0.5);
@@ -49,6 +48,7 @@
 
   @media screen and (min-width: 850px) {
     position: absolute;
+    max-width: 368px;
 
     margin: 15px;
     padding: 11px 15px;

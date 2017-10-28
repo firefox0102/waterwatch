@@ -133,3 +133,11 @@ button.mapboxgl-ctrl-icon.mapboxgl-ctrl-fullextent {
 .controls-card-control-group__header {
   text-transform: uppercase;
 }
+
+.navigation-drawer.navigation-drawer--absolute {
+  @media screen and (max-width: 849px) {
+    height: 100vh !important;
+    padding-top: 64px;
+    margin-top: 0px;
+  }
+}
