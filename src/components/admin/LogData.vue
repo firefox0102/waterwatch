@@ -98,13 +98,14 @@
             <v-text-field
               slot="activator"
               label="Incubation In Time"
-              readonly
               v-model="newLogData.incubationTime"
               :rules="formRules.incubationTimeRules"
+              @Focus="()=>$refs.newLogData.incubationTime.blur()"
               class="input-group--limit-height">
             </v-text-field>
             <v-time-picker
               v-model="newLogData.incubationTime"
+              autosave
               format="24hr"
             ></v-time-picker>
           </v-menu>
@@ -431,6 +432,7 @@
     },
     data: function () {
       return {
+        testData: null,
         collectionSites: [],
         selectedSite: null,
         logbookNumber: null,
