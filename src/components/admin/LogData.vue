@@ -100,7 +100,6 @@
               label="Incubation In Time"
               v-model="newLogData.incubationTime"
               :rules="formRules.incubationTimeRules"
-              @Focus="()=>$refs.newLogData.incubationTime.blur()"
               class="input-group--limit-height">
             </v-text-field>
             <v-time-picker
