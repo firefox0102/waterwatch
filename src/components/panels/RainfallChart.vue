@@ -87,7 +87,8 @@ export default {
             text: '(in)',
             margin: 2
           },
-          min: 0
+          min: 0,
+          ceiling: 6000
         },
         tooltip: {
           crosshairs: true,
