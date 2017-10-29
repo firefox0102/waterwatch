@@ -47,10 +47,10 @@
             </v-text-field>
             <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
               <template scope="{ save, cancel }">
-                    <v-card-actions>
-                      <v-btn success @click.native="save()">Save</v-btn>
-                      <v-btn primary flat @click.native="cancel()">Cancel</v-btn>
-                    </v-card-actions>
+                <v-card-actions>
+                  <v-btn success @click.native="save()">Save</v-btn>
+                  <v-btn primary flat @click.native="cancel()">Cancel</v-btn>
+                </v-card-actions>
               </template>
             </v-date-picker>
           </v-menu>
@@ -157,20 +157,20 @@
               v-model="newLogData.specificConductivity">
           </v-text-field>
           <v-text-field
-              label="Rainfall (in)"
-              class="input-group--limit-height"
-              type="number"
-              step="0.01"
-              :rules="formRules.noNegatives"
-              v-model="newLogData.precipitation">
+            label="Rainfall (in)"
+            class="input-group--limit-height"
+            type="number"
+            step="0.01"
+            :rules="formRules.noNegatives"
+            v-model="newLogData.precipitation">
           </v-text-field>
           <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
           <v-text-field
-              label="Incubation Temp (*C)"
-              class="input-group--limit-height"
-              type="number"
-              :rules="formRules.incubationTempRules"
-              v-model="newLogData.incubationTemp">
+            label="Incubation Temp (*C)"
+            class="input-group--limit-height"
+            type="number"
+            :rules="formRules.incubationTempRules"
+            v-model="newLogData.incubationTemp">
           </v-text-field>
           <v-menu
             lazy
