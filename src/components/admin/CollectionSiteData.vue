@@ -75,7 +75,7 @@
               <input
                 class="site-reports-toolbar-search__input"
                 v-model="controls.search"
-                placeholder="Search collection sites"/>
+                placeholder="Search reports"/>
             </div>
             <div class="site-reports-datepickers">
               <span class="site-reports-body-toolbar__text-content">Select date range:</span>
