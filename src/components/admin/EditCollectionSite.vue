@@ -21,7 +21,7 @@
             <v-text-field label="Adopt A Stream ID (eg. S-4475)" v-model="collectionSite.adoptAStreamId"></v-text-field>
             <v-select
               v-bind:items="hucSet"
-              v-model="newCollectionSite.hucName"
+              v-model="collectionSite.hucName"
               label="HUC 12 Name"
               autocomplete
               bottom>
@@ -109,6 +109,8 @@ export default {
     return {
       labs: [],
       labSet: [],
+      hucList: [],
+      hucSet: [],
       partners: [],
       partnerSet: [],
       controls: {
