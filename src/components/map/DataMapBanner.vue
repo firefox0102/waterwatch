@@ -20,7 +20,7 @@
       </div>
 
       <div class="data-map-banner__text">
-        {{ selectedSite.huc }}
+        {{ selectedSite.hucName }}
       </div>
     </div>
 

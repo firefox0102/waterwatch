@@ -96,7 +96,7 @@ export default {
       sites = _.filter(sites, (site) => {
         let isPrivate = site.isPrivate
         let containsSearch = site.stationName.toLowerCase().includes(this.filters.search)
-        let containsHuc = this.filters.hucFilters.length ? this.filters.hucFilters.indexOf(site.huc) : 0
+        let containsHuc = this.filters.hucFilters.length ? this.filters.hucFilters.indexOf(site.hucName) : 0
         let containsLab = this.filters.labFilters.length ? this.filters.labFilters.indexOf(site.lab) : 0
 
         return containsSearch && !isPrivate && !(containsHuc === -1) && !(containsLab === -1)
@@ -300,5 +300,10 @@ $data-sidebar-width: 240px;
 
   background: #f5f5f5;
   overflow-y: auto;
+}
+
+.filter-body__list-item {
+  font-size: 12px;
+  padding: 2px 0;
 }
 </style>
