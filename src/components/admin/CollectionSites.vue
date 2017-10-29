@@ -160,7 +160,6 @@
                 <td>{{ props.item.lab }}</td>
                 <td>{{ props.item.lastCollectionDate }}</td>
                 <td>{{ props.item.lastEColiResult }}</td>
-                <td>{{ props.item.active ? 'active' : 'inactive' }}</td>
                 <td>{{ props.item.collectionPartner }}</td>
                 <td>{{ props.item.hucName }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.adoptAStreamName }}</td>
@@ -264,7 +263,6 @@ export default {
         { text: 'Lab', value: 'lab' },
         { text: 'Last Collection Date', value: 'lastCollectionDate' },
         { text: 'Last E. coli Result', value: 'lastEColi' },
-        { text: 'Status', value: 'active' },
         { text: 'Collection Partner', value: 'collectionPartner' },
         { text: 'Subwatershed (HUC12)', value: 'hucName' },
         { text: 'Adopt-A-Stream Name', value: 'adoptAStreamName' },
