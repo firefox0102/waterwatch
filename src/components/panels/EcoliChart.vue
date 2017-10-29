@@ -34,10 +34,10 @@
         <span class="graph-card-title__secondary--strong">
           Last Result:
         </span>
-        <span class="graph-card-title__secondary">
-          {{ selectedSite ? selectedSite.lastEColiResult : null }}
-          on 
-          {{ date }}
+        <span v-if="selectedSite" class="graph-card-title__secondary">
+          {{ selectedSite.lastEColiResult }}
+          on
+          {{ selectedSite.lastCollectionDate }}
         </span>
       </div>
     </div>
