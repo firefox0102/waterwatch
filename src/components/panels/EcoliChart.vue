@@ -82,7 +82,7 @@ export default {
         xAxis: {
           type: 'datetime',
           dateTimeLabelFormats: { // don't display the dummy year
-            month: '%e/%m/%Y',
+            month: '%e/%m/%y',
             year: '%b'
           },
           title: {
@@ -94,7 +94,8 @@ export default {
             text: '(MPN/100mL)',
             margin: 2
           },
-          min: 0
+          min: 0,
+          ceiling: 8000
         },
         tooltip: {
           crosshairs: true,

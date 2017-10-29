@@ -276,7 +276,7 @@ $data-sidebar-width: 240px;
   }
 
   &__dynamic-column {
-    height: 500px;
+    height: 400px;
     width: 100vw;
 
     overflow: hidden;

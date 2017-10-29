@@ -147,7 +147,11 @@ button.mapboxgl-ctrl-icon.mapboxgl-ctrl-fullextent {
   text-transform: uppercase;
 }
 
-.nww-dialog p {
-  color: $color-storm-cloud;
-  font-size: 17px;
+.navigation-drawer.navigation-drawer--absolute {
+  @media screen and (max-width: 849px) {
+    height: 100vh !important;
+    padding-top: 64px;
+    margin-top: 0px;
+  }
 }
+

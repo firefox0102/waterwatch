@@ -75,7 +75,7 @@ export default {
         xAxis: {
           type: 'datetime',
           dateTimeLabelFormats: {
-            month: '%e/%m/%Y',
+            month: '%e/%m/%y',
             year: '%b'
           },
           title: {

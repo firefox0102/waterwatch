@@ -92,13 +92,30 @@
                 <div class="page-content-body__header">
                   Incubation and Parameters
                 </div>
-                <v-text-field
+                <v-menu
+                  lazy
+                  :close-on-content-click="false"
+                  v-model="controls.incubationInMenu"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  :nudge-right="40"
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <v-text-field
+                    slot="activator"
                     label="Incubation In Time"
+                    readonly
                     v-model="targetLogData.incubationTime"
                     :rules="formRules.incubationTimeRules"
-                    type="time"
                     class="input-group--limit-height">
-                </v-text-field>
+                  </v-text-field>
+                  <v-time-picker
+                    v-model="targetLogData.incubationTime"
+                    format="24hr"
+                  ></v-time-picker>
+                </v-menu>
                 <v-text-field
                     label="# mL/100mL (Dilution)"
                     type="number"
@@ -146,13 +163,30 @@
                     :rules="formRules.incubationTempRules"
                     v-model="targetLogData.incubationTemp">
                 </v-text-field>
-                <v-text-field
-                    label="Incubation Out"
+                <v-menu
+                  lazy
+                  :close-on-content-click="false"
+                  v-model="controls.incubationOutMenu"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  :nudge-right="40"
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <v-text-field
+                    slot="activator"
+                    label="Incubation Out Time"
+                    readonly
                     v-model="targetLogData.incubationOut"
                     :rules="formRules.incubationOutTimeRules"
-                    type="time"
                     class="input-group--limit-height">
-                </v-text-field>
+                  </v-text-field>
+                  <v-time-picker
+                    v-model="targetLogData.incubationOut"
+                    format="24hr"
+                  ></v-time-picker>
+                </v-menu>
               </div>
 
               <!-- Column 3 -->
@@ -361,19 +395,32 @@
       this.ecoliSmallCells = this.targetLogData.ecoliSmallCells
     },
     computed: {
-      getTotalColiform () {
-        if (this.targetLogData.coliformLargeCells && this.targetLogData.coliformSmallCells && this.targetLogData.dilution) {
-          let matrixValue = matrix[this.targetLogData.coliformLargeCells][this.targetLogData.coliformSmallCells]
-          let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
-          return matrixValue * dilutionFactor
+      getTotalColiform: function () {
+        try {
+          if (this.newLogData.coliformLargeCells && this.newLogData.coliformSmallCells && this.newLogData.dilution) {
+            let matrixValue = matrix[this.newLogData.coliformLargeCells][this.newLogData.coliformSmallCells]
+            let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
+            let computedValue = matrixValue * dilutionFactor
+            let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
+
+            return roundedValue
+          }
+        } catch (e) {
+          return 0
         }
-        return 0
       },
-      getTotalEcoli () {
-        if (this.ecoliLargeCells && this.ecoliSmallCells && this.targetLogData.dilution) {
-          let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
-          let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
-          return matrixValue * dilutionFactor
+      getTotalEcoli: function () {
+        try {
+          if (this.ecoliLargeCells && this.ecoliSmallCells && this.newLogData.dilution) {
+            let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
+            let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
+            let computedValue = matrixValue * dilutionFactor
+            let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
+
+            return roundedValue
+          }
+        } catch (e) {
+          return 0
         }
       }
     },
@@ -389,7 +436,9 @@
           showAdditionalParams: false,
           showConfirmDialog: false,
           showDatepicker: false,
-          showDialog: false
+          showDialog: false,
+          incubationInMenu: false,
+          incubationOutMenu: false
         },
         formRules: {
           conductivityRules: [
