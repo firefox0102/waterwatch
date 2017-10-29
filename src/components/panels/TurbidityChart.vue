@@ -29,8 +29,6 @@
         </span>
         <span class="graph-card-title__secondary">
           {{ selectedSite ? selectedSite.lastTurbidityResult : null }}
-          on
-          {{ date }}
         </span>
       </div>
     </div>

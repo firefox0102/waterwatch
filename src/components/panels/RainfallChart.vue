@@ -29,8 +29,6 @@
         </span>
         <span class="graph-card-title__secondary">
           {{ selectedSite ? selectedSite.lastRainfallResult : null }}
-          on 
-          {{ date }}
         </span>
       </div>
     </div>
