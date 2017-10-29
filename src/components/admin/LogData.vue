@@ -60,7 +60,7 @@
             v-model="selectedSite"
             label="Collection Site *"
             autocomplete
-            item-text="stationName"
+            item-text="logbookAbbv"
             class="input-group--limit-height"
             :rules="[(v) => !!v || 'Collection Site is required']"
             bottom>
