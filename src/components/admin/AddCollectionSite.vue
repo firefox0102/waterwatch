@@ -16,7 +16,13 @@
             <v-text-field label="Logbook Abbreviation" v-model="newCollectionSite.logbookAbbv" required></v-text-field>
             <v-text-field label="Adopt A Stream Name" v-model="newCollectionSite.adoptAStreamName"></v-text-field>
             <v-text-field label="Adopt A Stream ID (eg. S-4475)" v-model="newCollectionSite.adoptAStreamId"></v-text-field>
-            <v-text-field label="HUC 12 Name" v-model="newCollectionSite.hucName" required></v-text-field>
+            <v-select
+              v-bind:items="hucSet"
+              v-model="newCollectionSite.hucName"
+              label="HUC 12 Name"
+              autocomplete
+              bottom>
+            </v-select>
             <v-text-field label="HUC 12" type="number" v-model="newCollectionSite.huc" required></v-text-field>
             <v-text-field label="Latitude (eg. 34.004401)" v-model="newCollectionSite.latitude" required></v-text-field>
             <v-text-field label="Longitude (eg. -84.350555)" v-model="newCollectionSite.longitude" required></v-text-field>
@@ -72,6 +78,7 @@ let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
 let partnersRef = db.ref('partners')
 let metaRef = db.ref('metaData')
+let hucRef = db.ref('hucList')
 
 export default {
   name: 'add-collection-site',
@@ -79,7 +86,8 @@ export default {
     collectionSites: collectionSitesRef,
     labs: labsRef,
     partners: partnersRef,
-    metaData: metaRef
+    metaData: metaRef,
+    hucList: hucRef
   },
   watch: {
     labs: {
@@ -91,12 +99,19 @@ export default {
       handler () {
         this.partnerSet = _.map(this.partners, '.value')
       }
+    },
+    hucList: {
+      handler () {
+        this.hucSet = _.map(this.hucList, '.value')
+      }
     }
   },
   data: function () {
     return {
       labs: [],
       labSet: [],
+      hucList: [],
+      hucSet: [],
       partners: [],
       partnerSet: [],
       controls: {

@@ -100,7 +100,7 @@
               label="Incubation In Time"
               v-model="newLogData.incubationTime"
               :rules="formRules.incubationTimeRules"
-              class="input-group--limit-height">
+            >
             </v-text-field>
             <v-time-picker
               v-model="newLogData.incubationTime"
