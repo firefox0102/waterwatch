@@ -115,11 +115,20 @@
               v-bind:items="collectionSites"
               v-bind:pagination.sync="pagination"
               v-bind:search="controls.search"
+              select-all
               item-key="stationName"
               class="elevation-1">
             <template slot="headers" scope="props">
              <tr class="nww-table__header">
-               <th></th>
+               <th>
+                 <v-checkbox
+                   primary
+                   hide-details
+                   @click.native="toggleAll"
+                   :input-value="props.all"
+                   :indeterminate="props.indeterminate"
+                 ></v-checkbox>
+               </th>
                <th v-for="header in props.headers" :key="header.text"
                  :class="['text-sm-left', 'column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                  @click="changeSort(header.value)">
