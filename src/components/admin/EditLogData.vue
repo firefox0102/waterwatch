@@ -73,13 +73,29 @@
                   :rules="[(v) => !!v || 'Collection Site is required']"
                   bottom>
                 </v-select>
-                <v-text-field
+                <v-menu
+                  lazy
+                  :close-on-content-click="false"
+                  v-model="controls.collectionTimeMenu"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  :nudge-right="40"
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <v-text-field
+                    slot="activator"
                     label="Collection Time"
                     v-model="targetLogData.collectionTime"
-                    type="time"
-                    suffix="EST"
-                    class="input-group--limit-height">
-                </v-text-field>
+                  >
+                  </v-text-field>
+                  <v-time-picker
+                    v-model="targetLogData.collectionTime"
+                    autosave
+                    format="24hr"
+                  ></v-time-picker>
+                </v-menu>
                 <v-text-field
                     label="Analyst (Initials)"
                     class="input-group--limit-height"
