@@ -147,7 +147,7 @@ body {
   }
 
   &__primary-link {
-    color: $color-warlock;
+    color: $color-warlock !important;
     text-decoration: none;
   }
 
