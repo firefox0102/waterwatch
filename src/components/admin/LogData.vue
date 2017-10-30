@@ -48,7 +48,7 @@
             <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
               <template scope="{ save, cancel }">
                 <v-card-actions>
-                  <v-btn success @click.native="save()">Save</v-btn>
+                  <v-btn class="btn-nww" @click.native="save()">Save</v-btn>
                   <v-btn primary flat @click.native="cancel()">Cancel</v-btn>
                 </v-card-actions>
               </template>
@@ -662,7 +662,7 @@
           chlorophyll: null,
           coliformLargeCells: '',
           coliformSmallCells: '',
-          collectionDate: moment(new Date().toISOString()).format('YYYY-MM-DD'),
+          collectionDate: moment(new Date().toISOString()).format('MM/DD/YYYY'),
           collectionSite: null,
           collectionTime: '',
           dilution: null,

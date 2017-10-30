@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-dialog v-model="controls.showDialog"  :overlay="false">
+    <v-dialog v-model="controls.showDialog" :overlay="false">
       <v-btn slot="activator" class="btn-nww--light">Add New Site</v-btn>
       <v-card>
         <div class="page-content-header">

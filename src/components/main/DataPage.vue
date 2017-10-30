@@ -53,7 +53,7 @@
                       <v-date-picker v-model="startDate" no-title scrollable actions>
                         <template scope="{ save, cancel }">
                           <v-card-actions>
-                            <v-btn success @click.native="save()">Save</v-btn>
+                            <v-btn class="btn-nww" @click.native="save()">Save</v-btn>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
                           </v-card-actions>
                         </template>
@@ -79,7 +79,7 @@
                       <v-date-picker v-model="endDate" no-title scrollable actions>
                         <template scope="{ save, cancel }">
                           <v-card-actions>
-                            <v-btn success @click.native="save()">Save</v-btn>
+                            <v-btn class="btn-nww" @click.native="save()">Save</v-btn>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
                           </v-card-actions>
                         </template>

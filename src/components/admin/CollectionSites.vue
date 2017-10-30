@@ -48,7 +48,7 @@
                   <v-date-picker v-model="startDate" no-title scrollable actions>
                     <template scope="{ save, cancel }">
                       <v-card-actions>
-                        <v-btn success @click.native="save()">Save</v-btn>
+                        <v-btn class="btn-nww" @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
                       </v-card-actions>
                     </template>
@@ -66,7 +66,7 @@
                   <v-date-picker v-model="endDate" no-title scrollable actions>
                     <template scope="{ save, cancel }">
                       <v-card-actions>
-                        <v-btn success @click.native="save()">Save</v-btn>
+                        <v-btn class="btn-nww" @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
                       </v-card-actions>
                     </template>
@@ -164,6 +164,7 @@
                 <td>{{ props.item.hucName }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.adoptAStreamName }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.storetName }}</td>
+                <td class="col-long table-cell__truncate--long">{{ props.item.storetLocationId }}</td>
                 <td>{{ props.item.numSamples }}</td>
                 <td>{{ props.item.firstCollectionDate }}</td>
                 <td class="table-cell__truncate--long">
@@ -196,7 +197,7 @@ import moment from 'moment'
 let collectionSitesRef = db.ref('collectionSites')
 let archivedRef = db.ref('archivedSites')
 let metaRef = db.ref('metaData')
-let activeSitesRef = db.ref('metaData/actuveSites')
+let activeSitesRef = db.ref('metaData/activeSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
 let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
 // let oldDate = moment(new Date()).subtract(200, 'months').format('YYYY-MM-DD')
@@ -267,6 +268,7 @@ export default {
         { text: 'Subwatershed (HUC12)', value: 'hucName' },
         { text: 'Adopt-A-Stream Name', value: 'adoptAStreamName' },
         { text: 'STORET Name', value: 'storetName' },
+        { text: 'STORET Location ID', value: 'storetLocationId' },
         { text: '# Samples Collected', value: 'numSamples' },
         { text: 'First Collection Date', value: 'firstCollectionDate' },
         { text: 'Google Maps URL', value: 'googleMapsUrl' },

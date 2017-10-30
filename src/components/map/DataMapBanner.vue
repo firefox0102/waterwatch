@@ -41,7 +41,7 @@
       </div>
 
       <div class="data-map-banner__text data-map-banner__text--nww">
-        {{ selectedSite.lastEColiResult }} (MPN/100mL) on ({{selectedSite.lastCollectionDate | formatDate}})
+        {{ selectedSite.lastEColiResult }} (MPN/100mL) on {{selectedSite.lastCollectionDate | formatDate}}
       </div>
     </div>
   </div>

@@ -69,6 +69,7 @@ a.list__tile:hover,
 }
 
 .dialog.dialog--active {
+  max-width: 900px !important;
   min-width: 460px !important;
   width: 90% !important;
 }
