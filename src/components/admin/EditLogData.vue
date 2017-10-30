@@ -388,7 +388,8 @@
     props: [
       'tableLogData',
       'routeCollectionSiteId',
-      'resetSelected'
+      'resetSelected',
+      'postSubmitForm'
     ],
     firebase: {
       collectionSites: collectionSitesRef
@@ -589,8 +590,8 @@
           this.$unbind('firebaseLogObject')
 
           // Success!
-          this.snackbar.successVisible = true
           this.controls.showDialog = false
+          this.postSubmitForm()
         } catch (e) {
           console.log(e)
           this.snackbar.errorVisible = true

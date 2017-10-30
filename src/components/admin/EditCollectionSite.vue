@@ -53,7 +53,11 @@
               label="Collection Partner"
               bottom>
             </v-select>
-            <v-checkbox v-bind:label="`${ targetCollectionSite.isPrivate ? 'Check this box to hide from map (make private)' : 'Check this box to hide from map (make private)' }`" v-model="targetCollectionSite.isPrivate" success></v-checkbox>
+            <v-checkbox
+              v-bind:label="`${ targetCollectionSite.isPrivate ? 'Check this box to hide from map (make private)' : 'Check this box to hide from map (make private)' }`"
+              v-model="targetCollectionSite.isPrivate"
+              success
+            ></v-checkbox>
             <div class="flex">
               <v-btn class="btn-nww" type="submit">Save Site</v-btn>
               <v-btn v-on:click.native="close" flat primary class="btn">Cancel</v-btn>
@@ -61,15 +65,17 @@
           </form>
         </div>
       </v-card>
+      <div>
+        <v-snackbar
+          :timeout="snackbar.timeout"
+          :error="true"
+          v-model="snackbar.errorVisible"
+        >
+          {{snackbar.errorMessage}}
+          <v-btn dark flat @click.native="snackbar.errorVisible = false">Close</v-btn>
+        </v-snackbar>
+      </div>
     </v-dialog>
-    <v-snackbar :timeout="snackbar.timeout" :error="true" v-model="snackbar.errorVisible">
-      {{snackbar.errorMessage}}
-      <v-btn dark flat @click.native="snackbar.errorVisible = false">Close</v-btn>
-    </v-snackbar>
-    <v-snackbar :timeout="snackbar.timeout" :info="true" v-model="snackbar.successVisible">
-      {{snackbar.successMessage}}
-      <v-btn dark flat @click.native="snackbar.successVisible = false">Close</v-btn>
-    </v-snackbar>
   </div>
 </template>
 
@@ -85,10 +91,14 @@ let hucRef = db.ref('hucList')
 
 export default {
   name: 'edit-collection-site',
-  props: ['collectionSite'],
+  props: [
+    'collectionSite',
+    'postSubmitForm'
+  ],
   beforeMount () {
     // Copy the targetLogData and modify the read-only-collection
     this.targetCollectionSite = _.cloneDeep(this.collectionSite)
+    console.log(this.targetCollectionSite.isPrivate)
   },
   firebase: {
     collectionSites: collectionSitesRef,
@@ -116,6 +126,7 @@ export default {
   },
   data () {
     return {
+      targetCollectionSite: {},
       labs: [],
       labSet: [],
       hucList: [],
@@ -127,8 +138,6 @@ export default {
       },
       snackbar: {
         errorVisible: false,
-        successVisible: false,
-        successMessage: 'Collection Site saved successfully!',
         errorMessage: 'There was an issue saving your Collection Site',
         timeout: 6000
       }
@@ -141,8 +150,8 @@ export default {
         delete itemCopy['.key']
         this.$firebaseRefs.collectionSites.child(this.targetCollectionSite['.key']).set(itemCopy)
 
-        this.snackbar.successVisible = true
         this.controls.showDialog = false
+        this.postSubmitForm()
       } catch (e) {
         console.log(e)
         this.snackbar.errorVisible = true

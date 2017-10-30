@@ -77,7 +77,12 @@
           </div>
           <div class="site-reports-body-toolbar__secondary-content">
             <div class="site-reports-actions">
-              <edit-collection-site class="site-reports-actions__action" v-if="selected.length === 1" v-bind:collection-site="selected[0]"></edit-collection-site>
+              <edit-collection-site
+                class="site-reports-actions__action"
+                v-if="selected.length === 1"
+                v-bind:collection-site="selected[0]"
+                v-bind:post-submit-form="postSubmitForm"
+              ></edit-collection-site>
               <v-btn v-if="selected.length === 1 && !showArchived" v-on:click.native="archiveSite(selected[0])" class="site-reports-actions__action btn btn-nww">
                 Archive
                 <v-icon right dark>archive</v-icon>
@@ -184,6 +189,16 @@
         </v-card>
       </div>
     </v-card>
+    <div>
+      <v-snackbar
+        :timeout="snackbar.timeout"
+        :info="true"
+        v-model="snackbar.successVisible"
+      >
+        {{snackbar.successMessage}}
+        <v-btn dark flat @click.native="snackbar.successVisible = false">Close</v-btn>
+      </v-snackbar>
+    </div>
   </v-card>
 </template>
 
@@ -275,10 +290,19 @@ export default {
         { text: 'HUC 12', value: 'huc' },
         { text: 'Is Private', value: 'isPrivate' }
       ],
-      selected: []
+      selected: [],
+      snackbar: {
+        successVisible: false,
+        successMessage: 'Collection Site saved successfully!',
+        timeout: 6000
+      }
     }
   },
   methods: {
+    postSubmitForm () {
+      this.snackbar.successVisible = true
+      this.selected = []
+    },
     toggleAll () {
       if (this.selected.length) {
         this.selected = []
