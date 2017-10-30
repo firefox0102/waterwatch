@@ -56,7 +56,7 @@
                     <template scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn @click.native="save()" class="btn btn-nww">Save</v-btn>
-                        <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
+                        <v-btn flat color="primary" @click.native="cancel()">Cancel</v-btn>
                       </v-card-actions>
                     </template>
                   </v-date-picker>
@@ -82,24 +82,28 @@
                   full-width
                   :nudge-right="40"
                   max-width="290px"
-                  min-width="290px"
-                >
-                  <v-text-field
-                    slot="activator"
-                    label="Collection Time"
-                    v-model="targetLogData.collectionTime"
-                  >
-                  </v-text-field>
-                  <v-time-picker
-                    v-model="targetLogData.collectionTime"
-                    autosave
-                    format="24hr"
-                  ></v-time-picker>
+                  min-width="290px">
+                <v-text-field
+                  slot="activator"
+                  label="Collection Time"
+                  v-model="targetLogData.collectionTime">
+                </v-text-field>
+                <v-time-picker
+                  v-model="targetLogData.collectionTime"
+                  autosave
+                  format="24hr">
+                </v-time-picker>
                 </v-menu>
                 <v-text-field
-                    label="Analyst (Initials)"
-                    class="input-group--limit-height"
-                    v-model="targetLogData.analyst">
+                  label="Analyst (Initials)"
+                  class="input-group--limit-height"
+                  v-model="targetLogData.analyst">
+                </v-text-field>
+                <v-text-field
+                  name="input-5-1"
+                  label="Notes"
+                  v-model="targetLogData.notes"
+                  class="input-group--limit-height">
                 </v-text-field>
               </div>
 
@@ -329,12 +333,6 @@
                       :rules="formRules.noNegatives"
                       v-model="targetLogData.chlorophyll">
                   </v-text-field>
-                  <v-text-field
-                      name="input-5-1"
-                      label="Notes"
-                      v-model="targetLogData.notes"
-                      class="input-group--limit-height"
-                    ></v-text-field>
                 </div>
                 <div class="flex log-data-btn-row">
                   <v-btn

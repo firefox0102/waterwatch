@@ -33,7 +33,7 @@
             transition="scale-transition"
             offset-y
             full-width
-            :nudge-left="40"
+            :nudge-left="0"
             class="input-group--limit-height"
             max-width="290px">
             <v-text-field
@@ -58,11 +58,12 @@
           <v-select
             v-bind:items="collectionSites"
             v-model="selectedSite"
-            label="Collection Site *"
+            label="Collection Site"
             autocomplete
             item-text="logbookAbbv"
             class="input-group--limit-height"
             :rules="[(v) => !!v || 'Collection Site is required']"
+            required
             bottom>
           </v-select>
           <v-menu
@@ -92,6 +93,12 @@
               label="Analyst (Initials)"
               class="input-group--limit-height"
               v-model="newLogData.analyst">
+          </v-text-field>
+          <v-text-field
+            name="input-5-1"
+            label="Notes"
+            v-model="newLogData.notes"
+            class="input-group--limit-height">
           </v-text-field>
         </div>
 
@@ -324,12 +331,6 @@
                 type="number"
                 :rules="formRules.noNegatives"
                 v-model="newLogData.waterTemp">
-            </v-text-field>
-            <v-text-field
-                name="input-5-1"
-                label="Notes"
-                v-model="newLogData.notes"
-                class="input-group--limit-height">
             </v-text-field>
           </div>
 
