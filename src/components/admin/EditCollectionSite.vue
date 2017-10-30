@@ -17,28 +17,6 @@
           <form class="add-form" v-on:submit.prevent="submitForm">
             <v-text-field label="Station Name" v-model="collectionSite.stationName" required></v-text-field>
             <v-text-field label="Logbook Abbreviation" v-model="collectionSite.logbookAbbv" required></v-text-field>
-            <v-text-field label="Adopt A Stream Name" v-model="collectionSite.adoptAStreamName" required></v-text-field>
-            <v-text-field label="Adopt A Stream ID (eg. S-4475)" v-model="collectionSite.adoptAStreamId"></v-text-field>
-            <v-select
-              v-bind:items="hucSet"
-              v-model="collectionSite.hucName"
-              label="HUC 12 Name"
-              autocomplete
-              bottom>
-            </v-select>            <v-text-field label="HUC 12" type="number" v-model="collectionSite.huc" required></v-text-field>
-            <v-text-field label="Latitude (eg. 34.004401)" v-model="collectionSite.latitude" required></v-text-field>
-            <v-text-field label="Longitude (eg. -84.350555)" v-model="collectionSite.longitude" required></v-text-field>
-            <v-text-field label="Storet Name" v-model="collectionSite.storetName"></v-text-field>
-            <v-text-field label="Storet Location ID (eg. NWW24)" v-model="collectionSite.storetLocationId"></v-text-field>
-            <v-select
-              v-bind:items="partnerSet"
-              v-model="collectionSite.collectionPartner"
-              item-text=".value"
-              item-value=".value"
-              label="Collection Partner"
-              required
-              bottom>
-            </v-select>
             <v-select
               v-bind:items="labSet"
               v-model="collectionSite.lab"
@@ -48,7 +26,31 @@
               required
               bottom>
             </v-select>
-            <v-checkbox v-bind:label="`${ collectionSite.isPrivate ? 'Site is Private (uncheck to make Public)' : 'Site is Public (check to make Private)' }`" v-model="collectionSite.isPrivate" success></v-checkbox>
+            <v-text-field label="Latitude (eg. 34.004401)" v-model="collectionSite.latitude" required></v-text-field>
+            <v-text-field label="Longitude (eg. -84.350555)" v-model="collectionSite.longitude" required></v-text-field>
+            <v-select
+              v-bind:items="hucSet"
+              v-model="collectionSite.hucName"
+              label="Subwatershed (HUC 12) Name"
+              required
+              autocomplete
+              bottom>
+            </v-select>
+            <v-text-field label="HUC 12 Number" type="number" v-model="collectionSite.huc"></v-text-field>
+            <v-text-field label="Adopt-A-Stream Name" v-model="collectionSite.adoptAStreamName"></v-text-field>
+            <v-text-field label="Adopt-A-Stream 'S' ID (eg. S-4475)" v-model="collectionSite.adoptAStreamId"
+              :rules="[(v) => !!v || 'Enter the 4 numbers after S- only (Leave blank if no ID)']"></v-text-field>
+            <v-text-field label="STORET Name" v-model="collectionSite.storetName"></v-text-field>
+            <v-text-field label="STORET Location ID (eg. NWW24)" v-model="collectionSite.storetLocationId"></v-text-field>
+            <v-select
+              v-bind:items="partnerSet"
+              v-model="collectionSite.collectionPartner"
+              item-text=".value"
+              item-value=".value"
+              label="Collection Partner"
+              bottom>
+            </v-select>
+            <v-checkbox v-bind:label="`${ collectionSite.isPrivate ? 'Check this box to hide from map (make private)' : 'Check this box to hide from map (make private)' }`" v-model="collectionSite.isPrivate" success></v-checkbox>
             <div class="flex">
               <v-btn class="btn-nww" type="submit">Save Site</v-btn>
               <v-btn v-on:click.native="close" flat primary class="btn">Cancel</v-btn>
