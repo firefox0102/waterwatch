@@ -29,8 +29,6 @@
         </span>
         <span class="graph-card-title__secondary">
           {{ selectedSite ? selectedSite.lastRainfallResult : null }}
-          on 
-          {{ date }}
         </span>
       </div>
     </div>
@@ -87,7 +85,8 @@ export default {
             text: '(in)',
             margin: 2
           },
-          min: 0
+          min: 0,
+          ceiling: 6000
         },
         tooltip: {
           crosshairs: true,

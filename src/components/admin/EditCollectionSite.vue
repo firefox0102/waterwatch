@@ -19,8 +19,13 @@
             <v-text-field label="Logbook Abbreviation" v-model="collectionSite.logbookAbbv" required></v-text-field>
             <v-text-field label="Adopt A Stream Name" v-model="collectionSite.adoptAStreamName" required></v-text-field>
             <v-text-field label="Adopt A Stream ID (eg. S-4475)" v-model="collectionSite.adoptAStreamId"></v-text-field>
-            <v-text-field label="HUC 12 Name" v-model="collectionSite.hucName" required></v-text-field>
-            <v-text-field label="HUC 12" type="number" v-model="collectionSite.huc" required></v-text-field>
+            <v-select
+              v-bind:items="hucSet"
+              v-model="collectionSite.hucName"
+              label="HUC 12 Name"
+              autocomplete
+              bottom>
+            </v-select>            <v-text-field label="HUC 12" type="number" v-model="collectionSite.huc" required></v-text-field>
             <v-text-field label="Latitude (eg. 34.004401)" v-model="collectionSite.latitude" required></v-text-field>
             <v-text-field label="Longitude (eg. -84.350555)" v-model="collectionSite.longitude" required></v-text-field>
             <v-text-field label="Storet Name" v-model="collectionSite.storetName"></v-text-field>
@@ -71,6 +76,7 @@ let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
 let partnersRef = db.ref('partners')
 let metaRef = db.ref('metaData')
+let hucRef = db.ref('hucList')
 
 export default {
   name: 'edit-collection-site',
@@ -79,7 +85,8 @@ export default {
     collectionSites: collectionSitesRef,
     labs: labsRef,
     partners: partnersRef,
-    metaData: metaRef
+    metaData: metaRef,
+    hucList: hucRef
   },
   watch: {
     labs: {
@@ -91,12 +98,19 @@ export default {
       handler () {
         this.partnerSet = _.map(this.partners, '.value')
       }
+    },
+    hucList: {
+      handler () {
+        this.hucSet = _.map(this.hucList, '.value')
+      }
     }
   },
   data () {
     return {
       labs: [],
       labSet: [],
+      hucList: [],
+      hucSet: [],
       partners: [],
       partnerSet: [],
       controls: {

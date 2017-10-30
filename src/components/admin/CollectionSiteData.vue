@@ -75,7 +75,7 @@
               <input
                 class="site-reports-toolbar-search__input"
                 v-model="controls.search"
-                placeholder="Search collection sites"/>
+                placeholder="Search reports"/>
             </div>
             <div class="site-reports-datepickers">
               <span class="site-reports-body-toolbar__text-content">Select date range:</span>
@@ -154,12 +154,21 @@
               v-bind:items="reports"
               v-bind:pagination.sync="pagination"
               v-bind:search="controls.search"
+              select-all
               item-key=".key"
               class="elevation-1"
             >
             <template slot="headers" scope="props">
-              <tr class="nww-table__header">
-                <th></th>
+              <tr class="nww-table__header" :active="props.selected" @click="props.selected = !props.selected">
+                <th>
+                  <v-checkbox
+                    primary
+                    hide-details
+                    @click.native="toggleAll"
+                    :input-value="props.all"
+                    :indeterminate="props.indeterminate"
+                  ></v-checkbox>
+                </th>
                 <th v-for="header in props.headers" :key="header.value"
                   :class="['text-sm-left', 'column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                   @click="changeSort(header.value)"

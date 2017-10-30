@@ -115,11 +115,20 @@
               v-bind:items="collectionSites"
               v-bind:pagination.sync="pagination"
               v-bind:search="controls.search"
+              select-all
               item-key="stationName"
               class="elevation-1">
             <template slot="headers" scope="props">
              <tr class="nww-table__header">
-               <th></th>
+               <th>
+                 <v-checkbox
+                   primary
+                   hide-details
+                   @click.native="toggleAll"
+                   :input-value="props.all"
+                   :indeterminate="props.indeterminate"
+                 ></v-checkbox>
+               </th>
                <th v-for="header in props.headers" :key="header.text"
                  :class="['text-sm-left', 'column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                  @click="changeSort(header.value)">
@@ -151,7 +160,6 @@
                 <td>{{ props.item.lab }}</td>
                 <td>{{ props.item.lastCollectionDate }}</td>
                 <td>{{ props.item.lastEColiResult }}</td>
-                <td>{{ props.item.active ? 'active' : 'inactive' }}</td>
                 <td>{{ props.item.collectionPartner }}</td>
                 <td>{{ props.item.hucName }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.adoptAStreamName }}</td>
@@ -255,7 +263,6 @@ export default {
         { text: 'Lab', value: 'lab' },
         { text: 'Last Collection Date', value: 'lastCollectionDate' },
         { text: 'Last E. coli Result', value: 'lastEColi' },
-        { text: 'Status', value: 'active' },
         { text: 'Collection Partner', value: 'collectionPartner' },
         { text: 'Subwatershed (HUC12)', value: 'hucName' },
         { text: 'Adopt-A-Stream Name', value: 'adoptAStreamName' },

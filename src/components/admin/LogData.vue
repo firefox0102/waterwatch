@@ -47,10 +47,10 @@
             </v-text-field>
             <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
               <template scope="{ save, cancel }">
-                    <v-card-actions>
-                      <v-btn success @click.native="save()">Save</v-btn>
-                      <v-btn primary flat @click.native="cancel()">Cancel</v-btn>
-                    </v-card-actions>
+                <v-card-actions>
+                  <v-btn success @click.native="save()">Save</v-btn>
+                  <v-btn primary flat @click.native="cancel()">Cancel</v-btn>
+                </v-card-actions>
               </template>
             </v-date-picker>
           </v-menu>
@@ -60,18 +60,34 @@
             v-model="selectedSite"
             label="Collection Site *"
             autocomplete
-            item-text="stationName"
+            item-text="logbookAbbv"
             class="input-group--limit-height"
             :rules="[(v) => !!v || 'Collection Site is required']"
             bottom>
           </v-select>
-          <v-text-field
+          <v-menu
+            lazy
+            :close-on-content-click="false"
+            v-model="controls.collectionTimeMenu"
+            transition="scale-transition"
+            offset-y
+            full-width
+            :nudge-right="40"
+            max-width="290px"
+            min-width="290px"
+          >
+            <v-text-field
+              slot="activator"
               label="Collection Time"
               v-model="newLogData.collectionTime"
-              type="time"
-              suffix="EST"
-              class="input-group--limit-height">
-          </v-text-field>
+            >
+            </v-text-field>
+            <v-time-picker
+              v-model="newLogData.collectionTime"
+              autosave
+              format="24hr"
+            ></v-time-picker>
+          </v-menu>
           <v-text-field
               label="Analyst (Initials)"
               class="input-group--limit-height"
@@ -100,7 +116,7 @@
               label="Incubation In Time"
               v-model="newLogData.incubationTime"
               :rules="formRules.incubationTimeRules"
-              class="input-group--limit-height">
+            >
             </v-text-field>
             <v-time-picker
               v-model="newLogData.incubationTime"
@@ -141,20 +157,20 @@
               v-model="newLogData.specificConductivity">
           </v-text-field>
           <v-text-field
-              label="Rainfall (in)"
-              class="input-group--limit-height"
-              type="number"
-              step="0.01"
-              :rules="formRules.noNegatives"
-              v-model="newLogData.precipitation">
+            label="Rainfall (in)"
+            class="input-group--limit-height"
+            type="number"
+            step="0.01"
+            :rules="formRules.noNegatives"
+            v-model="newLogData.precipitation">
           </v-text-field>
           <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
           <v-text-field
-              label="Incubation Temp (*C)"
-              class="input-group--limit-height"
-              type="number"
-              :rules="formRules.incubationTempRules"
-              v-model="newLogData.incubationTemp">
+            label="Incubation Temp (*C)"
+            class="input-group--limit-height"
+            type="number"
+            :rules="formRules.incubationTempRules"
+            v-model="newLogData.incubationTemp">
           </v-text-field>
           <v-menu
             lazy
