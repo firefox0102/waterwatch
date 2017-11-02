@@ -103,14 +103,14 @@
                 </i>
               </div>
               <div class="controls-card-control-group__content">
-                <download-excel
+                <v-btn
                   type="submit"
                   class="btn md-raised btn-nww--light"
                   v-bind:data = "getExportJson"
                   v-bind:fields = "jsonFields"
                   name = "NWW_Report.xls">
                   Download  XLSX
-                </download-excel>
+                </v-btn>
               </div>
             </div>
           </div>
