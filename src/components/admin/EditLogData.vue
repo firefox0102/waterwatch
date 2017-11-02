@@ -388,7 +388,8 @@
     props: [
       'tableLogData',
       'routeCollectionSiteId',
-      'resetSelected'
+      'resetSelected',
+      'postSubmitForm'
     ],
     firebase: {
       collectionSites: collectionSitesRef
@@ -485,7 +486,7 @@
           ],
           incubationTimeRules: [
             (startTime) => {
-              if (/^\s*$/.test(startTime)) { return true } // If value is empty, return
+              if (startTime === null || /^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
 
               function dateObj (d) {
@@ -501,7 +502,7 @@
           ],
           incubationOutTimeRules: [
             (outTime) => {
-              if (/^\s*$/.test(outTime)) { return true } // If value is empty, return
+              if (outTime === null || /^\s*$/.test(outTime)) { return true } // If value is empty, return
               let format = 'hh:mm:ss'
               let startDate = dateObj(this.targetLogData.incubationTime)
 
@@ -577,10 +578,19 @@
       updateExistingLog () {
         try {
           this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.routeCollectionSiteId + '/' + this.targetLogData['.key']))
-          this.targetLogData.ecoliLargeCells = this.ecoliLargeCells
-          this.targetLogData.ecoliSmallCells = this.ecoliSmallCells
-          this.targetLogData.totalEcoli = this.getTotalEcoli
-          this.targetLogData.totalColiform = this.getTotalColiform
+          if (this.ecoliLargeCells) {
+            this.targetLogData.ecoliLargeCells = this.ecoliLargeCells
+          }
+          if (this.ecoliSmallCells) {
+            this.targetLogData.ecoliSmallCells = this.ecoliSmallCells
+          }
+          if (this.getTotalEcoli !== undefined) {
+            this.targetLogData.totalEcoli = this.getTotalEcoli
+          }
+
+          if (this.getTotalColiform !== undefined) {
+            this.targetLogData.totalColiform = this.getTotalColiform
+          }
           this.targetLogData.collectionSite = null
 
           let itemCopy = { ...this.targetLogData }
@@ -589,8 +599,8 @@
           this.$unbind('firebaseLogObject')
 
           // Success!
-          this.snackbar.successVisible = true
           this.controls.showDialog = false
+          this.postSubmitForm()
         } catch (e) {
           console.log(e)
           this.snackbar.errorVisible = true
@@ -605,16 +615,24 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.getTotalEcoli)
+        if (this.totalEcoli) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
+        }
 
         // Last turbidity equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.targetLogData.turbidity)
+        if (this.newLogData.turbidity) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
+        }
 
         // Last rainfall equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.targetLogData.precipitation)
+        if (this.newLogData.precipitation) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.newLogData.precipitation)
+        }
 
         // Last specific conductivity equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.targetLogData.specificConductivity)
+        if (this.newLogData.specificConductivity) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.newLogData.specificConductivity)
+        }
       }
     }
   }

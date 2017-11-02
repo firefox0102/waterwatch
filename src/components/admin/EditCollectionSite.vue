@@ -1,13 +1,16 @@
 <template>
   <div>
-    <v-dialog v-model="controls.showDialog" :overlay="false">
+    <v-dialog
+      v-model="controls.showDialog"
+      :overlay="false"
+    >
       <v-btn
         slot="activator"
         class="site-reports-actions__action site-reports-actions__action--no-margin btn btn-nww">
         Edit
         <v-icon right dark>edit</v-icon>
       </v-btn>
-      <v-card v-if="collectionSite">
+      <v-card v-if="targetCollectionSite">
         <div class="page-content-header">
           <div class="page-content-header__text">
             Edit Collection Site
@@ -15,42 +18,46 @@
         </div>
         <div class="page-content-body">
           <form class="add-form" v-on:submit.prevent="submitForm">
-            <v-text-field label="Station Name" v-model="collectionSite.stationName" required></v-text-field>
-            <v-text-field label="Logbook Abbreviation" v-model="collectionSite.logbookAbbv" required></v-text-field>
+            <v-text-field label="Station Name" v-model="targetCollectionSite.stationName" required></v-text-field>
+            <v-text-field label="Logbook Abbreviation" v-model="targetCollectionSite.logbookAbbv" required></v-text-field>
             <v-select
               v-bind:items="labSet"
-              v-model="collectionSite.lab"
+              v-model="targetCollectionSite.lab"
               item-text=".value"
               item-value=".value"
               label="Lab"
               required
               bottom>
             </v-select>
-            <v-text-field label="Latitude (eg. 34.004401)" v-model="collectionSite.latitude" required></v-text-field>
-            <v-text-field label="Longitude (eg. -84.350555)" v-model="collectionSite.longitude" required></v-text-field>
+            <v-text-field label="Latitude (eg. 34.004401)" v-model="targetCollectionSite.latitude" required></v-text-field>
+            <v-text-field label="Longitude (eg. -84.350555)" v-model="targetCollectionSite.longitude" required></v-text-field>
             <v-select
               v-bind:items="hucSet"
-              v-model="collectionSite.hucName"
+              v-model="targetCollectionSite.hucName"
               label="Subwatershed (HUC 12) Name"
               required
               autocomplete
               bottom>
             </v-select>
-            <v-text-field label="HUC 12 Number" type="number" v-model="collectionSite.huc"></v-text-field>
-            <v-text-field label="Adopt-A-Stream Name" v-model="collectionSite.adoptAStreamName"></v-text-field>
-            <v-text-field label="Adopt-A-Stream 'S' ID (eg. S-4475)" v-model="collectionSite.adoptAStreamId"
+            <v-text-field label="HUC 12 Number" type="number" v-model="targetCollectionSite.huc"></v-text-field>
+            <v-text-field label="Adopt-A-Stream Name" v-model="targetCollectionSite.adoptAStreamName"></v-text-field>
+            <v-text-field label="Adopt-A-Stream 'S' ID (eg. S-4475)" v-model="targetCollectionSite.adoptAStreamId"
               :rules="[(v) => !!v || 'Enter the 4 numbers after S- only (Leave blank if no ID)']"></v-text-field>
-            <v-text-field label="STORET Name" v-model="collectionSite.storetName"></v-text-field>
-            <v-text-field label="STORET Location ID (eg. NWW24)" v-model="collectionSite.storetLocationId"></v-text-field>
+            <v-text-field label="STORET Name" v-model="targetCollectionSite.storetName"></v-text-field>
+            <v-text-field label="STORET Location ID (eg. NWW24)" v-model="targetCollectionSite.storetLocationId"></v-text-field>
             <v-select
               v-bind:items="partnerSet"
-              v-model="collectionSite.collectionPartner"
+              v-model="targetCollectionSite.collectionPartner"
               item-text=".value"
               item-value=".value"
               label="Collection Partner"
               bottom>
             </v-select>
-            <v-checkbox v-bind:label="`${ collectionSite.isPrivate ? 'Check this box to hide from map (make private)' : 'Check this box to hide from map (make private)' }`" v-model="collectionSite.isPrivate" success></v-checkbox>
+            <v-checkbox
+              v-bind:label="`${ targetCollectionSite.isPrivate ? 'Check this box to hide from map (make private)' : 'Check this box to hide from map (make private)' }`"
+              v-model="targetCollectionSite.isPrivate"
+              success
+            ></v-checkbox>
             <div class="flex">
               <v-btn class="btn-nww" type="submit">Save Site</v-btn>
               <v-btn v-on:click.native="close" flat primary class="btn">Cancel</v-btn>
@@ -58,15 +65,17 @@
           </form>
         </div>
       </v-card>
+      <div>
+        <v-snackbar
+          :timeout="snackbar.timeout"
+          :error="true"
+          v-model="snackbar.errorVisible"
+        >
+          {{snackbar.errorMessage}}
+          <v-btn dark flat @click.native="snackbar.errorVisible = false">Close</v-btn>
+        </v-snackbar>
+      </div>
     </v-dialog>
-    <v-snackbar :timeout="snackbar.timeout" :error="true" v-model="snackbar.errorVisible">
-      {{snackbar.errorMessage}}
-      <v-btn dark flat @click.native="snackbar.errorVisible = false">Close</v-btn>
-    </v-snackbar>
-    <v-snackbar :timeout="snackbar.timeout" :info="true" v-model="snackbar.successVisible">
-      {{snackbar.successMessage}}
-      <v-btn dark flat @click.native="snackbar.successVisible = false">Close</v-btn>
-    </v-snackbar>
   </div>
 </template>
 
@@ -82,7 +91,15 @@ let hucRef = db.ref('hucList')
 
 export default {
   name: 'edit-collection-site',
-  props: ['collectionSite'],
+  props: [
+    'collectionSite',
+    'postSubmitForm'
+  ],
+  beforeMount () {
+    // Copy the targetLogData and modify the read-only-collection
+    this.targetCollectionSite = _.cloneDeep(this.collectionSite)
+    console.log(this.targetCollectionSite.isPrivate)
+  },
   firebase: {
     collectionSites: collectionSitesRef,
     labs: labsRef,
@@ -109,6 +126,7 @@ export default {
   },
   data () {
     return {
+      targetCollectionSite: {},
       labs: [],
       labSet: [],
       hucList: [],
@@ -120,8 +138,6 @@ export default {
       },
       snackbar: {
         errorVisible: false,
-        successVisible: false,
-        successMessage: 'Collection Site saved successfully!',
         errorMessage: 'There was an issue saving your Collection Site',
         timeout: 6000
       }
@@ -130,12 +146,12 @@ export default {
   methods: {
     submitForm () {
       try {
-        let itemCopy = { ...this.collectionSite }
+        let itemCopy = { ...this.targetCollectionSite }
         delete itemCopy['.key']
-        this.$firebaseRefs.collectionSites.child(this.collectionSite['.key']).set(itemCopy)
+        this.$firebaseRefs.collectionSites.child(this.targetCollectionSite['.key']).set(itemCopy)
 
-        this.snackbar.successVisible = true
         this.controls.showDialog = false
+        this.postSubmitForm()
       } catch (e) {
         console.log(e)
         this.snackbar.errorVisible = true

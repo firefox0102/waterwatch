@@ -123,6 +123,7 @@
                 v-bind:table-log-data="selected[0]"
                 v-bind:reset-selected="resetSelected"
                 v-bind:route-collection-site-id="$route.params.siteId"
+                v-bind:post-submit-form="postSubmitForm"
                 v-if="selected.length === 1">
               </edit-log-data>
             </div>
@@ -304,7 +305,12 @@ export default {
         { text: 'Incubation Out Time', value: 'incubationOut' },
         { text: 'Notes', value: 'notes' }
       ],
-      selected: []
+      selected: [],
+      snackbar: {
+        successVisible: false,
+        successMessage: 'Data logged successfully!',
+        timeout: 6000
+      }
     }
   },
   methods: {
@@ -326,6 +332,10 @@ export default {
     },
     resetSelected () {
       this.selected = []
+    },
+    postSubmitForm () {
+      this.snackbar.successVisible = true
+      this.resetSelected()
     }
   }
 }
