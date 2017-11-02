@@ -578,10 +578,19 @@
       updateExistingLog () {
         try {
           this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.routeCollectionSiteId + '/' + this.targetLogData['.key']))
-          this.targetLogData.ecoliLargeCells = this.ecoliLargeCells
-          this.targetLogData.ecoliSmallCells = this.ecoliSmallCells
-          this.targetLogData.totalEcoli = this.getTotalEcoli
-          this.targetLogData.totalColiform = this.getTotalColiform
+          if (this.ecoliLargeCells) {
+            this.targetLogData.ecoliLargeCells = this.ecoliLargeCells
+          }
+          if (this.ecoliSmallCells) {
+            this.targetLogData.ecoliSmallCells = this.ecoliSmallCells
+          }
+          if (this.getTotalEcoli !== undefined) {
+            this.targetLogData.totalEcoli = this.getTotalEcoli
+          }
+
+          if (this.getTotalColiform !== undefined) {
+            this.targetLogData.totalColiform = this.getTotalColiform
+          }
           this.targetLogData.collectionSite = null
 
           let itemCopy = { ...this.targetLogData }
