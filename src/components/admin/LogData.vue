@@ -168,7 +168,7 @@
             class="input-group--limit-height"
             type="number"
             step="0.01"
-            :rules="formRules.noNegatives"
+            :rules="formRules.precipitation"
             v-model="newLogData.precipitation">
           </v-text-field>
           <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
@@ -567,6 +567,13 @@
               let turbidity = parseFloat(input)
               if (isNaN(turbidity)) { return true }
               return (turbidity >= 0 && turbidity <= 1000) || 'That number seems high. Normal range is 0 - 1000'
+            }
+          ],
+          precipitation: [
+            (v) => {
+              let value = parseFloat(v)
+              if (isNaN(value)) { return true }
+              return (value >= 0) || 'Should be greater than or equal to 0 (Leave empty if not recorded)'
             }
           ]
         },
