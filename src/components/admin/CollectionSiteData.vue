@@ -88,7 +88,7 @@
                     <i class="fa fa-calendar"></i>
                   </div>
                   <v-date-picker v-model="startDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
+                    <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn class="btn btn-nww" @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -106,7 +106,7 @@
                     <i class="fa fa-calendar"></i>
                   </div>
                   <v-date-picker v-model="endDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
+                    <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn class="btn btn-nww" @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -159,7 +159,7 @@
               item-key=".key"
               class="elevation-1"
             >
-            <template slot="headers" scope="props">
+            <template slot="headers" slot-scope="props">
               <tr class="nww-table__header" :active="props.selected" @click="props.selected = !props.selected">
                 <th>
                   <v-checkbox
@@ -179,7 +179,7 @@
                 </th>
               </tr>
             </template>
-            <template slot="items" scope="props">
+            <template slot="items" slot-scope="props">
               <tr
                 :active="props.selected"
                 @click="props.selected = !props.selected"
@@ -342,7 +342,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
+<style lang="scss" slot-scoped>
 @import "../../scss/colors";
 @import "../../scss/collection-sites";
 

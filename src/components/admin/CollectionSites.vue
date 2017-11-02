@@ -46,7 +46,7 @@
                     <i class="fa fa-calendar"></i>
                   </div>
                   <v-date-picker v-model="startDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
+                    <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn success @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -64,7 +64,7 @@
                     <i class="fa fa-calendar"></i>
                   </div>
                   <v-date-picker v-model="endDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
+                    <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn success @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -123,7 +123,7 @@
               select-all
               item-key="stationName"
               class="elevation-1">
-            <template slot="headers" scope="props">
+            <template slot="headers" slot-scope="props">
              <tr class="nww-table__header">
                <th>
                  <v-checkbox
@@ -142,7 +142,7 @@
                </th>
              </tr>
             </template>
-            <template slot="items" scope="props">
+            <template slot="items" slot-scope="props">
               <tr
                 :active="props.selected"
                 @click="props.selected = !props.selected"

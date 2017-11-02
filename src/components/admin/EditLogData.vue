@@ -53,7 +53,7 @@
                     required>
                   </v-text-field>
                   <v-date-picker v-model="targetLogData.collectionDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
+                    <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn @click.native="save()" class="btn btn-nww">Save</v-btn>
                         <v-btn flat color="primary" @click.native="cancel()">Cancel</v-btn>
