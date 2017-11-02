@@ -508,7 +508,7 @@
           ],
           incubationTimeRules: [
             (startTime) => {
-              if (startTime === null || /^\s*$/.test(startTime)) { return true } // If value is empty, return
+              if (startTime === null || startTime === undefined || /^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
               function dateObj (d) {
                 let date = moment()
@@ -522,7 +522,7 @@
           ],
           incubationOutTimeRules: [
             (outTime) => {
-              if (outTime === null || /^\s*$/.test(outTime)) { return true } // If value is empty, return
+              if (outTime === null || outTime === undefined || /^\s*$/.test(outTime)) { return true } // If value is empty, return
 
               let format = 'hh:mm:ss'
               let startDate = dateObj(this.newLogData.incubationTime)
@@ -637,8 +637,8 @@
           this.newLogData.logbookAbbv = this.selectedSite.logbookAbbv
           this.newLogData.ecoliLargeCells = this.ecoliLargeCells
           this.newLogData.ecoliSmallCells = this.ecoliSmallCells
-          this.newLogData.totalEcoli = this.getTotalEcoli
-          this.newLogData.totalColiform = this.getTotalColiform
+          this.newLogData.totalEcoli = this.getTotalEcoli ? this.getTotalEcoli : null
+          this.newLogData.totalColiform = this.getTotalColiform ? this.getTotalColiform : null
           this.newLogData.collectionSiteId = key
           this.newLogData.collectionDate = collDate
           this.newLogData.collectionSite = null
@@ -708,28 +708,35 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
+        console.log('test')
         if (this.totalEcoli) {
+          console.log(this.totalEcoli)
           this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
         }
-
+        console.log('test 2')
         // Last turbidity equation
         if (this.newLogData.turbidity) {
           this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
         }
+        console.log('test 3')
 
         // Last rainfall equation
         if (this.newLogData.precipitation) {
           this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.newLogData.precipitation)
         }
+        console.log('test 4')
 
         // Last specific conductivity equation
         if (this.newLogData.specificConductivity) {
           this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.newLogData.specificConductivity)
         }
+        console.log('test 5')
 
         if (!this.selectedSite.firstCollectionDate) {
           this.$firebaseRefs.collectionSites.child(key).child('firstCollectionDate').set(collDate)
         }
+
+        console.log(this.selectedSite)
       },
       incrementLogbookNumber (newLogbookNum) {
         this.$firebaseRefs.logbookNumber.child('currentLogbookNumber').set(newLogbookNum)

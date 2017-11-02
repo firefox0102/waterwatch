@@ -172,7 +172,7 @@
                     class="input-group--limit-height"
                     type="number"
                     step="0.01"
-                    :rules="formRules.noNegatives"
+                    :rules="formRules.precipitation"
                     v-model="targetLogData.precipitation">
                 </v-text-field>
                 <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
@@ -486,7 +486,7 @@
           ],
           incubationTimeRules: [
             (startTime) => {
-              if (startTime === null || /^\s*$/.test(startTime)) { return true } // If value is empty, return
+              if (startTime === null || startTime === undefined || /^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
 
               function dateObj (d) {
@@ -502,7 +502,10 @@
           ],
           incubationOutTimeRules: [
             (outTime) => {
-              if (outTime === null || /^\s*$/.test(outTime)) { return true } // If value is empty, return
+              console.log('test')
+              console.log(outTime)
+              if (outTime === null || outTime === undefined || /^\s*$/.test(outTime)) { return true } // If value is empty, return
+              console.log('yu faild')
               let format = 'hh:mm:ss'
               let startDate = dateObj(this.targetLogData.incubationTime)
 
@@ -547,6 +550,13 @@
               let turbidity = parseFloat(input)
               if (isNaN(turbidity)) { return true }
               return (turbidity >= 0 && turbidity <= 1000) || 'That number seems high. Normal range is 0 - 1000'
+            }
+          ],
+          precipitation: [
+            (v) => {
+              let value = parseFloat(v)
+              if (isNaN(value)) { return true }
+              return (value >= 0) || 'Should be greater than or equal to 0 (Leave empty if not recorded)'
             }
           ]
         },
@@ -615,7 +625,9 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
+        console.log('test')
         if (this.totalEcoli) {
+          console.log(this.totalEcoli)
           this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
         }
 
