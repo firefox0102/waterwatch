@@ -14,11 +14,11 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
-    // {
-    //   path: '*',
-    //   component: SignIn,
-    //   meta: { requiresAuth: false }
-    // },
+    {
+      path: '*',
+      component: DataPage,
+      meta: { requiresAuth: false }
+    },
     {
       path: '/signIn',
       component: SignIn,
@@ -31,7 +31,7 @@ export default new Router({
       meta: { requiresAuth: false }
     },
     {
-      path: '*',
+      path: '/',
       component: DataPage,
       meta: { requiresAuth: false }
     },

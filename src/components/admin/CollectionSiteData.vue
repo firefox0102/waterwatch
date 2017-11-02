@@ -88,7 +88,7 @@
                     <i class="fa fa-calendar"></i>
                   </div>
                   <v-date-picker v-model="startDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
+                    <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn class="btn btn-nww" @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -106,7 +106,7 @@
                     <i class="fa fa-calendar"></i>
                   </div>
                   <v-date-picker v-model="endDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
+                    <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn class="btn btn-nww" @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -139,8 +139,41 @@
                   <i class="material-icons">arrow_drop_down</i>
                 </div>
                 <v-list>
-                  <v-list-tile v-for="action in controls.exportActions" :key="action.title">
-                    <v-list-tile-title>{{ action.title }}</v-list-tile-title>
+                  <v-list-tile>
+                    <v-list-tile-title>
+                      <download-excel
+                        type="submit"
+                        class="btn md-raised btn-nww--light"
+                        v-bind:data = "getExportXls"
+                        v-bind:fields = "jsonFields"
+                        name = "NWW_Report.xls">
+                        Export as XLS
+                      </download-excel>
+                    </v-list-tile-title>
+                  </v-list-tile>
+                   <v-list-tile>
+                    <v-list-tile-title>
+                      <download-excel
+                        type="submit"
+                        class="btn md-raised btn-nww--light"
+                        v-bind:data = "getExportAdopt"
+                        v-bind:fields = "jsonFields"
+                        name = "NWW_Adopt-a-Stream-Report.xls">
+                        Export for Adopt-A-Stream
+                      </download-excel>
+                    </v-list-tile-title>
+                  </v-list-tile>
+                   <v-list-tile>
+                    <v-list-tile-title>
+                      <download-excel
+                        type="submit"
+                        class="btn md-raised btn-nww--light"
+                        v-bind:data = "getExportStoret"
+                        v-bind:fields = "jsonFieldsStoret"
+                        name = "NWW_Storet-Report.xls">
+                        Export for STORET
+                      </download-excel>
+                    </v-list-tile-title>
                   </v-list-tile>
                 </v-list>
               </v-menu>
@@ -158,7 +191,7 @@
               item-key=".key"
               class="elevation-1"
             >
-            <template slot="headers" scope="props">
+            <template slot="headers" slot-scope="props">
               <tr class="nww-table__header" :active="props.selected" @click="props.selected = !props.selected">
                 <th>
                   <v-checkbox
@@ -178,7 +211,7 @@
                 </th>
               </tr>
             </template>
-            <template slot="items" scope="props">
+            <template slot="items" slot-scope="props">
               <tr
                 :active="props.selected"
                 @click="props.selected = !props.selected"
@@ -216,6 +249,7 @@
 
 <script>
 import { db } from '../../helpers/firebase'
+import _ from 'lodash'
 import moment from 'moment'
 import EditLogData from './EditLogData'
 
@@ -235,6 +269,64 @@ export default {
         source: collectionSitesRef.orderByKey().equalTo(this.$route.params.siteId)
       },
       reports: db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(oldDate).endAt(todaysDate)
+    }
+  },
+  computed: {
+    getExportXls () {
+      let jsonData = []
+      if (this.reports && this.selected.length) {
+        jsonData = _.map(this.selected, function (report) {
+          return {
+            stationName: report.stationName,
+            collectionDate: report.collectionDate,
+            collectionTime: report.collectionTime,
+            specificConductivity: report.specificConductivity,
+            precipitation: report.precipitation,
+            totalEcoli: report.totalEcoli,
+            turbidity: report.turbidity
+          }
+        })
+      }
+
+      return jsonData
+    },
+    getExportAdopt () {
+      let jsonData = []
+      if (this.reports && this.selected.length) {
+        jsonData = _.map(this.selected, function (report) {
+          return {
+            stationName: report.stationName,
+            collectionDate: report.collectionDate,
+            collectionTime: report.collectionTime,
+            specificConductivity: report.specificConductivity,
+            precipitation: report.precipitation,
+            totalEcoli: report.totalEcoli,
+            turbidity: report.turbidity
+          }
+        })
+      }
+
+      return jsonData
+    },
+    getExportStoret () {
+      let jsonData = []
+      if (this.reports && this.selected.length) {
+        jsonData = _.map(this.selected, function (report) {
+          return {
+            stationName: report.stationName,
+            collectionDate: report.collectionDate,
+            collectionTime: report.collectionTime,
+            specificConductivity: report.specificConductivity,
+            precipitation: report.precipitation,
+            totalEcoli: report.totalEcoli,
+            turbidity: report.turbidity,
+            'L': report.stationName + report.collectionDate,
+            water: 'water'
+          }
+        })
+      }
+
+      return jsonData
     }
   },
   watch: {
@@ -267,25 +359,7 @@ export default {
         search: '',
         startDateModal: false,
         endDateModal: false,
-        exportAction: { label: 'Export' },
-        exportActions: [
-          {
-            title: 'Export as CSV',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export as XLS',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export for Adopt-A-Stream',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export for STORET',
-            callback: 'TODO MAKE CALLBACK'
-          }
-        ]
+        exportAction: { label: 'Export' }
       },
       headers: [
         { text: 'Logbook #', value: 'logbookNumber' },
@@ -304,7 +378,16 @@ export default {
         { text: 'Incubation Out Time', value: 'incubationOut' },
         { text: 'Notes', value: 'notes' }
       ],
-      selected: []
+      selected: [],
+      jsonFields: {
+        'stationName': 'String',
+        'collectionDate': 'report.collectionDate',
+        'collectionTime': 'collectionTime',
+        'specificConductivity': 'Number',
+        'precipitation': 'Number',
+        'totalEcoli': 'Number',
+        'turbidity': 'Number'
+      }
     }
   },
   methods: {
@@ -331,7 +414,7 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Add "slot-scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../../scss/colors";
 @import "../../scss/collection-sites";
