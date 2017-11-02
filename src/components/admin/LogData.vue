@@ -701,16 +701,24 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
+        if (this.totalEcoli) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
+        }
 
         // Last turbidity equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
+        if (this.newLogData.turbidity) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
+        }
 
         // Last rainfall equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.newLogData.precipitation)
+        if (this.newLogData.precipitation) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.newLogData.precipitation)
+        }
 
         // Last specific conductivity equation
-        this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.newLogData.specificConductivity)
+        if (this.newLogData.specificConductivity) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.newLogData.specificConductivity)
+        }
 
         if (!this.selectedSite.firstCollectionDate) {
           this.$firebaseRefs.collectionSites.child(key).child('firstCollectionDate').set(collDate)
