@@ -103,22 +103,14 @@
                 </i>
               </div>
               <div class="controls-card-control-group__content">
-                <v-btn
+                <download-excel
                   type="submit"
-                  class="md-raised btn-nww--light"
-                  :data = "json_data"
-                  :fields = "json_fields"
+                  class="btn md-raised btn-nww--light"
+                  v-bind:data = "getExportJson"
+                  v-bind:fields = "jsonFields"
                   name = "NWW_Report.xls">
                   Download  XLSX
-                </v-btn>
-                <v-btn
-                  type="submit"
-                  class="md-raised btn-nww--light"
-                  :data = "json_data"
-                  :fields = "json_fields"
-                  name = "NWW_Report.csv">
-                  Download  CSV
-                </v-btn>
+                </download-excel>
               </div>
             </div>
           </div>
@@ -168,6 +160,25 @@ export default {
   firebase: {
     collectionSites: collectionSitesRef
   },
+  computed: {
+    getExportJson () {
+      let jsonData = []
+      console.log(this.reports)
+      if (this.reports) {
+        jsonData = _.map(this.reports, function (report) {
+          return {
+            stationName: report.stationName,
+            specificConductivity: report.specificConductivity,
+            precipitation: report.precipitation,
+            totalEcoli: report.totalEcoli,
+            turbidity: report.turbidity
+          }
+        })
+      }
+
+      return jsonData
+    }
+  },
   watch: {
     startDate (val) {
       this.getReports()
@@ -188,6 +199,13 @@ export default {
         sidebar: false,
         selectedControlDates: false,
         selectedControlReport: true
+      },
+      jsonFields: {
+        'stationName': 'String',
+        'specificConductivity': 'Number',
+        'precipitation': 'Number',
+        'totalEcoli': 'Number',
+        'turbidity': 'Number'
       }
     }
   },
@@ -224,19 +242,6 @@ export default {
   },
   mounted: function () {
     this.initializeMap()
-    var thisVue = this
-    thisVue.axios({
-      method: 'get',
-      url: '/*'
-    }).then(function (response) {
-      for (var i = 0; i < response.data.data.length; i++) {
-        response.data.data[i].id = i + 1
-        response.data.data[i].created_at = moment(moment(response.data.data[i].created_at).toString()).format('DD-MM-YYYY HH:mm:ss')
-      }
-      thisVue.tableData = response.data.data
-    }).catch(function (error) {
-      console.log(error)
-    })
   }
 }
 </script>

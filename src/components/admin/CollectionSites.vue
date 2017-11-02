@@ -241,10 +241,6 @@ export default {
         exportAction: { label: 'Export' },
         exportActions: [
           {
-            title: 'Export as CSV',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
             title: 'Export as XLS',
             callback: 'TODO MAKE CALLBACK'
           },
