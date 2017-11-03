@@ -104,7 +104,6 @@
               </div>
               <div class="controls-card-control-group__content">
                 <download-excel
-                  type="submit"
                   class="btn md-raised btn-nww--light"
                   v-bind:data = "getExportJson"
                   v-bind:fields = "jsonFields"
