@@ -5,7 +5,6 @@
         <div class="collection-sites-header__header">
           {{ site ? site.stationName : '' }}
         </div>
-
         <div class="collection-sites-header__subheader-wrapper">
           <router-link class="collection-sites-header__subheader--nww" :to="{ name: 'Collection Sites'}">
             Back to List of Collection Sites
@@ -426,7 +425,7 @@ export default {
 }
 </script>
 
-<!-- Add "slot-scoped" attribute to limit CSS to this component only -->
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../../scss/colors";
 @import "../../scss/collection-sites";
