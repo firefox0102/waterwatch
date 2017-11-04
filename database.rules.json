@@ -1,0 +1,21 @@
+{
+  "rules": {
+    ".read": "true",
+    ".write": "true",
+    "collectionSites": {
+      ".indexOn": [
+        "lastCollectionDate"
+      ]
+    },
+    "archivedSites": {
+      ".indexOn": "lastCollectionDate"
+    },
+    "reports": {
+      "$collectionSiteId": {
+        ".indexOn": [
+          "collectionDate"
+        ]
+      }
+    }
+  }
+}
