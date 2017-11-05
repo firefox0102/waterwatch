@@ -30,11 +30,11 @@ export default new Router({
       component: About,
       meta: { requiresAuth: false }
     },
-    {
-      path: '/',
-      component: DataPage,
-      meta: { requiresAuth: false }
-    },
+    // {
+    //   path: '/',
+    //   component: DataPage,
+    //   meta: { requiresAuth: false }
+    // },
     {
       path: '/collectionSiteData/:siteId',
       name: 'Collection Site Data',
