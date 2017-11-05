@@ -34,20 +34,9 @@ export class MapHelper {
 
       map.addSource('labs', {
         'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=f88dc7c8-9569-483f-a1fa-c6828fea8d4a'
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=7690b36f-cdca-43cd-888e-e2bda25b06a8'
       })
 // MAP LAYERS
-      map.addLayer({
-        'id': 'huc-clicked',
-        'type': 'fill',
-        'source': 'sites',
-        'paint': {
-          'fill-color': 'rgba(248, 219, 114, 1)',
-          'fill-outline-color': 'rgba(190, 118, 48, 1)'
-        },
-        'filter': ['in', 'Name', '']
-      })
-
       // COLLECTION SITES //
       map.addLayer({
         'id': 'Collection Sites Layer',

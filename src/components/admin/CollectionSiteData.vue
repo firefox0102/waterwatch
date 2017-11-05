@@ -380,13 +380,13 @@ export default {
       ],
       selected: [],
       jsonFields: {
-        'stationName': 'String',
-        'collectionDate': 'report.collectionDate',
-        'collectionTime': 'collectionTime',
-        'specificConductivity': 'Number',
-        'precipitation': 'Number',
-        'totalEcoli': 'Number',
-        'turbidity': 'Number'
+        'stationName': 'Station Name',
+        'collectionDate': 'Date Collected',
+        'collectionTime': 'Time Collected',
+        'specificConductivity': 'Specific Conductivity',
+        'precipitation': 'Percipitation',
+        'totalEcoli': 'E.Coli Total',
+        'turbidity': 'Turbidity Total'
       },
 
       snackbar: {
