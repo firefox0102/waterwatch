@@ -92,37 +92,29 @@
                 <v-icon right dark>unarchive</v-icon>
               </v-btn>
             </div>
-            <div class="site-reports-toolbar-export">
-              <v-menu
-                offset-y
-                left>
-                <div
-                  slot="activator"
-                  class="site-reports-toolbar-export__activator">
-                  <div class="site-reports-toolbar-export__activator-text">
-                    Export
-                  </div>
-                  <i class="material-icons">arrow_drop_down</i>
-                </div>
-                <v-list>
-                  <v-list-tile v-for="action in controls.exportActions" :key="action['.key']">
-                    <v-list-tile-title>{{ action.title }}</v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
+            <div
+              class="site-reports-toolbar-export"
+              v-if="selected.length > 0"
+            >
+              <export-site-reports-excel
+                v-bind:selected="selected"
+                v-bind:start-date="startDate"
+                v-bind:end-date="endDate"
+              >
+              </export-site-reports-excel>
             </div>
           </div>
         </div>
         <v-card class="nww-table nww-table--left-align">
           <v-data-table
-              v-model="selected"
-              v-bind:headers="headers"
-              v-bind:items="collectionSites"
-              v-bind:pagination.sync="pagination"
-              v-bind:search="controls.search"
-              select-all
-              item-key="stationName"
-              class="elevation-1">
+            v-model="selected"
+            v-bind:headers="headers"
+            v-bind:items="collectionSites"
+            v-bind:pagination.sync="pagination"
+            v-bind:search="controls.search"
+            select-all
+            item-key="stationName"
+            class="elevation-1">
             <template slot="headers" slot-scope="props">
              <tr class="nww-table__header">
                <th>
@@ -207,6 +199,7 @@
 import { db } from '../../helpers/firebase'
 import AddCollectionSite from './AddCollectionSite'
 import EditCollectionSite from './EditCollectionSite'
+import ExportSiteReportsExcel from './ExportSiteReportsExcel'
 import moment from 'moment'
 
 let collectionSitesRef = db.ref('collectionSites')
@@ -215,13 +208,13 @@ let metaRef = db.ref('metaData')
 let activeSitesRef = db.ref('metaData/activeSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
 let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
-// let oldDate = moment(new Date()).subtract(200, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'site-reports',
   components: {
     AddCollectionSite,
-    EditCollectionSite
+    EditCollectionSite,
+    ExportSiteReportsExcel
   },
   firebase () {
     return {

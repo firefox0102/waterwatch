@@ -388,7 +388,6 @@ export default {
         'totalEcoli': 'E.Coli Total',
         'turbidity': 'Turbidity Total'
       },
-
       snackbar: {
         successVisible: false,
         successMessage: 'Data logged successfully!',
