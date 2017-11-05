@@ -30,12 +30,20 @@
           <download-excel
             v-if="generatedJsonData !== null && reportsFetched === selected.length"
             type="submit"
-            class="btn md-raised btn-nww--light"
             v-bind:data = "generatedJsonData"
             v-bind:fields = "jsonFields"
             :meta = "json_meta"
             name = "NWW_Report.xls">
             Export as XLS
+          </download-excel>
+          <download-excel
+            v-if="generatedJsonData !== null && reportsFetched === selected.length"
+            type="submit"
+            v-bind:data = "generatedJsonData"
+            v-bind:fields = "adoptJsonFields"
+            :meta = "json_meta"
+            name = "NWW_Report.xls">
+            Export Adopt-A-Stream Report
           </download-excel>
         </v-card-text>
         <v-card-actions>
@@ -87,14 +95,14 @@ export default {
         'totalEcoli': 'E.Coli Total',
         'turbidity': 'Turbidity Total'
       },
-      jsonFieldsStoret: {
-        'stationName': 'String',
-        'collectionDate': 'String',
-        'collectionTime': 'String',
-        'specificConductivity': 'Number',
-        'precipitation': 'Number',
-        'totalEcoli': 'Number',
-        'turbidity': 'Number'
+      adoptJsonFields: {
+        'adoptAStreamName': 'Station S-',
+        'collectionDate': 'Event date (mm/dd/yyyy)',
+        'precipitation': 'Amount of rain (inches)',
+        'totalEcoli': 'E.coli IDEXX (MPN / 100mL)',
+        'turbidity': 'Turbidity (NTU)',
+        'specificConductivity': 'Conductivity (µS/cm)',
+        'collectionTime': 'Time sample collected (hh:mm am/pm)'
       }
     }
   },
