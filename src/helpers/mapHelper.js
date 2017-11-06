@@ -34,7 +34,7 @@ export class MapHelper {
 
       map.addSource('labs', {
         'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=f88dc7c8-9569-483f-a1fa-c6828fea8d4a'
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/labs.geojson?alt=media&token=7690b36f-cdca-43cd-888e-e2bda25b06a8'
       })
 // MAP LAYERS
       // COLLECTION SITES //

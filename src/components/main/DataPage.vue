@@ -174,7 +174,6 @@ export default {
           }
         })
       }
-
       return jsonData
     }
   },
@@ -200,11 +199,11 @@ export default {
         selectedControlReport: true
       },
       jsonFields: {
-        'stationName': 'String',
-        'specificConductivity': 'Number',
-        'precipitation': 'Number',
-        'totalEcoli': 'Number',
-        'turbidity': 'Number'
+        'stationName': 'Station Name',
+        'specificConductivity': 'Specific Conductivity',
+        'precipitation': 'Percipitation',
+        'totalEcoli': 'E.Coli Total',
+        'turbidity': 'Turbidity'
       }
     }
   },
