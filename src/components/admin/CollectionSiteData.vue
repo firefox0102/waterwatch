@@ -231,7 +231,7 @@
                 <td>{{ props.item.dilution }}</td>
                 <td>{{ props.item.incubationTemp }}</td>
                 <td>{{ props.item.incubationOut }}</td>
-                <td>{{ props.item.notes }}</td>
+                <td class="col-long table-cell__truncate--long">{{ props.item.notes }}</td>
               </tr>
             </template>
           </v-data-table>
