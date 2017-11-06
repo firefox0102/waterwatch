@@ -142,8 +142,6 @@
                   <v-list-tile>
                     <v-list-tile-title>
                       <download-excel
-                        type="submit"
-                        class="btn md-raised btn-nww--light"
                         v-bind:data = "getExportXls"
                         v-bind:fields = "jsonFields"
                         name = "NWW_Report.xls">
@@ -154,11 +152,9 @@
                    <v-list-tile>
                     <v-list-tile-title>
                       <download-excel
-                        type="submit"
-                        class="btn md-raised btn-nww--light"
                         v-bind:data = "getExportAdopt"
                         v-bind:fields = "jsonFields"
-                        name = "NWW_Adopt-a-Stream-Report.xls">
+                        name = "NWW_Adopt-A-Stream-Report.xls">
                         Export for Adopt-A-Stream
                       </download-excel>
                     </v-list-tile-title>
@@ -166,8 +162,6 @@
                    <v-list-tile>
                     <v-list-tile-title>
                       <download-excel
-                        type="submit"
-                        class="btn md-raised btn-nww--light"
                         v-bind:data = "getExportStoret"
                         v-bind:fields = "jsonFieldsStoret"
                         name = "NWW_Storet-Report.xls">
@@ -237,7 +231,7 @@
                 <td>{{ props.item.dilution }}</td>
                 <td>{{ props.item.incubationTemp }}</td>
                 <td>{{ props.item.incubationOut }}</td>
-                <td>{{ props.item.notes }}</td>
+                <td class="col-long table-cell__truncate--long">{{ props.item.notes }}</td>
               </tr>
             </template>
           </v-data-table>
@@ -388,7 +382,6 @@ export default {
         'totalEcoli': 'E.Coli Total',
         'turbidity': 'Turbidity Total'
       },
-
       snackbar: {
         successVisible: false,
         successMessage: 'Data logged successfully!',

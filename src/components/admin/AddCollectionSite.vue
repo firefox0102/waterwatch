@@ -29,7 +29,7 @@
               v-bind:items="hucSet"
               v-model="newCollectionSite.hucName"
               label="Subwatershed (HUC 12) Name"
-              required 
+              required
               autocomplete
               bottom>
             </v-select>
