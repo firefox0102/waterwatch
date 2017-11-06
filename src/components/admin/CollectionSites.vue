@@ -91,12 +91,9 @@
                 Unarchive
                 <v-icon right dark>unarchive</v-icon>
               </v-btn>
-            </div>
-            <div
-              class="site-reports-toolbar-export"
-              v-if="selected.length > 0"
-            >
               <export-site-reports-excel
+                class="site-reports-toolbar-export"
+                v-if="selected.length > 0"
                 v-bind:selected="selected"
                 v-bind:start-date="startDate"
                 v-bind:end-date="endDate"
