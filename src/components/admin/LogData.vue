@@ -66,6 +66,12 @@
             required
             bottom>
           </v-select>
+          <v-text-field
+            name="input-5-1"
+            label="Notes"
+            v-model="newLogData.notes"
+            class="input-group--limit-height">
+          </v-text-field>
           <v-menu
             lazy
             :close-on-content-click="false"
@@ -93,12 +99,6 @@
               label="Analyst (Initials)"
               class="input-group--limit-height"
               v-model="newLogData.analyst">
-          </v-text-field>
-          <v-text-field
-            name="input-5-1"
-            label="Notes"
-            v-model="newLogData.notes"
-            class="input-group--limit-height">
           </v-text-field>
         </div>
 
