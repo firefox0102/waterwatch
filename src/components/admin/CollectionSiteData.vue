@@ -144,7 +144,7 @@
                       <download-excel
                         v-bind:data = "getExportXls"
                         v-bind:fields = "jsonFields"
-                        name = "NWW_Report.xls">
+                        name = "NWW_Director_Report.xls">
                         Export as XLS
                       </download-excel>
                     </v-list-tile-title>
@@ -153,7 +153,7 @@
                     <v-list-tile-title>
                       <download-excel
                         v-bind:data = "getExportAdopt"
-                        v-bind:fields = "jsonFields"
+                        v-bind:fields = "jsonFieldsAdopt"
                         name = "NWW_Adopt-A-Stream-Report.xls">
                         Export for Adopt-A-Stream
                       </download-excel>
@@ -307,15 +307,35 @@ export default {
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
+            projectID: 'NWW_2012',
             stationName: report.stationName,
+            'L': report.stationName + report.collectionDate,
+            activityType: 'Sample-Routine',
+            water: 'Water',
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
-            specificConductivity: report.specificConductivity,
-            precipitation: report.precipitation,
+            timeZone: 'EST',
+            secchiDepth: report.secchiDepth,
+            secchiUnit: 'meters',
+            collectionMethod: 'Grab Sample',
+            equipment: 'Whirl-pak bag',
+            comment: ' ',
+            loggerLine: ' ',
+            characteristic: 'Escherichia coli',
+            methodSpeciation: ' ',
+            resultDetection: ' ',
             totalEcoli: report.totalEcoli,
-            turbidity: report.turbidity,
-            'L': report.stationName + report.collectionDate,
-            water: 'water'
+            resultUnit: 'MPN',
+            'qualifier': ' ',
+            'resultSampleFraction': ' ',
+            'resultStatus': 'Final',
+            'baseCode': ' ',
+            'valueType': 'Calculated',
+            'analyticalMethod': 'Colliert',
+            'analyticalMethodContext': 'IDEXX',
+            'startDate': ' ',
+            precipitation: report.precipitation,
+            notes: report.notes
           }
         })
       }
@@ -374,13 +394,56 @@ export default {
       ],
       selected: [],
       jsonFields: {
-        'stationName': 'Station Name',
-        'collectionDate': 'Date Collected',
-        'collectionTime': 'Time Collected',
-        'specificConductivity': 'Specific Conductivity',
-        'precipitation': 'Percipitation',
-        'totalEcoli': 'E.Coli Total',
-        'turbidity': 'Turbidity Total'
+        'collectionDate': 'Date',
+        'collectionTime': 'Time',
+        'stationName': 'Site',
+        'precipitation': 'Rainfall (in.)',
+        'totalEcoli': 'E. coli (MPN/100mL)',
+        'fluorometry': 'Fluorometry',
+        'specificConductivity': 'Specific Conductivity (µS)',
+        'turbidity': 'Turbidity (NTU)',
+        'notes': 'Notes'
+      },
+      jsonFieldsAdopt: {
+        'stationName': 'Site S-',
+        'collectionDate': 'Event date (mm/dd/yyyy)',
+        'precipitation': 'Amount of rain (inches)',
+        'totalEcoli': 'E.coli IDEXX (MPN / 100mL)',
+        'turbidity': 'Turbidity (NTU)',
+        'specificConductivity': 'Conductivity (µS/cm)',
+        'collectionTime': 'Time sample collected (hh:mm am/pm)'
+      },
+      jsonFieldsStoret: {
+        'projectID': 'projectID',
+        'stationName': 'Monitoring Location',
+        'L': 'L',
+        'activityType': 'Activity Type',
+        'water': 'Activity Media Name',
+        'collectionDate': 'Activity Start Date',
+        'collectionTime': 'Activity Start Time',
+        'timeZone': 'Activity Start Time Zone',
+        'secchiDepth': 'Activity Depth/Height Measure',
+        'secchiUnit': 'Activity Depth/Height Unit',
+        'collectionMethod': 'Sample Collection Method ID',
+        'equipment': 'Sample Collection Equipment Name',
+        'comment': 'Sample Collection Equipment Comment',
+        'loggerLine': 'Data Logger Line',
+        'characteristic': 'Characteristic Name',
+        'methodSpeciation': 'Method Speciation',
+        'resultDetection': 'Result Detection Condition',
+        'totalEcoli': 'Result Value',
+        'resultUnit': 'Result Unit',
+        'qualifier': 'Result Measure Qualifier',
+        'resultSampleFraction': 'Result Sample Fraction',
+        'resultStatus': 'Result Status ID',
+        'baseCode': 'Statistical Base Code',
+        'valueType': 'Result Value Type',
+        'analyticalMethod': 'Result Analytical Method ID',
+        'analyticalMethodContext': 'Result Analytical Method Context',
+        'analysisStart': 'Analysis Start Date',
+        'resultDetectionType': 'Result Detection/Quantitation Limit Type',
+        'resultDetectionUnit': 'Result Detection/Quantitation Limit Unit',
+        'notes': 'Result Comment'
       },
       snackbar: {
         successVisible: false,
