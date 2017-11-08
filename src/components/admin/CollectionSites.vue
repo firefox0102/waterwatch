@@ -181,7 +181,6 @@
                 </td>
                 <td>{{ props.item.latitude }}</td>
                 <td>{{ props.item.longitude }}</td>
-                <td>{{ props.item.huc }}</td>
                 <td>{{ props.item.isPrivate }}</td>
               </tr>
             </template>
@@ -287,7 +286,6 @@ export default {
         { text: 'Google Maps URL', value: 'googleMapsUrl' },
         { text: 'Latitude', value: 'latitude' },
         { text: 'Longitude', value: 'longitude' },
-        { text: 'HUC 12', value: 'huc' },
         { text: 'Is Private', value: 'isPrivate' }
       ],
       selected: [],

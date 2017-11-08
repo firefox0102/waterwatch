@@ -29,11 +29,9 @@
               v-bind:items="hucSet"
               v-model="newCollectionSite.hucName"
               label="Subwatershed (HUC 12) Name"
-              required
               autocomplete
               bottom>
             </v-select>
-            <v-text-field label="HUC 12 Number" type="number" v-model="newCollectionSite.huc" required></v-text-field>
             <v-text-field label="Adopt-A-Stream Name" v-model="newCollectionSite.adoptAStreamName"></v-text-field>
             <v-text-field label="Adopt-A-Stream 'S' ID (eg. S-4475)" v-model="newCollectionSite.adoptAStreamId"
               :rules="[(v) => !!v || 'Enter the 4 numbers after S- only (Leave blank if no ID)']"></v-text-field>
@@ -123,7 +121,6 @@ export default {
         adoptAStreamId: '',
         collectionPartner: '',
         hucName: '',
-        huc: '',
         lab: '',
         latitude: '',
         logbookAbbv: '',
@@ -168,7 +165,6 @@ export default {
         adoptAStreamName: '',
         collectionPartner: '',
         hucName: '',
-        huc: '',
         lab: '',
         latitude: '',
         logbookAbbv: '',

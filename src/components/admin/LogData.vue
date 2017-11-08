@@ -660,8 +660,7 @@
         }
       },
       resetForm: function () {
-        let oldLog = { ...this.newLogData
-        }
+        let oldLog = { ...this.newLogData }
 
         this.newLogData = {
           airTemp: null,
