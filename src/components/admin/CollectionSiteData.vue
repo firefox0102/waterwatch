@@ -144,7 +144,7 @@
                       <download-excel
                         v-bind:data = "getExportXls"
                         v-bind:fields = "jsonFields"
-                        name = "NWW_Report.xls">
+                        name = "NWW_Director_Report.xls">
                         Export as XLS
                       </download-excel>
                     </v-list-tile-title>
@@ -153,7 +153,7 @@
                     <v-list-tile-title>
                       <download-excel
                         v-bind:data = "getExportAdopt"
-                        v-bind:fields = "jsonFields"
+                        v-bind:fields = "jsonFieldsAdopt"
                         name = "NWW_Adopt-A-Stream-Report.xls">
                         Export for Adopt-A-Stream
                       </download-excel>
@@ -263,25 +263,39 @@ export default {
         source: collectionSitesRef.orderByKey().equalTo(this.$route.params.siteId)
       },
       reports: db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(oldDate).endAt(todaysDate)
+      // collectionSites: db.ref('collectionSites/' + this.$route.params.siteId)
     }
   },
   computed: {
     getExportXls () {
       let jsonData = []
       if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, function (report) {
+        jsonData = _.map(this.selected, function (report, collectionSite, metaData) {
           return {
-            stationName: report.stationName,
+            siteId: metaData.logbookNumber,
+            logbookNumber: collectionSite.logbookNumber,
+            logbookAbbv: report.logbookAbbv,
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
-            specificConductivity: report.specificConductivity,
             precipitation: report.precipitation,
+            dilution: report.dilution,
+            totalColiform: report.totalColiform,
             totalEcoli: report.totalEcoli,
-            turbidity: report.turbidity
+            fluorometry: report.fluorometry,
+            turbidity: report.turbidity,
+            specificConductivity: report.specificConductivity,
+            anlyst: report.analyst,
+            notes: report.notes
           }
         })
       }
-
+      // if (this.collectionSites && this.selected.length) {
+      //   jsonData = _.map(this.selected, function (collectionSite) {
+      //     return {
+      //       hucName: collectionSite.hucName
+      //     }
+      //   })
+      // }
       return jsonData
     },
     getExportAdopt () {
@@ -289,17 +303,21 @@ export default {
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
-            stationName: report.stationName,
+            stationName: report.stationName + (report.aasNumber),
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
-            specificConductivity: report.specificConductivity,
+            participation: '1',
+            samplingTime: '60',
+            monitor: 'Micheal Meyer (25064',
             precipitation: report.precipitation,
-            totalEcoli: report.totalEcoli,
-            turbidity: report.turbidity
+            hours: '24',
+            specificConductivity: report.specificConductivity,
+            turbidity: report.turbidity,
+            film: 'yes',
+            totalEcoli: report.totalEcoli
           }
         })
       }
-
       return jsonData
     },
     getExportStoret () {
@@ -307,19 +325,39 @@ export default {
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
+            projectID: 'NWW_2012',
             stationName: report.stationName,
+            'L': report.stationName + report.collectionDate,
+            activityType: 'Sample-Routine',
+            water: 'Water',
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
-            specificConductivity: report.specificConductivity,
-            precipitation: report.precipitation,
+            timeZone: 'EST',
+            activityMeasure: ' ',
+            activityUnit: ' ',
+            collectionMethod: 'Grab Sample',
+            equipment: 'Whirl-pak bag',
+            equipComment: ' ',
+            loggerLine: ' ',
+            characteristic: 'Escherichia coli',
+            methodSpeciation: ' ',
+            resultDetection: ' ',
             totalEcoli: report.totalEcoli,
-            turbidity: report.turbidity,
-            'L': report.stationName + report.collectionDate,
-            water: 'water'
+            resultUnit: 'MPN',
+            qualifier: ' ',
+            resultSampleFraction: ' ',
+            resultStatus: 'Final',
+            baseCode: ' ',
+            valueType: 'Calculated',
+            analyticalMethod: 'Colliert',
+            analyticalMethodContext: 'IDEXX',
+            startDate: ' ',
+            limitMeasure: ' ',
+            limitUnit: ' ',
+            comments: ' '
           }
         })
       }
-
       return jsonData
     }
   },
@@ -374,13 +412,65 @@ export default {
       ],
       selected: [],
       jsonFields: {
-        'stationName': 'Station Name',
-        'collectionDate': 'Date Collected',
-        'collectionTime': 'Time Collected',
-        'specificConductivity': 'Specific Conductivity',
-        'precipitation': 'Percipitation',
-        'totalEcoli': 'E.Coli Total',
-        'turbidity': 'Turbidity Total'
+        'siteId #': 'logbookNumber',
+        'Site': 'logbookAbbv',
+        'Collection Date': 'collectionDate',
+        'Collection Time': 'collectionTime',
+        'Rainfall (in.)': 'precipitation',
+        'Dilution (mL / 100mL)': 'dilution',
+        'Total Coliform (MPN / 100mL)': 'totalColiform',
+        'E. coli (MPN/100mL)': 'totalEcoli',
+        'Fluorometry': 'fluorometry',
+        'Turbidity (NTU)': 'turbidity',
+        'Specific Conductivity (µS)': 'specificConductivity',
+        'Analyst': 'analyst',
+        'Notes': 'notes'
+      },
+      jsonFieldsAdopt: {
+        'Site S-': 'stationName',
+        'Event date (mm/dd/yyyy)': 'collectionDate',
+        'Time sample collected (hh:mm am/pm)': 'collectionTime',
+        'Total # of particip': 'participation',
+        'Time spent sampling (minutes)': 'sampling',
+        'Adopt-A-Stream monitors': 'monitor',
+        'Amount of rain (inches)': 'precipitation',
+        'In last (hours)': 'hours',
+        'Conductivity (µS/cm)': 'specificConductivity',
+        'Turbidity (NTU)': 'turbidity',
+        'Other than Petri film?': 'film',
+        'E.coli IDEXX (MPN / 100mL)': 'totalEcoli'
+      },
+      jsonFieldsStoret: {
+        'Project ID': 'projectID',
+        'Monitoring Location ID': 'stationName',
+        'L': 'L',
+        'Activity Type': 'activityType',
+        'Activity Media Name': 'water',
+        'Activity Start Date': 'collectionDate',
+        'Activity Start Time': 'collectionTime',
+        'Activity Start Time Zone': 'timeZone',
+        'Activity Depth/Height Measure': 'activityMeasure',
+        'Activity Depth/Height Unit': 'activityUnit',
+        'Sample Collection Method ID': 'collectionMethod',
+        'Sample Collection Equipment Name': 'equipment',
+        'Sample Collection Equipment Comment': 'equipComment',
+        'Data Logger Line': 'loggerLine',
+        'Characteristic Name': 'characteristic',
+        'Method Speciation': 'methodSpeciation',
+        'Result Detection Condition': 'resultDetection',
+        'Result Value': 'totalEcoli',
+        'Result Unit': 'resultUnit',
+        'Result Measure Qualifier': 'qualifier',
+        'Result Sample Fraction': 'resultSampleFraction',
+        'Result Status ID': 'resultStatus',
+        'Statistical Base Code': 'baseCode',
+        'Result Value Type': 'valueType',
+        'Result Analytical Method ID': 'analyticalMethod',
+        'Result Analytical Method Context': 'analyticalMethodContext',
+        'Analysis Start Date': 'startDate',
+        'Result Detection/Quantitation Limit Type': 'limitMeasure',
+        'resultDetectionUnit': 'limitUnit',
+        'Result Comment': 'comments'
       },
       snackbar: {
         successVisible: false,

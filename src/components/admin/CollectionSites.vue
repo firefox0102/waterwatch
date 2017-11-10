@@ -322,7 +322,8 @@ export default {
       this.$firebaseRefs.setCollectionSites.child(item['.key']).remove()
 
       // Decrement active sites number
-      let newActive = this.metaData[0]['.value'] - 1
+      let oldActive = parseInt(this.metaData[0]['.value'])
+      let newActive = oldActive - 1
       this.$firebaseRefs.metaData.child('activeSites').set(newActive)
 
       this.selected = []
@@ -341,7 +342,8 @@ export default {
       this.$firebaseRefs.setArchivedSites.child(item['.key']).remove()
 
       // Increment active sites number
-      let newActive = this.metaData[0]['.value'] + 1
+      let oldActive = parseInt(this.metaData[0]['.value'])
+      let newActive = oldActive + 1
       this.$firebaseRefs.metaData.child('activeSites').set(newActive)
 
       this.selected = []

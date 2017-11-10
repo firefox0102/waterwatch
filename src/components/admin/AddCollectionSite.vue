@@ -148,12 +148,12 @@ export default {
       try {
         this.$firebaseRefs.collectionSites.push(this.newCollectionSite)
 
-        let activeSites = _.find(this.metaData, { '.key': 'activeSites' })
-        let totalSites = _.find(this.metaData, { '.key': 'totalSites' })
+        let oldActive = parseInt(this.metaData[0]['.value'])
+        let oldTotal = parseInt(this.metaData[2]['.value'])
 
-        let newActive = activeSites['.value'] + 1
+        let newActive = oldActive + 1
         this.$firebaseRefs.metaData.child('activeSites').set(newActive)
-        let newTotalSites = totalSites['.value'] + 1
+        let newTotalSites = oldTotal + 1
         this.$firebaseRefs.metaData.child('totalSites').set(newTotalSites)
 
         this.snackbar.successVisible = true
