@@ -263,25 +263,34 @@ export default {
         source: collectionSitesRef.orderByKey().equalTo(this.$route.params.siteId)
       },
       reports: db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(oldDate).endAt(todaysDate)
+      // collectionSites: db.ref('collectionSites/' + this.$route.params.siteId)
     }
   },
   computed: {
     getExportXls () {
       let jsonData = []
       if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, function (report) {
+        jsonData = _.map(this.selected, function (report, collectionSite) {
           return {
-            stationName: report.stationName,
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
-            specificConductivity: report.specificConductivity,
+            stationName: report.stationName,
             precipitation: report.precipitation,
             totalEcoli: report.totalEcoli,
-            turbidity: report.turbidity
+            fluorometry: report.fluorometry,
+            turbidity: report.turbidity,
+            specificConductivity: report.specificConductivity,
+            notes: report.notes
           }
         })
       }
-
+      if (this.collectionSites && this.selected.length) {
+        jsonData = _.map(this.selected, function (collectionSite) {
+          return {
+            hucName: collectionSite.hucName
+          }
+        })
+      }
       return jsonData
     },
     getExportAdopt () {
@@ -339,7 +348,6 @@ export default {
           }
         })
       }
-
       return jsonData
     }
   },
@@ -402,7 +410,8 @@ export default {
         'fluorometry': 'Fluorometry',
         'specificConductivity': 'Specific Conductivity (µS)',
         'turbidity': 'Turbidity (NTU)',
-        'notes': 'Notes'
+        'notes': 'Notes',
+        'hucName': 'hucName'
       },
       jsonFieldsAdopt: {
         'stationName': 'Site S-',
