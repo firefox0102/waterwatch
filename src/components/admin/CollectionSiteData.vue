@@ -270,10 +270,9 @@ export default {
     getExportXls () {
       let jsonData = []
       if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, function (report, collectionSite, metaData) {
+        jsonData = _.map(this.selected, function (report, collectionSite) {
           return {
-            siteId: metaData.logbookNumber,
-            logbookNumber: collectionSite.logbookNumber,
+            logbookNumber: report.logbookNumber,
             logbookAbbv: report.logbookAbbv,
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
@@ -284,18 +283,11 @@ export default {
             fluorometry: report.fluorometry,
             turbidity: report.turbidity,
             specificConductivity: report.specificConductivity,
-            anlyst: report.analyst,
+            analyst: report.analyst,
             notes: report.notes
           }
         })
       }
-      // if (this.collectionSites && this.selected.length) {
-      //   jsonData = _.map(this.selected, function (collectionSite) {
-      //     return {
-      //       hucName: collectionSite.hucName
-      //     }
-      //   })
-      // }
       return jsonData
     },
     getExportAdopt () {
@@ -413,7 +405,7 @@ export default {
       selected: [],
       jsonFields: {
         'logbookNumber': 'siteId #',
-        'logbookAbbv': 'Site',
+        'logbookAbbv': 'Site Name',
         'collectionDate': 'Collection Date',
         'collectionTime': 'Collection Time',
         'precipitation': 'Rainfall (in.)',
