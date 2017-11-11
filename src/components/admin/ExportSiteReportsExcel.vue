@@ -99,22 +99,29 @@ export default {
         }]
       ],
       jsonFields: {
-        'stationName': 'Station Name',
-        'collectionDate': 'Date Collected',
-        'collectionTime': 'Time Collected',
-        'specificConductivity': 'Specific Conductivity',
-        'precipitation': 'Percipitation',
+        'logbookNumber': '#',
+        'logbookAbbv': 'Site Name',
+        'collectionDate': 'Collect. Date',
+        'collectionTime': 'Collect. Time',
+        'precipitation': 'Rain (in)',
+        'dilution': 'Dilution (mL / 100mL)',
+        'totalColiform': 'Total Coliform (MPN / 100mL)',
         'totalEcoli': 'E.Coli Total',
-        'turbidity': 'Turbidity Total'
+        'fluorometry:': 'Fluorometry',
+        'turbidity': 'Turbid. (NTU)',
+        'specificConductivity': 'Specifc Cond. (µS)',
+        'analyst': 'Analyst',
+        'notes': 'Notes'
+
       },
       adoptJsonFields: {
-        'adoptAStreamName': 'Station S-',
+        'adoptAStreamName': 'Site S-',
         'collectionDate': 'Event date (mm/dd/yyyy)',
+        'collectionTime': 'Time sample collected (hh:mm am/pm)',
         'precipitation': 'Amount of rain (inches)',
         'totalEcoli': 'E.coli IDEXX (MPN / 100mL)',
         'turbidity': 'Turbidity (NTU)',
-        'specificConductivity': 'Conductivity (µS/cm)',
-        'collectionTime': 'Time sample collected (hh:mm am/pm)'
+        'specificConductivity': 'Conductivity (µS/cm)'
       },
       storetJsonFields: {
         'projectId': 'ProjectId',

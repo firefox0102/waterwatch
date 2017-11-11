@@ -597,7 +597,6 @@
           if (this.getTotalEcoli !== undefined) {
             this.targetLogData.totalEcoli = this.getTotalEcoli
           }
-
           if (this.getTotalColiform !== undefined) {
             this.targetLogData.totalColiform = this.getTotalColiform
           }
