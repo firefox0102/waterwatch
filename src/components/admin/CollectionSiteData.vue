@@ -295,7 +295,7 @@ export default {
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
-            stationName: report.stationName + (report.aasNumber),
+            stationName: report.stationName + ' (' + report.aasNumber + ')',
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
             participation: '1',
@@ -423,7 +423,7 @@ export default {
         'collectionDate': 'Event date (mm/dd/yyyy)',
         'collectionTime': 'Time sample collected (hh:mm am/pm)',
         'participation': 'Total # of particip',
-        'sampling': 'Time spent sampling (minutes)',
+        'samplingTime': 'Time spent sampling (minutes)',
         'monitor': 'Adopt-A-Stream monitors',
         'precipitation': 'Amount of rain (inches)',
         'hours': 'In last (hours)',
