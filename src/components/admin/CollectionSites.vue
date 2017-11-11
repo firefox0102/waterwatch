@@ -157,6 +157,7 @@
                 <td>{{ props.item.collectionPartner }}</td>
                 <td>{{ props.item.hucName }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.adoptAStreamName }}</td>
+                <td class="col-long table-cell__truncate--long">{{ props.item.aasNumber }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.storetName }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.storetLocationId }}</td>
                 <td>{{ props.item.numSamples }}</td>
@@ -268,6 +269,7 @@ export default {
         { text: 'Collection Partner', value: 'collectionPartner' },
         { text: 'Subwatershed (HUC12)', value: 'hucName' },
         { text: 'Adopt-A-Stream Name', value: 'adoptAStreamName' },
+        { text: 'Adopt-A-Stream Number', value: 'aasNumber' },
         { text: 'STORET Name', value: 'storetName' },
         { text: 'STORET Location ID', value: 'storetLocationId' },
         { text: '# Samples Collected', value: 'numSamples' },

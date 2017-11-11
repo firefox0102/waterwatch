@@ -272,8 +272,7 @@ export default {
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report, collectionSite, metaData) {
           return {
-            siteId: metaData.logbookNumber,
-            logbookNumber: collectionSite.logbookNumber,
+            logbookNumber: report.logbookNumber,
             logbookAbbv: report.logbookAbbv,
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
@@ -284,7 +283,7 @@ export default {
             fluorometry: report.fluorometry,
             turbidity: report.turbidity,
             specificConductivity: report.specificConductivity,
-            anlyst: report.analyst,
+            analyst: report.analyst,
             notes: report.notes
           }
         })
@@ -413,7 +412,7 @@ export default {
       selected: [],
       jsonFields: {
         'logbookNumber': 'siteId #',
-        'logbookAbbv': 'Site',
+        'logbookAbbv': 'Site Name',
         'collectionDate': 'Collection Date',
         'collectionTime': 'Collection Time',
         'precipitation': 'Rainfall (in.)',
@@ -431,7 +430,7 @@ export default {
         'collectionDate': 'Event date (mm/dd/yyyy)',
         'collectionTime': 'Time sample collected (hh:mm am/pm)',
         'participation': 'Total # of particip',
-        'sampling': 'Time spent sampling (minutes)',
+        'samplingTime': 'Time spent sampling (minutes)',
         'monitor': 'Adopt-A-Stream monitors',
         'precipitation': 'Amount of rain (inches)',
         'hours': 'In last (hours)',
