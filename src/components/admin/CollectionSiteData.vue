@@ -144,6 +144,7 @@
                       <download-excel
                         v-bind:data = "getExportXls"
                         v-bind:fields = "jsonFields"
+                        :meta = "json_meta"
                         name = "NWW_Director_Report.xls">
                         Export as XLS
                       </download-excel>
@@ -154,6 +155,7 @@
                       <download-excel
                         v-bind:data = "getExportAdopt"
                         v-bind:fields = "jsonFieldsAdopt"
+                        :meta = "json_meta"
                         name = "NWW_Adopt-A-Stream-Report.xls">
                         Export for Adopt-A-Stream
                       </download-excel>
@@ -164,6 +166,7 @@
                       <download-excel
                         v-bind:data = "getExportStoret"
                         v-bind:fields = "jsonFieldsStoret"
+                        :meta = "json_meta"
                         name = "NWW_Storet-Report.xls">
                         Export for STORET
                       </download-excel>
@@ -403,6 +406,12 @@ export default {
         { text: 'Notes', value: 'notes' }
       ],
       selected: [],
+      json_meta: [
+        [{
+          'key': 'charset',
+          'value': 'utf-8'
+        }]
+      ],
       jsonFields: {
         'logbookNumber': 'siteId #',
         'logbookAbbv': 'Site Name',
