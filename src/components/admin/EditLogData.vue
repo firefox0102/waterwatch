@@ -412,9 +412,9 @@
     computed: {
       getTotalColiform: function () {
         try {
-          if (this.newLogData.coliformLargeCells && this.newLogData.coliformSmallCells && this.newLogData.dilution) {
-            let matrixValue = matrix[this.newLogData.coliformLargeCells][this.newLogData.coliformSmallCells]
-            let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
+          if (this.targetLogData.coliformLargeCells && this.targetLogData.coliformSmallCells && this.targetLogData.dilution) {
+            let matrixValue = matrix[this.targetLogData.coliformLargeCells][this.targetLogData.coliformSmallCells]
+            let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
             let computedValue = matrixValue * dilutionFactor
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
 
@@ -426,9 +426,9 @@
       },
       getTotalEcoli: function () {
         try {
-          if (this.ecoliLargeCells && this.ecoliSmallCells && this.newLogData.dilution) {
+          if (this.ecoliLargeCells && this.ecoliSmallCells && this.targetLogData.dilution) {
             let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
-            let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
+            let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
             let computedValue = matrixValue * dilutionFactor
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
 
@@ -632,18 +632,18 @@
         }
 
         // Last turbidity equation
-        if (this.newLogData.turbidity) {
-          this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
+        if (this.targetLogData.turbidity) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.targetLogData.turbidity)
         }
 
         // Last rainfall equation
-        if (this.newLogData.precipitation) {
-          this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.newLogData.precipitation)
+        if (this.targetLogData.precipitation) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.targetLogData.precipitation)
         }
 
         // Last specific conductivity equation
-        if (this.newLogData.specificConductivity) {
-          this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.newLogData.specificConductivity)
+        if (this.targetLogData.specificConductivity) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.targetLogData.specificConductivity)
         }
       }
     }
