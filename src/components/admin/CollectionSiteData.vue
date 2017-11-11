@@ -270,7 +270,7 @@ export default {
     getExportXls () {
       let jsonData = []
       if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, function (report, collectionSite, metaData) {
+        jsonData = _.map(this.selected, function (report) {
           return {
             logbookNumber: report.logbookNumber,
             logbookAbbv: report.logbookAbbv,
@@ -288,13 +288,6 @@ export default {
           }
         })
       }
-      // if (this.collectionSites && this.selected.length) {
-      //   jsonData = _.map(this.selected, function (collectionSite) {
-      //     return {
-      //       hucName: collectionSite.hucName
-      //     }
-      //   })
-      // }
       return jsonData
     },
     getExportAdopt () {
@@ -302,7 +295,7 @@ export default {
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
-            stationName: report.stationName + (report.aasNumber),
+            stationName: report.stationName + ' (' + report.aasNumber + ')',
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
             participation: '1',

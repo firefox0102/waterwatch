@@ -25,24 +25,34 @@
           ></v-progress-linear>
           <ul class="report-list list">
             <li>
-            <download-excel
-              v-if="generatedJsonData !== null && reportsFetched === selected.length"
-              v-bind:data = "generatedJsonData"
-              v-bind:fields = "jsonFields"
-              :meta = "json_meta"
-              name = "NWW_XLS-Report.xls">
-              Export as XLS
-            </download-excel>
+              <download-excel
+                v-if="generatedJsonData !== null && reportsFetched === selected.length"
+                v-bind:data = "generatedJsonData"
+                v-bind:fields = "jsonFields"
+                :meta = "json_meta"
+                name = "NWW_XLS-Report.xls">
+                Export as XLS
+              </download-excel>
             </li>
             <li>
-            <download-excel
-              v-if="generatedJsonData !== null && reportsFetched === selected.length"
-              v-bind:data = "generatedJsonData"
-              v-bind:fields = "adoptJsonFields"
-              :meta = "json_meta"
-              name = "NWW_Adopt-A-Stream-Report.xls">
-              Export Adopt-A-Stream Report
-            </download-excel>
+              <download-excel
+                v-if="generatedJsonData !== null && reportsFetched === selected.length"
+                v-bind:data = "generatedJsonData"
+                v-bind:fields = "adoptJsonFields"
+                :meta = "json_meta"
+                name = "NWW_Adopt-A-Stream-Report.xls">
+                Export Adopt-A-Stream Report
+              </download-excel>
+            </li>
+            <li>
+              <download-excel
+                v-if="storetJsonData !== null && reportsFetched === selected.length"
+                v-bind:data = "storetJsonData"
+                v-bind:fields = "storetJsonFields"
+                :meta = "json_meta"
+                name = "NWW_Report.xls">
+                Export Storet Report
+              </download-excel>
             </li>
           </ul>
         </v-card-text>
@@ -58,6 +68,7 @@
 <script>
 import { db } from '../../helpers/firebase'
 import _ from 'lodash'
+import moment from 'moment'
 
 export default {
   name: 'export-site-reports-excel',
@@ -69,6 +80,7 @@ export default {
   data: function () {
     return {
       generatedJsonData: null,
+      storetJsonData: null,
       reportsFetched: 0,
       controls: {
         openExportDialog: false,
@@ -103,6 +115,39 @@ export default {
         'turbidity': 'Turbidity (NTU)',
         'specificConductivity': 'Conductivity (µS/cm)',
         'collectionTime': 'Time sample collected (hh:mm am/pm)'
+      },
+      storetJsonFields: {
+        'projectId': 'ProjectId',
+        'monitoringLocationId': 'Monitoring Location Id',
+        'lField': 'L',
+        'activityType': 'Activity Type',
+        'activityMediaName': 'Activity Media Name',
+        'activityStartDate': 'Activity Start Date',
+        'activityStartTime': 'Activity Start Time',
+        'activityStartTimeZone': 'Activity Start Time Zone',
+        'activityDepthMeasure': 'Activity Depth/Height Measure',
+        'activityDepthUnit': 'Activity Depth/Height Unit',
+        'sampleCollectionMethodId': 'Sample Collection Method ID',
+        'sampleCollectionEquipmentName': 'Sample Collection Equipment Name',
+        'sampleCollectionEquipmentComment': 'Sample Collection Equipment Comment',
+        'dataLoggerLine': 'Data Logger Line',
+        'characteristicName': 'Characteristic Name',
+        'methodSpeciation': 'Method Speciation',
+        'resultDetectionCondition': 'Result Detection Condition',
+        'resultValue': 'Result Value',
+        'resultUnit': 'Result Unit',
+        'resultMeasureQualifier': 'Result Measure Qualifier',
+        'resultSampleFraction': 'Result Sample Fraction',
+        'resultStatusID': 'Result Status ID',
+        'statisticalBaseCode': 'Statistical Base Code',
+        'resultValueType': 'Result Value Type',
+        'resultAnalyticalMethodID': 'Result Analytical Method ID',
+        'resultAnalyticalMethodContext': 'Result Analytical Method Context',
+        'analysisStartDate': 'Analysis Start Date',
+        'resultDetectionQuantitationLimitType': 'Result Detection/Quantitation Limit Type',
+        'resultDetectionQuantitationLimitMeasure': 'Result Detection/Quantitation Limit Measure',
+        'resultDetectionQuantitationLimitUnit': 'Result Detection/Quantitation Limit Unit',
+        'resultComment': 'Result Comment'
       }
     }
   },
@@ -111,6 +156,7 @@ export default {
       console.log('generating')
       this.controls.isExporting = true
       this.generatedJsonData = []
+      this.storetJsonData = []
 
       var i = 0
       this.reportsFetched = 0
@@ -125,6 +171,7 @@ export default {
             console.log('selected callback fired')
             let itemsCopy = [ ...this[stringy] ]
             this.generatedJsonData = _.concat(this.generatedJsonData, itemsCopy)
+            this.generateStoretObjects(itemsCopy)
             this.$unbind(stringy)
             this.reportsFetched++
           }
@@ -133,8 +180,51 @@ export default {
         i++
       })
     },
+    generateStoretObjects (items) {
+      let storetItems = []
+
+      _.forEach(items, (item) => {
+        let lDate = moment(item.collectionDate).format('YYYYMMDD')
+        storetItems.push({
+          'projectId': 'NWW_2012',
+          'monitoringLocationId': item.logbookAbbv,
+          'lField': `NWW40${lDate}`,
+          'activityType': 'Sample-Routine',
+          'activityMediaName': 'Water',
+          'activityStartDate': item.collectionDate,
+          'activityStartTime': item.collectionTime,
+          'activityStartTimeZone': 'EST',
+          'activityDepthMeasure': ' ',
+          'activityDepthUnit': ' ',
+          'sampleCollectionMethodId': 'Grab Sample',
+          'sampleCollectionEquipmentName': 'Whirl-pak bag',
+          'sampleCollectionEquipmentComment': ' ',
+          'dataLoggerLine': '',
+          'characteristicName': 'Escherichia coli',
+          'methodSpeciation': ' ',
+          'resultDetectionCondition': ' ',
+          'resultValue': item.totalEcoli,
+          'resultUnit': 'MPN',
+          'resultMeasureQualifier': ' ',
+          'resultSampleFraction': ' ',
+          'resultStatusID': 'Final',
+          'statisticalBaseCode': ' ',
+          'resultValueType': 'Calculated',
+          'resultAnalyticalMethodID': 'Colilert',
+          'resultAnalyticalMethodContext': 'IDEXX',
+          'analysisStartDate': ' ',
+          'resultDetectionQuantitationLimitType': ' ',
+          'resultDetectionQuantitationLimitMeasure': ' ',
+          'resultDetectionQuantitationLimitUnit': ' ',
+          'resultComment': ' '
+        })
+      })
+
+      this.storetJsonData = _.concat(this.storetJsonData, storetItems)
+    },
     close () {
-      this.generatedJsonData = []
+      this.generatedJsonData = null
+      this.storetJsonData = null
       this.controls.openExportDialog = false
     }
   }
