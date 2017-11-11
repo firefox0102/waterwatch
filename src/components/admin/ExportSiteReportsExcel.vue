@@ -47,7 +47,6 @@
             <li>
               <download-excel
                 v-if="storetJsonData !== null && reportsFetched === selected.length"
-                type="submit"
                 v-bind:data = "storetJsonData"
                 v-bind:fields = "storetJsonFields"
                 :meta = "json_meta"
@@ -224,7 +223,8 @@ export default {
       this.storetJsonData = _.concat(this.storetJsonData, storetItems)
     },
     close () {
-      this.generatedJsonData = []
+      this.generatedJsonData = null
+      this.storetJsonData = null
       this.controls.openExportDialog = false
     }
   }
