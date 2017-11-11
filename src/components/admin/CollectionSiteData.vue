@@ -270,7 +270,7 @@ export default {
     getExportXls () {
       let jsonData = []
       if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, function (report, collectionSite) {
+        jsonData = _.map(this.selected, function (report) {
           return {
             logbookNumber: report.logbookNumber,
             logbookAbbv: report.logbookAbbv,
