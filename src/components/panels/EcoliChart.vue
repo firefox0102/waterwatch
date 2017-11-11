@@ -3,7 +3,7 @@
   <div class="graph-card">
     <div class="graph-card-title">
       <span class="graph-card-title__primary">
-        E. coli
+        E. coli (MPN/100mL)
         <v-dialog
           v-model="controls.ecoliDialog"
           content-class="nww-dialog"

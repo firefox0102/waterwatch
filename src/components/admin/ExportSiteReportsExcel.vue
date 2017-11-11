@@ -1,21 +1,17 @@
 <template>
-  <v-layout row justify-center>
+  <v-layout>
     <v-dialog
       v-model="controls.openExportDialog"
       persistent
       max-width="600px">
-      <div
+      <v-btn
         slot="activator"
-        class="site-reports-toolbar-export__activator">
-        <div class="site-reports-toolbar-export__activator-text">
-          Export
-        </div>
-        <i class="material-icons">arrow_drop_down</i>
-      </div>
+        class="btn btn-nww--light site-reports-actions__action">
+        Export
+        <v-icon right dark>file_download</v-icon>
+      </v-btn>
       <v-card>
-        <v-card-title>
-          <span class="headline">Download Excel Reports</span>
-        </v-card-title>
+        <v-card-title class="headline">Download Excel Reports</v-card-title>
         <v-card-text>
           <v-btn
             v-on:click="generateReport"
@@ -27,37 +23,43 @@
             v-if="generatedJsonData !== null && reportsFetched < selected.length"
             v-bind:indeterminate="true"
           ></v-progress-linear>
-          <download-excel
-            v-if="generatedJsonData !== null && reportsFetched === selected.length"
-            type="submit"
-            v-bind:data = "generatedJsonData"
-            v-bind:fields = "jsonFields"
-            :meta = "json_meta"
-            name = "NWW_Report.xls">
-            Export as XLS
-          </download-excel>
-          <download-excel
-            v-if="generatedJsonData !== null && reportsFetched === selected.length"
-            type="submit"
-            v-bind:data = "generatedJsonData"
-            v-bind:fields = "adoptJsonFields"
-            :meta = "json_meta"
-            name = "NWW_Report.xls">
-            Export Adopt-A-Stream Report
-          </download-excel>
-          <download-excel
-            v-if="storetJsonData !== null && reportsFetched === selected.length"
-            type="submit"
-            v-bind:data = "storetJsonData"
-            v-bind:fields = "storetJsonFields"
-            :meta = "json_meta"
-            name = "NWW_Report.xls">
-            Export Storet Report
-          </download-excel>
+          <ul class="report-list list">
+            <li>
+              <download-excel
+                v-if="generatedJsonData !== null && reportsFetched === selected.length"
+                v-bind:data = "generatedJsonData"
+                v-bind:fields = "jsonFields"
+                :meta = "json_meta"
+                name = "NWW_XLS-Report.xls">
+                Export as XLS
+              </download-excel>
+            </li>
+            <li>
+              <download-excel
+                v-if="generatedJsonData !== null && reportsFetched === selected.length"
+                v-bind:data = "generatedJsonData"
+                v-bind:fields = "adoptJsonFields"
+                :meta = "json_meta"
+                name = "NWW_Adopt-A-Stream-Report.xls">
+                Export Adopt-A-Stream Report
+              </download-excel>
+            </li>
+            <li>
+              <download-excel
+                v-if="storetJsonData !== null && reportsFetched === selected.length"
+                type="submit"
+                v-bind:data = "storetJsonData"
+                v-bind:fields = "storetJsonFields"
+                :meta = "json_meta"
+                name = "NWW_Report.xls">
+                Export Storet Report
+              </download-excel>
+            </li>
+          </ul>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="close">Close</v-btn>
+          <v-btn class="flat-action" flat @click.native="close">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

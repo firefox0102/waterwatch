@@ -108,7 +108,7 @@
                   v-bind:data = "getExportJson"
                   v-bind:fields = "jsonFields"
                   name = "NWW_Report.xls">
-                  Download  XLSX
+                  Download  XLS
                 </download-excel>
               </div>
             </div>

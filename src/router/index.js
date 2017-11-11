@@ -30,11 +30,11 @@ export default new Router({
       component: About,
       meta: { requiresAuth: false }
     },
-    {
-      path: '/',
-      component: DataPage,
-      meta: { requiresAuth: false }
-    },
+    // {
+    //   path: '/',
+    //   component: DataPage,
+    //   meta: { requiresAuth: false }
+    // },
     {
       path: '/collectionSiteData/:siteId',
       name: 'Collection Site Data',
@@ -48,15 +48,15 @@ export default new Router({
       meta: { requiresAuth: true }
     },
     {
-      path: '/logData/:id',
-      name: 'Log Data Id',
-      component: LogData,
-      meta: { requiresAuth: true }
-    },
-    {
       path: '/collectionSites',
       name: 'Collection Sites',
       component: CollectionSites,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/logData/:id',
+      name: 'Log Data Id',
+      component: LogData,
       meta: { requiresAuth: true }
     }
   ]

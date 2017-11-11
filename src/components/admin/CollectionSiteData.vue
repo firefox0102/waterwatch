@@ -142,11 +142,9 @@
                   <v-list-tile>
                     <v-list-tile-title>
                       <download-excel
-                        type="submit"
-                        class="btn md-raised btn-nww--light"
                         v-bind:data = "getExportXls"
                         v-bind:fields = "jsonFields"
-                        name = "NWW_Report.xls">
+                        name = "NWW_Director_Report.xls">
                         Export as XLS
                       </download-excel>
                     </v-list-tile-title>
@@ -154,11 +152,9 @@
                    <v-list-tile>
                     <v-list-tile-title>
                       <download-excel
-                        type="submit"
-                        class="btn md-raised btn-nww--light"
                         v-bind:data = "getExportAdopt"
-                        v-bind:fields = "jsonFields"
-                        name = "NWW_Adopt-a-Stream-Report.xls">
+                        v-bind:fields = "jsonFieldsAdopt"
+                        name = "NWW_Adopt-A-Stream-Report.xls">
                         Export for Adopt-A-Stream
                       </download-excel>
                     </v-list-tile-title>
@@ -166,8 +162,6 @@
                    <v-list-tile>
                     <v-list-tile-title>
                       <download-excel
-                        type="submit"
-                        class="btn md-raised btn-nww--light"
                         v-bind:data = "getExportStoret"
                         v-bind:fields = "jsonFieldsStoret"
                         name = "NWW_Storet-Report.xls">
@@ -237,7 +231,7 @@
                 <td>{{ props.item.dilution }}</td>
                 <td>{{ props.item.incubationTemp }}</td>
                 <td>{{ props.item.incubationOut }}</td>
-                <td>{{ props.item.notes }}</td>
+                <td class="col-long table-cell__truncate--long">{{ props.item.notes }}</td>
               </tr>
             </template>
           </v-data-table>
@@ -269,25 +263,39 @@ export default {
         source: collectionSitesRef.orderByKey().equalTo(this.$route.params.siteId)
       },
       reports: db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(oldDate).endAt(todaysDate)
+      // collectionSites: db.ref('collectionSites/' + this.$route.params.siteId)
     }
   },
   computed: {
     getExportXls () {
       let jsonData = []
       if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, function (report) {
+        jsonData = _.map(this.selected, function (report, collectionSite, metaData) {
           return {
-            stationName: report.stationName,
+            siteId: metaData.logbookNumber,
+            logbookNumber: collectionSite.logbookNumber,
+            logbookAbbv: report.logbookAbbv,
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
-            specificConductivity: report.specificConductivity,
             precipitation: report.precipitation,
+            dilution: report.dilution,
+            totalColiform: report.totalColiform,
             totalEcoli: report.totalEcoli,
-            turbidity: report.turbidity
+            fluorometry: report.fluorometry,
+            turbidity: report.turbidity,
+            specificConductivity: report.specificConductivity,
+            anlyst: report.analyst,
+            notes: report.notes
           }
         })
       }
-
+      // if (this.collectionSites && this.selected.length) {
+      //   jsonData = _.map(this.selected, function (collectionSite) {
+      //     return {
+      //       hucName: collectionSite.hucName
+      //     }
+      //   })
+      // }
       return jsonData
     },
     getExportAdopt () {
@@ -295,17 +303,21 @@ export default {
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
-            stationName: report.stationName,
+            stationName: report.stationName + (report.aasNumber),
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
-            specificConductivity: report.specificConductivity,
+            participation: '1',
+            samplingTime: '60',
+            monitor: 'Micheal Meyer (25064)',
             precipitation: report.precipitation,
-            totalEcoli: report.totalEcoli,
-            turbidity: report.turbidity
+            hours: '24',
+            specificConductivity: report.specificConductivity,
+            turbidity: report.turbidity,
+            film: 'yes',
+            totalEcoli: report.totalEcoli
           }
         })
       }
-
       return jsonData
     },
     getExportStoret () {
@@ -313,19 +325,39 @@ export default {
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
+            projectID: 'NWW_2012',
             stationName: report.stationName,
+            'L': report.stationName + report.collectionDate,
+            activityType: 'Sample-Routine',
+            water: 'Water',
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
-            specificConductivity: report.specificConductivity,
-            precipitation: report.precipitation,
+            timeZone: 'EST',
+            activityMeasure: ' ',
+            activityUnit: ' ',
+            collectionMethod: 'Grab Sample',
+            equipment: 'Whirl-pak bag',
+            equipComment: ' ',
+            loggerLine: ' ',
+            characteristic: 'Escherichia coli',
+            methodSpeciation: ' ',
+            resultDetection: ' ',
             totalEcoli: report.totalEcoli,
-            turbidity: report.turbidity,
-            'L': report.stationName + report.collectionDate,
-            water: 'water'
+            resultUnit: 'MPN',
+            qualifier: ' ',
+            resultSampleFraction: ' ',
+            resultStatus: 'Final',
+            baseCode: ' ',
+            valueType: 'Calculated',
+            analyticalMethod: 'Colliert',
+            analyticalMethodContext: 'IDEXX',
+            startDate: ' ',
+            limitMeasure: ' ',
+            limitUnit: ' ',
+            comments: ' '
           }
         })
       }
-
       return jsonData
     }
   },
@@ -380,13 +412,65 @@ export default {
       ],
       selected: [],
       jsonFields: {
-        'stationName': 'Station Name',
-        'collectionDate': 'Date Collected',
-        'collectionTime': 'Time Collected',
-        'specificConductivity': 'Specific Conductivity',
-        'precipitation': 'Percipitation',
-        'totalEcoli': 'E.Coli Total',
-        'turbidity': 'Turbidity Total'
+        'logbookNumber': 'siteId #',
+        'logbookAbbv': 'Site',
+        'collectionDate': 'Collection Date',
+        'collectionTime': 'Collection Time',
+        'precipitation': 'Rainfall (in.)',
+        'dilution': 'Dilution (mL / 100mL)',
+        'totalColiform': 'Total Coliform (MPN / 100mL)',
+        'totalEcoli': 'E. coli (MPN/100mL)',
+        'fluorometry': 'Fluorometry',
+        'turbidity': 'Turbidity (NTU)',
+        'specificConductivity': 'Specific Conductivity (µS)',
+        'analyst': 'Analyst',
+        'notes': 'Notes'
+      },
+      jsonFieldsAdopt: {
+        'stationName': 'Site S-',
+        'collectionDate': 'Event date (mm/dd/yyyy)',
+        'collectionTime': 'Time sample collected (hh:mm am/pm)',
+        'participation': 'Total # of particip',
+        'sampling': 'Time spent sampling (minutes)',
+        'monitor': 'Adopt-A-Stream monitors',
+        'precipitation': 'Amount of rain (inches)',
+        'hours': 'In last (hours)',
+        'specificConductivity': 'Conductivity (µS/cm)',
+        'turbidity': 'Turbidity (NTU)',
+        'film': 'Other than Petri film?',
+        'totalEcoli': 'E.coli IDEXX (MPN / 100mL)'
+      },
+      jsonFieldsStoret: {
+        'projectID': 'Project ID',
+        'stationName': 'Monitoring Location ID',
+        'L': 'L',
+        'activityType': 'Activity Type',
+        'water': 'Activity Media Name',
+        'collectionDate': 'Activity Start Date',
+        'collectionTime': 'Activity Start Time',
+        'timeZone': 'Activity Start Time Zone',
+        'activityMeasure': 'Activity Depth/Height Measure',
+        'activityUnit': 'Activity Depth/Height Unit',
+        'collectionMethod': 'Sample Collection Method ID',
+        'equipment': 'Sample Collection Equipment Name',
+        'equipComment': 'Sample Collection Equipment Comment',
+        'loggerLine': 'Data Logger Line',
+        'characteristic': 'Characteristic Name',
+        'methodSpeciation': 'Method Speciation',
+        'resultDetection': 'Result Detection Condition',
+        'totalEcoli': 'Result Value',
+        'resultUnit': 'Result Unit',
+        'qualifier': 'Result Measure Qualifier',
+        'resultSampleFraction': 'Result Sample Fraction',
+        'resultStatus': 'Result Status ID',
+        'baseCode': 'Statistical Base Code',
+        'valueType': 'Result Value Type',
+        'analyticalMethod': 'Result Analytical Method ID',
+        'analyticalMethodContext': 'Result Analytical Method Context',
+        'startDate': 'Analysis Start Date',
+        'limitMeasure': 'Result Detection/Quantitation Limit Type',
+        'limitUnit': 'resultDetectionUnit',
+        'comments': 'Result Comment'
       },
       snackbar: {
         successVisible: false,

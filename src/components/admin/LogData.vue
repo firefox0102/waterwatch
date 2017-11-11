@@ -342,7 +342,7 @@
             >
               {{ "Log Data" }}
             </v-btn>
-            <v-card>
+            <v-card class="card-alert">
               <v-card-title>
                 <div class="headline log-data-confirm__header">Log Data?</div>
               </v-card-title>
@@ -351,7 +351,7 @@
                 <v-spacer></v-spacer>
                 <v-btn
                   primary
-                  flat="flat"
+                  flat
                   v-on:click.native="controls.showDialog = false">
                   Cancel
                 </v-btn>

@@ -3,7 +3,7 @@
   <div class="graph-card">
     <div class="graph-card-title">
       <span class="graph-card-title__primary">
-        Turbidity
+        Turbidity (NTU)
         <v-dialog
           v-model="controls.turbidityDialog"
           content-class="nww-dialog"
