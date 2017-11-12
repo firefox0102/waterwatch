@@ -24,7 +24,7 @@
             v-bind:indeterminate="true"
           ></v-progress-linear>
           <ul class="report-list list">
-            <li>
+            <!-- <li>
               <download-excel
                 v-if="generatedJsonData !== null && reportsFetched === selected.length"
                 v-bind:data = "generatedJsonData"
@@ -33,18 +33,18 @@
                 name = "NWW_XLS-Report.xls">
                 Export as XLS
               </download-excel>
-            </li>
+            </li> -->
             <li>
               <download-excel
-                v-if="generatedJsonData !== null && reportsFetched === selected.length"
-                v-bind:data = "generatedJsonData"
+                v-if="adoptJsonData !== null && reportsFetched === selected.length"
+                v-bind:data = "adoptJsonData"
                 v-bind:fields = "adoptJsonFields"
                 :meta = "json_meta"
                 name = "NWW_Adopt-A-Stream-Report.xls">
                 Export Adopt-A-Stream Report
               </download-excel>
             </li>
-            <li>
+            <!-- <li>
               <download-excel
                 v-if="storetJsonData !== null && reportsFetched === selected.length"
                 v-bind:data = "storetJsonData"
@@ -53,7 +53,7 @@
                 name = "NWW_Report.xls">
                 Export Storet Report
               </download-excel>
-            </li>
+            </li> -->
           </ul>
         </v-card-text>
         <v-card-actions>
@@ -81,6 +81,7 @@ export default {
     return {
       generatedJsonData: null,
       storetJsonData: null,
+      adoptJsonData: null,
       reportsFetched: 0,
       controls: {
         openExportDialog: false,
@@ -112,16 +113,20 @@ export default {
         'specificConductivity': 'Specifc Cond. (µS)',
         'analyst': 'Analyst',
         'notes': 'Notes'
-
       },
       adoptJsonFields: {
-        'adoptAStreamName': 'Site S-',
+        'aasSiteName': 'Site S-',
         'collectionDate': 'Event date (mm/dd/yyyy)',
-        'collectionTime': 'Time sample collected (hh:mm am/pm)',
+        'collectionTime': 'Time sample collected (hh:mm)',
+        'participation': 'Total # of particip',
+        'samplingTime': 'Time spent sampling (minutes)',
+        'monitor': 'Adopt-A-Stream monitors',
         'precipitation': 'Amount of rain (inches)',
-        'totalEcoli': 'E.coli IDEXX (MPN / 100mL)',
+        'hours': 'In last (hours)',
+        'specificConductivity': 'Conductivity (µS/cm)',
         'turbidity': 'Turbidity (NTU)',
-        'specificConductivity': 'Conductivity (µS/cm)'
+        'film': 'Other than Petri film?',
+        'totalEcoli': 'E.coli IDEXX (MPN / 100mL)'
       },
       storetJsonFields: {
         'projectId': 'ProjectId',
@@ -164,21 +169,21 @@ export default {
       this.controls.isExporting = true
       this.generatedJsonData = []
       this.storetJsonData = []
+      this.adoptJsonData = []
 
       var i = 0
       this.reportsFetched = 0
       _.forEach(this.selected, (selectedItem) => {
-        console.log('line 1')
         var stringy = `reports${i}`
         this.$bindAsArray(
           stringy,
           db.ref('reports/' + selectedItem['.key']).orderByChild('collectionDate').startAt(this.startDate).endAt(this.endDate),
           null,
           (reports) => {
-            console.log('selected callback fired')
             let itemsCopy = [ ...this[stringy] ]
             this.generatedJsonData = _.concat(this.generatedJsonData, itemsCopy)
-            this.generateStoretObjects(itemsCopy)
+            this.generateAdoptObjects(itemsCopy, selectedItem)
+            this.generateStoretObjects(itemsCopy, selectedItem)
             this.$unbind(stringy)
             this.reportsFetched++
           }
@@ -187,18 +192,44 @@ export default {
         i++
       })
     },
-    generateStoretObjects (items) {
+    generateAdoptObjects (items, selectedSite) {
+      let adoptItems = []
+
+      _.forEach(items, (item) => {
+        let collectionDate = moment(item.collectionDate).format('MM/DD/YYYY')
+        let aasSiteName = item.stationName + ' (' + selectedSite.aasNumber + ')'
+
+        adoptItems.push({
+          aasSiteName: aasSiteName,
+          collectionDate: collectionDate,
+          collectionTime: item.collectionTime,
+          participation: '1',
+          samplingTime: '60',
+          monitor: 'Micheal Meyer (25064)',
+          precipitation: item.precipitation,
+          hours: '24',
+          specificConductivity: item.specificConductivity,
+          turbidity: item.turbidity,
+          film: 'yes',
+          totalEcoli: item.totalEcoli
+        })
+      })
+
+      this.adoptJsonData = _.concat(this.adoptJsonData, adoptItems)
+    },
+    generateStoretObjects (items, selectedSite) {
       let storetItems = []
 
       _.forEach(items, (item) => {
         let lDate = moment(item.collectionDate).format('YYYYMMDD')
+        let startDate = moment(item.collectionDate).format('YYYY-MM-DD')
+
         storetItems.push({
           'projectId': 'NWW_2012',
-          'monitoringLocationId': item.logbookAbbv,
-          'lField': `NWW40${lDate}`,
+          'lField': `${selectedSite.storetName}${lDate}`,
           'activityType': 'Sample-Routine',
           'activityMediaName': 'Water',
-          'activityStartDate': item.collectionDate,
+          'activityStartDate': startDate,
           'activityStartTime': item.collectionTime,
           'activityStartTimeZone': 'EST',
           'activityDepthMeasure': ' ',
@@ -209,6 +240,7 @@ export default {
           'dataLoggerLine': '',
           'characteristicName': 'Escherichia coli',
           'methodSpeciation': ' ',
+          'monitoringLocationId': item.stationName,
           'resultDetectionCondition': ' ',
           'resultValue': item.totalEcoli,
           'resultUnit': 'MPN',
@@ -232,6 +264,7 @@ export default {
     close () {
       this.generatedJsonData = null
       this.storetJsonData = null
+      this.adoptJsonData = null
       this.controls.openExportDialog = false
     }
   }

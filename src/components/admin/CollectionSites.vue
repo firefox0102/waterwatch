@@ -242,22 +242,7 @@ export default {
       controls: {
         search: '',
         startDateModal: false,
-        endDateModal: false,
-        exportAction: { label: 'Export' },
-        exportActions: [
-          {
-            title: 'Export as XLS',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export for Adopt-A-Stream',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export for STORET',
-            callback: 'TODO MAKE CALLBACK'
-          }
-        ]
+        endDateModal: false
       },
       headers: [
         { text: 'Station Name', value: 'stationName' },
