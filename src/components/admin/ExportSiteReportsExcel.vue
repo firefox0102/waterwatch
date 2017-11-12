@@ -179,6 +179,7 @@ export default {
             let itemsCopy = [ ...this[stringy] ]
             this.generatedJsonData = _.concat(this.generatedJsonData, itemsCopy)
             this.generateStoretObjects(itemsCopy)
+            // this.generateAdoptObjects(itemsCopy)
             this.$unbind(stringy)
             this.reportsFetched++
           }
@@ -186,6 +187,11 @@ export default {
 
         i++
       })
+    },
+    generateAdoptObjects (items) {
+      let adoptItems = []
+
+      _.forEach(item)
     },
     generateStoretObjects (items) {
       let storetItems = []
