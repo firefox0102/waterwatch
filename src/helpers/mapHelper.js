@@ -16,7 +16,7 @@ export class MapHelper {
 // MAP SOURCES
       map.addSource('basin', {
         'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Chatt_River_Basin.geojson?alt=media&token=88e79a45-47fb-4be3-90d8-abaeeed4d5f7'
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/Chatt_River_Basin.geojson?alt=media&token=b2fae9b1-5e2b-4de1-8056-7cc7a289a5d5'
       })
 
       map.addSource('sites', {

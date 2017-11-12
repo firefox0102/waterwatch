@@ -209,9 +209,9 @@ export default {
           (reports) => {
             let itemsCopy = [ ...this[stringy] ]
             this.resultsCount += itemsCopy.length
-            this.generatedJsonData = _.concat(this.
-            this.generateStoretObjects(itemsCopy)
-            // this.generateAdoptObjects(itemsCopy)
+            this.generatedJsonData = _.concat(this.generatedJsonData, itemsCopy)
+            this.generateAdoptObjects(itemsCopy, selectedItem)
+            this.generateStoretObjects(itemsCopy, selectedItem)
             this.$unbind(stringy)
             this.reportsFetched++
           }
