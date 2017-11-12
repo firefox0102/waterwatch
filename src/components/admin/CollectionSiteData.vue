@@ -296,9 +296,9 @@ export default {
     getExportAdopt () {
       let jsonData = []
       if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, function (report) {
+        jsonData = _.map(this.selected, (report) => {
           return {
-            stationName: report.stationName + ' (' + report.aasNumber + ')',
+            aasSiteName: report.stationName + ' (' + this.firebaseSite[0].aasNumber + ')',
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
             participation: '1',
@@ -428,7 +428,7 @@ export default {
         'notes': 'Notes'
       },
       jsonFieldsAdopt: {
-        'stationName': 'Site S-',
+        'aasSiteName': 'Site S-',
         'collectionDate': 'Event date (mm/dd/yyyy)',
         'collectionTime': 'Time sample collected (hh:mm am/pm)',
         'participation': 'Total # of particip',
