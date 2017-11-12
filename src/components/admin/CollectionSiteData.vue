@@ -318,7 +318,7 @@ export default {
     getExportStoret () {
       let jsonData = []
       if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, function (report) {
+        jsonData = _.map(this.selected, (report) => {
           let lDate = moment(report.collectionDate).format('YYYYMMDD')
           let startDate = moment(report.collectionDate).format('YYYY-MM-DD')
 
