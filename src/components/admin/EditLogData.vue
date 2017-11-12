@@ -73,6 +73,12 @@
                   :rules="[(v) => !!v || 'Collection Site is required']"
                   bottom>
                 </v-select>
+                <v-text-field
+                  name="input-5-1"
+                  label="Notes"
+                  v-model="targetLogData.notes"
+                  class="input-group--limit-height">
+                </v-text-field>
                 <v-menu
                   lazy
                   :close-on-content-click="false"
@@ -83,27 +89,31 @@
                   :nudge-right="40"
                   max-width="290px"
                   min-width="290px">
-                <v-text-field
-                  slot="activator"
-                  label="Collection Time"
-                  v-model="targetLogData.collectionTime">
-                </v-text-field>
-                <v-time-picker
-                  v-model="targetLogData.collectionTime"
-                  autosave
-                  format="24hr">
-                </v-time-picker>
+                  <v-text-field
+                    slot="activator"
+                    label="Collection Time"
+                    v-model="targetLogData.collectionTime">
+                  </v-text-field>
+                  <v-time-picker
+                    v-model="targetLogData.collectionTime"
+                    autosave
+                    format="24hr">
+                  </v-time-picker>
                 </v-menu>
+                <v-text-field
+                    label="Rainfall (in)"
+                    class="input-group--limit-height"
+                    type="number"
+                    step="0.01"
+                    :rules="formRules.precipitation"
+                    v-model="targetLogData.precipitation">
+                </v-text-field>
+                <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
                 <v-text-field
                   label="Analyst (Initials)"
                   class="input-group--limit-height"
+                  required
                   v-model="targetLogData.analyst">
-                </v-text-field>
-                <v-text-field
-                  name="input-5-1"
-                  label="Notes"
-                  v-model="targetLogData.notes"
-                  class="input-group--limit-height">
                 </v-text-field>
               </div>
 
@@ -133,6 +143,37 @@
                   </v-text-field>
                   <v-time-picker
                     v-model="targetLogData.incubationTime"
+                    format="24hr"
+                  ></v-time-picker>
+                </v-menu>
+                <v-text-field
+                    label="Incubation Temp (*C)"
+                    class="input-group--limit-height"
+                    type="number"
+                    :rules="formRules.incubationTempRules"
+                    v-model="targetLogData.incubationTemp">
+                </v-text-field>
+                <v-menu
+                  lazy
+                  :close-on-content-click="false"
+                  v-model="controls.incubationOutMenu"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  :nudge-right="40"
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <v-text-field
+                    slot="activator"
+                    label="Incubation Out Time"
+                    readonly
+                    v-model="targetLogData.incubationOut"
+                    :rules="formRules.incubationOutTimeRules"
+                    class="input-group--limit-height">
+                  </v-text-field>
+                  <v-time-picker
+                    v-model="targetLogData.incubationOut"
                     format="24hr"
                   ></v-time-picker>
                 </v-menu>
@@ -167,46 +208,6 @@
                     :rules="formRules.conductivityRules"
                     v-model="targetLogData.specificConductivity">
                 </v-text-field>
-                <v-text-field
-                    label="Rainfall (in)"
-                    class="input-group--limit-height"
-                    type="number"
-                    step="0.01"
-                    :rules="formRules.precipitation"
-                    v-model="targetLogData.precipitation">
-                </v-text-field>
-                <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
-                <v-text-field
-                    label="Incubation Temp (*C)"
-                    class="input-group--limit-height"
-                    type="number"
-                    :rules="formRules.incubationTempRules"
-                    v-model="targetLogData.incubationTemp">
-                </v-text-field>
-                <v-menu
-                  lazy
-                  :close-on-content-click="false"
-                  v-model="controls.incubationOutMenu"
-                  transition="scale-transition"
-                  offset-y
-                  full-width
-                  :nudge-right="40"
-                  max-width="290px"
-                  min-width="290px"
-                >
-                  <v-text-field
-                    slot="activator"
-                    label="Incubation Out Time"
-                    readonly
-                    v-model="targetLogData.incubationOut"
-                    :rules="formRules.incubationOutTimeRules"
-                    class="input-group--limit-height">
-                  </v-text-field>
-                  <v-time-picker
-                    v-model="targetLogData.incubationOut"
-                    format="24hr"
-                  ></v-time-picker>
-                </v-menu>
               </div>
 
               <!-- Column 3 -->
@@ -460,34 +461,36 @@
             (input) => {
               let conductivity = parseFloat(input)
               if (isNaN(conductivity)) { return true }
-              return (conductivity >= 0 && conductivity <= 750) || 'That number seems high. Normal range is 0 - 750'
+              return (conductivity >= 0 && conductivity <= 750) || 'Typical range is 0 - 750'
             }
           ],
           dilutionRules: [
             (input) => {
               let dilution = parseFloat(input)
               if (isNaN(dilution)) { return true }
-              return (Number.isInteger(dilution) && dilution >= 0) || 'Dilution must be a whole number'
+              return (Number.isInteger(dilution) && dilution >= 0 && dilution <= 100) || 'Dilution must be a whole num. between 0-100'
             }
           ],
           fluorometryRules: [
             (input) => {
               let fluorometry = parseFloat(input)
               if (isNaN(fluorometry)) { return true }
-              return (fluorometry >= 0 && fluorometry <= 200) || 'That number seems high. Normal range is 0 - 200'
+              return (fluorometry >= 0 && fluorometry <= 200) || 'Typical range is 0 - 200'
             }
           ],
           incubationTempRules: [
             (input) => {
-              let turbidity = parseFloat(input)
-              if (isNaN(turbidity)) { return true }
-              return (turbidity >= 10 && turbidity <= 50) || 'Normal range is 10 - 50'
+              let temp = parseFloat(input)
+              if (isNaN(temp)) { return true }
+              return (temp >= 34.5 && temp <= 35.5) || 'Required Temp is 35°C +/- 0.5'
             }
           ],
           incubationTimeRules: [
             (startTime) => {
               if (startTime === null || startTime === undefined || /^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
+              let testStartDate = dateObj(this.newLogData.collectionTime)
+              let testEndDate = dateObj(this.newLogData.collectionTime).add(6, 'hours')
 
               function dateObj (d) {
                 let date = moment()
@@ -497,17 +500,15 @@
                 return date
               }
 
-              return moment(startDate).isAfter(moment().subtract(6, 'hours')) || 'Incubation Time should be within last 6 hours'
+              return startDate.isBetween(testStartDate, testEndDate) || 'Should be within 6 hours of Collection Time'
             }
           ],
           incubationOutTimeRules: [
             (outTime) => {
-              console.log('test')
-              console.log(outTime)
               if (outTime === null || outTime === undefined || /^\s*$/.test(outTime)) { return true } // If value is empty, return
-              console.log('yu faild')
+
               let format = 'hh:mm:ss'
-              let startDate = dateObj(this.targetLogData.incubationTime)
+              let startDate = dateObj(this.newLogData.incubationTime)
 
               let endDateMin = moment(startDate).add(18, 'hours').format(format)
               let endDateMax = moment(startDate).add(22, 'hours').format(format)
@@ -520,15 +521,14 @@
                 date.minutes(+parts.shift())
                 return date
               }
-
-              return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Incubation Out should be within 18 to 22 hours of Incubation In'
+              return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Should be within 18 to 22 hours of Incubation In'
             }
           ],
           noNegatives: [
             (v) => {
               let value = parseFloat(v)
               if (isNaN(value)) { return true }
-              return (value > 0) || 'Should be greater than 0 (Leave empty if not recorded)'
+              return (value >= 0) || 'Should be greater than 0 (Leave empty if not recorded)'
             }
           ],
           largeCellsRules: [
@@ -549,7 +549,7 @@
             (input) => {
               let turbidity = parseFloat(input)
               if (isNaN(turbidity)) { return true }
-              return (turbidity >= 0 && turbidity <= 1000) || 'That number seems high. Normal range is 0 - 1000'
+              return (turbidity >= 0 && turbidity <= 1500) || 'Typical range is 0 - 1500'
             }
           ],
           precipitation: [

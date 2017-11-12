@@ -66,6 +66,12 @@
             required
             bottom>
           </v-select>
+          <v-text-field
+            name="input-5-1"
+            label="Notes"
+            v-model="newLogData.notes"
+            class="input-group--limit-height">
+          </v-text-field>
           <v-menu
             lazy
             :close-on-content-click="false"
@@ -80,6 +86,7 @@
             <v-text-field
               slot="activator"
               label="Collection Time"
+              required
               v-model="newLogData.collectionTime"
             >
             </v-text-field>
@@ -90,15 +97,19 @@
             ></v-time-picker>
           </v-menu>
           <v-text-field
+            label="Rainfall (in)"
+            class="input-group--limit-height"
+            type="number"
+            step="0.01"
+            :rules="formRules.precipitation"
+            v-model="newLogData.precipitation">
+          </v-text-field>
+          <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
+          <v-text-field
               label="Analyst (Initials)"
               class="input-group--limit-height"
+              required
               v-model="newLogData.analyst">
-          </v-text-field>
-          <v-text-field
-            name="input-5-1"
-            label="Notes"
-            v-model="newLogData.notes"
-            class="input-group--limit-height">
           </v-text-field>
         </div>
 
@@ -131,47 +142,6 @@
               format="24hr"
             ></v-time-picker>
           </v-menu>
-
-          <v-text-field
-              label="# mL/100mL (Dilution)"
-              class="input-group--limit-height"
-              type="number"
-              :rules="formRules.dilutionRules"
-              v-model="newLogData.dilution">
-          </v-text-field>
-          <v-text-field
-              label="Fluorometry"
-              class="input-group--limit-height"
-              type="number"
-              step="0.01"
-              :rules="formRules.fluorometryRules"
-              v-model="newLogData.fluorometry">
-          </v-text-field>
-          <v-text-field
-              label="Turbidity (NTU)"
-              class="input-group--limit-height"
-              type="number"
-              step="0.01"
-              :rules="formRules.turbidityRules"
-              v-model="newLogData.turbidity">
-          </v-text-field>
-          <v-text-field
-              label="Conductivity (µS)"
-              class="input-group--limit-height"
-              type="number"
-              step="0.01"
-              :rules="formRules.conductivityRules"
-              v-model="newLogData.specificConductivity">
-          </v-text-field>
-          <v-text-field
-            label="Rainfall (in)"
-            class="input-group--limit-height"
-            type="number"
-            step="0.01"
-            :rules="formRules.precipitation"
-            v-model="newLogData.precipitation">
-          </v-text-field>
-          <a class="form-input-sub-text" target="_blank" href="https://www.wunderground.com/history/">Rainfall value from Weather Underground</a>
           <v-text-field
             label="Incubation Temp (*C)"
             class="input-group--limit-height"
@@ -204,6 +174,37 @@
               format="24hr"
             ></v-time-picker>
           </v-menu>
+          <v-text-field
+              label="# mL/100mL (Dilution)"
+              class="input-group--limit-height"
+              type="number"
+              :rules="formRules.dilutionRules"
+              v-model="newLogData.dilution">
+          </v-text-field>
+          <v-text-field
+              label="Fluorometry"
+              class="input-group--limit-height"
+              type="number"
+              step="0.01"
+              :rules="formRules.fluorometryRules"
+              v-model="newLogData.fluorometry">
+          </v-text-field>
+          <v-text-field
+              label="Turbidity (NTU)"
+              class="input-group--limit-height"
+              type="number"
+              step="0.01"
+              :rules="formRules.turbidityRules"
+              v-model="newLogData.turbidity">
+          </v-text-field>
+          <v-text-field
+              label="Conductivity (µS)"
+              class="input-group--limit-height"
+              type="number"
+              step="0.01"
+              :rules="formRules.conductivityRules"
+              v-model="newLogData.specificConductivity">
+          </v-text-field>
         </div>
 
         <!-- Column 3 -->
@@ -273,7 +274,6 @@
               label="Air Temperature (*C)"
               class="input-group--limit-height"
               type="number"
-              :rules="formRules.noNegatives"
               v-model="newLogData.airTemp">
             </v-text-field>
             <v-text-field
@@ -482,34 +482,37 @@
             (input) => {
               let conductivity = parseFloat(input)
               if (isNaN(conductivity)) { return true }
-              return (conductivity >= 0 && conductivity <= 750) || 'That number seems high. Normal range is 0 - 750'
+              return (conductivity >= 0 && conductivity <= 750) || 'Typical range is 0 - 750'
             }
           ],
           dilutionRules: [
             (input) => {
               let dilution = parseFloat(input)
               if (isNaN(dilution)) { return true }
-              return (Number.isInteger(dilution) && dilution >= 0) || 'Dilution must be a whole number'
+              return (Number.isInteger(dilution) && dilution >= 0 && dilution <= 100) || 'Dilution must be a whole num. between 0-100'
             }
           ],
           fluorometryRules: [
             (input) => {
               let fluorometry = parseFloat(input)
               if (isNaN(fluorometry)) { return true }
-              return (fluorometry >= 0 && fluorometry <= 200) || 'That number seems high. Normal range is 0 - 200'
+              return (fluorometry >= 0 && fluorometry <= 200) || 'Typical range is 0 - 200'
             }
           ],
           incubationTempRules: [
             (input) => {
-              let turbidity = parseFloat(input)
-              if (isNaN(turbidity)) { return true }
-              return (turbidity >= 10 && turbidity <= 50) || 'Normal range is 10 - 50'
+              let temp = parseFloat(input)
+              if (isNaN(temp)) { return true }
+              return (temp >= 34.5 && temp <= 35.5) || 'Required Temp is 35°C +/- 0.5'
             }
           ],
           incubationTimeRules: [
             (startTime) => {
               if (startTime === null || startTime === undefined || /^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
+              let testStartDate = dateObj(this.newLogData.collectionTime)
+              let testEndDate = dateObj(this.newLogData.collectionTime).add(6, 'hours')
+
               function dateObj (d) {
                 let date = moment()
                 let parts = d.split(/:|\s/)
@@ -517,7 +520,8 @@
                 date.minutes(+parts.shift())
                 return date
               }
-              return moment(startDate).isAfter(moment().subtract(6, 'hours')) || 'Incubation Time should be within last 6 hours'
+
+              return startDate.isBetween(testStartDate, testEndDate) || 'Should be within 6 hours of Collection Time'
             }
           ],
           incubationOutTimeRules: [
@@ -538,14 +542,14 @@
                 date.minutes(+parts.shift())
                 return date
               }
-              return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Incubation Out should be within 18 to 22 hours of Incubation In'
+              return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Should be within 18 to 22 hours of Incubation In'
             }
           ],
           noNegatives: [
             (v) => {
               let value = parseFloat(v)
               if (isNaN(value)) { return true }
-              return (value > 0) || 'Should be greater than 0 (Leave empty if not recorded)'
+              return (value >= 0) || 'Should be greater than 0 (Leave empty if not recorded)'
             }
           ],
           largeCellsRules: [
@@ -566,7 +570,7 @@
             (input) => {
               let turbidity = parseFloat(input)
               if (isNaN(turbidity)) { return true }
-              return (turbidity >= 0 && turbidity <= 1000) || 'That number seems high. Normal range is 0 - 1000'
+              return (turbidity >= 0 && turbidity <= 1500) || 'Typical range is 0 - 1500'
             }
           ],
           precipitation: [
@@ -660,8 +664,7 @@
         }
       },
       resetForm: function () {
-        let oldLog = { ...this.newLogData
-        }
+        let oldLog = { ...this.newLogData }
 
         this.newLogData = {
           airTemp: null,
