@@ -191,7 +191,6 @@ export default {
   },
   methods: {
     generateReport () {
-      console.log('generating')
       this.controls.isExporting = true
       this.generatedJsonData = []
       this.storetJsonData = []

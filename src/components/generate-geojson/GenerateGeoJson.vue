@@ -26,7 +26,7 @@ export default {
       let fileRef = storageRef.child('Chatt_River_Basin.geojson')
 
       fileRef.put(newFile).then(function (snapshot) {
-        console.log('Uploaded a blob or file!')
+        console.log('Uploaded new geojson file!')
       })
     },
     generateJsonObject () {

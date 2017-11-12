@@ -624,9 +624,7 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
-        console.log('test')
         if (this.totalEcoli) {
-          console.log(this.totalEcoli)
           this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
         }
 

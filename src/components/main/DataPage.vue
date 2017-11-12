@@ -162,7 +162,7 @@ export default {
   computed: {
     getExportJson () {
       let jsonData = []
-      console.log(this.reports)
+
       if (this.reports) {
         jsonData = _.map(this.reports, function (report) {
           return {

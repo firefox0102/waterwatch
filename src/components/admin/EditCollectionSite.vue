@@ -96,7 +96,6 @@ export default {
   beforeMount () {
     // Copy the targetLogData and modify the read-only-collection
     this.targetCollectionSite = _.cloneDeep(this.collectionSite)
-    console.log(this.targetCollectionSite.isPrivate)
   },
   firebase: {
     collectionSites: collectionSitesRef,
