@@ -122,7 +122,6 @@ export class MapHelper {
     // Pop up //
     map.on('click', 'Collection Sites Layer', (e) => {
       var name = e.features[0].properties.Name
-      console.log(name)
       this.selectSiteCallback(name)
       this.makeItGreen(name)
     })

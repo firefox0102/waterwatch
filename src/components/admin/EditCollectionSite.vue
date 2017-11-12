@@ -35,11 +35,9 @@
               v-bind:items="hucSet"
               v-model="targetCollectionSite.hucName"
               label="Subwatershed (HUC 12) Name"
-              required
               autocomplete
               bottom>
             </v-select>
-            <v-text-field label="HUC 12 Number" type="number" v-model="targetCollectionSite.huc"></v-text-field>
             <v-text-field label="Adopt-A-Stream Name" v-model="targetCollectionSite.adoptAStreamName"></v-text-field>
             <v-text-field label="Adopt-A-Stream 'S' ID (eg. S-4475)" v-model="targetCollectionSite.adoptAStreamId"
               :rules="[(v) => !!v || 'Enter the 4 numbers after S- only (Leave blank if no ID)']"></v-text-field>
@@ -98,7 +96,6 @@ export default {
   beforeMount () {
     // Copy the targetLogData and modify the read-only-collection
     this.targetCollectionSite = _.cloneDeep(this.collectionSite)
-    console.log(this.targetCollectionSite.isPrivate)
   },
   firebase: {
     collectionSites: collectionSitesRef,

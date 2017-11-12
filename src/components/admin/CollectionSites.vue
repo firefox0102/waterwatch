@@ -20,6 +20,7 @@
             v-on:click.native="toggleArchived()">
               {{ archivedText() }}
           </v-btn>
+          <generate-geojson v-bind:collection-sites="collectionSites"></generate-geojson>
           <add-collection-site></add-collection-site>
         </v-layout>
       </div>
@@ -172,7 +173,6 @@
                 </td>
                 <td>{{ props.item.latitude }}</td>
                 <td>{{ props.item.longitude }}</td>
-                <td>{{ props.item.huc }}</td>
                 <td>{{ props.item.isPrivate }}</td>
               </tr>
             </template>
@@ -198,6 +198,7 @@ import { db } from '../../helpers/firebase'
 import AddCollectionSite from './AddCollectionSite'
 import EditCollectionSite from './EditCollectionSite'
 import ExportSiteReportsExcel from './ExportSiteReportsExcel'
+import GenerateGeojson from '../generate-geojson/GenerateGeoJson'
 import moment from 'moment'
 
 let collectionSitesRef = db.ref('collectionSites')
@@ -212,7 +213,8 @@ export default {
   components: {
     AddCollectionSite,
     EditCollectionSite,
-    ExportSiteReportsExcel
+    ExportSiteReportsExcel,
+    GenerateGeojson
   },
   firebase () {
     return {
@@ -243,22 +245,7 @@ export default {
       controls: {
         search: '',
         startDateModal: false,
-        endDateModal: false,
-        exportAction: { label: 'Export' },
-        exportActions: [
-          {
-            title: 'Export as XLS',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export for Adopt-A-Stream',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export for STORET',
-            callback: 'TODO MAKE CALLBACK'
-          }
-        ]
+        endDateModal: false
       },
       headers: [
         { text: 'Station Name', value: 'stationName' },
@@ -277,7 +264,6 @@ export default {
         { text: 'Google Maps URL', value: 'googleMapsUrl' },
         { text: 'Latitude', value: 'latitude' },
         { text: 'Longitude', value: 'longitude' },
-        { text: 'HUC 12', value: 'huc' },
         { text: 'Is Private', value: 'isPrivate' }
       ],
       selected: [],

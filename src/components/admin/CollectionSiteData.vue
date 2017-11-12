@@ -296,9 +296,9 @@ export default {
     getExportAdopt () {
       let jsonData = []
       if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, function (report) {
+        jsonData = _.map(this.selected, (report) => {
           return {
-            stationName: report.stationName + ' (' + report.aasNumber + ')',
+            aasSiteName: report.stationName + ' (' + this.firebaseSite[0].aasNumber + ')',
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
             participation: '1',
@@ -318,14 +318,17 @@ export default {
     getExportStoret () {
       let jsonData = []
       if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, function (report) {
+        jsonData = _.map(this.selected, (report) => {
+          let lDate = moment(report.collectionDate).format('YYYYMMDD')
+          let startDate = moment(report.collectionDate).format('YYYY-MM-DD')
+
           return {
             projectID: 'NWW_2012',
             stationName: report.stationName,
-            'L': report.stationName + report.collectionDate,
+            lField: `${this.firebaseSite[0].storetName}${lDate}`,
             activityType: 'Sample-Routine',
             water: 'Water',
-            collectionDate: report.collectionDate,
+            collectionDate: startDate,
             collectionTime: report.collectionTime,
             timeZone: 'EST',
             activityMeasure: ' ',
@@ -428,9 +431,9 @@ export default {
         'notes': 'Notes'
       },
       jsonFieldsAdopt: {
-        'stationName': 'Site S-',
+        'aasSiteName': 'Site S-',
         'collectionDate': 'Event date (mm/dd/yyyy)',
-        'collectionTime': 'Time sample collected (hh:mm am/pm)',
+        'collectionTime': 'Time sample collected (hh:mm)',
         'participation': 'Total # of particip',
         'samplingTime': 'Time spent sampling (minutes)',
         'monitor': 'Adopt-A-Stream monitors',
@@ -444,7 +447,7 @@ export default {
       jsonFieldsStoret: {
         'projectID': 'Project ID',
         'stationName': 'Monitoring Location ID',
-        'L': 'L',
+        'lField': 'L',
         'activityType': 'Activity Type',
         'water': 'Activity Media Name',
         'collectionDate': 'Activity Start Date',
@@ -470,7 +473,7 @@ export default {
         'analyticalMethodContext': 'Result Analytical Method Context',
         'startDate': 'Analysis Start Date',
         'limitMeasure': 'Result Detection/Quantitation Limit Type',
-        'limitUnit': 'resultDetectionUnit',
+        'limitUnit': 'Result Detection/Quantitation Limit Unit',
         'comments': 'Result Comment'
       },
       snackbar: {

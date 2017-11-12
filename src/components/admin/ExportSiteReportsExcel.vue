@@ -1,67 +1,70 @@
 <template>
   <v-layout>
-    <v-dialog
-      v-model="controls.openExportDialog"
-      persistent
-      max-width="600px">
-      <v-btn
-        slot="activator"
-        class="btn btn-nww--light site-reports-actions__action">
-        Export
-        <v-icon right dark>file_download</v-icon>
-      </v-btn>
-      <v-card>
-        <v-card-title class="headline">Download Excel Reports</v-card-title>
-        <v-card-text>
-          <v-btn
-            v-on:click="generateReport"
-            class="btn btn-nww--light"
-          >
-            Generate Report
-          </v-btn>
-          <v-progress-linear
-            v-if="generatedJsonData !== null && reportsFetched < selected.length"
-            v-bind:indeterminate="true"
-          ></v-progress-linear>
-          <ul class="report-list list">
-            <li>
-              <download-excel
-                v-if="generatedJsonData !== null && reportsFetched === selected.length"
-                v-bind:data = "generatedJsonData"
-                v-bind:fields = "jsonFields"
-                :meta = "json_meta"
-                name = "NWW_XLS-Report.xls">
-                Export as XLS
-              </download-excel>
-            </li>
-            <li>
-              <download-excel
-                v-if="generatedJsonData !== null && reportsFetched === selected.length"
-                v-bind:data = "generatedJsonData"
-                v-bind:fields = "adoptJsonFields"
-                :meta = "json_meta"
-                name = "NWW_Adopt-A-Stream-Report.xls">
-                Export Adopt-A-Stream Report
-              </download-excel>
-            </li>
-            <li>
-              <download-excel
-                v-if="storetJsonData !== null && reportsFetched === selected.length"
-                v-bind:data = "storetJsonData"
-                v-bind:fields = "storetJsonFields"
-                :meta = "json_meta"
-                name = "NWW_Report.xls">
-                Export Storet Report
-              </download-excel>
-            </li>
-          </ul>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn class="flat-action" flat @click.native="close">Close</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <v-btn
+      v-if="generatedJsonData == null && adoptJsonData == null && storetJsonData == null"
+      v-on:click="generateReport"
+      class="btn btn-nww--light"
+    >
+      Generate Report
+    </v-btn>
+    <v-progress-circular
+      v-if="showProgressSpinner"
+      indeterminate
+      color="green"
+    ></v-progress-circular>
+    <v-menu
+      v-if="showExportButton"
+      offset-y
+      left
+    >
+      <div slot="activator" class="site-reports-toolbar-export__activator">
+        <div class="site-reports-toolbar-export__activator-text">
+          Export
+        </div>
+        <i class="material-icons">arrow_drop_down</i>
+      </div>
+      <v-list>
+        <v-list-tile>
+          <v-list-tile-title>
+            <download-excel
+              v-if="generatedJsonData.length === resultsCount"
+              v-bind:data="generatedJsonData"
+              v-bind:fields="jsonFields"
+              :meta="json_meta"
+              name="NWW_Director_Report.xls"
+            >
+              Export as XLS
+            </download-excel>
+          </v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-title>
+            <download-excel
+              v-if="adoptJsonData.length === resultsCount"
+              v-bind:data="adoptJsonData"
+              v-bind:fields="adoptJsonFields"
+              :meta="json_meta"
+              name="NWW_Adopt-A-Stream-Report.xls"
+            >
+              Export for Adopt-A-Stream
+            </download-excel>
+          </v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-title>
+            <download-excel
+              v-if="storetJsonData.length === resultsCount"
+              v-bind:data="storetJsonData"
+              v-bind:fields="storetJsonFields"
+              :meta="json_meta"
+              name="NWW_Storet-Report.xls"
+            >
+              Export for STORET
+            </download-excel>
+          </v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
   </v-layout>
 </template>
 
@@ -77,10 +80,20 @@ export default {
     'startDate',
     'endDate'
   ],
+  watch: {
+    selected () {
+      this.generatedJsonData = null
+      this.storetJsonData = null
+      this.adoptJsonData = null
+      this.resultsCount = 0
+    }
+  },
   data: function () {
     return {
       generatedJsonData: null,
       storetJsonData: null,
+      adoptJsonData: null,
+      resultsCount: 0,
       reportsFetched: 0,
       controls: {
         openExportDialog: false,
@@ -112,16 +125,20 @@ export default {
         'specificConductivity': 'Specifc Cond. (µS)',
         'analyst': 'Analyst',
         'notes': 'Notes'
-
       },
       adoptJsonFields: {
-        'adoptAStreamName': 'Site S-',
+        'aasSiteName': 'Site S-',
         'collectionDate': 'Event date (mm/dd/yyyy)',
-        'collectionTime': 'Time sample collected (hh:mm am/pm)',
+        'collectionTime': 'Time sample collected (hh:mm)',
+        'participation': 'Total # of particip',
+        'samplingTime': 'Time spent sampling (minutes)',
+        'monitor': 'Adopt-A-Stream monitors',
         'precipitation': 'Amount of rain (inches)',
-        'totalEcoli': 'E.coli IDEXX (MPN / 100mL)',
+        'hours': 'In last (hours)',
+        'specificConductivity': 'Conductivity (µS/cm)',
         'turbidity': 'Turbidity (NTU)',
-        'specificConductivity': 'Conductivity (µS/cm)'
+        'film': 'Other than Petri film?',
+        'totalEcoli': 'E.coli IDEXX (MPN / 100mL)'
       },
       storetJsonFields: {
         'projectId': 'ProjectId',
@@ -158,26 +175,41 @@ export default {
       }
     }
   },
+  computed: {
+    showProgressSpinner () {
+      if (!this.selected) { return false }
+      return this.generatedJsonData !== null &&
+        this.reportsFetched < this.selected.length
+    },
+    showExportButton () {
+      if (!this.selected) {
+        return false
+      }
+
+      return this.reportsFetched === this.selected.length
+    }
+  },
   methods: {
     generateReport () {
-      console.log('generating')
       this.controls.isExporting = true
       this.generatedJsonData = []
       this.storetJsonData = []
+      this.adoptJsonData = []
+      this.resultsCount = 0
 
       var i = 0
       this.reportsFetched = 0
+
       _.forEach(this.selected, (selectedItem) => {
-        console.log('line 1')
         var stringy = `reports${i}`
         this.$bindAsArray(
           stringy,
           db.ref('reports/' + selectedItem['.key']).orderByChild('collectionDate').startAt(this.startDate).endAt(this.endDate),
           null,
           (reports) => {
-            console.log('selected callback fired')
             let itemsCopy = [ ...this[stringy] ]
-            this.generatedJsonData = _.concat(this.generatedJsonData, itemsCopy)
+            this.resultsCount += itemsCopy.length
+            this.generatedJsonData = _.concat(this.
             this.generateStoretObjects(itemsCopy)
             // this.generateAdoptObjects(itemsCopy)
             this.$unbind(stringy)
@@ -188,23 +220,44 @@ export default {
         i++
       })
     },
-    generateAdoptObjects (items) {
+    generateAdoptObjects (items, selectedSite) {
       let adoptItems = []
 
-      _.forEach(item)
+      _.forEach(items, (item) => {
+        let collectionDate = moment(item.collectionDate).format('MM/DD/YYYY')
+        let aasSiteName = item.stationName + ' (' + selectedSite.aasNumber + ')'
+
+        adoptItems.push({
+          aasSiteName: aasSiteName,
+          collectionDate: collectionDate,
+          collectionTime: item.collectionTime,
+          participation: '1',
+          samplingTime: '60',
+          monitor: 'Micheal Meyer (25064)',
+          precipitation: item.precipitation,
+          hours: '24',
+          specificConductivity: item.specificConductivity,
+          turbidity: item.turbidity,
+          film: 'yes',
+          totalEcoli: item.totalEcoli
+        })
+      })
+
+      this.adoptJsonData = _.concat(this.adoptJsonData, adoptItems)
     },
-    generateStoretObjects (items) {
+    generateStoretObjects (items, selectedSite) {
       let storetItems = []
 
       _.forEach(items, (item) => {
         let lDate = moment(item.collectionDate).format('YYYYMMDD')
+        let startDate = moment(item.collectionDate).format('YYYY-MM-DD')
+
         storetItems.push({
           'projectId': 'NWW_2012',
-          'monitoringLocationId': item.logbookAbbv,
-          'lField': `NWW40${lDate}`,
+          'lField': `${selectedSite.storetName}${lDate}`,
           'activityType': 'Sample-Routine',
           'activityMediaName': 'Water',
-          'activityStartDate': item.collectionDate,
+          'activityStartDate': startDate,
           'activityStartTime': item.collectionTime,
           'activityStartTimeZone': 'EST',
           'activityDepthMeasure': ' ',
@@ -215,6 +268,7 @@ export default {
           'dataLoggerLine': '',
           'characteristicName': 'Escherichia coli',
           'methodSpeciation': ' ',
+          'monitoringLocationId': item.stationName,
           'resultDetectionCondition': ' ',
           'resultValue': item.totalEcoli,
           'resultUnit': 'MPN',
@@ -238,6 +292,8 @@ export default {
     close () {
       this.generatedJsonData = null
       this.storetJsonData = null
+      this.adoptJsonData = null
+      this.resultsCount = 0
       this.controls.openExportDialog = false
     }
   }

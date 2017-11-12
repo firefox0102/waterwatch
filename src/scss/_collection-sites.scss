@@ -4,6 +4,7 @@ $toolbar-breakpoint: 1450px;
 .site-reports-actions {
   display: flex;
 
+  align-items: center;
   height: 100%;
   margin-right: 20px;
 
@@ -121,8 +122,8 @@ $toolbar-breakpoint: 1450px;
 }
 
 .site-reports-toolbar-export {
-  margin-bottom: 13px;
-  width: 100px;
+  margin-bottom: 0px;
+  width: 150px;
 
   color: $color-nww-green;
 
