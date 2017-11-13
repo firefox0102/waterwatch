@@ -23,7 +23,7 @@ export default {
     generateJsonBlob () {
       let newFile = this.generateJsonObject()
       let storageRef = firebase.storage().ref()
-      let fileRef = storageRef.child('Chatt_River_Basin.geojson')
+      let fileRef = storageRef.child('sites.geojson')
 
       fileRef.put(newFile).then(function (snapshot) {
         console.log('Uploaded new geojson file!')
@@ -51,13 +51,12 @@ export default {
               'OBJECTID': 12,
               'SDEPUBSDER': 242769517526.887604,
               'PERIMETER': 5499584.38711,
-              'NAME': 'Chattahoochee River Basin',
-              'ACRES': 5573221.247,
+              'NAME': 'stationName',
               'GlobalID': '{E6175B64-CFA7-4B6D-A736-C1E74ABDD80D}',
               'last_edite': null
             },
             'geometry': {
-              'type': 'Polygon',
+              'type': 'Point',
               'coordinates': [
                 collectionSiteCoordinates
               ]
