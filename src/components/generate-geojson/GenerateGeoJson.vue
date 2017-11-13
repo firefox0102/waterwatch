@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <v-layout>
     <v-btn
       v-on:click="generateJsonBlob"
@@ -74,3 +74,4 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 </style>
+ -->
