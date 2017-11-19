@@ -275,8 +275,8 @@ export default {
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
+            logbookAbbv: report.stationName,
             logbookNumber: report.logbookNumber,
-            logbookAbbv: report.logbookAbbv,
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
             precipitation: report.precipitation,
@@ -297,9 +297,11 @@ export default {
       let jsonData = []
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, (report) => {
+          let startDate = moment(report.collectionDate).format('MM/DD/YY')
+
           return {
             aasSiteName: report.stationName + ' (' + this.firebaseSite[0].aasNumber + ')',
-            collectionDate: report.collectionDate,
+            collectionDate: startDate,
             collectionTime: report.collectionTime,
             participation: '1',
             samplingTime: '60',
@@ -324,8 +326,8 @@ export default {
 
           return {
             projectID: 'NWW_2012',
-            stationName: report.stationName,
-            lField: `${this.firebaseSite[0].storetName}${lDate}`,
+            stationName: `${this.firebaseSite[0].storetID}`,
+            lField: `${this.firebaseSite[0].storetID}${lDate}`,
             activityType: 'Sample-Routine',
             water: 'Water',
             collectionDate: startDate,
@@ -416,7 +418,7 @@ export default {
         }]
       ],
       jsonFields: {
-        'logbookNumber': 'siteId #',
+        'logbookNumber': 'site ID #',
         'logbookAbbv': 'Site Name',
         'collectionDate': 'Collection Date',
         'collectionTime': 'Collection Time',
