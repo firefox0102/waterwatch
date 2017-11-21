@@ -24,6 +24,7 @@ export default {
       let newFile = this.generateJsonObject()
       let storageRef = firebase.storage().ref()
       let fileRef = storageRef.child('sites.geojson')
+      let path = fileRef.fullPath
 
       fileRef.put(newFile).then(function (snapshot) {
         console.log('Uploaded new geojson file!')
@@ -33,7 +34,7 @@ export default {
       let collectionSiteCoordinates = []
 
       _.forEach(this.collectionSites, function (item) {
-        collectionSiteCoordinates.push([item.latitude, item.longitude])
+        collectionSiteCoordinates.push([item.latitude, item.longitude, item.stationName])
       })
 
       const dataObject = {
@@ -47,14 +48,6 @@ export default {
         'features': [
           {
             'type': 'Feature',
-            'properties': {
-              'OBJECTID': 12,
-              'SDEPUBSDER': 242769517526.887604,
-              'PERIMETER': 5499584.38711,
-              'NAME': 'stationName',
-              'GlobalID': '{E6175B64-CFA7-4B6D-A736-C1E74ABDD80D}',
-              'last_edite': null
-            },
             'geometry': {
               'type': 'Point',
               'coordinates': [
@@ -71,7 +64,9 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Add "scoped" attribute to limit CSS to this component only
 <style lang="scss" scoped>
 </style>
+
+ -->
  -->

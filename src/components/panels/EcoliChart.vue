@@ -100,7 +100,7 @@ export default {
         tooltip: {
           crosshairs: true,
           shared: true,
-          pointFormat: '{point.y} (MPN/100mL)'
+          pointFormat: '{point.y:,.0f} (MPN/100mL)'
         },
         plotOptions: {
           column: {

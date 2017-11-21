@@ -119,7 +119,7 @@ export default {
         'precipitation': 'Rain (in)',
         'dilution': 'Dilution (mL / 100mL)',
         'totalColiform': 'Total Coliform (MPN / 100mL)',
-        'totalEcoli': 'E.Coli Total',
+        'totalEcoli': 'E.Coli (MPN / 100mL)',
         'fluorometry:': 'Fluorometry',
         'turbidity': 'Turbid. (NTU)',
         'specificConductivity': 'Specifc Cond. (µS)',

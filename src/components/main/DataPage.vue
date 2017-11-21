@@ -167,10 +167,14 @@ export default {
         jsonData = _.map(this.reports, function (report) {
           return {
             stationName: report.stationName,
-            specificConductivity: report.specificConductivity,
+            collectionDate: report.collectionDate,
+            collectionTime: report.collectionTime,
             precipitation: report.precipitation,
+            totalColiform: report.totalColiform,
             totalEcoli: report.totalEcoli,
-            turbidity: report.turbidity
+            fluorometry: report.fluorometry,
+            turbidity: report.turbidity,
+            specificConductivity: report.specificConductivity
           }
         })
       }
@@ -199,11 +203,15 @@ export default {
         selectedControlReport: true
       },
       jsonFields: {
-        'stationName': 'Station Name',
-        'specificConductivity': 'Specific Conductivity',
+        'stationName': 'Site Name',
+        'collectionDate': 'Collection Date',
+        'collectionTime': 'Collection Time',
         'precipitation': 'Percipitation',
-        'totalEcoli': 'E.Coli Total',
-        'turbidity': 'Turbidity'
+        'totalColiform': 'Total Coliform (MPN / 100mL)',
+        'totalEcoli': 'E.Coli (MPN / 100mL)',
+        'fluorometry': 'Fluorometry',
+        'turbidity': 'Turbidity (NTU)',
+        'specificConductivity': 'Specifc Conductivity (µS)'
       }
     }
   },
