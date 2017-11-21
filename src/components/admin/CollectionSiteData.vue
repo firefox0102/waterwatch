@@ -275,7 +275,7 @@ export default {
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
-            logbookAbbv: report.stationName,
+            logbookAbbv: report.logbookAbbv,
             logbookNumber: report.logbookNumber,
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,

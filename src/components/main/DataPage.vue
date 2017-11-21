@@ -206,7 +206,7 @@ export default {
         'stationName': 'Site Name',
         'collectionDate': 'Collection Date',
         'collectionTime': 'Collection Time',
-        'precipitation': 'Percipitation',
+        'precipitation': 'Rain (in)',
         'totalColiform': 'Total Coliform (MPN / 100mL)',
         'totalEcoli': 'E.Coli (MPN / 100mL)',
         'fluorometry': 'Fluorometry',

@@ -210,6 +210,7 @@ export default {
             let itemsCopy = [ ...this[stringy] ]
             this.resultsCount += itemsCopy.length
             this.generatedJsonData = _.concat(this.generatedJsonData, itemsCopy)
+            // this.generateJsonObjects(itemsCopy, selectedItem)
             this.generateAdoptObjects(itemsCopy, selectedItem)
             this.generateStoretObjects(itemsCopy, selectedItem)
             this.$unbind(stringy)
@@ -220,6 +221,30 @@ export default {
         i++
       })
     },
+    // generateJsonObjects (items, selectedSite) {
+    //   let jsonItems = []
+
+    //   _.forEach(items, (item) => {
+    //     let collectionDate = moment(item.collectionDate).format('MM/DD/YYYY')
+
+    //     jsonItems.push({
+    //       'logbookNumber': item.logbookNumber,
+    //       'logbookAbbv': `selectedSite.logbookAbbv`,
+    //       'collectionDate': collectionDate,
+    //       'collectionTime': item.collectionTime,
+    //       'precipitation': item.precipitation,
+    //       'dilution': item.dilution,
+    //       'totalColiform': item.totalColiform,
+    //       'totalEcoli': item.totalEcoli,
+    //       'turbidity': item.turbidity,
+    //       'specificConductivity': item.specificConductivity,
+    //       'analyst': item.analyst,
+    //       'notes': item.notes
+    //     })
+    //   })
+    //   this.generatedJsonData = _.concat(this.jsonData, jsonItems)
+    // },
+
     generateAdoptObjects (items, selectedSite) {
       let adoptItems = []
 
