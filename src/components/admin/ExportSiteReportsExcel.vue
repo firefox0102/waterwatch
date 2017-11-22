@@ -27,9 +27,9 @@
         <v-list-tile>
           <v-list-tile-title>
             <download-excel
-              v-if="generatedJsonData.length === resultsCount"
-              v-bind:data="generatedJsonData"
-              v-bind:fields="jsonFields"
+              v-if="xlsJsonData.length === resultsCount"
+              v-bind:data="xlsJsonData"
+              v-bind:fields="xlsJsonFields"
               :meta="json_meta"
               name="NWW_Director_Report.xls"
             >
@@ -83,6 +83,7 @@ export default {
   watch: {
     selected () {
       this.generatedJsonData = null
+      this.xlsJsonData = null
       this.storetJsonData = null
       this.adoptJsonData = null
       this.resultsCount = 0
@@ -91,6 +92,7 @@ export default {
   data: function () {
     return {
       generatedJsonData: null,
+      xlsJsonData: null,
       storetJsonData: null,
       adoptJsonData: null,
       resultsCount: 0,
@@ -111,7 +113,7 @@ export default {
           'value': 'utf-8'
         }]
       ],
-      jsonFields: {
+      xlsJsonFields: {
         'logbookNumber': '#',
         'logbookAbbv': 'Site Name',
         'collectionDate': 'Collect. Date',
@@ -119,7 +121,7 @@ export default {
         'precipitation': 'Rain (in)',
         'dilution': 'Dilution (mL / 100mL)',
         'totalColiform': 'Total Coliform (MPN / 100mL)',
-        'totalEcoli': 'E.Coli (MPN / 100mL)',
+        'totalEcoli': 'E.Coli Total',
         'fluorometry:': 'Fluorometry',
         'turbidity': 'Turbid. (NTU)',
         'specificConductivity': 'Specifc Cond. (µS)',
@@ -193,6 +195,7 @@ export default {
     generateReport () {
       this.controls.isExporting = true
       this.generatedJsonData = []
+      this.xlsJsonData = []
       this.storetJsonData = []
       this.adoptJsonData = []
       this.resultsCount = 0
@@ -210,7 +213,7 @@ export default {
             let itemsCopy = [ ...this[stringy] ]
             this.resultsCount += itemsCopy.length
             this.generatedJsonData = _.concat(this.generatedJsonData, itemsCopy)
-            // this.generateJsonObjects(itemsCopy, selectedItem)
+            this.generateXlsData(itemsCopy, selectedItem)
             this.generateAdoptObjects(itemsCopy, selectedItem)
             this.generateStoretObjects(itemsCopy, selectedItem)
             this.$unbind(stringy)
@@ -221,30 +224,30 @@ export default {
         i++
       })
     },
-    // generateJsonObjects (items, selectedSite) {
-    //   let jsonItems = []
+    generateXlsData (items, selectedSite) {
+      let jsonItems = []
 
-    //   _.forEach(items, (item) => {
-    //     let collectionDate = moment(item.collectionDate).format('MM/DD/YYYY')
+      _.forEach(items, (item) => {
+        let collectionDate = moment(item.collectionDate).format('MM/DD/YYYY')
+        console.log(selectedSite)
+        jsonItems.push({
+          logbookNumber: item.logbookNumber,
+          logbookAbbv: selectedSite.logbookAbbv,
+          collectionDate: collectionDate,
+          collectionTime: item.collectionTime,
+          precipitation: item.precipitation,
+          dilution: item.dilution,
+          totalColiform: item.totalColiform,
+          totalEcoli: item.totalEcoli,
+          turbidity: item.turbidity,
+          specificConductivity: item.specificConductivity,
+          analyst: item.analyst,
+          notes: item.notes
+        })
+      })
 
-    //     jsonItems.push({
-    //       'logbookNumber': item.logbookNumber,
-    //       'logbookAbbv': `selectedSite.logbookAbbv`,
-    //       'collectionDate': collectionDate,
-    //       'collectionTime': item.collectionTime,
-    //       'precipitation': item.precipitation,
-    //       'dilution': item.dilution,
-    //       'totalColiform': item.totalColiform,
-    //       'totalEcoli': item.totalEcoli,
-    //       'turbidity': item.turbidity,
-    //       'specificConductivity': item.specificConductivity,
-    //       'analyst': item.analyst,
-    //       'notes': item.notes
-    //     })
-    //   })
-    //   this.generatedJsonData = _.concat(this.jsonData, jsonItems)
-    // },
-
+      this.xlsJsonData = _.concat(this.xlsJsonData, jsonItems)
+    },
     generateAdoptObjects (items, selectedSite) {
       let adoptItems = []
 
@@ -279,7 +282,7 @@ export default {
 
         storetItems.push({
           'projectId': 'NWW_2012',
-          'lField': `${selectedSite.storetID}${lDate}`,
+          'lField': `${selectedSite.storetName}${lDate}`,
           'activityType': 'Sample-Routine',
           'activityMediaName': 'Water',
           'activityStartDate': startDate,
@@ -293,7 +296,7 @@ export default {
           'dataLoggerLine': '',
           'characteristicName': 'Escherichia coli',
           'methodSpeciation': ' ',
-          'monitoringLocationId': item.storetID,
+          'monitoringLocationId': item.stationName,
           'resultDetectionCondition': ' ',
           'resultValue': item.totalEcoli,
           'resultUnit': 'MPN',
@@ -316,6 +319,7 @@ export default {
     },
     close () {
       this.generatedJsonData = null
+      this.xlsJsonData = null
       this.storetJsonData = null
       this.adoptJsonData = null
       this.resultsCount = 0

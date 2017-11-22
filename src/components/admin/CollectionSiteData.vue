@@ -270,12 +270,13 @@ export default {
     }
   },
   computed: {
-    getExportXls () {
+    getExportXls (selected) {
       let jsonData = []
+      console.log(selected)
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
-            logbookAbbv: report.logbookAbbv,
+            logbookAbbv: report.stationName,
             logbookNumber: report.logbookNumber,
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
