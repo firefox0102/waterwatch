@@ -8,6 +8,7 @@ import LogData from '../components/admin/LogData'
 import About from '../components/main/About'
 import DataPage from '../components/main/DataPage'
 import SignIn from '../components/main/SignIn'
+// import firebase from 'firebase'
 
 Vue.use(Router)
 
@@ -16,25 +17,26 @@ export default new Router({
   routes: [
     {
       path: '*',
-      component: DataPage,
-      meta: { requiresAuth: false }
+      redirect: '/DataPage'
+    },
+    {
+      path: '/',
+      redirect: '/DataPage'
+    },
+    {
+      path: '/DataPage',
+      name: 'DataPage',
+      component: DataPage
     },
     {
       path: '/signIn',
-      component: SignIn,
-      meta: { requiresAuth: false }
+      component: SignIn
     },
     {
       path: '/about',
       name: 'About',
-      component: About,
-      meta: { requiresAuth: false }
+      component: About
     },
-    // {
-    //   path: '/',
-    //   component: DataPage,
-    //   meta: { requiresAuth: false }
-    // },
     {
       path: '/collectionSiteData/:siteId',
       name: 'Collection Site Data',
