@@ -239,6 +239,7 @@ export default {
           dilution: item.dilution,
           totalColiform: item.totalColiform,
           totalEcoli: item.totalEcoli,
+          fluorometry: item.fluorometry,
           turbidity: item.turbidity,
           specificConductivity: item.specificConductivity,
           analyst: item.analyst,

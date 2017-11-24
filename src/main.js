@@ -10,6 +10,7 @@ import store from './helpers/store'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash/dist/vue-lodash.min'
 import JsonExcel from 'vue-json-excel'
+import VueAnalytics from 'vue-analytics'
 
 Vue.component('downloadExcel', JsonExcel)
 // import Sheets from 'helpers/sheetsJS'
@@ -19,7 +20,9 @@ Vue.use(VueFire)
 Vue.use(VueHighcharts)
 Vue.use(VueLodash, lodash)
 Vue.config.productionTip = false
-
+Vue.use(VueAnalytics, {
+  id: 'UA-3008698-3'
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -22,6 +22,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.19.1",
     "vue": "^2.5.7",
+    "vue-analytics": "^5.4.0",
     "vue-json-excel": "0.0.8",
     "vue-lodash": "^1.0.3",
     "vue-router": "^2.3.1",

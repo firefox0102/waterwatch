@@ -266,7 +266,6 @@ export default {
         source: collectionSitesRef.orderByKey().equalTo(this.$route.params.siteId)
       },
       reports: db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(oldDate).endAt(todaysDate)
-      // collectionSites: db.ref('collectionSites/' + this.$route.params.siteId)
     }
   },
   computed: {
@@ -281,7 +280,7 @@ export default {
             collectionDate: report.collectionDate,
             collectionTime: report.collectionTime,
             precipitation: report.precipitation,
-            dilution: report.dilution,
+            dilution: '2/100',
             totalColiform: report.totalColiform,
             totalEcoli: report.totalEcoli,
             fluorometry: report.fluorometry,
