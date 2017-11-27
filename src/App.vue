@@ -25,6 +25,10 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       console.log('Auth state changed')
       this.$store.commit('setUser', user || false)
+
+      if (this.$route.meta.requiresAuth && !user) {
+        this.$router.push('/signIn')
+      }
     })
 
     router.beforeEach((to, from, next) => {
