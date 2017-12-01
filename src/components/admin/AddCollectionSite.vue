@@ -54,7 +54,7 @@
     </v-dialog>
     <v-snackbar
       :timeout="snackbar.timeout"
-      :error="true"
+      :error="false"
       v-model="snackbar.errorVisible">
       {{snackbar.errorMessage}}
       <v-btn dark flat @click.native="snackbar.errorVisible = false">Close</v-btn>
@@ -146,7 +146,7 @@ export default {
         this.$firebaseRefs.collectionSites.push(this.newCollectionSite)
 
         let oldActive = parseInt(this.metaData[0]['.value'])
-        let oldTotal = parseInt(this.metaData[2]['.value'])
+        let oldTotal = parseInt(this.metaData[3]['.value'])
 
         let newActive = oldActive + 1
         this.$firebaseRefs.metaData.child('activeSites').set(newActive)

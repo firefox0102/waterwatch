@@ -143,7 +143,7 @@ export default {
         'totalEcoli': 'E.coli IDEXX (MPN / 100mL)'
       },
       storetJsonFields: {
-        'projectId': 'ProjectId',
+        'projectId': 'Project ID',
         'monitoringLocationId': 'Monitoring Location Id',
         'lField': 'L',
         'activityType': 'Activity Type',
@@ -224,69 +224,20 @@ export default {
         i++
       })
     },
-    generateXlsData (items, selectedSite) {
-      let jsonItems = []
-
-      _.forEach(items, (item) => {
-        let collectionDate = moment(item.collectionDate).format('MM/DD/YYYY')
-        console.log(selectedSite)
-        jsonItems.push({
-          logbookNumber: item.logbookNumber,
-          logbookAbbv: selectedSite.logbookAbbv,
-          collectionDate: collectionDate,
-          collectionTime: item.collectionTime,
-          precipitation: item.precipitation,
-          dilution: item.dilution,
-          totalColiform: item.totalColiform,
-          totalEcoli: item.totalEcoli,
-          fluorometry: item.fluorometry,
-          turbidity: item.turbidity,
-          specificConductivity: item.specificConductivity,
-          analyst: item.analyst,
-          notes: item.notes
-        })
-      })
-
-      this.xlsJsonData = _.concat(this.xlsJsonData, jsonItems)
-    },
-    generateAdoptObjects (items, selectedSite) {
-      let adoptItems = []
-
-      _.forEach(items, (item) => {
-        let collectionDate = moment(item.collectionDate).format('MM/DD/YYYY')
-        let aasSiteName = item.stationName + ' (' + selectedSite.aasNumber + ')'
-
-        adoptItems.push({
-          aasSiteName: aasSiteName,
-          collectionDate: collectionDate,
-          collectionTime: item.collectionTime,
-          participation: '1',
-          samplingTime: '60',
-          monitor: 'Micheal Meyer (25064)',
-          precipitation: item.precipitation,
-          hours: '24',
-          specificConductivity: item.specificConductivity,
-          turbidity: item.turbidity,
-          film: 'yes',
-          totalEcoli: item.totalEcoli
-        })
-      })
-
-      this.adoptJsonData = _.concat(this.adoptJsonData, adoptItems)
-    },
     generateStoretObjects (items, selectedSite) {
       let storetItems = []
 
       _.forEach(items, (item) => {
         let lDate = moment(item.collectionDate).format('YYYYMMDD')
-        let startDate = moment(item.collectionDate).format('YYYY-MM-DD')
+        let storetDate = moment(item.collectionDate).format('YYYY-MM-DD')
+        // let storetTime = moment(item.collectionTime).format('HH:mm:ss')
 
         storetItems.push({
           'projectId': 'NWW_2012',
-          'lField': `${selectedSite.storetName}${lDate}`,
+          'lField': `${selectedSite.storetID}${lDate}`,
           'activityType': 'Sample-Routine',
           'activityMediaName': 'Water',
-          'activityStartDate': startDate,
+          'activityStartDate': storetDate,
           'activityStartTime': item.collectionTime,
           'activityStartTimeZone': 'EST',
           'activityDepthMeasure': ' ',
@@ -297,7 +248,7 @@ export default {
           'dataLoggerLine': '',
           'characteristicName': 'Escherichia coli',
           'methodSpeciation': ' ',
-          'monitoringLocationId': item.stationName,
+          'monitoringLocationId': item.storetID,
           'resultDetectionCondition': ' ',
           'resultValue': item.totalEcoli,
           'resultUnit': 'MPN',
@@ -317,6 +268,56 @@ export default {
       })
 
       this.storetJsonData = _.concat(this.storetJsonData, storetItems)
+    },
+    generateXlsData (items, selectedSite) {
+      let jsonItems = []
+
+      _.forEach(items, (item) => {
+        let jsonDate = moment(item.collectionDate).format('MM/DD/YYYY')
+        console.log(selectedSite)
+        jsonItems.push({
+          logbookNumber: item.logbookNumber,
+          logbookAbbv: selectedSite.logbookAbbv,
+          collectionDate: jsonDate,
+          collectionTime: item.collectionTime,
+          precipitation: item.precipitation,
+          dilution: item.dilution,
+          totalColiform: item.totalColiform,
+          totalEcoli: item.totalEcoli,
+          fluorometry: item.fluorometry,
+          turbidity: item.turbidity,
+          specificConductivity: item.specificConductivity,
+          analyst: item.analyst,
+          notes: item.notes
+        })
+      })
+
+      this.xlsJsonData = _.concat(this.xlsJsonData, jsonItems)
+    },
+    generateAdoptObjects (items, selectedSite) {
+      let adoptItems = []
+
+      _.forEach(items, (item) => {
+        let adoptDate = moment(item.collectionDate).format('MM/DD/YYYY')
+        let aasSiteName = item.stationName + ' (' + selectedSite.aasNumber + ')'
+
+        adoptItems.push({
+          aasSiteName: aasSiteName,
+          collectionDate: adoptDate,
+          collectionTime: item.collectionTime,
+          participation: '1',
+          samplingTime: '60',
+          monitor: 'Micheal Meyer (25064)',
+          precipitation: item.precipitation,
+          hours: '24',
+          specificConductivity: item.specificConductivity,
+          turbidity: item.turbidity,
+          film: 'yes',
+          totalEcoli: item.totalEcoli
+        })
+      })
+
+      this.adoptJsonData = _.concat(this.adoptJsonData, adoptItems)
     },
     close () {
       this.generatedJsonData = null
