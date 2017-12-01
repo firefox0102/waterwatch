@@ -602,7 +602,7 @@
           logbookNumber: 1,
           nitrate: null,
           phosphate: null,
-          precipitation: 0.00,
+          precipitation: null,
           secchiDepth: null,
           specificConductivity: null,
           turbidity: null,
