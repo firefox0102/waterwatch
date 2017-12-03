@@ -230,7 +230,7 @@ export default {
       _.forEach(items, (item) => {
         let lDate = moment(item.collectionDate).format('YYYYMMDD')
         let storetDate = moment(item.collectionDate).format('YYYY-MM-DD')
-        let storetTime = (item.collectionTime === '') ? '' : `${report.collectionTime}:00`
+        let storetTime = (item.collectionTime === '') ? '' : `${item.collectionTime}:00`
 
         storetItems.push({
           'projectId': 'NWW_2012',
