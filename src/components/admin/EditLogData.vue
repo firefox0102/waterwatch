@@ -487,6 +487,7 @@
           ],
           incubationTimeRules: [
             (startTime) => {
+              if (!this.newLogData) { return true }
               if (startTime === null || startTime === undefined || /^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
               let testStartDate = dateObj(this.newLogData.collectionTime)
@@ -505,6 +506,7 @@
           ],
           incubationOutTimeRules: [
             (outTime) => {
+              if (!this.newLogData) { return true }
               if (outTime === null || outTime === undefined || /^\s*$/.test(outTime)) { return true } // If value is empty, return
 
               let format = 'hh:mm:ss'
