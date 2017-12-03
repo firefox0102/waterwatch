@@ -381,6 +381,7 @@
   import _ from 'lodash'
   import moment from 'moment'
   import { matrix } from '../../helpers/coeffecient'
+  import MathService from '../../services/MathService'
 
   let collectionSitesRef = db.ref('collectionSites')
 
@@ -475,6 +476,7 @@
             (input) => {
               let fluorometry = parseFloat(input)
               if (isNaN(fluorometry)) { return true }
+              if (MathService.decimalPlaces(fluorometry)) { return 'Please limit to 3 decimal places' }
               return (fluorometry >= 0 && fluorometry <= 200) || 'Typical range is 0 - 200'
             }
           ],
