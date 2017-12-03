@@ -230,7 +230,7 @@ export default {
       _.forEach(items, (item) => {
         let lDate = moment(item.collectionDate).format('YYYYMMDD')
         let storetDate = moment(item.collectionDate).format('YYYY-MM-DD')
-        // let storetTime = moment(item.collectionTime).format('HH:mm:ss')
+        let storetTime = (item.collectionTime === '') ? '' : `${report.collectionTime}:00`
 
         storetItems.push({
           'projectId': 'NWW_2012',
@@ -238,7 +238,7 @@ export default {
           'activityType': 'Sample-Routine',
           'activityMediaName': 'Water',
           'activityStartDate': storetDate,
-          'activityStartTime': item.collectionTime,
+          'activityStartTime': storetTime,
           'activityStartTimeZone': 'EST',
           'activityDepthMeasure': ' ',
           'activityDepthUnit': ' ',

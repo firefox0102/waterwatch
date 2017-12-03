@@ -323,6 +323,7 @@ export default {
         jsonData = _.map(this.selected, (report) => {
           let lDate = moment(report.collectionDate).format('YYYYMMDD')
           let startDate = moment(report.collectionDate).format('YYYY-MM-DD')
+          let storetTime = (report.collectionTime === '') ? '' : `${report.collectionTime}:00`
 
           return {
             projectID: 'NWW_2012',
@@ -331,7 +332,7 @@ export default {
             activityType: 'Sample-Routine',
             water: 'Water',
             collectionDate: startDate,
-            collectionTime: report.collectionTime,
+            collectionTime: storetTime,
             timeZone: 'EST',
             activityMeasure: ' ',
             activityUnit: ' ',
