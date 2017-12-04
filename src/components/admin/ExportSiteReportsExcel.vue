@@ -31,6 +31,7 @@
               v-bind:data="xlsJsonData"
               v-bind:fields="xlsJsonFields"
               :meta="json_meta"
+              type="csv"
               name="NWW_Director_Report.xls"
             >
               Export as XLS
@@ -44,6 +45,7 @@
               v-bind:data="adoptJsonData"
               v-bind:fields="adoptJsonFields"
               :meta="json_meta"
+              type="csv"
               name="NWW_Adopt-A-Stream-Report.xls"
             >
               Export for Adopt-A-Stream
@@ -57,6 +59,7 @@
               v-bind:data="storetJsonData"
               v-bind:fields="storetJsonFields"
               :meta="json_meta"
+              type="csv"
               name="NWW_Storet-Report.xls"
             >
               Export for STORET
