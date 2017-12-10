@@ -640,6 +640,8 @@
           let key = this.selectedSite['.key']
 
           this.newLogData.stationName = this.selectedSite.stationName
+          this.newLogData.aasNumber = this.selectedSite.adoptAStreamId || ''
+          this.newLogData.storetID = this.selectedSite.storetID || ''
           this.newLogData.logbookAbbv = this.selectedSite.logbookAbbv
           this.newLogData.ecoliLargeCells = this.ecoliLargeCells
           this.newLogData.ecoliSmallCells = this.ecoliSmallCells
@@ -652,6 +654,12 @@
           this.updateCollectionSite(collDate, key)
 
           this.$firebaseRefs.reports.push(this.newLogData)
+          .on('value', (snap) => {
+            const snapcopy = {...snap.val()}
+            const key = snap.key
+            db.ref('allReports/' + key).set(snapcopy)
+          })
+
           this.incrementLogbookNumber(this.newLogData.logbookNumber)
 
           // Success!

@@ -592,6 +592,7 @@
       updateExistingLog () {
         try {
           this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.routeCollectionSiteId + '/' + this.targetLogData['.key']))
+          this.$bindAsObject('allReportsLogObject', db.ref('allReports/' + this.targetLogData['.key']))
           if (this.ecoliLargeCells) {
             this.targetLogData.ecoliLargeCells = this.ecoliLargeCells
           }
@@ -609,7 +610,9 @@
           let itemCopy = { ...this.targetLogData }
           delete itemCopy['.key']
           this.$firebaseRefs.firebaseLogObject.set(itemCopy)
+          this.$firebaseRefs.allReportsLogObject.set(itemCopy)
           this.$unbind('firebaseLogObject')
+          this.$unbind('allReportsLogObject')
 
           // Success!
           this.controls.showDialog = false

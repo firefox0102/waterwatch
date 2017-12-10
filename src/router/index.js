@@ -8,6 +8,7 @@ import LogData from '../components/admin/LogData'
 import About from '../components/main/About'
 import DataPage from '../components/main/DataPage'
 import SignIn from '../components/main/SignIn'
+import ReportsPage from '../components/reports-page/ReportsPage'
 // import firebase from 'firebase'
 
 Vue.use(Router)
@@ -47,6 +48,12 @@ export default new Router({
       path: '/logData',
       name: 'Log Data',
       component: LogData,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/allreports',
+      name: 'All Reports',
+      component: ReportsPage,
       meta: { requiresAuth: true }
     },
     {

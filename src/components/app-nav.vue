@@ -100,6 +100,13 @@
             icon: 'location_on'
           },
           {
+            title: 'Reports',
+            id: '5',
+            auth: true,
+            path: '/allreports',
+            icon: 'location_on'
+          },
+          {
             title: 'Data',
             id: '3',
             auth: false,

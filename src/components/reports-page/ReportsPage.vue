@@ -1,64 +1,16 @@
 <template>
   <v-card class="site-reports-wrapper">
-    <div class="collection-sites-header">
+     <div class="collection-sites-header">
       <div class="collection-sites-header__primary-content">
         <div class="collection-sites-header__header">
-          {{ site ? site.stationName : '' }}
+          All Reports
         </div>
-        <div class="collection-sites-header__subheader-wrapper">
-          <router-link class="collection-sites-header__subheader--nww" :to="{ name: 'Collection Sites'}">
-            Back to List of Collection Sites
-          </router-link>
-        </div>
-        <div class="collection-data-group">
-          <div class="collection-data-group__row">
-            <span class="collection-data-group__text--strong">
-              Subwatershed (HUC12):
-            </span>
-            <span class="collection-data-group__text">
-              {{ site ? site.hucName : '' }}
-            </span>
-            <span class="collection-data-group__divider">|</span>
-            <span class="collection-data-group__text--strong">
-              Lab:
-            </span>
-            <span class="collection-data-group__text">
-              {{ site ? site.lab : '' }}
-            </span>
-            <span class="collection-data-group__divider">|</span>
-            <span class="collection-data-group__text--strong">
-              Collection Partner:
-            </span>
-            <span class="collection-data-group__text">
-              {{ site ? site.collectionPartner : '' }}
-            </span>
-            <span class="collection-data-group__divider">|</span>
-            <span class="collection-data-group__text--strong">
-              Total Samples:
-            </span>
-            <span class="collection-data-group__text">
-              {{ site ? site.numSamples : '' }}
-            </span>
-            <span class="collection-data-group__divider">|</span>
-            <span class="collection-data-group__text--strong">
-              First Collection Date:
-            </span>
-            <span class="collection-data-group__text">
-              {{ site ? site.firstCollectionDate : '' }}
-            </span>
-          </div>
-          <div class="collection-data-group__row">
-            <a
-              class="collection-data-group__link"
-              v-bind:href="site.googleMapsUrl"
-              target="_blank">
-              View Site on Google Maps
-            </a>
-          </div>
+        <div class="collection-sites-header__subheader">
+          All reports can be found here. Filter by collection date to compile a list of reports in a set range.
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
-        <router-link class="log-new-data-btn" :to="{ name: 'Log Data Id', params: { 'id': $route.params.siteId } }">
+        <router-link class="log-new-data-btn" :to="{ name: 'Log Data Id' }">
           <v-btn class="btn-nww--light">
             Log New Data
           </v-btn>
@@ -77,7 +29,7 @@
                 placeholder="Search reports"/>
             </div>
             <div class="site-reports-datepickers">
-              <span class="site-reports-body-toolbar__text-content">Select date range:</span>
+              <span class="site-reports-body-toolbar__text-content">Select collection date range:</span>
               <div class="site-reports-toolbar-datepicker">
                 <v-menu lazy :close-on-content-click="false" v-model="controls.startDateModal" transition="scale-transition" offset-y full-width :nudge-left="0" max-width="290px">
                   <div
@@ -117,15 +69,6 @@
             </div>
           </div>
           <div class="site-reports-body-toolbar__secondary-content">
-            <div class="site-reports-actions">
-              <edit-log-data
-                v-bind:table-log-data="selected[0]"
-                v-bind:reset-selected="resetSelected"
-                v-bind:route-collection-site-id="$route.params.siteId"
-                v-bind:post-submit-form="postSubmitForm"
-                v-if="selected.length === 1">
-              </edit-log-data>
-            </div>
             <div class="site-reports-toolbar-export">
               <v-menu
                 offset-y
@@ -220,6 +163,7 @@
                     :input-value="props.selected"
                   ></v-checkbox>
                 </td>
+                <td>{{ props.item.stationName }}</td>
                 <td>{{ props.item.logbookNumber }}</td>
                 <td>{{ props.item.collectionDate }}</td>
                 <td>{{ props.item.collectionTime }}</td>
@@ -248,27 +192,20 @@
 import { db } from '../../helpers/firebase'
 import _ from 'lodash'
 import moment from 'moment'
-import EditLogData from './EditLogData'
 import JsonExcel from '../json-excel/JsonExcel'
 
-let collectionSitesRef = db.ref('collectionSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
 let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
-// let oldDate = moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD')
 
 export default {
-  name: 'collection-sites',
-  components: {
-    EditLogData,
-    JsonExcel
-  },
+  name: 'reports-page',
   firebase () {
     return {
-      firebaseSite: {
-        source: collectionSitesRef.orderByKey().equalTo(this.$route.params.siteId)
-      },
-      reports: db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(oldDate).endAt(todaysDate)
+      reports: db.ref('allReports')
     }
+  },
+  components: {
+    JsonExcel
   },
   computed: {
     getExportXls (selected) {
@@ -301,7 +238,7 @@ export default {
           let startDate = moment(report.collectionDate).format('MM/DD/YY')
 
           return {
-            aasSiteName: report.stationName + ' (' + this.firebaseSite[0].aasNumber + ')',
+            aasSiteName: report.stationName + ' (' + report.aasNumber + ')' || '',
             collectionDate: startDate || '',
             collectionTime: report.collectionTime || '',
             participation: '1',
@@ -328,8 +265,8 @@ export default {
 
           return {
             projectID: 'NWW_2012',
-            stationName: `${this.firebaseSite[0].storetID}`,
-            lField: `${this.firebaseSite[0].storetID}${lDate}`,
+            stationName: `${report.storetID}`,
+            lField: `${report.storetID}${lDate}`,
             activityType: 'Sample-Routine',
             water: 'Water',
             collectionDate: startDate || '',
@@ -364,12 +301,6 @@ export default {
     }
   },
   watch: {
-    firebaseSite: {
-      deep: true,
-      handler (newArray) {
-        this.site = newArray[0]
-      }
-    },
     startDate (val) {
       this.filterByDate()
     },
@@ -379,12 +310,11 @@ export default {
   },
   data: function () {
     return {
-      firebaseSite: [],
       startDate: oldDate,
       endDate: todaysDate,
       site: {},
       pagination: {
-        sortBy: 'logbookNumber',
+        sortBy: 'collectionDate',
         descending: 'asc',
         totalItems: 0,
         loading: true
@@ -396,6 +326,7 @@ export default {
         exportAction: { label: 'Export' }
       },
       headers: [
+        { text: 'Station Name', value: 'stationName' },
         { text: 'Logbook #', value: 'logbookNumber' },
         { text: 'Collection Date', value: 'collectionDate' },
         { text: 'Collection Time', value: 'collectionTime' },
@@ -404,7 +335,7 @@ export default {
         { text: 'E. coli (MPN/100mL)', value: 'totalEcoli' },
         { text: 'Fluorometry', value: 'fluorometry' },
         { text: 'Turbidity (NTU)', value: 'turbidity' },
-        { text: 'Conductivity (uS)', value: 'specificConductivity' },
+        { text: 'Conductivity (uS)', value: 'specifcConductivity' },
         { text: 'Rainfall (in)', value: 'precipitation' },
         { text: 'Incubation In Time', value: 'incubationTime' },
         { text: '# mL/100mL (Dilution)', value: 'dilution' },
@@ -484,7 +415,6 @@ export default {
         successVisible: false,
         successMessage: 'Data logged successfully!',
         timeout: 6000
-
       }
     }
   },
@@ -503,7 +433,7 @@ export default {
     },
     filterByDate () {
       this.$unbind('reports')
-      this.$bindAsArray('reports', db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(this.startDate).endAt(this.endDate))
+      this.$bindAsArray('reports', db.ref('allReports').orderByChild('collectionDate').startAt(this.startDate).endAt(this.endDate))
     },
     resetSelected () {
       this.selected = []
