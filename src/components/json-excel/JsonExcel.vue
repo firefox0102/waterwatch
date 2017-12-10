@@ -12,6 +12,7 @@
 <script>
   /* eslint-disable */
   export default {
+  name: 'json-excel',
   data: function () {
     return {
       animate   : true,

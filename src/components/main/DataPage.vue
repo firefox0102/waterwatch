@@ -140,7 +140,7 @@ import RainfallChart from '../panels/RainfallChart'
 import ConductivityChart from '../panels/ConductivityChart'
 import FilterSidebar from '../panels/FilterSidebar'
 import DataMapBanner from '../map/DataMapBanner'
-import JsonExcel from 'vue-json-excel'
+import JsonExcel from '../json-excel/JsonExcel'
 
 let collectionSitesRef = db.ref('collectionSites')
 
@@ -154,7 +154,7 @@ export default {
     ConductivityChart,
     FilterSidebar,
     DataMapBanner,
-    'downloadExcel': JsonExcel
+    JsonExcel
   },
   firebase: {
     collectionSites: collectionSitesRef

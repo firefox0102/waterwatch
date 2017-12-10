@@ -9,11 +9,9 @@ import VueHighcharts from 'vue2-highcharts'
 import store from './helpers/store'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash/dist/vue-lodash.min'
-import JsonExcel from 'vue-json-excel'
 import VueAnalytics from 'vue-analytics'
 // import firebase from 'firebase'
 
-Vue.component('downloadExcel', JsonExcel)
 // import Sheets from 'helpers/sheetsJS'
 
 Vue.use(Vuetify)

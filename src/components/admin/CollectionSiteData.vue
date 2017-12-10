@@ -141,35 +141,35 @@
                 <v-list>
                   <v-list-tile>
                     <v-list-tile-title>
-                      <download-excel
+                      <json-excel
                         v-bind:data = "getExportXls"
                         v-bind:fields = "jsonFields"
                         :meta = "json_meta"
                         name = "NWW_Director_Report.xls">
                         Export as XLS
-                      </download-excel>
+                      </json-excel>
                     </v-list-tile-title>
                   </v-list-tile>
                    <v-list-tile>
                     <v-list-tile-title>
-                      <download-excel
+                      <json-excel
                         v-bind:data = "getExportAdopt"
                         v-bind:fields = "jsonFieldsAdopt"
                         :meta = "json_meta"
                         name = "NWW_Adopt-A-Stream-Report.xls">
                         Export for Adopt-A-Stream
-                      </download-excel>
+                      </json-excel>
                     </v-list-tile-title>
                   </v-list-tile>
                    <v-list-tile>
                     <v-list-tile-title>
-                      <download-excel
+                      <json-excel
                         v-bind:data = "getExportStoret"
                         v-bind:fields = "jsonFieldsStoret"
                         :meta = "json_meta"
                         name = "NWW_Storet-Report.xls">
                         Export for STORET
-                      </download-excel>
+                      </json-excel>
                     </v-list-tile-title>
                   </v-list-tile>
                 </v-list>
@@ -249,6 +249,7 @@ import { db } from '../../helpers/firebase'
 import _ from 'lodash'
 import moment from 'moment'
 import EditLogData from './EditLogData'
+import JsonExcel from '../json-excel/JsonExcel'
 
 let collectionSitesRef = db.ref('collectionSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
@@ -258,7 +259,8 @@ let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
 export default {
   name: 'collection-sites',
   components: {
-    EditLogData
+    EditLogData,
+    JsonExcel
   },
   firebase () {
     return {
