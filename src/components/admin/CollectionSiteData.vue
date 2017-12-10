@@ -228,7 +228,7 @@
                 <td>{{ props.item.totalEcoli }}</td>
                 <td>{{ props.item.fluorometry }}</td>
                 <td>{{ props.item.turbidity }}</td>
-                <td>{{ props.item.specifcConductivity }}</td>
+                <td>{{ props.item.specificConductivity }}</td>
                 <td>{{ props.item.precipitation }}</td>
                 <td>{{ props.item.incubationTime }}</td>
                 <td>{{ props.item.dilution }}</td>
@@ -271,7 +271,6 @@ export default {
   computed: {
     getExportXls (selected) {
       let jsonData = []
-      console.log(selected)
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
