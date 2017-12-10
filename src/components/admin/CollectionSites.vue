@@ -20,7 +20,6 @@
             v-on:click.native="toggleArchived()">
               {{ archivedText() }}
           </v-btn>
-          <generate-geojson v-bind:collection-sites="collectionSites"></generate-geojson>
           <add-collection-site></add-collection-site>
         </v-layout>
       </div>
@@ -37,7 +36,7 @@
                 placeholder="Search collection sites"/>
             </div>
             <div class="site-reports-datepickers">
-              <span class="site-reports-body-toolbar__text-content">Select date range:</span>
+              <span class="site-reports-body-toolbar__text-content">Select last collection date range:</span>
               <div class="site-reports-toolbar-datepicker">
                 <v-menu lazy :close-on-content-click="false" v-model="controls.startDateModal" transition="scale-transition" offset-y full-width :nudge-left="0" max-width="290px">
                   <div
@@ -92,14 +91,6 @@
                 Unarchive
                 <v-icon right dark>unarchive</v-icon>
               </v-btn>
-              <export-site-reports-excel
-                class="site-reports-toolbar-export"
-                v-if="selected.length > 0"
-                v-bind:selected="selected"
-                v-bind:start-date="startDate"
-                v-bind:end-date="endDate"
-              >
-              </export-site-reports-excel>
             </div>
           </div>
         </div>
@@ -197,8 +188,6 @@
 import { db } from '../../helpers/firebase'
 import AddCollectionSite from './AddCollectionSite'
 import EditCollectionSite from './EditCollectionSite'
-import ExportSiteReportsExcel from './ExportSiteReportsExcel'
-import GenerateGeojson from '../generate-geojson/GenerateGeoJson'
 import moment from 'moment'
 
 let collectionSitesRef = db.ref('collectionSites')
@@ -212,9 +201,7 @@ export default {
   name: 'site-reports',
   components: {
     AddCollectionSite,
-    EditCollectionSite,
-    ExportSiteReportsExcel,
-    GenerateGeojson
+    EditCollectionSite
   },
   firebase () {
     return {
