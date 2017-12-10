@@ -274,19 +274,19 @@ export default {
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
-            logbookAbbv: report.stationName,
-            logbookNumber: report.logbookNumber,
-            collectionDate: report.collectionDate,
-            collectionTime: report.collectionTime,
-            precipitation: report.precipitation,
+            logbookAbbv: report.stationName || '',
+            logbookNumber: report.logbookNumber || '',
+            collectionDate: report.collectionDate || '',
+            collectionTime: report.collectionTime || '',
+            precipitation: report.precipitation || '',
             dilution: '2/100',
-            totalColiform: report.totalColiform,
-            totalEcoli: report.totalEcoli,
-            fluorometry: report.fluorometry,
-            turbidity: report.turbidity,
-            specificConductivity: report.specificConductivity,
-            analyst: report.analyst,
-            notes: report.notes
+            totalColiform: report.totalColiform || '',
+            totalEcoli: report.totalEcoli || '',
+            fluorometry: report.fluorometry || '',
+            turbidity: report.turbidity || '',
+            specificConductivity: report.specificConductivity || '',
+            analyst: report.analyst || '',
+            notes: report.notes || ''
           }
         })
       }
@@ -300,17 +300,17 @@ export default {
 
           return {
             aasSiteName: report.stationName + ' (' + this.firebaseSite[0].aasNumber + ')',
-            collectionDate: startDate,
-            collectionTime: report.collectionTime,
+            collectionDate: startDate || '',
+            collectionTime: report.collectionTime || '',
             participation: '1',
             samplingTime: '60',
             monitor: 'Micheal Meyer (25064)',
-            precipitation: report.precipitation,
+            precipitation: report.precipitation || '',
             hours: '24',
-            specificConductivity: report.specificConductivity,
-            turbidity: report.turbidity,
+            specificConductivity: report.specificConductivity || '',
+            turbidity: report.turbidity || '',
             film: 'yes',
-            totalEcoli: report.totalEcoli
+            totalEcoli: report.totalEcoli || ''
           }
         })
       }
@@ -330,8 +330,8 @@ export default {
             lField: `${this.firebaseSite[0].storetID}${lDate}`,
             activityType: 'Sample-Routine',
             water: 'Water',
-            collectionDate: startDate,
-            collectionTime: storetTime,
+            collectionDate: startDate || '',
+            collectionTime: storetTime || '',
             timeZone: 'EST',
             activityMeasure: ' ',
             activityUnit: ' ',
@@ -342,7 +342,7 @@ export default {
             characteristic: 'Escherichia coli',
             methodSpeciation: ' ',
             resultDetection: ' ',
-            totalEcoli: report.totalEcoli,
+            totalEcoli: report.totalEcoli || '',
             resultUnit: 'MPN',
             qualifier: ' ',
             resultSampleFraction: ' ',

@@ -36,7 +36,7 @@
                 placeholder="Search collection sites"/>
             </div>
             <div class="site-reports-datepickers">
-              <span class="site-reports-body-toolbar__text-content">Select last collection date range:</span>
+              <span class="site-reports-body-toolbar__text-content">Select date range:</span>
               <div class="site-reports-toolbar-datepicker">
                 <v-menu lazy :close-on-content-click="false" v-model="controls.startDateModal" transition="scale-transition" offset-y full-width :nudge-left="0" max-width="290px">
                   <div

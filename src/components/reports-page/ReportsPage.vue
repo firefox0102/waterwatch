@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
-        <router-link class="log-new-data-btn" :to="{ name: 'Log Data Id', params: { 'id': $route.params.siteId } }">
+        <router-link class="log-new-data-btn" :to="{ name: 'Log Data Id' }">
           <v-btn class="btn-nww--light">
             Log New Data
           </v-btn>
@@ -69,15 +69,6 @@
             </div>
           </div>
           <div class="site-reports-body-toolbar__secondary-content">
-            <div class="site-reports-actions">
-              <edit-log-data
-                v-bind:table-log-data="selected[0]"
-                v-bind:reset-selected="resetSelected"
-                v-bind:route-collection-site-id="$route.params.siteId"
-                v-bind:post-submit-form="postSubmitForm"
-                v-if="selected.length === 1">
-              </edit-log-data>
-            </div>
             <div class="site-reports-toolbar-export">
               <v-menu
                 offset-y
@@ -201,16 +192,12 @@
 import { db } from '../../helpers/firebase'
 import _ from 'lodash'
 import moment from 'moment'
-import EditLogData from '../admin/EditLogData'
 
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
 let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
 
 export default {
   name: 'reports-page',
-  components: {
-    EditLogData
-  },
   firebase () {
     return {
       reports: db.ref('allReports')
@@ -222,19 +209,19 @@ export default {
       if (this.reports && this.selected.length) {
         jsonData = _.map(this.selected, function (report) {
           return {
-            logbookAbbv: report.stationName,
-            logbookNumber: report.logbookNumber,
-            collectionDate: report.collectionDate,
-            collectionTime: report.collectionTime,
-            precipitation: report.precipitation,
+            logbookAbbv: report.stationName || '',
+            logbookNumber: report.logbookNumber || '',
+            collectionDate: report.collectionDate || '',
+            collectionTime: report.collectionTime || '',
+            precipitation: report.precipitation || '',
             dilution: '2/100',
-            totalColiform: report.totalColiform,
-            totalEcoli: report.totalEcoli,
-            fluorometry: report.fluorometry,
-            turbidity: report.turbidity,
-            specificConductivity: report.specificConductivity,
-            analyst: report.analyst,
-            notes: report.notes
+            totalColiform: report.totalColiform || '',
+            totalEcoli: report.totalEcoli || '',
+            fluorometry: report.fluorometry || '',
+            turbidity: report.turbidity || '',
+            specificConductivity: report.specificConductivity || '',
+            analyst: report.analyst || '',
+            notes: report.notes || ''
           }
         })
       }
@@ -247,18 +234,18 @@ export default {
           let startDate = moment(report.collectionDate).format('MM/DD/YY')
 
           return {
-            aasSiteName: report.stationName + ' (' + this.firebaseSite[0].aasNumber + ')',
-            collectionDate: startDate,
-            collectionTime: report.collectionTime,
+            aasSiteName: report.stationName + ' (' + report.aasNumber + ')' || '',
+            collectionDate: startDate || '',
+            collectionTime: report.collectionTime || '',
             participation: '1',
             samplingTime: '60',
             monitor: 'Micheal Meyer (25064)',
-            precipitation: report.precipitation,
+            precipitation: report.precipitation || '',
             hours: '24',
-            specificConductivity: report.specificConductivity,
-            turbidity: report.turbidity,
+            specificConductivity: report.specificConductivity || '',
+            turbidity: report.turbidity || '',
             film: 'yes',
-            totalEcoli: report.totalEcoli
+            totalEcoli: report.totalEcoli || ''
           }
         })
       }
@@ -274,12 +261,12 @@ export default {
 
           return {
             projectID: 'NWW_2012',
-            stationName: `${this.firebaseSite[0].storetID}`,
-            lField: `${this.firebaseSite[0].storetID}${lDate}`,
+            stationName: `${report.storetID}`,
+            lField: `${report.storetID}${lDate}`,
             activityType: 'Sample-Routine',
             water: 'Water',
-            collectionDate: startDate,
-            collectionTime: storetTime,
+            collectionDate: startDate || '',
+            collectionTime: storetTime || '',
             timeZone: 'EST',
             activityMeasure: ' ',
             activityUnit: ' ',
@@ -290,7 +277,7 @@ export default {
             characteristic: 'Escherichia coli',
             methodSpeciation: ' ',
             resultDetection: ' ',
-            totalEcoli: report.totalEcoli,
+            totalEcoli: report.totalEcoli || '',
             resultUnit: 'MPN',
             qualifier: ' ',
             resultSampleFraction: ' ',
@@ -310,12 +297,6 @@ export default {
     }
   },
   watch: {
-    firebaseSite: {
-      deep: true,
-      handler (newArray) {
-        this.site = newArray[0]
-      }
-    },
     startDate (val) {
       this.filterByDate()
     },
@@ -325,7 +306,6 @@ export default {
   },
   data: function () {
     return {
-      firebaseSite: [],
       startDate: oldDate,
       endDate: todaysDate,
       site: {},
@@ -431,7 +411,6 @@ export default {
         successVisible: false,
         successMessage: 'Data logged successfully!',
         timeout: 6000
-
       }
     }
   },
@@ -450,7 +429,7 @@ export default {
     },
     filterByDate () {
       this.$unbind('reports')
-      this.$bindAsArray('reports', db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(this.startDate).endAt(this.endDate))
+      this.$bindAsArray('reports', db.ref('allReports').orderByChild('collectionDate').startAt(this.startDate).endAt(this.endDate))
     },
     resetSelected () {
       this.selected = []
