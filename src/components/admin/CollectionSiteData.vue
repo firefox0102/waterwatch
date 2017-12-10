@@ -403,7 +403,7 @@ export default {
         { text: 'E. coli (MPN/100mL)', value: 'totalEcoli' },
         { text: 'Fluorometry', value: 'fluorometry' },
         { text: 'Turbidity (NTU)', value: 'turbidity' },
-        { text: 'Conductivity (uS)', value: 'specifcConductivity' },
+        { text: 'Conductivity (uS)', value: 'specificConductivity' },
         { text: 'Rainfall (in)', value: 'precipitation' },
         { text: 'Incubation In Time', value: 'incubationTime' },
         { text: '# mL/100mL (Dilution)', value: 'dilution' },
