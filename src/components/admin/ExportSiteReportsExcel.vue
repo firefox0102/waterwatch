@@ -46,7 +46,7 @@
               v-bind:fields="adoptJsonFields"
               :meta="json_meta"
               type="csv"
-              name="NWW_Adopt-A-Stream-Report.xls"
+              name="NWW_Adopt-A-Stream-Report.xlsx"
             >
               Export for Adopt-A-Stream
             </download-excel>

@@ -20,6 +20,7 @@
     "firebase": "^4.8.0",
     "firebaseui": "^2.2.1",
     "lodash": "^4.17.4",
+    "mapbox-gl-vue": "^1.6.2",
     "moment": "^2.19.1",
     "vue": "^2.5.7",
     "vue-analytics": "^5.4.0",
