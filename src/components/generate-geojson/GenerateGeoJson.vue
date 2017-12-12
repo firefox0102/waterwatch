@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <v-layout>
     <v-btn
       v-on:click="generateJsonBlob"
@@ -24,7 +24,7 @@ export default {
       let newFile = this.generateJsonObject()
       let storageRef = firebase.storage().ref()
       let fileRef = storageRef.child('sites.geojson')
-      let path = fileRef.fullPath
+      // let path = fileRef.fullPath
 
       fileRef.put(newFile).then(function (snapshot) {
         console.log('Uploaded new geojson file!')
@@ -69,5 +69,6 @@ export default {
 </style>
 
 
- -->
+
+
  -->

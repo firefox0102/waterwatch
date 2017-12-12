@@ -20,6 +20,7 @@
             v-on:click.native="toggleArchived()">
               {{ archivedText() }}
           </v-btn>
+          <!-- <generate-geojson v-bind:collection-sites="collectionSites"></generate-geojson> -->
           <add-collection-site></add-collection-site>
         </v-layout>
       </div>
@@ -188,6 +189,7 @@
 import { db } from '../../helpers/firebase'
 import AddCollectionSite from './AddCollectionSite'
 import EditCollectionSite from './EditCollectionSite'
+// import GenerateGeojson from '../generate-geojson/GenerateGeoJson'
 import moment from 'moment'
 
 let collectionSitesRef = db.ref('collectionSites')
@@ -202,6 +204,7 @@ export default {
   components: {
     AddCollectionSite,
     EditCollectionSite
+    // GenerateGeojson
   },
   firebase () {
     return {

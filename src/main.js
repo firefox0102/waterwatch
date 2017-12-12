@@ -10,6 +10,7 @@ import store from './helpers/store'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash/dist/vue-lodash.min'
 import VueAnalytics from 'vue-analytics'
+// import Mapbox from 'mapbox-gl-vue'
 // import firebase from 'firebase'
 
 // import Sheets from 'helpers/sheetsJS'
