@@ -21,7 +21,7 @@ export class MapHelper {
 
       map.addSource('sites', {
         'type': 'geojson',
-        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/sites.geojson?alt=media&token=c40fcc94-9320-4dcb-9365-f97ac41f3842',
+        'data': 'https://firebasestorage.googleapis.com/v0/b/waterwatch-cb707.appspot.com/o/sites.geojson?alt=media&token=6bf76451-aeef-4790-8611-e4600b59a901',
         'cluster': true,
         'clusterMaxZoom': 14, // Max zoom to cluster points on
         'clusterRadius': 25 // Radius of each cluster when clustering points (defaults to 50)
