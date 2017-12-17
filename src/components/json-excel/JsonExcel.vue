@@ -45,9 +45,6 @@
       default: []
     }
   },
-  created: function () {
-    console.log('created my thing')
-  },
   computed:{
     id_name : function () {
       var now = new Date().getTime();
