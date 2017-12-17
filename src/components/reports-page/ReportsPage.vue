@@ -451,6 +451,17 @@ export default {
 @import "../../scss/colors";
 @import "../../scss/collection-sites";
 
+.site-reports-body-toolbar {
+  &__text-content {
+    min-width: 176px;
+    width: 176px;
+  }
+}
+
+.site-reports-body-toolbar__primary-content {
+  min-width: 840px;
+}
+
 .log-new-data-btn {
   text-decoration: none;
 }

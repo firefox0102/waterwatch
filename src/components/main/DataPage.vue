@@ -154,7 +154,7 @@ export default {
     ConductivityChart,
     FilterSidebar,
     DataMapBanner,
-    JsonExcel
+    'download-excel': JsonExcel
   },
   firebase: {
     collectionSites: collectionSitesRef
