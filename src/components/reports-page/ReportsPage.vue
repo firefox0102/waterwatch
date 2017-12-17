@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
-        <router-link class="log-new-data-btn" :to="{ name: 'Log Data Id' }">
+        <router-link class="log-new-data-btn" :to="{ name: 'Log Data' }">
           <v-btn class="btn-nww--light">
             Log New Data
           </v-btn>
