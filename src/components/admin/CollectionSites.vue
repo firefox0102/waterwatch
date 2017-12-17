@@ -6,7 +6,9 @@
           Collection Sites
         </div>
         <div class="collection-sites-header__subheader--bold">
-          {{ this.metaData[0] ? metaData[0]['.value'] : 0 }} active of {{ this.metaData[3] ? metaData[3]['.value'] : 0 }} total sites
+          <!-- {{ this.metaData[0] ? metaData[0]['.value'] : 0 }} active of {{ this.metaData[3] ? metaData[3]['.value'] : 0 }} total sites -->
+          <!-- {{ this.collectionSites.length }} active of {{ this.collectionSites.length }} total sites -->
+          {{ this.collectionSites.length }} total sites
         </div>
         <div class="collection-sites-header__subheader">
           Select a site to view logged data. Create and export reports of logged data for one or many collection sites.
@@ -208,7 +210,7 @@ export default {
   },
   firebase () {
     return {
-      collectionSites: collectionSitesRef.orderByChild('lastCollectionDate').startAt(oldDate).endAt(todaysDate),
+      collectionSites: collectionSitesRef.orderByChild('stationName'),
       activeSitesFB: activeSitesRef,
       metaData: metaRef
     }
