@@ -37,7 +37,7 @@
               Total Samples:
             </span>
             <span class="collection-data-group__text">
-              {{ site ? site.numSamples : '' }}
+              {{ site ? reports.length : '' }}
             </span>
             <span class="collection-data-group__divider">|</span>
             <span class="collection-data-group__text--strong">
