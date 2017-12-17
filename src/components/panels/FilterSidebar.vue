@@ -64,8 +64,8 @@
         v-on:click="selectActiveSite(site)"
         v-bind:class="{'data-sidebar-list-item--active': selectedSite === site}"
         v-bind:key="site.key"
-        v-for=" site in filteredResults">
-        {{ site.stationName }}
+        v-for="site in filteredResults">
+         {{ site.stationName }}
       </div>
     </div>
   </aside>
@@ -75,6 +75,7 @@
 import { db } from '../../helpers/firebase'
 import _ from 'lodash'
 
+let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
 let hucRef = db.ref('hucList')
 
@@ -87,12 +88,13 @@ export default {
     'showSidebar'
   ],
   firebase: {
+    collectionSites: collectionSitesRef,
     labs: labsRef,
     hucList: hucRef
   },
   computed: {
     filteredResults () {
-      let sites = this.collectionSites
+      let sites = _.orderBy(this.collectionSites, 'stationName')
       sites = _.filter(sites, (site) => {
         let isPrivate = site.isPrivate
         let containsSearch = site.stationName.toLowerCase().includes(this.filters.search)
