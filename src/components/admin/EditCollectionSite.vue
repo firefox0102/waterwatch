@@ -80,6 +80,7 @@
 <script>
 import { db } from '../../helpers/firebase'
 import _ from 'lodash'
+import {uploadNewGeoJsonFile} from '../../helpers/generateGeoJson'
 
 let collectionSitesRef = db.ref('collectionSites')
 let labsRef = db.ref('labs')
@@ -147,6 +148,8 @@ export default {
         delete itemCopy['.key']
         this.$firebaseRefs.collectionSites.child(this.targetCollectionSite['.key']).set(itemCopy)
 
+        this.uploadNewJsonFile()
+
         this.controls.showDialog = false
         this.postSubmitForm()
       } catch (e) {
@@ -156,6 +159,11 @@ export default {
     },
     close () {
       this.controls.showDialog = false
+    },
+    uploadNewJsonFile () {
+      this.$bindAsArray('jsonSites', collectionSitesRef, null, () => {
+        uploadNewGeoJsonFile(this.jsonSites)
+      })
     }
   }
 }

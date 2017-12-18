@@ -6,8 +6,6 @@
           Collection Sites
         </div>
         <div class="collection-sites-header__subheader--bold">
-          <!-- {{ this.metaData[0] ? metaData[0]['.value'] : 0 }} active of {{ this.metaData[3] ? metaData[3]['.value'] : 0 }} total sites -->
-          <!-- {{ this.collectionSites.length }} active of {{ this.collectionSites.length }} total sites -->
           {{ this.collectionSites.length }} total sites
         </div>
         <div class="collection-sites-header__subheader">
@@ -22,7 +20,6 @@
             v-on:click.native="toggleArchived()">
               {{ archivedText() }}
           </v-btn>
-          <!-- <generate-geojson v-bind:collection-sites="collectionSites"></generate-geojson> -->
           <add-collection-site></add-collection-site>
         </v-layout>
       </div>
@@ -191,13 +188,12 @@
 import { db } from '../../helpers/firebase'
 import AddCollectionSite from './AddCollectionSite'
 import EditCollectionSite from './EditCollectionSite'
-// import GenerateGeojson from '../generate-geojson/GenerateGeoJson'
+import {uploadNewGeoJsonFile} from '../../helpers/generateGeoJson'
 import moment from 'moment'
 
 let collectionSitesRef = db.ref('collectionSites')
 let archivedRef = db.ref('archivedSites')
 let metaRef = db.ref('metaData')
-let activeSitesRef = db.ref('metaData/activeSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
 let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
 
@@ -206,12 +202,10 @@ export default {
   components: {
     AddCollectionSite,
     EditCollectionSite
-    // GenerateGeojson
   },
   firebase () {
     return {
       collectionSites: collectionSitesRef.orderByChild('stationName'),
-      activeSitesFB: activeSitesRef,
       metaData: metaRef
     }
   },
@@ -297,16 +291,11 @@ export default {
       let itemCopy = { ...item }
       delete itemCopy['.key']
       itemCopy.archived = true
-
       this.$firebaseRefs.setArchivedSites.child(item['.key']).set(itemCopy)
       this.$firebaseRefs.setCollectionSites.child(item['.key']).remove()
 
-      // Decrement active sites number
-      let oldActive = parseInt(this.metaData[0]['.value'])
-      let newActive = oldActive - 1
-      this.$firebaseRefs.metaData.child('activeSites').set(newActive)
-
       this.selected = []
+      this.uploadNewJsonFile()
 
       this.$unbind('setArchivedSites')
       this.$unbind('setCollectionSites')
@@ -321,15 +310,16 @@ export default {
       this.$firebaseRefs.setCollectionSites.child(item['.key']).set(itemCopy)
       this.$firebaseRefs.setArchivedSites.child(item['.key']).remove()
 
-      // Increment active sites number
-      let oldActive = parseInt(this.metaData[0]['.value'])
-      let newActive = oldActive + 1
-      this.$firebaseRefs.metaData.child('activeSites').set(newActive)
-
       this.selected = []
+      this.uploadNewJsonFile()
 
       this.$unbind('setArchivedSites')
       this.$unbind('setCollectionSites')
+    },
+    uploadNewJsonFile () {
+      this.$bindAsArray('jsonSites', collectionSitesRef, null, () => {
+        uploadNewGeoJsonFile(this.jsonSites)
+      })
     },
     toggleArchived () {
       this.showArchived = !this.showArchived

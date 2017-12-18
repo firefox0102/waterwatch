@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="collection-sites-header__secondary-content">
-        <router-link class="log-new-data-btn" :to="{ name: 'Log Data Id' }">
+        <router-link class="log-new-data-btn" :to="{ name: 'Log Data' }">
           <v-btn class="btn-nww--light">
             Log New Data
           </v-btn>
@@ -265,8 +265,8 @@ export default {
 
           return {
             projectID: 'NWW_2012',
-            stationName: `${report.storetID}`,
-            lField: `${report.storetID}${lDate}`,
+            stationName: `${report.storetID || ''}`,
+            lField: `${report.storetID || ''}${lDate}`,
             activityType: 'Sample-Routine',
             water: 'Water',
             collectionDate: startDate || '',
@@ -450,6 +450,17 @@ export default {
 <style lang="scss" scoped>
 @import "../../scss/colors";
 @import "../../scss/collection-sites";
+
+.site-reports-body-toolbar {
+  &__text-content {
+    min-width: 176px;
+    width: 176px;
+  }
+}
+
+.site-reports-body-toolbar__primary-content {
+  min-width: 840px;
+}
 
 .log-new-data-btn {
   text-decoration: none;

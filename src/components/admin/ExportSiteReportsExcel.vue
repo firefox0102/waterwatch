@@ -277,7 +277,6 @@ export default {
 
       _.forEach(items, (item) => {
         let jsonDate = moment(item.collectionDate).format('MM/DD/YYYY')
-        console.log(selectedSite)
         jsonItems.push({
           logbookNumber: item.logbookNumber,
           logbookAbbv: selectedSite.logbookAbbv,

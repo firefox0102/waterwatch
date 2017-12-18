@@ -140,14 +140,14 @@
 @import "../scss/colors";
 
 $navbar-height: 64px;
-$nav-split-breakpoint: 820px;
+$nav-split-breakpoint: 870px;
 
 .app-sidebar {
   display: flex;
   z-index: 5;
 
   flex-direction: column;
-  margin-top: $navbar-height;
+  margin-top: $navbar-height !important;
   overflow: visible;
 
   @media screen and (min-width: $nav-split-breakpoint) {
