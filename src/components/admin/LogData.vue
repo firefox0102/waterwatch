@@ -675,6 +675,8 @@
       },
       resetForm: function () {
         let oldLog = { ...this.newLogData }
+        this.ecoliLargeCells = null
+        this.ecoliSmallCells = null
 
         this.newLogData = {
           airTemp: null,
