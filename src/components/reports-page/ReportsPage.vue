@@ -201,7 +201,7 @@ export default {
   name: 'reports-page',
   firebase () {
     return {
-      reports: db.ref('allReports')
+      reports: db.ref('allReports').orderByChild('collectionDate').startAt(oldDate).endAt(todaysDate)
     }
   },
   components: {
