@@ -1,4 +1,4 @@
-<template>
+ <template>
   <v-card class="site-reports-wrapper">
      <div class="collection-sites-header">
       <div class="collection-sites-header__primary-content">
