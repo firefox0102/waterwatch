@@ -195,7 +195,8 @@ import moment from 'moment'
 import JsonExcel from '../json-excel/JsonExcel'
 
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
-let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
+// let oldDate = moment(new Date('2017.09.01')).format('YYYY-MM-DD')
+let oldDate = moment().subtract(3, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'reports-page',
