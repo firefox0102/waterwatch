@@ -489,11 +489,11 @@
           ],
           incubationTimeRules: [
             (startTime) => {
-              if (!this.newLogData) { return true }
+              if (!this.targetLogData) { return true }
               if (startTime === null || startTime === undefined || /^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
-              let testStartDate = dateObj(this.newLogData.collectionTime)
-              let testEndDate = dateObj(this.newLogData.collectionTime).add(6, 'hours')
+              let testStartDate = dateObj(this.targetLogData.collectionTime)
+              let testEndDate = dateObj(this.targetLogData.collectionTime).add(6, 'hours')
 
               function dateObj (d) {
                 let date = moment()
@@ -508,24 +508,24 @@
           ],
           incubationOutTimeRules: [
             (outTime) => {
-              if (!this.newLogData) { return true }
+              if (!this.targetLogData) { return true }
               if (outTime === null || outTime === undefined || /^\s*$/.test(outTime)) { return true } // If value is empty, return
 
-              let format = 'hh:mm:ss'
-              let startDate = dateObj(this.newLogData.incubationTime)
+              let startDate = dateObj(this.targetLogData.incubationTime)
 
-              let endDateMin = moment(startDate).add(18, 'hours').format(format)
-              let endDateMax = moment(startDate).add(22, 'hours').format(format)
-              let outMoment = dateObj(outTime).format(format)
+              let endDateMin = startDate.clone().add(18, 'hours')
+              let endDateMax = startDate.clone().add(22, 'hours')
+              let outMoment = dateObj(outTime).date(endDateMax.date())
 
-              function dateObj (d, format) {
+              function dateObj (d) {
                 let date = moment()
                 let parts = d.split(/:|\s/)
                 date.hour(+parts.shift())
                 date.minutes(+parts.shift())
                 return date
               }
-              return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Should be within 18 to 22 hours of Incubation In'
+
+              return outMoment.isBetween(endDateMin, endDateMax) || 'Should be within 18 to 22 hours of Incubation In'
             }
           ],
           noNegatives: [
