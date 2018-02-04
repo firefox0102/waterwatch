@@ -53,7 +53,7 @@
                     required>
                   </v-text-field>
                   <v-date-picker v-model="targetLogData.collectionDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
+                    <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn @click.native="save()" class="btn btn-nww">Save</v-btn>
                         <v-btn flat color="primary" @click.native="cancel()">Cancel</v-btn>
@@ -381,6 +381,7 @@
   import _ from 'lodash'
   import moment from 'moment'
   import { matrix } from '../../helpers/coeffecient'
+  import MathService from '../../services/MathService'
 
   let collectionSitesRef = db.ref('collectionSites')
 
@@ -413,9 +414,9 @@
     computed: {
       getTotalColiform: function () {
         try {
-          if (this.newLogData.coliformLargeCells && this.newLogData.coliformSmallCells && this.newLogData.dilution) {
-            let matrixValue = matrix[this.newLogData.coliformLargeCells][this.newLogData.coliformSmallCells]
-            let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
+          if (this.targetLogData.coliformLargeCells && this.targetLogData.coliformSmallCells && this.targetLogData.dilution) {
+            let matrixValue = matrix[this.targetLogData.coliformLargeCells][this.targetLogData.coliformSmallCells]
+            let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
             let computedValue = matrixValue * dilutionFactor
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
 
@@ -427,9 +428,9 @@
       },
       getTotalEcoli: function () {
         try {
-          if (this.ecoliLargeCells && this.ecoliSmallCells && this.newLogData.dilution) {
+          if (this.ecoliLargeCells && this.ecoliSmallCells && this.targetLogData.dilution) {
             let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
-            let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
+            let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
             let computedValue = matrixValue * dilutionFactor
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
 
@@ -475,6 +476,7 @@
             (input) => {
               let fluorometry = parseFloat(input)
               if (isNaN(fluorometry)) { return true }
+              if (MathService.decimalPlaces(fluorometry)) { return 'Please limit to 3 decimal places' }
               return (fluorometry >= 0 && fluorometry <= 200) || 'Typical range is 0 - 200'
             }
           ],
@@ -487,10 +489,11 @@
           ],
           incubationTimeRules: [
             (startTime) => {
+              if (!this.targetLogData) { return true }
               if (startTime === null || startTime === undefined || /^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
-              let testStartDate = dateObj(this.newLogData.collectionTime)
-              let testEndDate = dateObj(this.newLogData.collectionTime).add(6, 'hours')
+              let testStartDate = dateObj(this.targetLogData.collectionTime)
+              let testEndDate = dateObj(this.targetLogData.collectionTime).add(6, 'hours')
 
               function dateObj (d) {
                 let date = moment()
@@ -505,23 +508,24 @@
           ],
           incubationOutTimeRules: [
             (outTime) => {
+              if (!this.targetLogData) { return true }
               if (outTime === null || outTime === undefined || /^\s*$/.test(outTime)) { return true } // If value is empty, return
 
-              let format = 'hh:mm:ss'
-              let startDate = dateObj(this.newLogData.incubationTime)
+              let startDate = dateObj(this.targetLogData.incubationTime)
 
-              let endDateMin = moment(startDate).add(18, 'hours').format(format)
-              let endDateMax = moment(startDate).add(22, 'hours').format(format)
-              let outMoment = dateObj(outTime).format(format)
+              let endDateMin = startDate.clone().add(18, 'hours')
+              let endDateMax = startDate.clone().add(22, 'hours')
+              let outMoment = dateObj(outTime).date(endDateMax.date())
 
-              function dateObj (d, format) {
+              function dateObj (d) {
                 let date = moment()
                 let parts = d.split(/:|\s/)
                 date.hour(+parts.shift())
                 date.minutes(+parts.shift())
                 return date
               }
-              return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Should be within 18 to 22 hours of Incubation In'
+
+              return outMoment.isBetween(endDateMin, endDateMax) || 'Should be within 18 to 22 hours of Incubation In'
             }
           ],
           noNegatives: [
@@ -588,6 +592,7 @@
       updateExistingLog () {
         try {
           this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.routeCollectionSiteId + '/' + this.targetLogData['.key']))
+          this.$bindAsObject('allReportsLogObject', db.ref('allReports/' + this.targetLogData['.key']))
           if (this.ecoliLargeCells) {
             this.targetLogData.ecoliLargeCells = this.ecoliLargeCells
           }
@@ -597,7 +602,6 @@
           if (this.getTotalEcoli !== undefined) {
             this.targetLogData.totalEcoli = this.getTotalEcoli
           }
-
           if (this.getTotalColiform !== undefined) {
             this.targetLogData.totalColiform = this.getTotalColiform
           }
@@ -606,7 +610,9 @@
           let itemCopy = { ...this.targetLogData }
           delete itemCopy['.key']
           this.$firebaseRefs.firebaseLogObject.set(itemCopy)
+          this.$firebaseRefs.allReportsLogObject.set(itemCopy)
           this.$unbind('firebaseLogObject')
+          this.$unbind('allReportsLogObject')
 
           // Success!
           this.controls.showDialog = false
@@ -625,25 +631,23 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
-        console.log('test')
         if (this.totalEcoli) {
-          console.log(this.totalEcoli)
           this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
         }
 
         // Last turbidity equation
-        if (this.newLogData.turbidity) {
-          this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
+        if (this.targetLogData.turbidity) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.targetLogData.turbidity)
         }
 
         // Last rainfall equation
-        if (this.newLogData.precipitation) {
-          this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.newLogData.precipitation)
+        if (this.targetLogData.precipitation) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.targetLogData.precipitation)
         }
 
         // Last specific conductivity equation
-        if (this.newLogData.specificConductivity) {
-          this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.newLogData.specificConductivity)
+        if (this.targetLogData.specificConductivity) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.targetLogData.specificConductivity)
         }
       }
     }

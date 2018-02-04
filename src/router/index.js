@@ -8,32 +8,35 @@ import LogData from '../components/admin/LogData'
 import About from '../components/main/About'
 import DataPage from '../components/main/DataPage'
 import SignIn from '../components/main/SignIn'
+import ReportsPage from '../components/reports-page/ReportsPage'
+// import firebase from 'firebase'
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   routes: [
-    // {
-    //   path: '*',
-    //   component: SignIn,
-    //   meta: { requiresAuth: false }
-    // },
+    {
+      path: '*',
+      redirect: '/DataPage'
+    },
+    {
+      path: '/',
+      redirect: '/DataPage'
+    },
+    {
+      path: '/DataPage',
+      name: 'DataPage',
+      component: DataPage
+    },
     {
       path: '/signIn',
-      component: SignIn,
-      meta: { requiresAuth: false }
+      component: SignIn
     },
     {
       path: '/about',
       name: 'About',
-      component: About,
-      meta: { requiresAuth: false }
-    },
-    {
-      path: '*',
-      component: DataPage,
-      meta: { requiresAuth: false }
+      component: About
     },
     {
       path: '/collectionSiteData/:siteId',
@@ -48,15 +51,21 @@ export default new Router({
       meta: { requiresAuth: true }
     },
     {
-      path: '/logData/:id',
-      name: 'Log Data Id',
-      component: LogData,
+      path: '/allreports',
+      name: 'All Reports',
+      component: ReportsPage,
       meta: { requiresAuth: true }
     },
     {
       path: '/collectionSites',
       name: 'Collection Sites',
       component: CollectionSites,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/logData/:id',
+      name: 'Log Data Id',
+      component: LogData,
       meta: { requiresAuth: true }
     }
   ]

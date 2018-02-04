@@ -69,13 +69,37 @@ a.list__tile:hover,
 }
 
 .dialog.dialog--active {
-  max-width: 75vw !important;
+  max-width: 680px !important;
   min-width: 460px !important;
   width: 90% !important;
 }
 
 .dialog.dialog--active .card {
   padding: 0 !important;
+}
+
+.dialog .page-content-body__column {
+  width: 100%;
+}
+
+.list a {
+  text-decoration: none;
+}
+
+.list li:hover a {
+  color: #4d86a0;
+}
+
+.report-list {
+  padding: 8px;
+}
+
+.report-list li {
+  padding-top: 12px;
+}
+
+.report-list li a {
+  color: #4d86a0;
 }
 
 .application--light .input-group.input-group--disabled .input-group__details:before {
@@ -129,6 +153,10 @@ button.mapboxgl-ctrl-icon.mapboxgl-ctrl-fullextent {
   background-size: 22px 22px;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+.btn .icon--right {
+  margin-left: 12px;
 }
 
 .mapboxgl-ctrl-geocoder input[type='text'] {

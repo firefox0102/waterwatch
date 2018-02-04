@@ -51,9 +51,9 @@
                         <i class="fa fa-calendar"></i>
                       </div>
                       <v-date-picker v-model="startDate" no-title scrollable actions>
-                        <template scope="{ save, cancel }">
+                        <template slot-scope="{ save, cancel }">
                           <v-card-actions>
-                            <v-btn success @click.native="save()">Save</v-btn>
+                            <v-btn class="btn-nww" @click.native="save()">Save</v-btn>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
                           </v-card-actions>
                         </template>
@@ -77,9 +77,9 @@
                         <i class="fa fa-calendar"></i>
                       </div>
                       <v-date-picker v-model="endDate" no-title scrollable actions>
-                        <template scope="{ save, cancel }">
+                        <template slot-scope="{ save, cancel }">
                           <v-card-actions>
-                            <v-btn success @click.native="save()">Save</v-btn>
+                            <v-btn class="btn-nww" @click.native="save()">Save</v-btn>
                             <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
                           </v-card-actions>
                         </template>
@@ -103,22 +103,13 @@
                 </i>
               </div>
               <div class="controls-card-control-group__content">
-                <v-btn
-                  type="submit"
-                  class="md-raised btn-nww--light"
-                  :data = "json_data"
-                  :fields = "json_fields"
+                <download-excel
+                  class="btn md-raised btn-nww--light"
+                  v-bind:data = "getExportJson"
+                  v-bind:fields = "jsonFields"
                   name = "NWW_Report.xls">
-                  Download  XLSX
-                </v-btn>
-                <v-btn
-                  type="submit"
-                  class="md-raised btn-nww--light"
-                  :data = "json_data"
-                  :fields = "json_fields"
-                  name = "NWW_Report.csv">
-                  Download  CSV
-                </v-btn>
+                  Download  XLS
+                </download-excel>
               </div>
             </div>
           </div>
@@ -149,7 +140,7 @@ import RainfallChart from '../panels/RainfallChart'
 import ConductivityChart from '../panels/ConductivityChart'
 import FilterSidebar from '../panels/FilterSidebar'
 import DataMapBanner from '../map/DataMapBanner'
-import JsonExcel from 'vue-json-excel'
+import JsonExcel from '../json-excel/JsonExcel'
 
 let collectionSitesRef = db.ref('collectionSites')
 
@@ -163,10 +154,32 @@ export default {
     ConductivityChart,
     FilterSidebar,
     DataMapBanner,
-    'downloadExcel': JsonExcel
+    'download-excel': JsonExcel
   },
   firebase: {
     collectionSites: collectionSitesRef
+  },
+  computed: {
+    getExportJson () {
+      let jsonData = []
+
+      if (this.reports) {
+        jsonData = _.map(this.reports, function (report) {
+          return {
+            stationName: report.stationName,
+            collectionDate: report.collectionDate,
+            collectionTime: report.collectionTime,
+            precipitation: report.precipitation,
+            totalColiform: report.totalColiform,
+            totalEcoli: report.totalEcoli,
+            fluorometry: report.fluorometry,
+            turbidity: report.turbidity,
+            specificConductivity: report.specificConductivity
+          }
+        })
+      }
+      return jsonData
+    }
   },
   watch: {
     startDate (val) {
@@ -188,6 +201,17 @@ export default {
         sidebar: false,
         selectedControlDates: false,
         selectedControlReport: true
+      },
+      jsonFields: {
+        'stationName': 'Site Name',
+        'collectionDate': 'Collection Date',
+        'collectionTime': 'Collection Time',
+        'precipitation': 'Rain (in)',
+        'totalColiform': 'Total Coliform (MPN / 100mL)',
+        'totalEcoli': 'E.Coli (MPN / 100mL)',
+        'fluorometry': 'Fluorometry',
+        'turbidity': 'Turbidity (NTU)',
+        'specificConductivity': 'Specifc Conductivity (µS)'
       }
     }
   },
@@ -224,19 +248,6 @@ export default {
   },
   mounted: function () {
     this.initializeMap()
-    var thisVue = this
-    thisVue.axios({
-      method: 'get',
-      url: '/*'
-    }).then(function (response) {
-      for (var i = 0; i < response.data.data.length; i++) {
-        response.data.data[i].id = i + 1
-        response.data.data[i].created_at = moment(moment(response.data.data[i].created_at).toString()).format('DD-MM-YYYY HH:mm:ss')
-      }
-      thisVue.tableData = response.data.data
-    }).catch(function (error) {
-      console.log(error)
-    })
   }
 }
 </script>
