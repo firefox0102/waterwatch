@@ -151,7 +151,7 @@
                 <td class="col-long table-cell__truncate--long">{{ props.item.adoptAStreamName }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.aasNumber }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.storetName }}</td>
-                <td class="col-long table-cell__truncate--long">{{ props.item.storetID }}</td>
+                <td class="col-long table-cell__truncate--long">{{ props.item.storetId }}</td>
                 <td>{{ props.item.numSamples }}</td>
                 <td>{{ props.item.firstCollectionDate }}</td>
                 <td class="table-cell__truncate--long">
@@ -244,7 +244,7 @@ export default {
         { text: 'Adopt-A-Stream Name', value: 'adoptAStreamName' },
         { text: 'Adopt-A-Stream Number', value: 'aasNumber' },
         { text: 'STORET Name', value: 'storetName' },
-        { text: 'STORET Location ID', value: 'storetID' },
+        { text: 'STORET Location ID', value: 'storetId' },
         { text: '# Samples Collected', value: 'numSamples' },
         { text: 'First Collection Date', value: 'firstCollectionDate' },
         { text: 'Google Maps URL', value: 'googleMapsUrl' },

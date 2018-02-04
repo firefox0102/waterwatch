@@ -645,8 +645,8 @@
           let key = this.selectedSite['.key']
 
           this.newLogData.stationName = this.selectedSite.stationName
-          this.newLogData.aasNumber = this.selectedSite.adoptAStreamId || ''
-          this.newLogData.storetID = this.selectedSite.storetID || ''
+          this.newLogData.aasNumber = this.selectedSite.aasNumber || ''
+          this.newLogData.storetId = this.selectedSite.storetId || ''
           this.newLogData.logbookAbbv = this.selectedSite.logbookAbbv
           this.newLogData.ecoliLargeCells = this.ecoliLargeCells
           this.newLogData.ecoliSmallCells = this.ecoliSmallCells

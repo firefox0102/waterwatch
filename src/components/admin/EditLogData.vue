@@ -631,8 +631,8 @@
             let itemCopy = { ...this.targetLogData }
             delete itemCopy['.key']
             itemCopy.stationName = this.selectedSite.stationName
-            itemCopy.aasNumber = this.selectedSite.adoptAStreamId || ''
-            itemCopy.storetID = this.selectedSite.storetID || ''
+            itemCopy.aasNumber = this.selectedSite.aasNumber || ''
+            itemCopy.storetId = this.selectedSite.storetId || ''
             itemCopy.logbookAbbv = this.selectedSite.logbookAbbv
             itemCopy.collectionSiteId = this.selectedSite['.key']
 

@@ -266,8 +266,8 @@ export default {
 
           return {
             projectID: 'NWW_2012',
-            stationName: `${report.storetID || ''}`,
-            lField: `${report.storetID || ''}${lDate}`,
+            stationName: `${report.storetId || ''}`,
+            lField: `${report.storetId || ''}${lDate}`,
             activityType: 'Sample-Routine',
             water: 'Water',
             collectionDate: startDate || '',

@@ -328,8 +328,8 @@ export default {
 
           return {
             projectID: 'NWW_2012',
-            stationName: `${this.firebaseSite[0].storetID || ''}`,
-            lField: `${this.firebaseSite[0].storetID || ''}${lDate || ''}`,
+            stationName: `${this.firebaseSite[0].storetId || ''}`,
+            lField: `${this.firebaseSite[0].storetId || ''}${lDate || ''}`,
             activityType: 'Sample-Routine',
             water: 'Water',
             collectionDate: startDate || '',
