@@ -97,7 +97,7 @@
             ></v-time-picker>
           </v-menu>
           <v-text-field
-            label="Rainfall (in)"
+            label="Rainfall (in) [trace = 0.001]"
             class="input-group--limit-height"
             type="number"
             step="0.01"
@@ -163,7 +163,6 @@
             <v-text-field
               slot="activator"
               label="Incubation Out Time"
-              readonly
               v-model="newLogData.incubationOut"
               :rules="formRules.incubationOutTimeRules"
               class="input-group--limit-height">
@@ -398,7 +397,7 @@
   export default {
     name: 'log-data',
     firebase: {
-      collectionSites: collectionSitesRef,
+      collectionSites: collectionSitesRef.orderByChild('stationName'),
       logbookNumber: logbookNumberRef
     },
     watch: {
