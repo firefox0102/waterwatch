@@ -5,7 +5,6 @@
         <div class="collection-sites-header__header">
           {{ site ? site.stationName : '' }}
         </div>
-
         <div class="collection-sites-header__subheader-wrapper">
           <router-link class="collection-sites-header__subheader--nww" :to="{ name: 'Collection Sites'}">
             Back to List of Collection Sites
@@ -38,7 +37,7 @@
               Total Samples:
             </span>
             <span class="collection-data-group__text">
-              {{ site ? site.numSamples : '' }}
+              {{ site ? reports.length : '' }}
             </span>
             <span class="collection-data-group__divider">|</span>
             <span class="collection-data-group__text--strong">
@@ -88,7 +87,7 @@
                     <i class="fa fa-calendar"></i>
                   </div>
                   <v-date-picker v-model="startDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
+                    <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn class="btn btn-nww" @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -106,7 +105,7 @@
                     <i class="fa fa-calendar"></i>
                   </div>
                   <v-date-picker v-model="endDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
+                    <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn class="btn btn-nww" @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
@@ -140,8 +139,38 @@
                   <i class="material-icons">arrow_drop_down</i>
                 </div>
                 <v-list>
-                  <v-list-tile v-for="action in controls.exportActions" :key="action.title">
-                    <v-list-tile-title>{{ action.title }}</v-list-tile-title>
+                  <v-list-tile>
+                    <v-list-tile-title>
+                      <json-excel
+                        v-bind:data = "getExportXls"
+                        v-bind:fields = "jsonFields"
+                        :meta = "json_meta"
+                        name = "NWW_Director_Report.xls">
+                        Export as XLS
+                      </json-excel>
+                    </v-list-tile-title>
+                  </v-list-tile>
+                   <v-list-tile>
+                    <v-list-tile-title>
+                      <json-excel
+                        v-bind:data = "getExportAdopt"
+                        v-bind:fields = "jsonFieldsAdopt"
+                        :meta = "json_meta"
+                        name = "NWW_Adopt-A-Stream-Report.xls">
+                        Export for Adopt-A-Stream
+                      </json-excel>
+                    </v-list-tile-title>
+                  </v-list-tile>
+                   <v-list-tile>
+                    <v-list-tile-title>
+                      <json-excel
+                        v-bind:data = "getExportStoret"
+                        v-bind:fields = "jsonFieldsStoret"
+                        :meta = "json_meta"
+                        name = "NWW_Storet-Report.xls">
+                        Export for STORET
+                      </json-excel>
+                    </v-list-tile-title>
                   </v-list-tile>
                 </v-list>
               </v-menu>
@@ -159,7 +188,7 @@
               item-key=".key"
               class="elevation-1"
             >
-            <template slot="headers" scope="props">
+            <template slot="headers" slot-scope="props">
               <tr class="nww-table__header" :active="props.selected" @click="props.selected = !props.selected">
                 <th>
                   <v-checkbox
@@ -179,7 +208,7 @@
                 </th>
               </tr>
             </template>
-            <template slot="items" scope="props">
+            <template slot="items" slot-scope="props">
               <tr
                 :active="props.selected"
                 @click="props.selected = !props.selected"
@@ -199,13 +228,13 @@
                 <td>{{ props.item.totalEcoli }}</td>
                 <td>{{ props.item.fluorometry }}</td>
                 <td>{{ props.item.turbidity }}</td>
-                <td>{{ props.item.specifcConductivity }}</td>
+                <td>{{ props.item.specificConductivity }}</td>
                 <td>{{ props.item.precipitation }}</td>
                 <td>{{ props.item.incubationTime }}</td>
                 <td>{{ props.item.dilution }}</td>
                 <td>{{ props.item.incubationTemp }}</td>
                 <td>{{ props.item.incubationOut }}</td>
-                <td>{{ props.item.notes }}</td>
+                <td class="col-long table-cell__truncate--long">{{ props.item.notes }}</td>
               </tr>
             </template>
           </v-data-table>
@@ -217,8 +246,10 @@
 
 <script>
 import { db } from '../../helpers/firebase'
+import _ from 'lodash'
 import moment from 'moment'
 import EditLogData from './EditLogData'
+import JsonExcel from '../json-excel/JsonExcel'
 
 let collectionSitesRef = db.ref('collectionSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
@@ -228,7 +259,8 @@ let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
 export default {
   name: 'collection-sites',
   components: {
-    EditLogData
+    EditLogData,
+    JsonExcel
   },
   computed: {
     getGoogleMapsUrl: function () {
@@ -245,6 +277,99 @@ export default {
         source: collectionSitesRef.orderByKey().equalTo(this.$route.params.siteId)
       },
       reports: db.ref('reports/' + this.$route.params.siteId).orderByChild('collectionDate').startAt(oldDate).endAt(todaysDate)
+    }
+  },
+  computed: {
+    getExportXls (selected) {
+      let jsonData = []
+      if (this.reports && this.selected.length) {
+        jsonData = _.map(this.selected, function (report) {
+          return {
+            logbookAbbv: report.stationName || '',
+            logbookNumber: report.logbookNumber || '',
+            collectionDate: report.collectionDate || '',
+            collectionTime: report.collectionTime || '',
+            precipitation: report.precipitation || '',
+            dilution: '2/100',
+            totalColiform: report.totalColiform || '',
+            totalEcoli: report.totalEcoli || '',
+            fluorometry: report.fluorometry || '',
+            turbidity: report.turbidity || '',
+            specificConductivity: report.specificConductivity || '',
+            analyst: report.analyst || '',
+            notes: report.notes || ''
+          }
+        })
+      }
+      return jsonData
+    },
+    getExportAdopt () {
+      let jsonData = []
+      if (this.reports && this.selected.length) {
+        jsonData = _.map(this.selected, (report) => {
+          let startDate = moment(report.collectionDate).format('MM/DD/YY')
+
+          return {
+            aasSiteName: report.stationName + ' (' + this.firebaseSite[0].aasNumber + ')',
+            collectionDate: startDate || '',
+            collectionTime: report.collectionTime || '',
+            participation: '1',
+            samplingTime: '60',
+            monitor: 'Micheal Meyer (25064)',
+            precipitation: report.precipitation || '',
+            hours: '24',
+            specificConductivity: report.specificConductivity || '',
+            turbidity: report.turbidity || '',
+            film: 'yes',
+            totalEcoli: report.totalEcoli || ''
+          }
+        })
+      }
+      return jsonData
+    },
+    getExportStoret () {
+      let jsonData = []
+      if (this.reports && this.selected.length) {
+        jsonData = _.map(this.selected, (report) => {
+          let lDate = moment(report.collectionDate).format('YYYYMMDD')
+          let startDate = moment(report.collectionDate).format('YYYY-MM-DD')
+          let storetTime = (report.collectionTime === '') ? '' : `${report.collectionTime}:00`
+
+          return {
+            projectID: 'NWW_2012',
+            stationName: `${this.firebaseSite[0].storetID || ''}`,
+            lField: `${this.firebaseSite[0].storetID || ''}${lDate || ''}`,
+            activityType: 'Sample-Routine',
+            water: 'Water',
+            collectionDate: startDate || '',
+            collectionTime: storetTime || '',
+            timeZone: 'EST',
+            activityMeasure: ' ',
+            activityUnit: ' ',
+            collectionMethod: 'Grab Sample',
+            equipment: 'Whirl-pak bag',
+            equipComment: ' ',
+            loggerLine: ' ',
+            characteristic: 'Escherichia coli',
+            methodSpeciation: ' ',
+            resultDetection: ' ',
+            totalEcoli: report.totalEcoli || '',
+            resultUnit: 'MPN',
+            qualifier: ' ',
+            resultSampleFraction: ' ',
+            resultStatus: 'Final',
+            baseCode: ' ',
+            valueType: 'Calculated',
+            analyticalMethod: 'Colliert',
+            analyticalMethodContext: 'IDEXX',
+            startDate: ' ',
+            limitMeasure: ' ',
+            limitUnit: ' ',
+            comments: ' '
+          }
+        })
+      }
+      return jsonData
     }
   },
   watch: {
@@ -277,25 +402,7 @@ export default {
         search: '',
         startDateModal: false,
         endDateModal: false,
-        exportAction: { label: 'Export' },
-        exportActions: [
-          {
-            title: 'Export as CSV',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export as XLS',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export for Adopt-A-Stream',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export for STORET',
-            callback: 'TODO MAKE CALLBACK'
-          }
-        ]
+        exportAction: { label: 'Export' }
       },
       headers: [
         { text: 'Logbook #', value: 'logbookNumber' },
@@ -306,7 +413,7 @@ export default {
         { text: 'E. coli (MPN/100mL)', value: 'totalEcoli' },
         { text: 'Fluorometry', value: 'fluorometry' },
         { text: 'Turbidity (NTU)', value: 'turbidity' },
-        { text: 'Conductivity (uS)', value: 'specifcConductivity' },
+        { text: 'Conductivity (uS)', value: 'specificConductivity' },
         { text: 'Rainfall (in)', value: 'precipitation' },
         { text: 'Incubation In Time', value: 'incubationTime' },
         { text: '# mL/100mL (Dilution)', value: 'dilution' },
@@ -315,10 +422,78 @@ export default {
         { text: 'Notes', value: 'notes' }
       ],
       selected: [],
+      json_meta: [
+        [{
+          'key': 'charset',
+          'value': 'utf-8'
+        }]
+      ],
+      jsonFields: {
+        'logbookNumber': 'site ID #',
+        'logbookAbbv': 'Site Name',
+        'collectionDate': 'Collection Date',
+        'collectionTime': 'Collection Time',
+        'precipitation': 'Rainfall (in.)',
+        'dilution': 'Dilution (mL / 100mL)',
+        'totalColiform': 'Total Coliform (MPN / 100mL)',
+        'totalEcoli': 'E. coli (MPN/100mL)',
+        'fluorometry': 'Fluorometry',
+        'turbidity': 'Turbidity (NTU)',
+        'specificConductivity': 'Specific Conductivity (µS)',
+        'analyst': 'Analyst',
+        'notes': 'Notes'
+      },
+      jsonFieldsAdopt: {
+        'aasSiteName': 'Site S-',
+        'collectionDate': 'Event date (mm/dd/yyyy)',
+        'collectionTime': 'Time sample collected (hh:mm)',
+        'participation': 'Total # of particip',
+        'samplingTime': 'Time spent sampling (minutes)',
+        'monitor': 'Adopt-A-Stream monitors',
+        'precipitation': 'Amount of rain (inches)',
+        'hours': 'In last (hours)',
+        'specificConductivity': 'Conductivity (µS/cm)',
+        'turbidity': 'Turbidity (NTU)',
+        'film': 'Other than Petri film?',
+        'totalEcoli': 'E.coli IDEXX (MPN / 100mL)'
+      },
+      jsonFieldsStoret: {
+        'projectID': 'Project ID',
+        'stationName': 'Monitoring Location ID',
+        'lField': 'L',
+        'activityType': 'Activity Type',
+        'water': 'Activity Media Name',
+        'collectionDate': 'Activity Start Date',
+        'collectionTime': 'Activity Start Time',
+        'timeZone': 'Activity Start Time Zone',
+        'activityMeasure': 'Activity Depth/Height Measure',
+        'activityUnit': 'Activity Depth/Height Unit',
+        'collectionMethod': 'Sample Collection Method ID',
+        'equipment': 'Sample Collection Equipment Name',
+        'equipComment': 'Sample Collection Equipment Comment',
+        'loggerLine': 'Data Logger Line',
+        'characteristic': 'Characteristic Name',
+        'methodSpeciation': 'Method Speciation',
+        'resultDetection': 'Result Detection Condition',
+        'totalEcoli': 'Result Value',
+        'resultUnit': 'Result Unit',
+        'qualifier': 'Result Measure Qualifier',
+        'resultSampleFraction': 'Result Sample Fraction',
+        'resultStatus': 'Result Status ID',
+        'baseCode': 'Statistical Base Code',
+        'valueType': 'Result Value Type',
+        'analyticalMethod': 'Result Analytical Method ID',
+        'analyticalMethodContext': 'Result Analytical Method Context',
+        'startDate': 'Analysis Start Date',
+        'limitMeasure': 'Result Detection/Quantitation Limit Type',
+        'limitUnit': 'Result Detection/Quantitation Limit Unit',
+        'comments': 'Result Comment'
+      },
       snackbar: {
         successVisible: false,
         successMessage: 'Data logged successfully!',
         timeout: 6000
+
       }
     }
   },

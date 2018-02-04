@@ -73,8 +73,10 @@ export default {
         xAxis: {
           type: 'datetime',
           dateTimeLabelFormats: { // don't display the dummy year
-            month: '%e/%m/%y',
-            year: '%b'
+            day: '%m/%d/%y',
+            month: '%m/%d/%y',
+            week: '%m/%d/%y',
+            year: '%m/%d/%y'
           },
           title: {
             text: 'Collection Date'

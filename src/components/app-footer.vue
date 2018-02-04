@@ -25,7 +25,7 @@
       </div>
       <div class="footer-info__text">
         Phone (404) 352-9828 |
-        <a href="mailto:info@chattachoochee.org" class="footer-info__text--underline footer-info__text--active">info@chattahoochee.org</a>
+        <a href="mailto:info@chattahoochee.org" class="footer-info__text--underline footer-info__text--active">info@chattahoochee.org</a>
       </div>
     </div>
   </footer>

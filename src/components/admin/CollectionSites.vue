@@ -6,7 +6,7 @@
           Collection Sites
         </div>
         <div class="collection-sites-header__subheader--bold">
-          {{ this.metaData[0] ? metaData[0]['.value'] : 0 }} active of {{ this.metaData[3] ? metaData[3]['.value'] : 0 }} total sites
+          {{ this.collectionSites.length }} total sites
         </div>
         <div class="collection-sites-header__subheader">
           Select a site to view logged data. Create and export reports of logged data for one or many collection sites.
@@ -46,9 +46,9 @@
                     <i class="fa fa-calendar"></i>
                   </div>
                   <v-date-picker v-model="startDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
+                    <template slot-scope="{ save, cancel }">
                       <v-card-actions>
-                        <v-btn success @click.native="save()">Save</v-btn>
+                        <v-btn class="btn-nww" @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
                       </v-card-actions>
                     </template>
@@ -64,9 +64,9 @@
                     <i class="fa fa-calendar"></i>
                   </div>
                   <v-date-picker v-model="endDate" no-title scrollable actions>
-                    <template scope="{ save, cancel }">
+                    <template slot-scope="{ save, cancel }">
                       <v-card-actions>
-                        <v-btn success @click.native="save()">Save</v-btn>
+                        <v-btn class="btn-nww" @click.native="save()">Save</v-btn>
                         <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
                       </v-card-actions>
                     </template>
@@ -92,38 +92,19 @@
                 <v-icon right dark>unarchive</v-icon>
               </v-btn>
             </div>
-            <div class="site-reports-toolbar-export">
-              <v-menu
-                offset-y
-                left>
-                <div
-                  slot="activator"
-                  class="site-reports-toolbar-export__activator">
-                  <div class="site-reports-toolbar-export__activator-text">
-                    Export
-                  </div>
-                  <i class="material-icons">arrow_drop_down</i>
-                </div>
-                <v-list>
-                  <v-list-tile v-for="action in controls.exportActions" :key="action['.key']">
-                    <v-list-tile-title>{{ action.title }}</v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
-            </div>
           </div>
         </div>
         <v-card class="nww-table nww-table--left-align">
           <v-data-table
-              v-model="selected"
-              v-bind:headers="headers"
-              v-bind:items="collectionSites"
-              v-bind:pagination.sync="pagination"
-              v-bind:search="controls.search"
-              select-all
-              item-key="stationName"
-              class="elevation-1">
-            <template slot="headers" scope="props">
+            v-model="selected"
+            v-bind:headers="headers"
+            v-bind:items="collectionSites"
+            v-bind:pagination.sync="pagination"
+            v-bind:search="controls.search"
+            select-all
+            item-key="stationName"
+            class="elevation-1">
+            <template slot="headers" slot-scope="props">
              <tr class="nww-table__header">
                <th>
                  <v-checkbox
@@ -142,7 +123,7 @@
                </th>
              </tr>
             </template>
-            <template slot="items" scope="props">
+            <template slot="items" slot-scope="props">
               <tr
                 :active="props.selected"
                 @click="props.selected = !props.selected"
@@ -168,7 +149,9 @@
                 <td>{{ props.item.collectionPartner }}</td>
                 <td>{{ props.item.hucName }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.adoptAStreamName }}</td>
+                <td class="col-long table-cell__truncate--long">{{ props.item.aasNumber }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.storetName }}</td>
+                <td class="col-long table-cell__truncate--long">{{ props.item.storetID }}</td>
                 <td>{{ props.item.numSamples }}</td>
                 <td>{{ props.item.firstCollectionDate }}</td>
                 <td class="table-cell__truncate--long">
@@ -205,15 +188,14 @@
 import { db } from '../../helpers/firebase'
 import AddCollectionSite from './AddCollectionSite'
 import EditCollectionSite from './EditCollectionSite'
+import {uploadNewGeoJsonFile} from '../../helpers/generateGeoJson'
 import moment from 'moment'
 
 let collectionSitesRef = db.ref('collectionSites')
 let archivedRef = db.ref('archivedSites')
 let metaRef = db.ref('metaData')
-let activeSitesRef = db.ref('metaData/actuveSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
 let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
-// let oldDate = moment(new Date()).subtract(200, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'site-reports',
@@ -223,8 +205,7 @@ export default {
   },
   firebase () {
     return {
-      collectionSites: collectionSitesRef.orderByChild('lastCollectionDate').startAt(oldDate).endAt(todaysDate),
-      activeSitesFB: activeSitesRef,
+      collectionSites: collectionSitesRef.orderByChild('stationName'),
       metaData: metaRef
     }
   },
@@ -250,26 +231,7 @@ export default {
       controls: {
         search: '',
         startDateModal: false,
-        endDateModal: false,
-        exportAction: { label: 'Export' },
-        exportActions: [
-          {
-            title: 'Export as CSV',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export as XLS',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export for Adopt-A-Stream',
-            callback: 'TODO MAKE CALLBACK'
-          },
-          {
-            title: 'Export for STORET',
-            callback: 'TODO MAKE CALLBACK'
-          }
-        ]
+        endDateModal: false
       },
       headers: [
         { text: 'Station Name', value: 'stationName' },
@@ -280,7 +242,9 @@ export default {
         { text: 'Collection Partner', value: 'collectionPartner' },
         { text: 'Subwatershed (HUC12)', value: 'hucName' },
         { text: 'Adopt-A-Stream Name', value: 'adoptAStreamName' },
+        { text: 'Adopt-A-Stream Number', value: 'aasNumber' },
         { text: 'STORET Name', value: 'storetName' },
+        { text: 'STORET Location ID', value: 'storetID' },
         { text: '# Samples Collected', value: 'numSamples' },
         { text: 'First Collection Date', value: 'firstCollectionDate' },
         { text: 'Google Maps URL', value: 'googleMapsUrl' },
@@ -327,16 +291,11 @@ export default {
       let itemCopy = { ...item }
       delete itemCopy['.key']
       itemCopy.archived = true
-
       this.$firebaseRefs.setArchivedSites.child(item['.key']).set(itemCopy)
       this.$firebaseRefs.setCollectionSites.child(item['.key']).remove()
 
-      // Decrement active sites number
-      let oldActive = parseInt(this.metaData[0]['.value'])
-      let newActive = oldActive - 1
-      this.$firebaseRefs.metaData.child('activeSites').set(newActive)
-
       this.selected = []
+      this.uploadNewJsonFile()
 
       this.$unbind('setArchivedSites')
       this.$unbind('setCollectionSites')
@@ -351,15 +310,16 @@ export default {
       this.$firebaseRefs.setCollectionSites.child(item['.key']).set(itemCopy)
       this.$firebaseRefs.setArchivedSites.child(item['.key']).remove()
 
-      // Increment active sites number
-      let oldActive = parseInt(this.metaData[0]['.value'])
-      let newActive = oldActive + 1
-      this.$firebaseRefs.metaData.child('activeSites').set(newActive)
-
       this.selected = []
+      this.uploadNewJsonFile()
 
       this.$unbind('setArchivedSites')
       this.$unbind('setCollectionSites')
+    },
+    uploadNewJsonFile () {
+      this.$bindAsArray('jsonSites', collectionSitesRef, null, () => {
+        uploadNewGeoJsonFile(this.jsonSites)
+      })
     },
     toggleArchived () {
       this.showArchived = !this.showArchived

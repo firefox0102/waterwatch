@@ -46,9 +46,9 @@
               required>
             </v-text-field>
             <v-date-picker v-model="newLogData.collectionDate" no-title scrollable actions>
-              <template scope="{ save, cancel }">
+              <template slot-scope="{ save, cancel }">
                 <v-card-actions>
-                  <v-btn success @click.native="save()">Save</v-btn>
+                  <v-btn class="btn-nww" @click.native="save()">Save</v-btn>
                   <v-btn primary flat @click.native="cancel()">Cancel</v-btn>
                 </v-card-actions>
               </template>
@@ -342,7 +342,7 @@
             >
               {{ "Log Data" }}
             </v-btn>
-            <v-card>
+            <v-card class="card-alert">
               <v-card-title>
                 <div class="headline log-data-confirm__header">Log Data?</div>
               </v-card-title>
@@ -351,7 +351,7 @@
                 <v-spacer></v-spacer>
                 <v-btn
                   primary
-                  flat="flat"
+                  flat
                   v-on:click.native="controls.showDialog = false">
                   Cancel
                 </v-btn>
@@ -391,6 +391,7 @@
   import _ from 'lodash'
   import moment from 'moment'
   import { matrix } from '../../helpers/coeffecient'
+  import MathService from '../../services/MathService'
 
   let collectionSitesRef = db.ref('collectionSites')
   let logbookNumberRef = db.ref('metaData/logbookNumber')
@@ -496,6 +497,7 @@
             (input) => {
               let fluorometry = parseFloat(input)
               if (isNaN(fluorometry)) { return true }
+              if (MathService.decimalPlaces(fluorometry)) { return 'Please limit to 3 decimal places' }
               return (fluorometry >= 0 && fluorometry <= 200) || 'Typical range is 0 - 200'
             }
           ],
@@ -528,21 +530,21 @@
             (outTime) => {
               if (outTime === null || outTime === undefined || /^\s*$/.test(outTime)) { return true } // If value is empty, return
 
-              let format = 'hh:mm:ss'
               let startDate = dateObj(this.newLogData.incubationTime)
 
-              let endDateMin = moment(startDate).add(18, 'hours').format(format)
-              let endDateMax = moment(startDate).add(22, 'hours').format(format)
-              let outMoment = dateObj(outTime).format(format)
+              let endDateMin = startDate.clone().add(18, 'hours')
+              let endDateMax = startDate.clone().add(22, 'hours')
+              let outMoment = dateObj(outTime).date(endDateMax.date())
 
-              function dateObj (d, format) {
+              function dateObj (d) {
                 let date = moment()
                 let parts = d.split(/:|\s/)
                 date.hour(+parts.shift())
                 date.minutes(+parts.shift())
                 return date
               }
-              return moment(outMoment, format).isBetween(moment(endDateMin, format), moment(endDateMax, format)) || 'Should be within 18 to 22 hours of Incubation In'
+
+              return outMoment.isBetween(endDateMin, endDateMax) || 'Should be within 18 to 22 hours of Incubation In'
             }
           ],
           noNegatives: [
@@ -607,7 +609,7 @@
           logbookNumber: 1,
           nitrate: null,
           phosphate: null,
-          precipitation: 0.00,
+          precipitation: null,
           secchiDepth: null,
           specificConductivity: null,
           turbidity: null,
@@ -643,6 +645,8 @@
           let key = this.selectedSite['.key']
 
           this.newLogData.stationName = this.selectedSite.stationName
+          this.newLogData.aasNumber = this.selectedSite.adoptAStreamId || ''
+          this.newLogData.storetID = this.selectedSite.storetID || ''
           this.newLogData.logbookAbbv = this.selectedSite.logbookAbbv
           this.newLogData.ecoliLargeCells = this.ecoliLargeCells
           this.newLogData.ecoliSmallCells = this.ecoliSmallCells
@@ -655,6 +659,12 @@
           this.updateCollectionSite(collDate, key)
 
           this.$firebaseRefs.reports.push(this.newLogData)
+          .on('value', (snap) => {
+            const snapcopy = {...snap.val()}
+            const key = snap.key
+            db.ref('allReports/' + key).set(snapcopy)
+          })
+
           this.incrementLogbookNumber(this.newLogData.logbookNumber)
 
           // Success!
@@ -670,6 +680,8 @@
       },
       resetForm: function () {
         let oldLog = { ...this.newLogData }
+        this.ecoliLargeCells = null
+        this.ecoliSmallCells = null
 
         this.newLogData = {
           airTemp: null,
@@ -716,35 +728,28 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
-        console.log('test')
         if (this.totalEcoli) {
-          console.log(this.totalEcoli)
           this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
         }
-        console.log('test 2')
+
         // Last turbidity equation
         if (this.newLogData.turbidity) {
           this.$firebaseRefs.collectionSites.child(key).child('lastTurbidityResult').set(this.newLogData.turbidity)
         }
-        console.log('test 3')
 
         // Last rainfall equation
         if (this.newLogData.precipitation) {
           this.$firebaseRefs.collectionSites.child(key).child('lastRainfallResult').set(this.newLogData.precipitation)
         }
-        console.log('test 4')
 
         // Last specific conductivity equation
         if (this.newLogData.specificConductivity) {
           this.$firebaseRefs.collectionSites.child(key).child('lastConductivityResult').set(this.newLogData.specificConductivity)
         }
-        console.log('test 5')
 
         if (!this.selectedSite.firstCollectionDate) {
           this.$firebaseRefs.collectionSites.child(key).child('firstCollectionDate').set(collDate)
         }
-
-        console.log(this.selectedSite)
       },
       incrementLogbookNumber (newLogbookNum) {
         this.$firebaseRefs.logbookNumber.child('currentLogbookNumber').set(newLogbookNum)

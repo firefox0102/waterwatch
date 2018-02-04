@@ -3,7 +3,7 @@
   <div class="graph-card">
     <div class="graph-card-title">
       <span class="graph-card-title__primary">
-        Turbidity
+        Turbidity (NTU)
         <v-dialog
           v-model="controls.turbidityDialog"
           content-class="nww-dialog"
@@ -73,8 +73,10 @@ export default {
         xAxis: {
           type: 'datetime',
           dateTimeLabelFormats: { // don't display the dummy year
-            month: '%e/%m/%y',
-            year: '%b'
+            day: '%m/%d/%y',
+            month: '%m/%d/%y',
+            week: '%m/%d/%y',
+            year: '%m/%d/%y'
           },
           title: {
             text: 'Collection Date'

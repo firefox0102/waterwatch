@@ -80,7 +80,7 @@ export default {
   watch: {
     user: function () {
       if (firebase.auth().currentUser) {
-        this.$router.push('/logData')
+        this.$router.replace('/logData')
       }
     }
   },
@@ -119,7 +119,7 @@ export default {
       })
     },
     onSignedIn () {
-      this.$router.push('/logData')
+      this.$router.replace('/logData')
     },
     resetPassword () {
       firebase.auth().sendPasswordResetEmail(this.formUser.email).then(() => {

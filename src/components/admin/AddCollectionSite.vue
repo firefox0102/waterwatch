@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-dialog v-model="controls.showDialog"  :overlay="false">
+    <v-dialog v-model="controls.showDialog" :overlay="false">
       <v-btn slot="activator" class="btn-nww--light">Add New Site</v-btn>
       <v-card>
         <div class="page-content-header">
@@ -54,7 +54,7 @@
     </v-dialog>
     <v-snackbar
       :timeout="snackbar.timeout"
-      :error="true"
+      :error="false"
       v-model="snackbar.errorVisible">
       {{snackbar.errorMessage}}
       <v-btn dark flat @click.native="snackbar.errorVisible = false">Close</v-btn>
@@ -74,6 +74,7 @@ import { db } from '../../helpers/firebase'
 import _ from 'lodash'
 
 let collectionSitesRef = db.ref('collectionSites')
+import {uploadNewGeoJsonFile} from '../../helpers/generateGeoJson'
 let labsRef = db.ref('labs')
 let partnersRef = db.ref('partners')
 let metaRef = db.ref('metaData')
@@ -145,12 +146,7 @@ export default {
       try {
         this.$firebaseRefs.collectionSites.push(this.newCollectionSite)
 
-        let oldActive = parseInt(this.metaData[0]['.value'])
-        let oldTotal = parseInt(this.metaData[3]['.value'])
-        let newActive = oldActive + 1
-        this.$firebaseRefs.metaData.child('activeSites').set(newActive)
-        let newTotalSites = oldTotal + 1
-        this.$firebaseRefs.metaData.child('totalSites').set(newTotalSites)
+        this.uploadNewJsonFile()
 
         this.snackbar.successVisible = true
         this.controls.showDialog = false
@@ -175,6 +171,11 @@ export default {
     },
     close () {
       this.controls.showDialog = false
+    },
+    uploadNewJsonFile () {
+      this.$bindAsArray('jsonSites', collectionSitesRef, null, () => {
+        uploadNewGeoJsonFile(this.jsonSites)
+      })
     }
   }
 }

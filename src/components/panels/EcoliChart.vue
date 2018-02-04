@@ -3,7 +3,7 @@
   <div class="graph-card">
     <div class="graph-card-title">
       <span class="graph-card-title__primary">
-        E. coli
+        E. coli (MPN/100mL)
         <v-dialog
           v-model="controls.ecoliDialog"
           content-class="nww-dialog"
@@ -37,7 +37,7 @@
         <span v-if="selectedSite" class="graph-card-title__secondary">
           {{ selectedSite.lastEColiResult }}
           on
-          {{ selectedSite.lastCollectionDate }}
+          {{ selectedSite.lastCollectionDate | formatDate }}
         </span>
       </div>
     </div>
@@ -82,8 +82,10 @@ export default {
         xAxis: {
           type: 'datetime',
           dateTimeLabelFormats: { // don't display the dummy year
-            month: '%e/%m/%y',
-            year: '%b'
+            day: '%m/%d/%y',
+            month: '%m/%d/%y',
+            week: '%m/%d/%y',
+            year: '%m/%d/%y'
           },
           title: {
             text: 'Collection Date'
@@ -100,7 +102,7 @@ export default {
         tooltip: {
           crosshairs: true,
           shared: true,
-          pointFormat: '{point.y} (MPN/100mL)'
+          pointFormat: '{point.y:,.0f} (MPN/100mL)'
         },
         plotOptions: {
           column: {
