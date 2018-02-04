@@ -637,8 +637,8 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
-        if (this.totalEcoli) {
-          this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
+        if (this.getTotalEcoli) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.getTotalEcoli)
         }
 
         // Last turbidity equation
