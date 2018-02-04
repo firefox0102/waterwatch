@@ -402,6 +402,16 @@
         handler (newSites) {
           this.selectedSite = _.find(newSites, (obj) => { return obj['.key'] === this.routeCollectionSiteId }, this.routeCollectionSiteId)
         }
+      },
+      selectedSite: {
+        handler (newSite) {
+          if (newSite) {
+            if (this.$firebaseRefs.reports) {
+              this.$unbind('reports')
+            }
+            this.$bindAsArray('reports', db.ref('reports/' + newSite['.key']))
+          }
+        }
       }
     },
     beforeMount () {
@@ -599,6 +609,7 @@
         try {
           this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.routeCollectionSiteId + '/' + this.targetLogData['.key']))
           this.$bindAsObject('allReportsLogObject', db.ref('allReports/' + this.targetLogData['.key']))
+
           if (this.ecoliLargeCells) {
             this.targetLogData.ecoliLargeCells = this.ecoliLargeCells
           }
@@ -615,7 +626,24 @@
 
           let itemCopy = { ...this.targetLogData }
           delete itemCopy['.key']
-          this.$firebaseRefs.firebaseLogObject.set(itemCopy)
+
+          if (this.tableLogData.collectionSite !== this.selectedSite['.key']) {
+            let itemCopy = { ...this.targetLogData }
+            delete itemCopy['.key']
+            itemCopy.stationName = this.selectedSite.stationName
+            itemCopy.aasNumber = this.selectedSite.adoptAStreamId || ''
+            itemCopy.storetID = this.selectedSite.storetID || ''
+            itemCopy.logbookAbbv = this.selectedSite.logbookAbbv
+            itemCopy.collectionSiteId = this.selectedSite['.key']
+
+            this.$firebaseRefs.reports.push(itemCopy)
+              .on('value', () => {
+                this.$firebaseRefs.firebaseLogObject.remove()
+              })
+          } else {
+            this.$firebaseRefs.firebaseLogObject.set(itemCopy)
+          }
+
           this.$firebaseRefs.allReportsLogObject.set(itemCopy)
           this.$unbind('firebaseLogObject')
           this.$unbind('allReportsLogObject')
