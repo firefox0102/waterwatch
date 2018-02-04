@@ -164,6 +164,7 @@ export default {
       this.controls.showDialog = false
     },
     applyUpdatesToReports (targetCollectionSite) {
+      console.log(targetCollectionSite)
       _.forEach(this.reports, (item) => {
         let itemCopy = { ...item }
         delete itemCopy['.key']
@@ -174,6 +175,7 @@ export default {
 
         console.log(itemCopy)
         this.$firebaseRefs.reports.child(item['.key']).set(itemCopy)
+        db.ref('allReports/' + item['.key']).set(itemCopy)
       })
     },
     uploadNewJsonFile () {
