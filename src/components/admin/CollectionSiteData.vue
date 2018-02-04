@@ -51,7 +51,7 @@
           <div class="collection-data-group__row">
             <a
               class="collection-data-group__link"
-              v-bind:href="site.googleMapsUrl"
+              v-bind:href="getGoogleMapsUrl"
               target="_blank">
               View Site on Google Maps
             </a>
@@ -229,6 +229,15 @@ export default {
   name: 'collection-sites',
   components: {
     EditLogData
+  },
+  computed: {
+    getGoogleMapsUrl: function () {
+      if (this.site && this.site.longitude && this.site.latitude) {
+        return `https://www.google.com/maps/place/${this.site.latitude},${this.site.longitude}`
+      } else {
+        return null
+      }
+    }
   },
   firebase () {
     return {
