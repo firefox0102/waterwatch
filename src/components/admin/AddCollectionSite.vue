@@ -146,8 +146,7 @@ export default {
         this.$firebaseRefs.collectionSites.push(this.newCollectionSite)
 
         let oldActive = parseInt(this.metaData[0]['.value'])
-        let oldTotal = parseInt(this.metaData[2]['.value'])
-
+        let oldTotal = parseInt(this.metaData[3]['.value'])
         let newActive = oldActive + 1
         this.$firebaseRefs.metaData.child('activeSites').set(newActive)
         let newTotalSites = oldTotal + 1
