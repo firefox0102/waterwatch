@@ -79,7 +79,7 @@
               </v-select>
             </div>
             <div class="select-section select-section--wide">
-              <span class="select-section__label">Select a lab:</span>
+              <span class="select-section__label">Select a site:</span>
               <v-select
                 v-bind:items="collectionSites"
                 v-model="selectedSite"
