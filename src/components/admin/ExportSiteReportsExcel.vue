@@ -309,7 +309,7 @@ export default {
           collectionTime: item.collectionTime,
           participation: '1',
           samplingTime: '60',
-          monitor: 'Micheal Meyer (25064)',
+          monitor: 'Michael Meyer (25064)',
           precipitation: item.precipitation,
           hours: '24',
           specificConductivity: item.specificConductivity,

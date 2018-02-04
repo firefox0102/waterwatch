@@ -262,15 +262,6 @@ export default {
     EditLogData,
     JsonExcel
   },
-  computed: {
-    getGoogleMapsUrl: function () {
-      if (this.site && this.site.longitude && this.site.latitude) {
-        return `https://www.google.com/maps/place/${this.site.latitude},${this.site.longitude}`
-      } else {
-        return null
-      }
-    }
-  },
   firebase () {
     return {
       firebaseSite: {
@@ -315,7 +306,7 @@ export default {
             collectionTime: report.collectionTime || '',
             participation: '1',
             samplingTime: '60',
-            monitor: 'Micheal Meyer (25064)',
+            monitor: 'Michael Meyer (25064)',
             precipitation: report.precipitation || '',
             hours: '24',
             specificConductivity: report.specificConductivity || '',
@@ -370,6 +361,13 @@ export default {
         })
       }
       return jsonData
+    },
+    getGoogleMapsUrl: function () {
+      if (this.site && this.site.longitude && this.site.latitude) {
+        return `https://www.google.com/maps/place/${this.site.latitude},${this.site.longitude}`
+      } else {
+        return null
+      }
     }
   },
   watch: {
