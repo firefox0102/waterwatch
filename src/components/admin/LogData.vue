@@ -673,7 +673,7 @@
           chlorophyll: null,
           coliformLargeCells: '',
           coliformSmallCells: '',
-          collectionDate: moment(new Date().toISOString()).format('YYYY-MM-DD'),
+          collectionDate: oldLog.collectionDate,
           collectionSite: null,
           collectionTime: '',
           dilution: null,
