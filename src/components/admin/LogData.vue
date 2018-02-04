@@ -109,6 +109,7 @@
               label="Analyst (Initials)"
               class="input-group--limit-height"
               required
+              :rules="formRules.required"
               v-model="newLogData.analyst">
           </v-text-field>
         </div>
@@ -556,6 +557,11 @@
               let value = parseFloat(v)
               if (isNaN(value)) { return true }
               return (Number.isInteger(value) && value >= 0 && value <= 49) || 'Should be between 0-49 (Leave empty if not recorded)'
+            }
+          ],
+          required: [
+            (v) => {
+              return (v !== '' || 'Value is required')
             }
           ],
           smallCellsRules: [
