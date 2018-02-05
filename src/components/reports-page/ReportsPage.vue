@@ -220,7 +220,7 @@ let labsRef = db.ref('labs')
 let collectionSitesRef = db.ref('collectionSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
 // let oldDate = moment(new Date('2017.09.01')).format('YYYY-MM-DD')
-let oldDate = moment().subtract(3, 'months').format('YYYY-MM-DD')
+let oldDate = moment().subtract(2, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'reports-page',
