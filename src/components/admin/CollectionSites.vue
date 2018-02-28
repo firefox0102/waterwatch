@@ -373,58 +373,36 @@ export default {
       return this.showArchived ? 'Hide Archived' : 'View Archived'
     },
     adpotExport () {
-      const csIdArray = this.getCollectionSitesArray(this.selected)
-      console.log(csIdArray)
-      axios({
-        url: 'https://waterwatch-cb707.firebaseapp.com/export',
-        method: 'POST',
-        responseType: 'text/msexcel' // important
-      }).then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', 'file.xls')
-        document.body.appendChild(link)
-        link.click()
-      })
+      this.postToAPI('adopt_report')
     },
     exportXls () {
-      console.log('export xls')
-      const csIdArray = this.getCollectionSitesArray(this.selected)
-      console.log(csIdArray)
-      axios({
-        url: 'https://waterwatch-cb707.firebaseapp.com/export',
-        method: 'POST',
-        responseType: 'text/msexcel' // important
-      }).then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', 'file.xls')
-        document.body.appendChild(link)
-        link.click()
-      })
+      this.postToAPI('regular_report')
     },
     storetExport () {
-      console.log('export storet')
-      const csIdArray = this.getCollectionSitesArray(this.selected)
-      console.log(csIdArray)
-      axios({
-        url: 'https://waterwatch-cb707.firebaseapp.com/export',
-        method: 'POST',
-        responseType: 'text/msexcel' // important
-      }).then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', 'file.xls')
-        document.body.appendChild(link)
-        link.click()
-      })
+      this.postToAPI('storet_report')
     },
     getCollectionSitesArray (selected) {
       return _.map(selected, (collectionSite) => {
         return collectionSite['.key']
+      })
+    },
+    postToAPI (exportType) {
+      const csIdArray = this.getCollectionSitesArray(this.selected)
+      axios({
+        url: 'https://waterwatch-cb707.firebaseapp.com/export',
+        method: 'POST',
+        data: {
+          'export_type': exportType,
+          'start_date': this.startDate,
+          'end_date': this.endDate,
+          'collection_sites': csIdArray
+        }
+      }).then((response) => {
+        let blob = new Blob([response.data], { type: 'application/vnd.ms-excel' })
+        let link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = 'peter.xls'
+        link.click()
       })
     }
   }

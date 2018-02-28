@@ -252,7 +252,9 @@ function getCSVData ({ exportType, startDate, endDate, collectionSites }) {
   })
 
   return Promise.all(promiseCollection).then(function (values) {
+    console.log(values)
     reportsCollection = _.flatten(values)
+    console.log('promise all started')
 
     if (exportType === 'storet_report') {
       returnCollection = storetReport(reportsCollection)
@@ -280,24 +282,27 @@ function getCSVData ({ exportType, startDate, endDate, collectionSites }) {
 }
 
 function getAdminData ({ siteKey, startDate, endDate }) {
-  return admin.database().ref('reports/' + siteKey).orderByChild('collectionDate').startAt(startDate).endAt(endDate)
-    .once('value', (snapshot) => {
-      var data = []
-      _.map(snapshot.val(), (object) => {
-        data.push(object)
+  var promise1 = new Promise(function (resolve, reject) {
+    admin.database().ref('reports/' + siteKey).orderByChild('collectionDate').startAt(startDate).endAt(endDate)
+      .once('value', (snapshot) => {
+        var data = []
+        _.map(snapshot.val(), (object) => {
+          data.push(object)
+        })
+        resolve(data)
+      }, function (error) {
+        console.error(error)
       })
-      return data
-    }, function (error) {
-      console.error(error)
-    })
+  })
+
+  return promise1
 }
 
 function adoptReport (reports) {
   if (!(reports.length > 0)) return
   var jsonData = []
-
   jsonData = _.map(reports, (report) => {
-    let startDate = moment(report.collectionDate).format('MM/DD/YY')
+    let startDate = moment(report.collectionDate).utcOffset(60).format('MM/DD/YY')
 
     return {
       aasSiteName: report.stationName + ' (' + report.aasNumber + ')',
@@ -323,8 +328,8 @@ function storetReport (reports) {
   var jsonData = []
 
   jsonData = _.map(reports, (report) => {
-    let lDate = moment(report.collectionDate).format('YYYYMMDD')
-    let startDate = moment(report.collectionDate).format('YYYY-MM-DD')
+    let lDate = moment(report.collectionDate).utcOffset(60).format('YYYYMMDD')
+    let startDate = moment(report.collectionDate).utcOffset(60).format('YYYY-MM-DD')
     let storetTime = (report.collectionTime === '') ? '' : `${report.collectionTime}:00`
 
     return {
