@@ -11,12 +11,12 @@
     ],
     "rewrites": [
       {
-        "source": "/app/**",
-        "destination": "/index.html"
-      },
-      {
         "source": "/export",
         "function": "exportExcel"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   },
