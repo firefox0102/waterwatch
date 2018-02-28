@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "waterwatch-cb707",
+  "private_key_id": "fd4f5c2d86dd19fbbe7e6e29f657ecdbdb77675d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC7e7+iFQ9CwqnL\nM5US03uYTXpEEZAS6MR0v4t1J3kRa/moy6UJd71ORaa9xKHWxTndBSZOcCF362Sq\nO2qXyOEPs51PtoNi1uRcPg0amXGzOr4brRJcu1EgzA5tJ+uOv0EJfSU8NJDNmgNX\n2wuoqSmvSpZ66ooLDN1hu0VWZxe+Hs4kt9iA2o4oB+UHIShHWGmCMrIW9CC8Qu4B\nTCE0bOuBdhZulLwod+C5xPDKt58XTJOsSL518nYVKKoIFL3t0ekOpW33t5bP5RDu\nLfxqWatZ35Ps+7XLe37c7OWN2mSyVVAWAb6xE0kE1WznCAfF6RMMXu1/eQee39dM\nsQrADHupAgMBAAECggEAJgAdpfkVyEbTiovQfenepc6iZxSWOrbyRuWiGyNejzDv\nAA8Syvn5pVlJxDIMSY9dPJa0Hnbs2bUdCMIVR2GgeIHD82m/dLOwwp+TIV6TpKvV\n558rVx9igL7Ld8V9IchTIty6RNs0tG+wmMidsthiyhRYrt5GD5pSbuI52hr4PYEA\nGdZpVSW4HqOgvbfx0a17i2ShwxI9Ts/YLzIFNnqxsoG+S0nl0yxSqOmZr5LjiiCb\nJOFeMop+IJs8zy34En/+CiMqdezWe+1qwCm3/juEsjfwqCMjyS86qG4S9Ght9rO0\nKGGNAR/kuEqUluIVMU3t2kwR4mDJeOjSiVzhp0lHpwKBgQD/DCYpnDIixY2WnTAU\npjAJXCLkRBCCeRm1VMklxBGpg40K6QzYPkAdEyBj5EsaNAZR8jAL/EMM0FKi0CIg\nanyNuWIqYN1frSUaM1rUTDcD7n8Mdxih4mJWZK0l0a7dFqc3FqscCrydzE/0cJOp\nk51swvyvQ1JtWkBSw2RzYWEc3wKBgQC8LwBg4P7FtK2GJsjkzkcBEpCOtDe5Qu+7\npVQxA+BCojIlzGPvpnRb1m6xXALAg+AF5a4QQ7Dh3JijhqPCSN7XuMx/jWwxb40B\nTv+YUgZr/VTGjj28ITzGnOjahgSS461ZRxMUV3q4XFoXbcJydpLvCzkrwQwipwU6\nFbxtMwnwdwKBgQDE4P38lORmzxUTNNfOuNLQBt2wU5JjBVSBE6gKjSYNMs2HpIsT\nykn3p7ITKkGHQq22SDwqpFql45JGuF//ofPv+zD6AbghiSjg5s+wnfzB/jL4zl6n\naHf8tM6sKQbRCBGghtEjXm5naTY3PUffWWHmeUZRjKhuXYLV4JsELiGnBQKBgQC3\nLn2M0JfQdk9PviNibtW5WovzDcUMhvb8TzSEPgSoeGCeYLaLSxoLZ9H6vdlD81s4\nAlsNJAdj5SuESwTPk8WwcghGxbCi8rZspqyxZm8v4bsLSN0Za7VQlN8qELkVD6Hn\nvQL6kyk3m1ZrZgGZEIl5PhCZ4eJhPPoej5gLKFqtgwKBgE9c8MMPNnhNpWJuP8H7\n2LMCCDOZ96HsMABHjcQpiyYd5fsu7tbkYKUENiHVJvS0hGGyhKTWea4DgnvQd2zK\nwFNHRrVgUNXvk6ff2MFbC66kfDEuEiJVtNBap3Z5d4mX5kYdlKB/w05VbaVEQyuf\nj2aXk9ljGxK/JLYknjyND+KL\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-55qe6@waterwatch-cb707.iam.gserviceaccount.com",
+  "client_id": "110558303777495122706",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-55qe6%40waterwatch-cb707.iam.gserviceaccount.com"
+}

@@ -92,6 +92,40 @@
                 <v-icon right dark>unarchive</v-icon>
               </v-btn>
             </div>
+            <div
+              class="site-reports-toolbar-export"
+              v-if="selected.length > 0"
+            >
+              <v-menu
+                offset-y
+                left>
+                <div
+                  slot="activator"
+                  class="site-reports-toolbar-export__activator">
+                  <div class="site-reports-toolbar-export__activator-text">
+                    Export
+                  </div>
+                  <i class="material-icons">arrow_drop_down</i>
+                </div>
+                <v-list>
+                  <v-list-tile v-on:click="exportXls">
+                    <v-list-tile-title>
+                      Export as XLS
+                    </v-list-tile-title>
+                  </v-list-tile>
+                   <v-list-tile v-on:click="adpotExport">
+                    <v-list-tile-title>
+                      Export for Adopt-A-Stream
+                    </v-list-tile-title>
+                  </v-list-tile>
+                   <v-list-tile v-on:click="storetExport">
+                    <v-list-tile-title>
+                      Export for STORET
+                    </v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
+            </div>
           </div>
         </div>
         <v-card class="nww-table nww-table--left-align">
@@ -190,6 +224,8 @@ import AddCollectionSite from './AddCollectionSite'
 import EditCollectionSite from './EditCollectionSite'
 import {uploadNewGeoJsonFile} from '../../helpers/generateGeoJson'
 import moment from 'moment'
+import _ from 'lodash'
+import axios from 'axios'
 
 let collectionSitesRef = db.ref('collectionSites')
 let archivedRef = db.ref('archivedSites')
@@ -335,6 +371,61 @@ export default {
     },
     archivedText () {
       return this.showArchived ? 'Hide Archived' : 'View Archived'
+    },
+    adpotExport () {
+      const csIdArray = this.getCollectionSitesArray(this.selected)
+      console.log(csIdArray)
+      axios({
+        url: 'https://waterwatch-cb707.firebaseapp.com/export',
+        method: 'POST',
+        responseType: 'text/msexcel' // important
+      }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', 'file.xls')
+        document.body.appendChild(link)
+        link.click()
+      })
+    },
+    exportXls () {
+      console.log('export xls')
+      const csIdArray = this.getCollectionSitesArray(this.selected)
+      console.log(csIdArray)
+      axios({
+        url: 'https://waterwatch-cb707.firebaseapp.com/export',
+        method: 'POST',
+        responseType: 'text/msexcel' // important
+      }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', 'file.xls')
+        document.body.appendChild(link)
+        link.click()
+      })
+    },
+    storetExport () {
+      console.log('export storet')
+      const csIdArray = this.getCollectionSitesArray(this.selected)
+      console.log(csIdArray)
+      axios({
+        url: 'https://waterwatch-cb707.firebaseapp.com/export',
+        method: 'POST',
+        responseType: 'text/msexcel' // important
+      }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', 'file.xls')
+        document.body.appendChild(link)
+        link.click()
+      })
+    },
+    getCollectionSitesArray (selected) {
+      return _.map(selected, (collectionSite) => {
+        return collectionSite['.key']
+      })
     }
   }
 }
