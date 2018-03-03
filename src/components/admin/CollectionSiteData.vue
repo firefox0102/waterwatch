@@ -90,7 +90,7 @@
                     <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn class="btn btn-nww" @click.native="save()">Save</v-btn>
-                        <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
+                        <v-btn flat color="info" @click.native="cancel()">Cancel</v-btn>
                       </v-card-actions>
                     </template>
                   </v-date-picker>
@@ -108,7 +108,7 @@
                     <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn class="btn btn-nww" @click.native="save()">Save</v-btn>
-                        <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
+                        <v-btn flat color="info" @click.native="cancel()">Cancel</v-btn>
                       </v-card-actions>
                     </template>
                   </v-date-picker>
@@ -125,6 +125,39 @@
                 v-bind:post-submit-form="postSubmitForm"
                 v-if="selected.length === 1">
               </edit-log-data>
+              <v-btn
+                v-if="selected.length > 0"
+                color="error"
+                v-on:click.native="controls.showDeleteDialog = true"
+                class="site-reports-actions__action btn btn-nww"
+              >
+                  Delete
+                <v-icon right dark>delete</v-icon>
+              </v-btn>
+              <v-dialog v-model="controls.showDeleteDialog" lazy absolute>
+                <v-card class="card-alert">
+                  <v-card-title>
+                    <div class="headline log-data-confirm__header">Delete Data?</div>
+                  </v-card-title>
+                  <v-card-text>Please confirm that you would like to permenantly delete this data</v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="info"
+                      flat
+                      v-on:click.native="controls.showDeleteDialog = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      class="btn-nww"
+                      v-on:click.native="deleteSelected(selected)"
+                      type="submit">
+                      Delete Forever
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+
             </div>
             <div class="site-reports-toolbar-export">
               <v-menu
@@ -241,6 +274,13 @@
         </v-card>
       </div>
     </v-card>
+    <v-snackbar
+      :timeout="snackbar.timeout"
+      :error="true"
+      v-model="snackbar.deleteVisible">
+      {{snackbar.deleteSuccessMessage}}
+      <v-btn dark flat @click.native="snackbar.deleteVisible = false">Close</v-btn>
+    </v-snackbar>
   </v-card>
 </template>
 
@@ -400,7 +440,8 @@ export default {
         search: '',
         startDateModal: false,
         endDateModal: false,
-        exportAction: { label: 'Export' }
+        exportAction: { label: 'Export' },
+        showDeleteDialog: false
       },
       headers: [
         { text: 'Logbook #', value: 'logbookNumber' },
@@ -488,10 +529,11 @@ export default {
         'comments': 'Result Comment'
       },
       snackbar: {
+        deleteVisible: false,
         successVisible: false,
         successMessage: 'Data logged successfully!',
+        deleteSuccessMessage: 'Reports deleted successfully',
         timeout: 6000
-
       }
     }
   },
@@ -518,6 +560,16 @@ export default {
     postSubmitForm () {
       this.snackbar.successVisible = true
       this.resetSelected()
+    },
+    deleteSelected () {
+      _.each(this.selected, (item) => {
+        let key = item['.key']
+        this.$firebaseRefs.reports.child(key).remove()
+      })
+
+      this.selected = []
+      this.snackbar.deleteVisible = true
+      this.controls.showDeleteDialog = false
     }
   }
 }

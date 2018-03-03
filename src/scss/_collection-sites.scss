@@ -59,7 +59,7 @@ $toolbar-breakpoint: 1450px;
     width: 100%;
 
     @media screen and (min-width: $toolbar-breakpoint) {
-      width: 760px;
+      width: 820px;
     }
   }
 
@@ -76,13 +76,13 @@ $toolbar-breakpoint: 1450px;
     @media screen and (min-width: $toolbar-breakpoint) {
       justify-content: flex-end;
 
-      width: calc(100% - 760px);
+      width: calc(100% - 820px);
     }
   }
 
   &__text-content {
-    min-width: 112px;
-    width: 112px;
+    min-width: 156px;
+    width: 156px;
   }
 }
 

@@ -35,8 +35,11 @@
                 v-model="controls.search"
                 placeholder="Search collection sites"/>
             </div>
-            <div class="site-reports-datepickers">
-              <span class="site-reports-body-toolbar__text-content">Select date range:</span>
+            <div
+              v-if="selected.length > 0"
+              class="site-reports-datepickers"
+            >
+              <span class="site-reports-body-toolbar__text-content">Select export date range:</span>
               <div class="site-reports-toolbar-datepicker">
                 <v-menu lazy :close-on-content-click="false" v-model="controls.startDateModal" transition="scale-transition" offset-y full-width :nudge-left="0" max-width="290px">
                   <div
@@ -222,7 +225,7 @@
 import { db } from '../../helpers/firebase'
 import AddCollectionSite from './AddCollectionSite'
 import EditCollectionSite from './EditCollectionSite'
-import {uploadNewGeoJsonFile} from '../../helpers/generateGeoJson'
+import { uploadNewGeoJsonFile } from '../../helpers/generateGeoJson'
 import moment from 'moment'
 import _ from 'lodash'
 import axios from 'axios'
@@ -243,14 +246,6 @@ export default {
     return {
       collectionSites: collectionSitesRef.orderByChild('stationName'),
       metaData: metaRef
-    }
-  },
-  watch: {
-    startDate (val) {
-      this.filterByDate()
-    },
-    endDate (val) {
-      this.filterByDate()
     }
   },
   data: function () {
@@ -316,10 +311,6 @@ export default {
         this.pagination.descending = false
       }
     },
-    filterByDate () {
-      this.$unbind('collectionSites')
-      this.$bindAsArray('collectionSites', collectionSitesRef.orderByChild('lastCollectionDate').startAt(this.startDate).endAt(this.endDate))
-    },
     archiveSite (item) {
       this.$bindAsArray('setArchivedSites', archivedRef)
       this.$bindAsArray('setCollectionSites', collectionSitesRef)
@@ -373,13 +364,13 @@ export default {
       return this.showArchived ? 'Hide Archived' : 'View Archived'
     },
     adpotExport () {
-      this.postToAPI('adopt_report', 'NWW_Adopt-A-Stream-Report.xlsx')
+      this.postToAPI('adopt_report', 'NWW_Adopt-A-Stream-Report.csv')
     },
     exportXls () {
-      this.postToAPI('regular_report', 'NWW_Director_Report.xlsx')
+      this.postToAPI('regular_report', 'NWW_Director_Report.csv')
     },
     storetExport () {
-      this.postToAPI('storet_report', 'NWW_Director_Report.xlsx')
+      this.postToAPI('storet_report', 'NWW_Director_Report.csv')
     },
     getCollectionSitesArray (selected) {
       return _.map(selected, (collectionSite) => {

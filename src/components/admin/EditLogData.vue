@@ -341,7 +341,7 @@
                     slot="activator"
                     v-on:click.native="close"
                     flat
-                    primary
+                    color="primary"
                     class="btn">
                     Cancel
                   </v-btn>
