@@ -373,20 +373,20 @@ export default {
       return this.showArchived ? 'Hide Archived' : 'View Archived'
     },
     adpotExport () {
-      this.postToAPI('adopt_report')
+      this.postToAPI('adopt_report', 'NWW_Adopt-A-Stream-Report.xlsx')
     },
     exportXls () {
-      this.postToAPI('regular_report')
+      this.postToAPI('regular_report', 'NWW_Director_Report.xlsx')
     },
     storetExport () {
-      this.postToAPI('storet_report')
+      this.postToAPI('storet_report', 'NWW_Director_Report.xlsx')
     },
     getCollectionSitesArray (selected) {
       return _.map(selected, (collectionSite) => {
         return collectionSite['.key']
       })
     },
-    postToAPI (exportType) {
+    postToAPI (exportType, exportName) {
       const csIdArray = this.getCollectionSitesArray(this.selected)
       axios({
         url: 'https://waterwatch-cb707.firebaseapp.com/export',
@@ -401,7 +401,7 @@ export default {
         let blob = new Blob([response.data], { type: 'application/vnd.ms-excel' })
         let link = document.createElement('a')
         link.href = window.URL.createObjectURL(blob)
-        link.download = 'peter.xls'
+        link.download = exportName
         link.click()
       })
     }
