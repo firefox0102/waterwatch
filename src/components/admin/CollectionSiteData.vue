@@ -117,48 +117,6 @@
             </div>
           </div>
           <div class="site-reports-body-toolbar__secondary-content">
-            <div class="site-reports-actions">
-              <edit-log-data
-                v-bind:table-log-data="selected[0]"
-                v-bind:reset-selected="resetSelected"
-                v-bind:route-collection-site-id="$route.params.siteId"
-                v-bind:post-submit-form="postSubmitForm"
-                v-if="selected.length === 1">
-              </edit-log-data>
-              <v-btn
-                v-if="selected.length > 0"
-                color="error"
-                v-on:click.native="controls.showDeleteDialog = true"
-                class="site-reports-actions__action btn btn-nww"
-              >
-                  Delete
-                <v-icon right dark>delete</v-icon>
-              </v-btn>
-              <v-dialog v-model="controls.showDeleteDialog" lazy absolute>
-                <v-card class="card-alert">
-                  <v-card-title>
-                    <div class="headline log-data-confirm__header">Delete Data?</div>
-                  </v-card-title>
-                  <v-card-text>Please confirm that you would like to permenantly delete this data</v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      color="info"
-                      flat
-                      v-on:click.native="controls.showDeleteDialog = false">
-                      Cancel
-                    </v-btn>
-                    <v-btn
-                      class="btn-nww"
-                      v-on:click.native="deleteSelected(selected)"
-                      type="submit">
-                      Delete Forever
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-
-            </div>
             <div class="site-reports-toolbar-export">
               <v-menu
                 offset-y
@@ -208,8 +166,52 @@
                 </v-list>
               </v-menu>
             </div>
+            <div class="site-reports-actions">
+              <edit-log-data
+                v-bind:table-log-data="selected[0]"
+                v-bind:reset-selected="resetSelected"
+                v-bind:route-collection-site-id="$route.params.siteId"
+                v-bind:post-submit-form="postSubmitForm"
+                v-if="selected.length === 1">
+              </edit-log-data>
+              <v-btn
+                v-if="selected.length > 0"
+                color="error"
+                v-on:click.native="controls.showDeleteDialog = true"
+                class="site-reports-actions__action btn btn-nww"
+              >
+                  Delete
+                <v-icon right dark>delete</v-icon>
+              </v-btn>
+              <v-dialog v-model="controls.showDeleteDialog" lazy absolute>
+                <v-card class="card-alert">
+                  <v-card-title>
+                    <div class="headline log-data-confirm__header">Delete Data?</div>
+                  </v-card-title>
+                  <v-card-text>Please confirm that you would like to permenantly delete this data</v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="info"
+                      flat
+                      v-on:click.native="controls.showDeleteDialog = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      class="btn-nww"
+                      v-on:click.native="deleteSelected(selected)"
+                      type="submit">
+                      Delete Forever
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+
+            </div>
+
           </div>
         </div>
+
         <v-card class="nww-table nww-table--left-align">
           <v-data-table
               v-model="selected"
