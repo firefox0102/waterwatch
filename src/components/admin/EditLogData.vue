@@ -101,7 +101,7 @@
                   </v-time-picker>
                 </v-menu>
                 <v-text-field
-                    label="Rainfall (in)"
+                    label="Rainfall (in) [trace = 0.001]"
                     class="input-group--limit-height"
                     type="number"
                     step="0.01"
@@ -113,6 +113,7 @@
                   label="Analyst (Initials)"
                   class="input-group--limit-height"
                   required
+                  :rules="formRules.required"
                   v-model="targetLogData.analyst">
                 </v-text-field>
               </div>
@@ -340,7 +341,7 @@
                     slot="activator"
                     v-on:click.native="close"
                     flat
-                    primary
+                    color="primary"
                     class="btn">
                     Cancel
                   </v-btn>
@@ -394,12 +395,22 @@
       'postSubmitForm'
     ],
     firebase: {
-      collectionSites: collectionSitesRef
+      collectionSites: collectionSitesRef.orderByChild('stationName')
     },
     watch: {
       collectionSites: {
         handler (newSites) {
           this.selectedSite = _.find(newSites, (obj) => { return obj['.key'] === this.routeCollectionSiteId }, this.routeCollectionSiteId)
+        }
+      },
+      selectedSite: {
+        handler (newSite) {
+          if (newSite) {
+            if (this.$firebaseRefs.reports) {
+              this.$unbind('reports')
+            }
+            this.$bindAsArray('reports', db.ref('reports/' + newSite['.key']))
+          }
         }
       }
     },
@@ -420,6 +431,12 @@
             let computedValue = matrixValue * dilutionFactor
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
 
+            if (this.targetLogData.coliformLargeCells === '0' && this.targetLogData.coliformSmallCells === '0') {
+              return '<' + roundedValue
+            } else if (this.targetLogData.coliformLargeCells === '49' && this.targetLogData.coliformSmallCells === '48') {
+              return '>' + roundedValue
+            }
+
             return roundedValue
           }
         } catch (e) {
@@ -433,6 +450,12 @@
             let dilutionFactor = this.targetLogData.dilution === 0 ? 0 : 100 / this.targetLogData.dilution
             let computedValue = matrixValue * dilutionFactor
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
+
+            if (this.ecoliLargeCells === '0' && this.ecoliSmallCells === '0') {
+              return '<' + roundedValue
+            } else if (this.ecoliLargeCells === '49' && this.ecoliSmallCells === '48') {
+              return '>' + roundedValue
+            }
 
             return roundedValue
           }
@@ -542,6 +565,11 @@
               return (Number.isInteger(value) && value >= 0 && value <= 49) || 'Should be between 0-49 (Leave empty if not recorded)'
             }
           ],
+          required: [
+            (v) => {
+              return (v !== '' || 'Value is required')
+            }
+          ],
           smallCellsRules: [
             (v) => {
               let value = parseFloat(v)
@@ -593,6 +621,7 @@
         try {
           this.$bindAsObject('firebaseLogObject', db.ref('reports/' + this.routeCollectionSiteId + '/' + this.targetLogData['.key']))
           this.$bindAsObject('allReportsLogObject', db.ref('allReports/' + this.targetLogData['.key']))
+
           if (this.ecoliLargeCells) {
             this.targetLogData.ecoliLargeCells = this.ecoliLargeCells
           }
@@ -609,7 +638,24 @@
 
           let itemCopy = { ...this.targetLogData }
           delete itemCopy['.key']
-          this.$firebaseRefs.firebaseLogObject.set(itemCopy)
+
+          if (this.tableLogData.collectionSite !== this.selectedSite['.key']) {
+            let itemCopy = { ...this.targetLogData }
+            delete itemCopy['.key']
+            itemCopy.stationName = this.selectedSite.stationName
+            itemCopy.aasNumber = this.selectedSite.aasNumber || ''
+            itemCopy.storetId = this.selectedSite.storetId || ''
+            itemCopy.logbookAbbv = this.selectedSite.logbookAbbv
+            itemCopy.collectionSiteId = this.selectedSite['.key']
+
+            this.$firebaseRefs.reports.push(itemCopy)
+              .on('value', () => {
+                this.$firebaseRefs.firebaseLogObject.remove()
+              })
+          } else {
+            this.$firebaseRefs.firebaseLogObject.set(itemCopy)
+          }
+
           this.$firebaseRefs.allReportsLogObject.set(itemCopy)
           this.$unbind('firebaseLogObject')
           this.$unbind('allReportsLogObject')
@@ -631,8 +677,8 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
-        if (this.totalEcoli) {
-          this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
+        if (this.getTotalEcoli) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.getTotalEcoli)
         }
 
         // Last turbidity equation

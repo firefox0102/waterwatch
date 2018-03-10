@@ -237,7 +237,7 @@ export default {
 
         storetItems.push({
           'projectId': 'NWW_2012',
-          'lField': `${selectedSite.storetID}${lDate}`,
+          'lField': `${selectedSite.storetId}${lDate}`,
           'activityType': 'Sample-Routine',
           'activityMediaName': 'Water',
           'activityStartDate': storetDate,
@@ -251,7 +251,7 @@ export default {
           'dataLoggerLine': '',
           'characteristicName': 'Escherichia coli',
           'methodSpeciation': ' ',
-          'monitoringLocationId': item.storetID,
+          'monitoringLocationId': item.storetId,
           'resultDetectionCondition': ' ',
           'resultValue': item.totalEcoli,
           'resultUnit': 'MPN',
@@ -309,7 +309,7 @@ export default {
           collectionTime: item.collectionTime,
           participation: '1',
           samplingTime: '60',
-          monitor: 'Micheal Meyer (25064)',
+          monitor: 'Michael Meyer (25064)',
           precipitation: item.precipitation,
           hours: '24',
           specificConductivity: item.specificConductivity,

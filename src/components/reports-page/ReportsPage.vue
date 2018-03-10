@@ -67,6 +67,28 @@
                 </v-menu>
               </div>
             </div>
+            <div class="select-section">
+              <span class="select-section__label">Select a lab:</span>
+              <v-select
+                v-bind:items="labSet"
+                v-model="selectedLab"
+                item-text=".value"
+                item-value=".value"
+                label="Lab"
+                bottom>
+              </v-select>
+            </div>
+            <div class="select-section select-section--wide">
+              <span class="select-section__label">Select a site:</span>
+              <v-select
+                v-bind:items="collectionSites"
+                v-model="selectedSite"
+                item-text="stationName"
+                item-value="stationName"
+                label="Collection Site"
+                bottom>
+              </v-select>
+            </div>
           </div>
           <div class="site-reports-body-toolbar__secondary-content">
             <div class="site-reports-toolbar-export">
@@ -124,7 +146,7 @@
           <v-data-table
               v-model="selected"
               v-bind:headers="headers"
-              v-bind:items="reports"
+              v-bind:items="filteredReports"
               v-bind:pagination.sync="pagination"
               v-bind:search="controls.search"
               select-all
@@ -194,15 +216,19 @@ import _ from 'lodash'
 import moment from 'moment'
 import JsonExcel from '../json-excel/JsonExcel'
 
+let labsRef = db.ref('labs')
+let collectionSitesRef = db.ref('collectionSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
 // let oldDate = moment(new Date('2017.09.01')).format('YYYY-MM-DD')
-let oldDate = moment().subtract(3, 'months').format('YYYY-MM-DD')
+let oldDate = moment().subtract(2, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'reports-page',
   firebase () {
     return {
-      reports: db.ref('allReports').orderByChild('collectionDate').startAt(oldDate).endAt(todaysDate)
+      collectionSites: collectionSitesRef.orderByChild('stationName'),
+      reports: db.ref('allReports').orderByChild('collectionDate').startAt(oldDate).endAt(todaysDate),
+      labs: labsRef
     }
   },
   components: {
@@ -244,7 +270,7 @@ export default {
             collectionTime: report.collectionTime || '',
             participation: '1',
             samplingTime: '60',
-            monitor: 'Micheal Meyer (25064)',
+            monitor: 'Michael Meyer (25064)',
             precipitation: report.precipitation || '',
             hours: '24',
             specificConductivity: report.specificConductivity || '',
@@ -266,8 +292,8 @@ export default {
 
           return {
             projectID: 'NWW_2012',
-            stationName: `${report.storetID || ''}`,
-            lField: `${report.storetID || ''}${lDate}`,
+            stationName: `${report.storetId || ''}`,
+            lField: `${report.storetId || ''}${lDate}`,
             activityType: 'Sample-Routine',
             water: 'Water',
             collectionDate: startDate || '',
@@ -307,6 +333,32 @@ export default {
     },
     endDate (val) {
       this.filterByDate()
+    },
+    labs: {
+      handler () {
+        this.labSet = _.map(this.labs, '.value')
+      }
+    },
+    selectedLab (lab) {
+      this.filteredReports = this.filterAllReports({
+        lab,
+        collectionSite: this.selectedSite,
+        reports: this.reports
+      })
+    },
+    selectedSite (site) {
+      this.filteredReports = this.filterAllReports({
+        lab: this.selectedLab,
+        stationName: site,
+        reports: this.reports
+      })
+    },
+    reports (reports) {
+      this.filteredReports = this.filterAllReports({
+        lab: this.selectedLab,
+        collectionSite: this.selectedSite,
+        reports
+      })
     }
   },
   data: function () {
@@ -314,6 +366,12 @@ export default {
       startDate: oldDate,
       endDate: todaysDate,
       site: {},
+      selectedLab: null,
+      selectedSite: null,
+      labs: [],
+      labSet: [],
+      reports: [],
+      filteredReports: [],
       pagination: {
         sortBy: 'collectionDate',
         descending: 'asc',
@@ -352,7 +410,7 @@ export default {
         }]
       ],
       jsonFields: {
-        'logbookNumber': 'site ID #',
+        'logbookNumber': '#',
         'logbookAbbv': 'Site Name',
         'collectionDate': 'Collection Date',
         'collectionTime': 'Collection Time',
@@ -435,6 +493,23 @@ export default {
     filterByDate () {
       this.$unbind('reports')
       this.$bindAsArray('reports', db.ref('allReports').orderByChild('collectionDate').startAt(this.startDate).endAt(this.endDate))
+    },
+    filterAllReports ({ lab, stationName, reports }) {
+      console.log(lab)
+      console.log(stationName)
+      console.log(reports)
+
+      let fitered = _.filter(reports, (report) => {
+        let l = true
+        let s = true
+
+        if (lab) { l = report.lab === lab }
+        if (stationName) { s = report.stationName === stationName }
+
+        return l && s
+      })
+      console.log(fitered)
+      return fitered
     },
     resetSelected () {
       this.selected = []
@@ -533,6 +608,21 @@ export default {
     color: $color-bumble-bee;
     font-size: 13px;
     font-weight: 400;
+  }
+}
+
+.select-section {
+  display: flex;
+  align-items: center;
+  width: 300px;
+
+  &--wide {
+    width: 400px;
+  }
+
+  &__label {
+    width: 100px;
+    text-align: center;
   }
 }
 </style>

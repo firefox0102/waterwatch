@@ -33,10 +33,10 @@
               bottom>
             </v-select>
             <v-text-field label="Adopt-A-Stream Name" v-model="newCollectionSite.adoptAStreamName"></v-text-field>
-            <v-text-field label="Adopt-A-Stream 'S' ID (eg. S-4475)" v-model="newCollectionSite.adoptAStreamId"
+            <v-text-field label="Adopt-A-Stream 'S' ID (eg. S-4475)" v-model="newCollectionSite.aasNumber"
               :rules="[(v) => !!v || 'Enter the 4 numbers after S- only (Leave blank if no ID)']"></v-text-field>
             <v-text-field label="STORET Name" v-model="newCollectionSite.storetName"></v-text-field>
-            <v-text-field label="STORET Location ID (eg. NWW24)" v-model="newCollectionSite.storetLocationId"></v-text-field>
+            <v-text-field label="STORET Location ID (eg. NWW24)" v-model="newCollectionSite.storetId"></v-text-field>
             <v-select
               v-bind:items="partnerSet"
               v-model="newCollectionSite.collectionPartner"
@@ -119,7 +119,7 @@ export default {
       },
       newCollectionSite: {
         adoptAStreamName: '',
-        adoptAStreamId: '',
+        aasNumber: '',
         collectionPartner: '',
         hucName: '',
         lab: '',

@@ -35,8 +35,11 @@
                 v-model="controls.search"
                 placeholder="Search collection sites"/>
             </div>
-            <div class="site-reports-datepickers">
-              <span class="site-reports-body-toolbar__text-content">Select date range:</span>
+            <div
+              v-if="selected.length > 0"
+              class="site-reports-datepickers"
+            >
+              <span class="site-reports-body-toolbar__text-content">Select export date range:</span>
               <div class="site-reports-toolbar-datepicker">
                 <v-menu lazy :close-on-content-click="false" v-model="controls.startDateModal" transition="scale-transition" offset-y full-width :nudge-left="0" max-width="290px">
                   <div
@@ -91,6 +94,40 @@
                 Unarchive
                 <v-icon right dark>unarchive</v-icon>
               </v-btn>
+            </div>
+            <div
+              class="site-reports-toolbar-export"
+              v-if="selected.length > 0"
+            >
+              <v-menu
+                offset-y
+                left>
+                <div
+                  slot="activator"
+                  class="site-reports-toolbar-export__activator">
+                  <div class="site-reports-toolbar-export__activator-text">
+                    Export
+                  </div>
+                  <i class="material-icons">arrow_drop_down</i>
+                </div>
+                <v-list>
+                  <v-list-tile v-on:click="exportXls">
+                    <v-list-tile-title>
+                      Export as XLS
+                    </v-list-tile-title>
+                  </v-list-tile>
+                   <v-list-tile v-on:click="adpotExport">
+                    <v-list-tile-title>
+                      Export for Adopt-A-Stream
+                    </v-list-tile-title>
+                  </v-list-tile>
+                   <v-list-tile v-on:click="storetExport">
+                    <v-list-tile-title>
+                      Export for STORET
+                    </v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
             </div>
           </div>
         </div>
@@ -151,7 +188,7 @@
                 <td class="col-long table-cell__truncate--long">{{ props.item.adoptAStreamName }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.aasNumber }}</td>
                 <td class="col-long table-cell__truncate--long">{{ props.item.storetName }}</td>
-                <td class="col-long table-cell__truncate--long">{{ props.item.storetID }}</td>
+                <td class="col-long table-cell__truncate--long">{{ props.item.storetId }}</td>
                 <td>{{ props.item.numSamples }}</td>
                 <td>{{ props.item.firstCollectionDate }}</td>
                 <td class="table-cell__truncate--long">
@@ -188,8 +225,10 @@
 import { db } from '../../helpers/firebase'
 import AddCollectionSite from './AddCollectionSite'
 import EditCollectionSite from './EditCollectionSite'
-import {uploadNewGeoJsonFile} from '../../helpers/generateGeoJson'
+import { uploadNewGeoJsonFile } from '../../helpers/generateGeoJson'
 import moment from 'moment'
+import _ from 'lodash'
+import axios from 'axios'
 
 let collectionSitesRef = db.ref('collectionSites')
 let archivedRef = db.ref('archivedSites')
@@ -207,14 +246,6 @@ export default {
     return {
       collectionSites: collectionSitesRef.orderByChild('stationName'),
       metaData: metaRef
-    }
-  },
-  watch: {
-    startDate (val) {
-      this.filterByDate()
-    },
-    endDate (val) {
-      this.filterByDate()
     }
   },
   data: function () {
@@ -244,7 +275,7 @@ export default {
         { text: 'Adopt-A-Stream Name', value: 'adoptAStreamName' },
         { text: 'Adopt-A-Stream Number', value: 'aasNumber' },
         { text: 'STORET Name', value: 'storetName' },
-        { text: 'STORET Location ID', value: 'storetID' },
+        { text: 'STORET Location ID', value: 'storetId' },
         { text: '# Samples Collected', value: 'numSamples' },
         { text: 'First Collection Date', value: 'firstCollectionDate' },
         { text: 'Google Maps URL', value: 'googleMapsUrl' },
@@ -279,10 +310,6 @@ export default {
         this.pagination.sortBy = column
         this.pagination.descending = false
       }
-    },
-    filterByDate () {
-      this.$unbind('collectionSites')
-      this.$bindAsArray('collectionSites', collectionSitesRef.orderByChild('lastCollectionDate').startAt(this.startDate).endAt(this.endDate))
     },
     archiveSite (item) {
       this.$bindAsArray('setArchivedSites', archivedRef)
@@ -335,6 +362,39 @@ export default {
     },
     archivedText () {
       return this.showArchived ? 'Hide Archived' : 'View Archived'
+    },
+    adpotExport () {
+      this.postToAPI('adopt_report', 'NWW_Adopt-A-Stream-Report.csv')
+    },
+    exportXls () {
+      this.postToAPI('regular_report', 'NWW_Director_Report.csv')
+    },
+    storetExport () {
+      this.postToAPI('storet_report', 'NWW_Director_Report.csv')
+    },
+    getCollectionSitesArray (selected) {
+      return _.map(selected, (collectionSite) => {
+        return collectionSite['.key']
+      })
+    },
+    postToAPI (exportType, exportName) {
+      const csIdArray = this.getCollectionSitesArray(this.selected)
+      axios({
+        url: 'https://waterwatch-cb707.firebaseapp.com/export',
+        method: 'POST',
+        data: {
+          'export_type': exportType,
+          'start_date': this.startDate,
+          'end_date': this.endDate,
+          'collection_sites': csIdArray
+        }
+      }).then((response) => {
+        let blob = new Blob([response.data], { type: 'application/vnd.ms-excel' })
+        let link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = exportName
+        link.click()
+      })
     }
   }
 }

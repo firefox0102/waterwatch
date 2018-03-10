@@ -50,7 +50,7 @@
           <div class="collection-data-group__row">
             <a
               class="collection-data-group__link"
-              v-bind:href="site.googleMapsUrl"
+              v-bind:href="getGoogleMapsUrl"
               target="_blank">
               View Site on Google Maps
             </a>
@@ -90,7 +90,7 @@
                     <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn class="btn btn-nww" @click.native="save()">Save</v-btn>
-                        <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
+                        <v-btn flat color="info" @click.native="cancel()">Cancel</v-btn>
                       </v-card-actions>
                     </template>
                   </v-date-picker>
@@ -108,7 +108,7 @@
                     <template slot-scope="{ save, cancel }">
                       <v-card-actions>
                         <v-btn class="btn btn-nww" @click.native="save()">Save</v-btn>
-                        <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
+                        <v-btn flat color="info" @click.native="cancel()">Cancel</v-btn>
                       </v-card-actions>
                     </template>
                   </v-date-picker>
@@ -117,15 +117,6 @@
             </div>
           </div>
           <div class="site-reports-body-toolbar__secondary-content">
-            <div class="site-reports-actions">
-              <edit-log-data
-                v-bind:table-log-data="selected[0]"
-                v-bind:reset-selected="resetSelected"
-                v-bind:route-collection-site-id="$route.params.siteId"
-                v-bind:post-submit-form="postSubmitForm"
-                v-if="selected.length === 1">
-              </edit-log-data>
-            </div>
             <div class="site-reports-toolbar-export">
               <v-menu
                 offset-y
@@ -175,8 +166,52 @@
                 </v-list>
               </v-menu>
             </div>
+            <div class="site-reports-actions">
+              <edit-log-data
+                v-bind:table-log-data="selected[0]"
+                v-bind:reset-selected="resetSelected"
+                v-bind:route-collection-site-id="$route.params.siteId"
+                v-bind:post-submit-form="postSubmitForm"
+                v-if="selected.length === 1">
+              </edit-log-data>
+              <v-btn
+                v-if="selected.length > 0"
+                color="error"
+                v-on:click.native="controls.showDeleteDialog = true"
+                class="site-reports-actions__action btn btn-nww"
+              >
+                  Delete
+                <v-icon right dark>delete</v-icon>
+              </v-btn>
+              <v-dialog v-model="controls.showDeleteDialog" lazy absolute>
+                <v-card class="card-alert">
+                  <v-card-title>
+                    <div class="headline log-data-confirm__header">Delete Data?</div>
+                  </v-card-title>
+                  <v-card-text>Please confirm that you would like to permenantly delete this data</v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="info"
+                      flat
+                      v-on:click.native="controls.showDeleteDialog = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      class="btn-nww"
+                      v-on:click.native="deleteSelected(selected)"
+                      type="submit">
+                      Delete Forever
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+
+            </div>
+
           </div>
         </div>
+
         <v-card class="nww-table nww-table--left-align">
           <v-data-table
               v-model="selected"
@@ -241,6 +276,13 @@
         </v-card>
       </div>
     </v-card>
+    <v-snackbar
+      :timeout="snackbar.timeout"
+      :error="true"
+      v-model="snackbar.deleteVisible">
+      {{snackbar.deleteSuccessMessage}}
+      <v-btn dark flat @click.native="snackbar.deleteVisible = false">Close</v-btn>
+    </v-snackbar>
   </v-card>
 </template>
 
@@ -306,7 +348,7 @@ export default {
             collectionTime: report.collectionTime || '',
             participation: '1',
             samplingTime: '60',
-            monitor: 'Micheal Meyer (25064)',
+            monitor: 'Michael Meyer (25064)',
             precipitation: report.precipitation || '',
             hours: '24',
             specificConductivity: report.specificConductivity || '',
@@ -328,8 +370,8 @@ export default {
 
           return {
             projectID: 'NWW_2012',
-            stationName: `${this.firebaseSite[0].storetID || ''}`,
-            lField: `${this.firebaseSite[0].storetID || ''}${lDate || ''}`,
+            stationName: `${this.firebaseSite[0].storetId || ''}`,
+            lField: `${this.firebaseSite[0].storetId || ''}${lDate || ''}`,
             activityType: 'Sample-Routine',
             water: 'Water',
             collectionDate: startDate || '',
@@ -361,6 +403,13 @@ export default {
         })
       }
       return jsonData
+    },
+    getGoogleMapsUrl: function () {
+      if (this.site && this.site.longitude && this.site.latitude) {
+        return `https://www.google.com/maps/place/${this.site.latitude},${this.site.longitude}`
+      } else {
+        return null
+      }
     }
   },
   watch: {
@@ -393,7 +442,8 @@ export default {
         search: '',
         startDateModal: false,
         endDateModal: false,
-        exportAction: { label: 'Export' }
+        exportAction: { label: 'Export' },
+        showDeleteDialog: false
       },
       headers: [
         { text: 'Logbook #', value: 'logbookNumber' },
@@ -481,10 +531,11 @@ export default {
         'comments': 'Result Comment'
       },
       snackbar: {
+        deleteVisible: false,
         successVisible: false,
         successMessage: 'Data logged successfully!',
+        deleteSuccessMessage: 'Reports deleted successfully',
         timeout: 6000
-
       }
     }
   },
@@ -511,6 +562,16 @@ export default {
     postSubmitForm () {
       this.snackbar.successVisible = true
       this.resetSelected()
+    },
+    deleteSelected () {
+      _.each(this.selected, (item) => {
+        let key = item['.key']
+        this.$firebaseRefs.reports.child(key).remove()
+      })
+
+      this.selected = []
+      this.snackbar.deleteVisible = true
+      this.controls.showDeleteDialog = false
     }
   }
 }

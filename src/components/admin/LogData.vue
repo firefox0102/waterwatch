@@ -97,7 +97,7 @@
             ></v-time-picker>
           </v-menu>
           <v-text-field
-            label="Rainfall (in)"
+            label="Rainfall (in) [trace = 0.001]"
             class="input-group--limit-height"
             type="number"
             step="0.01"
@@ -109,6 +109,7 @@
               label="Analyst (Initials)"
               class="input-group--limit-height"
               required
+              :rules="formRules.required"
               v-model="newLogData.analyst">
           </v-text-field>
         </div>
@@ -163,7 +164,6 @@
             <v-text-field
               slot="activator"
               label="Incubation Out Time"
-              readonly
               v-model="newLogData.incubationOut"
               :rules="formRules.incubationOutTimeRules"
               class="input-group--limit-height">
@@ -399,7 +399,7 @@
   export default {
     name: 'log-data',
     firebase: {
-      collectionSites: collectionSitesRef,
+      collectionSites: collectionSitesRef.orderByChild('stationName'),
       logbookNumber: logbookNumberRef
     },
     watch: {
@@ -440,6 +440,12 @@
             let computedValue = matrixValue * dilutionFactor
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
 
+            if (this.newLogData.coliformLargeCells === '0' && this.newLogData.coliformSmallCells === '0') {
+              return '<' + roundedValue
+            } else if (this.newLogData.coliformLargeCells === '49' && this.newLogData.coliformSmallCells === '48') {
+              return '>' + roundedValue
+            }
+
             return roundedValue
           }
         } catch (e) {
@@ -450,9 +456,16 @@
         try {
           if (this.ecoliLargeCells && this.ecoliSmallCells && this.newLogData.dilution) {
             let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
+            console.log(matrixValue)
             let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
             let computedValue = matrixValue * dilutionFactor
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
+
+            if (this.ecoliLargeCells === '0' && this.ecoliSmallCells === '0') {
+              return '<' + roundedValue
+            } else if (this.ecoliLargeCells === '49' && this.ecoliSmallCells === '48') {
+              return '>' + roundedValue
+            }
 
             return roundedValue
           }
@@ -561,6 +574,11 @@
               return (Number.isInteger(value) && value >= 0 && value <= 49) || 'Should be between 0-49 (Leave empty if not recorded)'
             }
           ],
+          required: [
+            (v) => {
+              return (v !== '' || 'Value is required')
+            }
+          ],
           smallCellsRules: [
             (v) => {
               let value = parseFloat(v)
@@ -640,8 +658,8 @@
           let key = this.selectedSite['.key']
 
           this.newLogData.stationName = this.selectedSite.stationName
-          this.newLogData.aasNumber = this.selectedSite.adoptAStreamId || ''
-          this.newLogData.storetID = this.selectedSite.storetID || ''
+          this.newLogData.aasNumber = this.selectedSite.aasNumber || ''
+          this.newLogData.storetId = this.selectedSite.storetId || ''
           this.newLogData.logbookAbbv = this.selectedSite.logbookAbbv
           this.newLogData.ecoliLargeCells = this.ecoliLargeCells
           this.newLogData.ecoliSmallCells = this.ecoliSmallCells
@@ -685,7 +703,7 @@
           chlorophyll: null,
           coliformLargeCells: '',
           coliformSmallCells: '',
-          collectionDate: moment(new Date().toISOString()).format('MM/DD/YYYY'),
+          collectionDate: oldLog.collectionDate,
           collectionSite: null,
           collectionTime: '',
           dilution: null,
@@ -723,8 +741,8 @@
         this.$firebaseRefs.collectionSites.child(key).child('lastCollectionDate').set(collDate)
 
         // Last ecoli equation
-        if (this.totalEcoli) {
-          this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.totalEcoli)
+        if (this.getTotalEcoli) {
+          this.$firebaseRefs.collectionSites.child(key).child('lastEColiResult').set(this.getTotalEcoli)
         }
 
         // Last turbidity equation

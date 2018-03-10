@@ -39,10 +39,10 @@
               bottom>
             </v-select>
             <v-text-field label="Adopt-A-Stream Name" v-model="targetCollectionSite.adoptAStreamName"></v-text-field>
-            <v-text-field label="Adopt-A-Stream 'S' ID (eg. S-4475)" v-model="targetCollectionSite.adoptAStreamId"
+            <v-text-field label="Adopt-A-Stream 'S' ID (eg. S-4475)" v-model="targetCollectionSite.aasNumber"
               :rules="[(v) => !!v || 'Enter the 4 numbers after S- only (Leave blank if no ID)']"></v-text-field>
             <v-text-field label="STORET Name" v-model="targetCollectionSite.storetName"></v-text-field>
-            <v-text-field label="STORET Location ID (eg. NWW24)" v-model="targetCollectionSite.storetLocationId"></v-text-field>
+            <v-text-field label="STORET Location ID (eg. NWW24)" v-model="targetCollectionSite.storetId"></v-text-field>
             <v-select
               v-bind:items="partnerSet"
               v-model="targetCollectionSite.collectionPartner"
@@ -97,6 +97,7 @@ export default {
   beforeMount () {
     // Copy the targetLogData and modify the read-only-collection
     this.targetCollectionSite = _.cloneDeep(this.collectionSite)
+    this.$bindAsArray('reports', db.ref('reports/' + this.collectionSite['.key']))
   },
   firebase: {
     collectionSites: collectionSitesRef,
@@ -148,6 +149,8 @@ export default {
         delete itemCopy['.key']
         this.$firebaseRefs.collectionSites.child(this.targetCollectionSite['.key']).set(itemCopy)
 
+        this.applyUpdatesToReports(this.targetCollectionSite)
+
         this.uploadNewJsonFile()
 
         this.controls.showDialog = false
@@ -159,6 +162,21 @@ export default {
     },
     close () {
       this.controls.showDialog = false
+    },
+    applyUpdatesToReports (targetCollectionSite) {
+      console.log(targetCollectionSite)
+      _.forEach(this.reports, (item) => {
+        let itemCopy = { ...item }
+        delete itemCopy['.key']
+        itemCopy.stationName = targetCollectionSite.stationName
+        itemCopy.aasNumber = targetCollectionSite.aasNumber || ''
+        itemCopy.storetId = targetCollectionSite.storetId || ''
+        itemCopy.logbookAbbv = targetCollectionSite.logbookAbbv
+
+        console.log(itemCopy)
+        this.$firebaseRefs.reports.child(item['.key']).set(itemCopy)
+        db.ref('allReports/' + item['.key']).set(itemCopy)
+      })
     },
     uploadNewJsonFile () {
       this.$bindAsArray('jsonSites', collectionSitesRef, null, () => {
