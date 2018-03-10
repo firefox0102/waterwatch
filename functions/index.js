@@ -316,7 +316,7 @@ function adoptReport (reports) {
       specificConductivity: report.specificConductivity || '',
       turbidity: report.turbidity || '',
       film: 'yes',
-      totalEcoli: report.totalEcoli || ''
+      totalEcoli: getEcoliNumbers(report)
     }
   })
 
@@ -350,7 +350,7 @@ function storetReport (reports) {
       characteristic: 'Escherichia coli',
       methodSpeciation: ' ',
       resultDetection: ' ',
-      totalEcoli: report.totalEcoli || '',
+      totalEcoli: getEcoliNumbers(report),
       resultUnit: 'MPN',
       qualifier: ' ',
       resultSampleFraction: ' ',
@@ -381,8 +381,8 @@ function regularReport (reports) {
       collectionTime: report.collectionTime || '',
       precipitation: report.precipitation || '',
       dilution: '2/100',
-      totalColiform: report.totalColiform || '',
-      totalEcoli: report.totalEcoli || '',
+      totalColiform: getColiformNumbers(report),
+      totalEcoli: getEcoliNumbers(report),
       fluorometry: report.fluorometry || '',
       turbidity: report.turbidity || '',
       specificConductivity: report.specificConductivity || '',
@@ -392,6 +392,28 @@ function regularReport (reports) {
   })
 
   return jsonData
+}
+
+function getEcoliNumbers (report) {
+  if (!report.ecoliLargeCells || !report.ecoliSmallCells || !report.totalEcoli) { return '' }
+
+  if (report.ecoliLargeCells === '0' && report.ecoliSmallCells === '0') {
+    return '<' + report.totalEcoli
+  } else if (report.ecoliLargeCells === '49' && report.ecoliSmallCells === '48') {
+    return '>' + report.totalEcoli
+  }
+  return report.totalEcoli
+}
+
+function getColiformNumbers (report) {
+  if (!report.coliformLargeCells || !report.coliformSmallCells || !report.totalColiform) { return '' }
+
+  if (report.coliformLargeCells === '0' && report.coliformSmallCells === '0') {
+    return '<' + report.totalColiform
+  } else if (report.coliformLargeCells === '49' && report.coliformSmallCells === '48') {
+    return '>' + report.totalColiform
+  }
+  return report.totalColiform
 }
 
 app.post('/export', (request, response) => {

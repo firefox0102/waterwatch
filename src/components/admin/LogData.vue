@@ -440,6 +440,12 @@
             let computedValue = matrixValue * dilutionFactor
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
 
+            if (this.newLogData.coliformLargeCells === '0' && this.newLogData.coliformSmallCells === '0') {
+              return '<' + roundedValue
+            } else if (this.newLogData.coliformLargeCells === '49' && this.newLogData.coliformSmallCells === '48') {
+              return '>' + roundedValue
+            }
+
             return roundedValue
           }
         } catch (e) {
@@ -450,9 +456,16 @@
         try {
           if (this.ecoliLargeCells && this.ecoliSmallCells && this.newLogData.dilution) {
             let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
+            console.log(matrixValue)
             let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
             let computedValue = matrixValue * dilutionFactor
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
+
+            if (this.ecoliLargeCells === '0' && this.ecoliSmallCells === '0') {
+              return '<' + roundedValue
+            } else if (this.ecoliLargeCells === '49' && this.ecoliSmallCells === '48') {
+              return '>' + roundedValue
+            }
 
             return roundedValue
           }
