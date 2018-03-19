@@ -141,13 +141,17 @@
             select-all
             item-key="stationName"
             class="elevation-1">
-            <template slot="headers" slot-scope="props">
+            <template class="text-sm-left" slot="headerCell" slot-scope="props">
+              <span slot="activator">
+                {{ props.header.text }}
+              </span>
+            </template>
+            <!-- <template slot="headers" slot-scope="props">
              <tr class="nww-table__header">
                <th>
                  <v-checkbox
                    primary
                    hide-details
-                   @click.native="toggleAll"
                    :input-value="props.all"
                    :indeterminate="props.indeterminate"
                  ></v-checkbox>
@@ -159,7 +163,7 @@
                   <v-icon>arrow_upward</v-icon>
                </th>
              </tr>
-            </template>
+            </template> -->
             <template slot="items" slot-scope="props">
               <tr
                 :active="props.selected"

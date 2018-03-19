@@ -302,7 +302,7 @@ function adoptReport (reports) {
   if (!(reports.length > 0)) return
   var jsonData = []
   jsonData = _.map(reports, (report) => {
-    let startDate = moment(report.collectionDate).utcOffset(60).format('MM/DD/YY')
+    let startDate = report.collectionDate ? moment(report.collectionDate).utcOffset(60).format('MM/DD/YY') : null
 
     return {
       aasSiteName: report.stationName + ' (' + report.aasNumber + ')',
@@ -328,8 +328,8 @@ function storetReport (reports) {
   var jsonData = []
 
   jsonData = _.map(reports, (report) => {
-    let lDate = moment(report.collectionDate).utcOffset(60).format('YYYYMMDD')
-    let startDate = moment(report.collectionDate).utcOffset(60).format('YYYY-MM-DD')
+    let lDate = report.collectionDate ? moment(report.collectionDate).utcOffset(60).format('YYYYMMDD') : null
+    let startDate = report.collectionDate ? moment(report.collectionDate).utcOffset(60).format('YYYY-MM-DD') : null
     let storetTime = (report.collectionTime === '') ? '' : `${report.collectionTime}:00`
 
     return {

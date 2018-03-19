@@ -310,4 +310,8 @@ body {
 .rotated-icon {
   transform: rotate(270deg);
 }
+
+th.text-xs-right {
+  text-align: left !important;
+}
 </style>
