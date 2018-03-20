@@ -470,7 +470,7 @@ export default {
         }]
       ],
       jsonFields: {
-        'logbookNumber': 'site ID #',
+        'logbookNumber': '#',
         'logbookAbbv': 'Site Name',
         'collectionDate': 'Collection Date',
         'collectionTime': 'Collection Time',
