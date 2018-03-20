@@ -374,7 +374,7 @@ export default {
       this.postToAPI('regular_report', 'NWW_Director_Report.csv')
     },
     storetExport () {
-      this.postToAPI('storet_report', 'NWW_Director_Report.csv')
+      this.postToAPI('storet_report', 'NWW_STORET_Report.csv')
     },
     getCollectionSitesArray (selected) {
       return _.map(selected, (collectionSite) => {

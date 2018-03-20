@@ -14,7 +14,7 @@ admin.initializeApp({
 
 const jsonFields = [
   {
-    label: 'site ID #',
+    label: '#',
     value: 'logbookNumber'
   },
   {
