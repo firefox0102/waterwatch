@@ -60,7 +60,7 @@
               v-bind:fields="storetJsonFields"
               :meta="json_meta"
               type="csv"
-              name="NWW_Storet-Report.xls"
+              name="NWW_STORET-Report.xls"
             >
               Export for STORET
             </download-excel>
