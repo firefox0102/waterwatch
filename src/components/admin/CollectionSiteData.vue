@@ -158,7 +158,7 @@
                         v-bind:data = "getExportStoret"
                         v-bind:fields = "jsonFieldsStoret"
                         :meta = "json_meta"
-                        name = "NWW_Storet-Report.xls">
+                        name = "NWW_STORET-Report.xls">
                         Export for STORET
                       </json-excel>
                     </v-list-tile-title>
