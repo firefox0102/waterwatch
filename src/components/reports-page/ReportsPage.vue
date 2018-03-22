@@ -265,7 +265,7 @@ export default {
           let startDate = moment(report.collectionDate).format('MM/DD/YY')
 
           return {
-            aasSiteName: report.stationName + ' (' + report.aasNumber + ')' || '',
+            aasSiteName: report.adoptAStreamName + ' (' + report.aasNumber + ')' || '',
             collectionDate: startDate || '',
             collectionTime: report.collectionTime || '',
             participation: '1',

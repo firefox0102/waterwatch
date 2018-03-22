@@ -659,6 +659,7 @@
 
           this.newLogData.stationName = this.selectedSite.stationName
           this.newLogData.aasNumber = this.selectedSite.aasNumber || ''
+          this.newLogData.adoptAStreamName = this.selectedSite.adoptAStreamName || ''
           this.newLogData.storetId = this.selectedSite.storetId || ''
           this.newLogData.logbookAbbv = this.selectedSite.logbookAbbv
           this.newLogData.ecoliLargeCells = this.ecoliLargeCells

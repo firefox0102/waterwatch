@@ -305,7 +305,7 @@ function adoptReport (reports) {
     let startDate = report.collectionDate ? moment(report.collectionDate).utcOffset(60).format('MM/DD/YY') : null
 
     return {
-      aasSiteName: report.stationName + ' (' + report.aasNumber + ')',
+      aasSiteName: report.adoptAStreamName + ' (' + report.aasNumber + ')',
       collectionDate: startDate || '',
       collectionTime: report.collectionTime || '',
       participation: '1',

@@ -343,7 +343,7 @@ export default {
           let startDate = moment(report.collectionDate).format('MM/DD/YY')
 
           return {
-            aasSiteName: report.stationName + ' (' + this.firebaseSite[0].aasNumber + ')',
+            aasSiteName: report.adoptAStreamName + ' (' + this.firebaseSite[0].aasNumber + ')',
             collectionDate: startDate || '',
             collectionTime: report.collectionTime || '',
             participation: '1',
