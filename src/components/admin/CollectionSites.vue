@@ -146,24 +146,6 @@
                 {{ props.header.text }}
               </span>
             </template>
-            <!-- <template slot="headers" slot-scope="props">
-             <tr class="nww-table__header">
-               <th>
-                 <v-checkbox
-                   primary
-                   hide-details
-                   :input-value="props.all"
-                   :indeterminate="props.indeterminate"
-                 ></v-checkbox>
-               </th>
-               <th v-for="header in props.headers" :key="header.text"
-                 :class="['text-sm-left', 'column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                 @click="changeSort(header.value)">
-                  {{ header.text }}
-                  <v-icon>arrow_upward</v-icon>
-               </th>
-             </tr>
-            </template> -->
             <template slot="items" slot-scope="props">
               <tr
                 :active="props.selected"
@@ -390,7 +372,7 @@ export default {
           'export_type': exportType,
           'start_date': this.startDate,
           'end_date': this.endDate,
-          'collection_sites': csIdArray
+          'collection_sites': csIdArray || [this.$route.params.siteId]
         }
       }).then((response) => {
         let blob = new Blob([response.data], { type: 'application/vnd.ms-excel' })

@@ -301,7 +301,7 @@ export default {
 
       _.forEach(items, (item) => {
         let adoptDate = moment(item.collectionDate).format('MM/DD/YYYY')
-        let aasSiteName = item.stationName + ' (' + selectedSite.aasNumber + ')'
+        let aasSiteName = item.adoptAStreamName + ' (' + selectedSite.aasNumber + ')'
 
         adoptItems.push({
           aasSiteName: aasSiteName,
