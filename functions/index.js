@@ -302,6 +302,7 @@ function adoptReport (reports) {
   if (!(reports.length > 0)) return
   var jsonData = []
   jsonData = _.map(reports, (report) => {
+    if (!report) { return }
     let startDate = report.collectionDate ? moment(report.collectionDate).utcOffset(60).format('MM/DD/YY') : null
 
     return {
@@ -328,6 +329,7 @@ function storetReport (reports) {
   var jsonData = []
 
   jsonData = _.map(reports, (report) => {
+    if (!report) { return }
     let lDate = report.collectionDate ? moment(report.collectionDate).utcOffset(60).format('YYYYMMDD') : null
     let startDate = report.collectionDate ? moment(report.collectionDate).utcOffset(60).format('YYYY-MM-DD') : null
     let storetTime = (report.collectionTime === '') ? '' : `${report.collectionTime}:00`
@@ -374,6 +376,7 @@ function regularReport (reports) {
   var jsonData = []
 
   jsonData = _.map(reports, (report) => {
+    if (!report) { return }
     return {
       logbookNumber: report.logbookNumber || '',
       logbookAbbv: report.stationName || '',
