@@ -280,7 +280,7 @@ import axios from 'axios'
 
 let collectionSitesRef = db.ref('collectionSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
-let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
+let oldDate = moment(new Date()).subtract(1, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'collection-sites',

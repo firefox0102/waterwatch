@@ -220,7 +220,7 @@ let collectionSitesRef = db.ref('collectionSites')
 let archivedRef = db.ref('archivedSites')
 let metaRef = db.ref('metaData')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
-let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
+let oldDate = moment(new Date()).subtract(1, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'site-reports',
@@ -372,7 +372,7 @@ export default {
           'export_type': exportType,
           'start_date': this.startDate,
           'end_date': this.endDate,
-          'collection_sites': csIdArray || [this.$route.params.siteId]
+          'collection_sites': csIdArray
         }
       }).then((response) => {
         let blob = new Blob([response.data], { type: 'application/vnd.ms-excel' })
