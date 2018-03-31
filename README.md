@@ -20,3 +20,13 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
+
+## Deployments
+
+``` bash
+# install dependencies
+npm install
+
+# Deploy code to firebase hosting and functions
+firebase deploy
+```
