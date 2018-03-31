@@ -1,6 +1,6 @@
 # waterwatch
 
-![alt text](http://www.reviewstowatch.com/wp-content/uploads/2015/01/omega-water.jpg)
+![alt text](http://www.thewatchblog.co.uk/wp-content/uploads/2016/08/8401.jpg)
 
 > A project for watching water
 > Built with Vue.js
