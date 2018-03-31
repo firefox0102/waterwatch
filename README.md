@@ -1,9 +1,9 @@
 # waterwatch
 
-![alt text](http://www.thewatchblog.co.uk/wp-content/uploads/2016/08/8401.jpg)
 
-> A project for watching water
-> Built with Vue.js
+> A project for watching water, built with Vue.js
+
+![alt text](http://www.thewatchblog.co.uk/wp-content/uploads/2016/08/8401.jpg)
 
 ## Build Setup
 
