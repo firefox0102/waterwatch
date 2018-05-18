@@ -103,13 +103,13 @@
                 </i>
               </div>
               <div class="controls-card-control-group__content">
-                <download-excel
+                <v-btn
+                  @click="exportXls"
+                  v-bind:disabled="!selectedSite"
                   class="btn md-raised btn-nww--light"
-                  v-bind:data = "getExportJson"
-                  v-bind:fields = "jsonFields"
-                  name = "NWW_Report.xls">
+                >
                   Download  XLS
-                </download-excel>
+                </v-btn>
               </div>
             </div>
           </div>
@@ -130,10 +130,11 @@
 <script>
 import { db } from '../../helpers/firebase'
 import { MapHelper } from '../../helpers/mapHelper'
-// import {FullExtent} from '../../helpers/map-fullextent'
 import _ from 'lodash'
 import moment from 'moment'
 import VueHighcharts from 'vue2-highcharts'
+import axios from 'axios'
+
 import EcoliChart from '../panels/EcoliChart'
 import TurbidityChart from '../panels/TurbidityChart'
 import RainfallChart from '../panels/RainfallChart'
@@ -159,28 +160,6 @@ export default {
   firebase: {
     collectionSites: collectionSitesRef
   },
-  computed: {
-    getExportJson () {
-      let jsonData = []
-
-      if (this.reports) {
-        jsonData = _.map(this.reports, function (report) {
-          return {
-            stationName: report.stationName,
-            collectionDate: report.collectionDate,
-            collectionTime: report.collectionTime,
-            precipitation: report.precipitation,
-            totalColiform: report.totalColiform,
-            totalEcoli: report.totalEcoli,
-            fluorometry: report.fluorometry,
-            turbidity: report.turbidity,
-            specificConductivity: report.specificConductivity
-          }
-        })
-      }
-      return jsonData
-    }
-  },
   watch: {
     startDate (val) {
       this.getReports()
@@ -195,7 +174,7 @@ export default {
       selectedSite: null,
       reports: null,
       collectionSites: [], // Placeholder for sites watching
-      startDate: moment(new Date()).subtract(24, 'months').format('YYYY-MM-DD'),
+      startDate: moment(new Date()).subtract(1, 'months').format('YYYY-MM-DD'),
       endDate: moment(new Date()).format('YYYY-MM-DD'),
       controls: {
         sidebar: false,
@@ -244,6 +223,29 @@ export default {
     },
     initializeMap () {
       this.mapy = new MapHelper(this.selectedSiteCallbackFunc)
+    },
+    exportXls () {
+      if (this.selectedSite) {
+        this.postToAPI('regular_report', 'NWW_Director_Report.csv')
+      }
+    },
+    postToAPI (exportType, exportName) {
+      axios({
+        url: 'https://waterwatch-cb707.firebaseapp.com/export',
+        method: 'POST',
+        data: {
+          'export_type': exportType,
+          'start_date': this.startDate,
+          'end_date': this.endDate,
+          'collection_sites': [this.selectedSite['.key']]
+        }
+      }).then((response) => {
+        let blob = new Blob([response.data], { type: 'application/vnd.ms-excel' })
+        let link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = exportName
+        link.click()
+      })
     }
   },
   mounted: function () {

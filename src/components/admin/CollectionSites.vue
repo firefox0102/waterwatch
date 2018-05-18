@@ -146,24 +146,6 @@
                 {{ props.header.text }}
               </span>
             </template>
-            <!-- <template slot="headers" slot-scope="props">
-             <tr class="nww-table__header">
-               <th>
-                 <v-checkbox
-                   primary
-                   hide-details
-                   :input-value="props.all"
-                   :indeterminate="props.indeterminate"
-                 ></v-checkbox>
-               </th>
-               <th v-for="header in props.headers" :key="header.text"
-                 :class="['text-sm-left', 'column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                 @click="changeSort(header.value)">
-                  {{ header.text }}
-                  <v-icon>arrow_upward</v-icon>
-               </th>
-             </tr>
-            </template> -->
             <template slot="items" slot-scope="props">
               <tr
                 :active="props.selected"
@@ -238,7 +220,7 @@ let collectionSitesRef = db.ref('collectionSites')
 let archivedRef = db.ref('archivedSites')
 let metaRef = db.ref('metaData')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
-let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
+let oldDate = moment(new Date()).subtract(1, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'site-reports',
@@ -374,7 +356,7 @@ export default {
       this.postToAPI('regular_report', 'NWW_Director_Report.csv')
     },
     storetExport () {
-      this.postToAPI('storet_report', 'NWW_Director_Report.csv')
+      this.postToAPI('storet_report', 'NWW_STORET_Report.csv')
     },
     getCollectionSitesArray (selected) {
       return _.map(selected, (collectionSite) => {

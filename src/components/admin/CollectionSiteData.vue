@@ -77,7 +77,7 @@
                 placeholder="Search reports"/>
             </div>
             <div class="site-reports-datepickers">
-              <span class="site-reports-body-toolbar__text-content">Select date range:</span>
+              <span class="site-reports-body-toolbar__text-content">Select export date range:</span>
               <div class="site-reports-toolbar-datepicker">
                 <v-menu lazy :close-on-content-click="false" v-model="controls.startDateModal" transition="scale-transition" offset-y full-width :nudge-left="0" max-width="290px">
                   <div
@@ -117,55 +117,6 @@
             </div>
           </div>
           <div class="site-reports-body-toolbar__secondary-content">
-            <div class="site-reports-toolbar-export">
-              <v-menu
-                offset-y
-                left>
-                <div
-                  slot="activator"
-                  class="site-reports-toolbar-export__activator">
-                  <div class="site-reports-toolbar-export__activator-text">
-                    Export
-                  </div>
-                  <i class="material-icons">arrow_drop_down</i>
-                </div>
-                <v-list>
-                  <v-list-tile>
-                    <v-list-tile-title>
-                      <json-excel
-                        v-bind:data = "getExportXls"
-                        v-bind:fields = "jsonFields"
-                        :meta = "json_meta"
-                        name = "NWW_Director_Report.xls">
-                        Export as XLS
-                      </json-excel>
-                    </v-list-tile-title>
-                  </v-list-tile>
-                   <v-list-tile>
-                    <v-list-tile-title>
-                      <json-excel
-                        v-bind:data = "getExportAdopt"
-                        v-bind:fields = "jsonFieldsAdopt"
-                        :meta = "json_meta"
-                        name = "NWW_Adopt-A-Stream-Report.xls">
-                        Export for Adopt-A-Stream
-                      </json-excel>
-                    </v-list-tile-title>
-                  </v-list-tile>
-                   <v-list-tile>
-                    <v-list-tile-title>
-                      <json-excel
-                        v-bind:data = "getExportStoret"
-                        v-bind:fields = "jsonFieldsStoret"
-                        :meta = "json_meta"
-                        name = "NWW_Storet-Report.xls">
-                        Export for STORET
-                      </json-excel>
-                    </v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
-            </div>
             <div class="site-reports-actions">
               <edit-log-data
                 v-bind:table-log-data="selected[0]"
@@ -208,7 +159,40 @@
               </v-dialog>
 
             </div>
-
+            <div
+              class="site-reports-toolbar-export"
+              v-if="selected.length === 0"
+            >
+              <v-menu
+                offset-y
+                left>
+                <div
+                  slot="activator"
+                  class="site-reports-toolbar-export__activator">
+                  <div class="site-reports-toolbar-export__activator-text">
+                    Export
+                  </div>
+                  <i class="material-icons">arrow_drop_down</i>
+                </div>
+                <v-list>
+                  <v-list-tile v-on:click="exportXls">
+                    <v-list-tile-title>
+                      Export as XLS
+                    </v-list-tile-title>
+                  </v-list-tile>
+                   <v-list-tile v-on:click="adpotExport">
+                    <v-list-tile-title>
+                      Export for Adopt-A-Stream
+                    </v-list-tile-title>
+                  </v-list-tile>
+                   <v-list-tile v-on:click="storetExport">
+                    <v-list-tile-title>
+                      Export for STORET
+                    </v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
+            </div>
           </div>
         </div>
 
@@ -292,11 +276,11 @@ import _ from 'lodash'
 import moment from 'moment'
 import EditLogData from './EditLogData'
 import JsonExcel from '../json-excel/JsonExcel'
+import axios from 'axios'
 
 let collectionSitesRef = db.ref('collectionSites')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
-let oldDate = moment(new Date('2010.01.21')).format('YYYY-MM-DD')
-// let oldDate = moment(new Date()).subtract(6, 'months').format('YYYY-MM-DD')
+let oldDate = moment(new Date()).subtract(1, 'months').format('YYYY-MM-DD')
 
 export default {
   name: 'collection-sites',
@@ -313,97 +297,6 @@ export default {
     }
   },
   computed: {
-    getExportXls (selected) {
-      let jsonData = []
-      if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, function (report) {
-          return {
-            logbookAbbv: report.stationName || '',
-            logbookNumber: report.logbookNumber || '',
-            collectionDate: report.collectionDate || '',
-            collectionTime: report.collectionTime || '',
-            precipitation: report.precipitation || '',
-            dilution: '2/100',
-            totalColiform: report.totalColiform || '',
-            totalEcoli: report.totalEcoli || '',
-            fluorometry: report.fluorometry || '',
-            turbidity: report.turbidity || '',
-            specificConductivity: report.specificConductivity || '',
-            analyst: report.analyst || '',
-            notes: report.notes || ''
-          }
-        })
-      }
-      return jsonData
-    },
-    getExportAdopt () {
-      let jsonData = []
-      if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, (report) => {
-          let startDate = moment(report.collectionDate).format('MM/DD/YY')
-
-          return {
-            aasSiteName: report.stationName + ' (' + this.firebaseSite[0].aasNumber + ')',
-            collectionDate: startDate || '',
-            collectionTime: report.collectionTime || '',
-            participation: '1',
-            samplingTime: '60',
-            monitor: 'Michael Meyer (25064)',
-            precipitation: report.precipitation || '',
-            hours: '24',
-            specificConductivity: report.specificConductivity || '',
-            turbidity: report.turbidity || '',
-            film: 'yes',
-            totalEcoli: report.totalEcoli || ''
-          }
-        })
-      }
-      return jsonData
-    },
-    getExportStoret () {
-      let jsonData = []
-      if (this.reports && this.selected.length) {
-        jsonData = _.map(this.selected, (report) => {
-          let lDate = moment(report.collectionDate).format('YYYYMMDD')
-          let startDate = moment(report.collectionDate).format('YYYY-MM-DD')
-          let storetTime = (report.collectionTime === '') ? '' : `${report.collectionTime}:00`
-
-          return {
-            projectID: 'NWW_2012',
-            stationName: `${this.firebaseSite[0].storetId || ''}`,
-            lField: `${this.firebaseSite[0].storetId || ''}${lDate || ''}`,
-            activityType: 'Sample-Routine',
-            water: 'Water',
-            collectionDate: startDate || '',
-            collectionTime: storetTime || '',
-            timeZone: 'EST',
-            activityMeasure: ' ',
-            activityUnit: ' ',
-            collectionMethod: 'Grab Sample',
-            equipment: 'Whirl-pak bag',
-            equipComment: ' ',
-            loggerLine: ' ',
-            characteristic: 'Escherichia coli',
-            methodSpeciation: ' ',
-            resultDetection: ' ',
-            totalEcoli: report.totalEcoli || '',
-            resultUnit: 'MPN',
-            qualifier: ' ',
-            resultSampleFraction: ' ',
-            resultStatus: 'Final',
-            baseCode: ' ',
-            valueType: 'Calculated',
-            analyticalMethod: 'Colliert',
-            analyticalMethodContext: 'IDEXX',
-            startDate: ' ',
-            limitMeasure: ' ',
-            limitUnit: ' ',
-            comments: ' '
-          }
-        })
-      }
-      return jsonData
-    },
     getGoogleMapsUrl: function () {
       if (this.site && this.site.longitude && this.site.latitude) {
         return `https://www.google.com/maps/place/${this.site.latitude},${this.site.longitude}`
@@ -572,6 +465,33 @@ export default {
       this.selected = []
       this.snackbar.deleteVisible = true
       this.controls.showDeleteDialog = false
+    },
+    adpotExport () {
+      this.postToAPI('adopt_report', 'NWW_Adopt-A-Stream-Report.csv')
+    },
+    exportXls () {
+      this.postToAPI('regular_report', 'NWW_Director_Report.csv')
+    },
+    storetExport () {
+      this.postToAPI('storet_report', 'NWW_STORET_Report.csv')
+    },
+    postToAPI (exportType, exportName) {
+      axios({
+        url: 'https://waterwatch-cb707.firebaseapp.com/export',
+        method: 'POST',
+        data: {
+          'export_type': exportType,
+          'start_date': this.startDate,
+          'end_date': this.endDate,
+          'collection_sites': [this.$route.params.siteId]
+        }
+      }).then((response) => {
+        let blob = new Blob([response.data], { type: 'application/vnd.ms-excel' })
+        let link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = exportName
+        link.click()
+      })
     }
   }
 }

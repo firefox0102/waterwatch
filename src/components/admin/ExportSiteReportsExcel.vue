@@ -60,7 +60,7 @@
               v-bind:fields="storetJsonFields"
               :meta="json_meta"
               type="csv"
-              name="NWW_Storet-Report.xls"
+              name="NWW_STORET-Report.xls"
             >
               Export for STORET
             </download-excel>
@@ -301,7 +301,7 @@ export default {
 
       _.forEach(items, (item) => {
         let adoptDate = moment(item.collectionDate).format('MM/DD/YYYY')
-        let aasSiteName = item.stationName + ' (' + selectedSite.aasNumber + ')'
+        let aasSiteName = item.adoptAStreamName + ' (' + selectedSite.aasNumber + ')'
 
         adoptItems.push({
           aasSiteName: aasSiteName,
