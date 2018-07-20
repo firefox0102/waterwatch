@@ -340,10 +340,10 @@ export default {
 
       if (this.showArchived) {
         this.$unbind('collectionSites')
-        this.$bindAsArray('collectionSites', archivedRef.orderByChild('lastCollectionDate').startAt(this.startDate).endAt(this.endDate))
+        this.$bindAsArray('collectionSites', archivedRef.orderByChild('lastCollectionDate'))
       } else if (!this.showArchived) {
         this.$unbind('collectionSites')
-        this.$bindAsArray('collectionSites', collectionSitesRef.orderByChild('lastCollectionDate').startAt(this.startDate).endAt(this.endDate))
+        this.$bindAsArray('collectionSites', collectionSitesRef.orderByChild('lastCollectionDate'))
       }
     },
     archivedText () {

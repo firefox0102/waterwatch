@@ -516,7 +516,7 @@
               if (startTime === null || startTime === undefined || /^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
               let testStartDate = dateObj(this.targetLogData.collectionTime)
-              let testEndDate = dateObj(this.targetLogData.collectionTime).add(6, 'hours')
+              let testEndDate = dateObj(this.targetLogData.collectionTime).add(8, 'hours')
 
               function dateObj (d) {
                 let date = moment()

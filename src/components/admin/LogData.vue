@@ -13,7 +13,9 @@
         v-model="formValid"
         ref="form"
         v-on:submit.prevent="controls.showDialog = true"
-        class="page-content-body__form">
+        class="page-content-body__form"
+        autocomplete="false"
+      >
         <!-- Column 1 -->
         <div class="page-content-body__column">
           <div class="page-content-body__header">
@@ -526,7 +528,7 @@
               if (startTime === null || startTime === undefined || /^\s*$/.test(startTime)) { return true } // If value is empty, return
               let startDate = dateObj(startTime)
               let testStartDate = dateObj(this.newLogData.collectionTime)
-              let testEndDate = dateObj(this.newLogData.collectionTime).add(6, 'hours')
+              let testEndDate = dateObj(this.newLogData.collectionTime).add(8, 'hours')
 
               function dateObj (d) {
                 let date = moment()
