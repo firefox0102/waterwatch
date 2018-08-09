@@ -220,7 +220,9 @@ let collectionSitesRef = db.ref('collectionSites')
 let archivedRef = db.ref('archivedSites')
 let metaRef = db.ref('metaData')
 let todaysDate = moment(new Date()).format('YYYY-MM-DD')
-let oldDate = moment(new Date()).subtract(1, 'months').format('YYYY-MM-DD')
+let oldDate = moment(new Date())
+  .subtract(1, 'weeks')
+  .format('YYYY-MM-DD')
 
 export default {
   name: 'site-reports',

@@ -40,7 +40,7 @@
             max-width="290px">
             <v-text-field
               slot="activator"
-              label="Collection Date "
+              label="Collection Date(YYYY-MM-DD)"
               v-model="newLogData.collectionDate"
               append-icon="event"
               class="input-group--limit-height"
