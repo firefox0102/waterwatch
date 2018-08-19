@@ -38,6 +38,18 @@ const jsonFields = [
     value: "dilution"
   },
   {
+    label: "Inc. Time",
+    value: "incubationTime"
+  },
+  {
+    label: "Inc. Temp (°C)",
+    value: "incubationTemp"
+  },
+  {
+    label: "Inc. Out",
+    value: "incubationOut"
+  },
+  {
     label: "Total Coliform (MPN / 100mL)",
     value: "totalColiform"
   },
@@ -228,7 +240,7 @@ const jsonFieldsStoret = [
     value: "startDate"
   },
   {
-    label: "Result Detection/Quantitation Limit Type",
+    label: "Result Detection/Quantitation Limit Measure",
     value: "limitMeasure"
   },
   {
@@ -251,7 +263,7 @@ function getCSVData({ exportType, startDate, endDate, collectionSites }) {
     promiseCollection.push(promise);
   });
 
-  return Promise.all(promiseCollection).then(function (values) {
+  return Promise.all(promiseCollection).then(function(values) {
     console.log(values);
     reportsCollection = _.flatten(values);
     console.log("promise all started");
@@ -282,7 +294,7 @@ function getCSVData({ exportType, startDate, endDate, collectionSites }) {
 }
 
 function getAdminData({ siteKey, startDate, endDate }) {
-  var promise1 = new Promise(function (resolve, reject) {
+  var promise1 = new Promise(function(resolve, reject) {
     admin
       .database()
       .ref("reports/" + siteKey)
@@ -298,7 +310,7 @@ function getAdminData({ siteKey, startDate, endDate }) {
           });
           resolve(data);
         },
-        function (error) {
+        function(error) {
           console.error(error);
         }
       );
@@ -316,8 +328,8 @@ function adoptReport(reports) {
     }
     let startDate = report.collectionDate
       ? moment(report.collectionDate)
-        .utcOffset(60)
-        .format("MM/DD/YY")
+          .utcOffset(60)
+          .format("MM/DD/YY")
       : null;
 
     return {
@@ -327,7 +339,7 @@ function adoptReport(reports) {
       participation: "1",
       samplingTime: "60",
       monitor: "Michael Meyer (25064)",
-      precipitation: report.precipitation || "",
+      precipitation: report.precipitation || "0",
       hours: "24",
       specificConductivity: report.specificConductivity || "",
       turbidity: report.turbidity || "",
@@ -349,13 +361,13 @@ function storetReport(reports) {
     }
     let lDate = report.collectionDate
       ? moment(report.collectionDate)
-        .utcOffset(60)
-        .format("YYYYMMDD")
+          .utcOffset(60)
+          .format("YYYY-MM-DD")
       : null;
     let startDate = report.collectionDate
       ? moment(report.collectionDate)
-        .utcOffset(60)
-        .format("YYYY-MM-DD")
+          .utcOffset(60)
+          .format("YYYY-MM-DD")
       : null;
     let storetTime =
       report.collectionTime === "" ? "" : `${report.collectionTime}:00`;
@@ -378,14 +390,14 @@ function storetReport(reports) {
       characteristic: "Escherichia coli",
       methodSpeciation: " ",
       resultDetection: " ",
-      totalEcoli: getEcoliNumbers(report),
+      totalEcoli: report.totalEcoli || "",
       resultUnit: "MPN",
       qualifier: " ",
       resultSampleFraction: " ",
       resultStatus: "Final",
       baseCode: " ",
       valueType: "Calculated",
-      analyticalMethod: "Colliert",
+      analyticalMethod: "Colilert",
       analyticalMethodContext: "IDEXX",
       startDate: " ",
       limitMeasure: " ",
@@ -407,11 +419,14 @@ function regularReport(reports) {
     }
     return {
       logbookNumber: report.logbookNumber || "",
-      logbookAbbv: report.stationName || "",
+      logbookAbbv: report.logbookAbbv || "",
       collectionDate: report.collectionDate || "",
       collectionTime: report.collectionTime || "",
-      precipitation: report.precipitation || "",
-      dilution: "2/100",
+      precipitation: report.precipitation || "0",
+      dilution: report.dilution || "",
+      incubationTime: report.incubationTime || "",
+      incubationTemp: report.incubationTemp || "",
+      incubationOut: report.incubationOut || "",
       totalColiform: getColiformNumbers(report),
       totalEcoli: getEcoliNumbers(report),
       fluorometry: report.fluorometry || "",
@@ -427,20 +442,25 @@ function regularReport(reports) {
 
 function getEcoliNumbers(report) {
   if (
-    (!report.ecoliLargeCells ||
-      !report.ecoliSmallCells) &&
+    !report.ecoliLargeCells ||
+    !report.ecoliSmallCells ||
     !report.totalEcoli
   ) {
     return "";
   }
 
-  if (report.ecoliLargeCells === "0" && report.ecoliSmallCells === "0") {
-    return "<" + report.totalEcoli;
+  if (
+    report.ecoliLargeCells === "0" &&
+    report.ecoliSmallCells === "0" &&
+    report.totalEcoli.charAt(1) !== "<"
+  ) {
+    return "<" + report.totalEcoli.toString().replace(/.0+$/);
   } else if (
     report.ecoliLargeCells === "49" &&
-    report.ecoliSmallCells === "48"
+    report.ecoliSmallCells === "48" &&
+    report.totalEcoli.charAt(1) !== ">"
   ) {
-    return ">" + report.totalEcoli;
+    return ">" + report.totalEcoli.toString().replace(/.0+$/);
   }
   return report.totalEcoli;
 }
@@ -454,13 +474,18 @@ function getColiformNumbers(report) {
     return "";
   }
 
-  if (report.coliformLargeCells === "0" && report.coliformSmallCells === "0") {
-    return "<" + report.totalColiform;
+  if (
+    report.coliformLargeCells === "0" &&
+    report.coliformSmallCells === "0" &&
+    report.totalEcoli.charAt(1) !== "<"
+  ) {
+    return "<" + report.totalColiform.toString().replace(/.0+$/);
   } else if (
     report.coliformLargeCells === "49" &&
-    report.coliformSmallCells === "48"
+    report.coliformSmallCells === "48" &&
+    report.totalEcoli.charAt(1) !== ">"
   ) {
-    return ">" + report.totalColiform;
+    return ">" + report.totalColiform.toString().replace(/.0+$/);
   }
   return report.totalColiform;
 }
