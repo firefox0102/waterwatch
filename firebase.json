@@ -21,6 +21,9 @@
     ]
   },
   "storage": {
-    "rules": "storage.rules"
+    "rules": {
+    ".read": true,
+    ".write": false
+  }
   }
 }
