@@ -549,7 +549,15 @@
 
               let endDateMin = startDate.clone().add(18, 'hours')
               let endDateMax = startDate.clone().add(22, 'hours')
-              let outMoment = dateObj(outTime).date(endDateMax.date())
+              let outMoment = dateObj(outTime).date(endDateMax.date()).month(endDateMax.month()).year(endDateMax.year())
+
+              console.log('inc time', this.newLogData.incubationTime)
+              console.log('startDate', startDate)
+              console.log(endDateMin)
+              console.log(endDateMax)
+              // console.log(endDateMax.date())
+              console.log('outMoment', outMoment)
+              console.log('outTime', outTime)
 
               function dateObj (d) {
                 let date = moment()
