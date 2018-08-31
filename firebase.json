@@ -4,11 +4,7 @@
   },
   "hosting": {
     "public": "./dist",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "/export",
@@ -21,9 +17,6 @@
     ]
   },
   "storage": {
-    "rules": {
-    ".read": true,
-    ".write": false
-  }
+    "rules": "storage.rules"
   }
 }
