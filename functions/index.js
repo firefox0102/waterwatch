@@ -4,6 +4,7 @@ const express = require("express");
 const _ = require("lodash");
 const moment = require("moment");
 var admin = require("firebase-admin");
+var cors = require('cors')
 
 const app = express();
 const serviceAccount = require("./key.json");
@@ -489,6 +490,26 @@ function getColiformNumbers(report) {
   }
   return report.totalColiform;
 }
+
+const whitelist = [
+  "http://nww.chattahoochee.org",
+  "https://nww.chattahoochee.org",
+  "http://nww.chattahoochee.org",
+  "https://nww.chattahoochee.org",
+  "https://waterwatch-cb707.firebaseapp.com"
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+
+app.use(cors(corsOptions));
 
 app.post("/export", (request, response) => {
   var exportType = request.body["export_type"];
