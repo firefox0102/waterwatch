@@ -140,7 +140,7 @@ export default {
         'monitor': 'Adopt-A-Stream monitors',
         'precipitation': 'Amount of rain (inches)',
         'hours': 'In last (hours)',
-        'specificConductivity': 'Conductivity (µS/cm)',
+        'specificConductivity': 'Conductivity (μS/cm)',
         'turbidity': 'Turbidity (NTU)',
         'film': 'Other than Petri film?',
         'totalEcoli': 'E.coli IDEXX (MPN / 100mL)'
