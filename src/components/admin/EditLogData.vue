@@ -209,6 +209,7 @@
                     :rules="formRules.conductivityRules"
                     v-model="targetLogData.specificConductivity">
                 </v-text-field>
+                <p>Typical range for Conductivity is 0 - 750</p>
               </div>
 
               <!-- Column 3 -->
@@ -485,7 +486,6 @@
             (input) => {
               let conductivity = parseFloat(input)
               if (isNaN(conductivity)) { return true }
-              return (conductivity >= 0 && conductivity <= 750) || 'Typical range is 0 - 750'
             }
           ],
           dilutionRules: [
