@@ -87,6 +87,7 @@ export default {
             text: '(in)',
             margin: 2
           },
+          tickInterval: '0.5',
           min: 0,
           ceiling: 6000
         },
@@ -137,7 +138,7 @@ export default {
       }
 
       _.each(reports, function (report) {
-        let rainfall = parseInt(report.precipitation)
+        let rainfall = parseFloat(report.precipitation)
         let date = moment.utc(report.collectionDate).valueOf()
 
         chartObj.data.push([date, rainfall])
