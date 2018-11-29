@@ -444,9 +444,9 @@
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
 
             if (this.newLogData.coliformLargeCells === '0' && this.newLogData.coliformSmallCells === '0') {
-              return '<' + roundedValue
+              return roundedValue
             } else if (this.newLogData.coliformLargeCells === '49' && this.newLogData.coliformSmallCells === '48') {
-              return '>' + roundedValue
+              return roundedValue
             }
 
             return roundedValue
@@ -459,15 +459,13 @@
         try {
           if (this.ecoliLargeCells && this.ecoliSmallCells && this.newLogData.dilution) {
             let matrixValue = matrix[this.ecoliLargeCells][this.ecoliSmallCells]
-            console.log(matrixValue)
             let dilutionFactor = this.newLogData.dilution === 0 ? 0 : 100 / this.newLogData.dilution
             let computedValue = matrixValue * dilutionFactor
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
-
             if (this.ecoliLargeCells === '0' && this.ecoliSmallCells === '0') {
-              return '<' + roundedValue
+              return roundedValue
             } else if (this.ecoliLargeCells === '49' && this.ecoliSmallCells === '48') {
-              return '>' + roundedValue
+              return roundedValue
             }
 
             return roundedValue
@@ -550,14 +548,6 @@
               let endDateMin = startDate.clone().add(18, 'hours')
               let endDateMax = startDate.clone().add(22, 'hours')
               let outMoment = dateObj(outTime).date(endDateMax.date()).month(endDateMax.month()).year(endDateMax.year())
-
-              console.log('inc time', this.newLogData.incubationTime)
-              console.log('startDate', startDate)
-              console.log(endDateMin)
-              console.log(endDateMax)
-              // console.log(endDateMax.date())
-              console.log('outMoment', outMoment)
-              console.log('outTime', outTime)
 
               function dateObj (d) {
                 let date = moment()

@@ -433,9 +433,9 @@
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
 
             if (this.targetLogData.coliformLargeCells === '0' && this.targetLogData.coliformSmallCells === '0') {
-              return '<' + roundedValue
+              return roundedValue
             } else if (this.targetLogData.coliformLargeCells === '49' && this.targetLogData.coliformSmallCells === '48') {
-              return '>' + roundedValue
+              return roundedValue
             }
 
             return roundedValue
@@ -453,9 +453,9 @@
             let roundedValue = Math.max(Math.round(computedValue * 10) / 10).toFixed(1)
 
             if (this.ecoliLargeCells === '0' && this.ecoliSmallCells === '0') {
-              return '<' + roundedValue
+              return roundedValue
             } else if (this.ecoliLargeCells === '49' && this.ecoliSmallCells === '48') {
-              return '>' + roundedValue
+              return roundedValue
             }
 
             return roundedValue
