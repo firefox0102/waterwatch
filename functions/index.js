@@ -280,11 +280,11 @@ function getCSVData({ exportType, startDate, endDate, collectionSites }) {
     if (returnCollection.length > 0) {
       let csv;
       if (exportType === "storet_report") {
-        csv = json2csv({ data: returnCollection, fields: jsonFieldsStoret });
+        csv = json2csv({ data: returnCollection, fields: jsonFieldsStoret, encoding: 'utf-8' });
       } else if (exportType === "adopt_report") {
-        csv = json2csv({ data: returnCollection, fields: jsonFieldsAdopt });
+        csv = json2csv({ data: returnCollection, fields: jsonFieldsAdopt, encoding: 'utf-8' });
       } else if (exportType === "regular_report") {
-        csv = json2csv({ data: returnCollection, fields: jsonFields });
+        csv = json2csv({ data: returnCollection, fields: jsonFields, encoding: 'utf-8' });
       }
 
       return csv;
