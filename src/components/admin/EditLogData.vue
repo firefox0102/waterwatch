@@ -486,6 +486,7 @@
             (input) => {
               let conductivity = parseFloat(input)
               if (isNaN(conductivity)) { return true }
+              return (typeof conductivity === 'number' && conductivity >= 0) || 'Conductivity must be greater than or equal to 0'
             }
           ],
           dilutionRules: [
