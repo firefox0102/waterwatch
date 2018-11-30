@@ -424,7 +424,7 @@ function regularReport(reports) {
       collectionDate: report.collectionDate || "",
       collectionTime: report.collectionTime || "",
       precipitation: report.precipitation || "0",
-      dilution: report.dilution || "",
+      dilution:  getDilutionString(report.dilution) || "",
       incubationTime: report.incubationTime || "",
       incubationTemp: report.incubationTemp || "",
       incubationOut: report.incubationOut || "",
@@ -439,6 +439,10 @@ function regularReport(reports) {
   });
 
   return jsonData;
+}
+
+function getDilutionString(dilution) {
+  return dilution + '/100'
 }
 
 function getEcoliNumbers(report) {
