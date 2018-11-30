@@ -492,7 +492,7 @@
             (input) => {
               let dilution = parseFloat(input)
               if (isNaN(dilution)) { return true }
-              return (Number.isInteger(dilution) && dilution >= 0 && dilution <= 100) || 'Dilution must be a whole num. between 0-100'
+              return (typeof dilution === 'number' && dilution >= 0.25 && dilution <= 100) || 'Dilution must be between 0.25-100'
             }
           ],
           fluorometryRules: [
