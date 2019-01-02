@@ -175,7 +175,6 @@ export default {
 
         console.log(itemCopy)
         this.$firebaseRefs.reports.child(item['.key']).set(itemCopy)
-        db.ref('allReports/' + item['.key']).set(itemCopy)
       })
     },
     uploadNewJsonFile () {
