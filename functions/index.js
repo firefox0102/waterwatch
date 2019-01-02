@@ -445,6 +445,10 @@ function getDilutionString(dilution) {
   return dilution + '/100'
 }
 
+function checkDoubleSymbol(value, symbol) {
+  return typeof value === String && value.charAt(1) !== symbol
+}
+
 function getEcoliNumbers(report) {
   if (
     !report.ecoliLargeCells ||
@@ -457,13 +461,13 @@ function getEcoliNumbers(report) {
   if (
     report.ecoliLargeCells === "0" &&
     report.ecoliSmallCells === "0" &&
-    report.totalEcoli.charAt(1) !== "<"
+    checkDoubleSymbol(report.totalEcoli.charAt(1), "<")
   ) {
     return "<" + report.totalEcoli.toString().replace(/.0+$/);
   } else if (
     report.ecoliLargeCells === "49" &&
     report.ecoliSmallCells === "48" &&
-    report.totalEcoli.charAt(1) !== ">"
+    checkDoubleSymbol(report.totalEcoli.charAt(1), ">")
   ) {
     return ">" + report.totalEcoli.toString().replace(/.0+$/);
   }
@@ -482,13 +486,13 @@ function getColiformNumbers(report) {
   if (
     report.coliformLargeCells === "0" &&
     report.coliformSmallCells === "0" &&
-    report.totalEcoli.charAt(1) !== "<"
+    checkDoubleSymbol(report.totalEcoli.charAt(1), "<")
   ) {
     return "<" + report.totalColiform.toString().replace(/.0+$/);
   } else if (
     report.coliformLargeCells === "49" &&
     report.coliformSmallCells === "48" &&
-    report.totalEcoli.charAt(1) !== ">"
+    checkDoubleSymbol(report.totalEcoli.charAt(1), ">")
   ) {
     return ">" + report.totalColiform.toString().replace(/.0+$/);
   }
