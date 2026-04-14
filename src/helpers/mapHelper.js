@@ -4,10 +4,10 @@ export class MapHelper {
   constructor (selectSiteCallback) {
     this.selectSiteCallback = selectSiteCallback
 
-    window.mapboxgl.accessToken = 'pk.eyJ1IjoibGNhY2VkYSIsImEiOiIzNmM4MGRlN2I4NDhiY2UxZjA4MmJjZjE5OWEzYjUzNSJ9.Wc5KTJpWxmpxVMZfcuEQNg'
+    window.mapboxgl.accessToken = 'pk.eyJ1IjoibHNsYW5nbGV5IiwiYSI6ImNtbnl5bjg3NTA3OHEydHBvbGRnZzBzbnIifQ.Ni2My7YmoVvEb9WL3rUwxA'
     var map = new window.mapboxgl.Map({
       container: 'map', // container id
-      style: 'mapbox://styles/lcaceda/cj9bqvwwu4kb52smypbx0j8f9', // hosted style id
+      style: 'mapbox://styles/lslangley/cmnj697ag003b01sg8lm884ea', // hosted style id
       center: [-84.057249, 33.15888], // starting position
       zoom: 6.5 // starting zoom
     })
